@@ -1,0 +1,36 @@
+angular.module('BaiYin.OSI', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI', {
+            url: '/OSI',
+            controller: 'OSIController',
+            templateUrl: 'OSI/OSI.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSIController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.positionHide = true;
+            $scope.inputHide = false;
+            $scope.$on('$ionicView.afterEnter', function () {
+
+            });
+            //点击扫二维码
+            $scope.toScanCode = function () {
+                $scope.positionHide = false;
+                $scope.inputHide = true;
+            }
+            //跳转到巡检线路
+            $scope.toOsiLine = function () {
+                $state.go('OSI/OSILine');
+            }
+            //跳转到巡检记录
+            $scope.toOsiHistory = function () {
+                $state.go('OSI/OSIHistory');
+            }
+        }
+    ])

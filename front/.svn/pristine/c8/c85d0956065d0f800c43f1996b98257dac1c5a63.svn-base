@@ -1,0 +1,282 @@
+angular.module('BaiYin.OffLine', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OffLine', {
+            url: '/OffLine',
+            controller: 'OffLineController',
+            templateUrl: 'OffLine/OffLine.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OffLineController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker', '$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker, $cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.positionHide = true;/*签到*/
+                $scope.inputHide = false;/*扫描设备二维码按钮*/
+                $scope.searchsBlueHide=false;/*搜索按钮*/
+                $scope.osiListHide=false;/*下载列表*/
+                $scope.OfflineMyHide=true;/*上传列表*/
+                $scope.uanddHide=false;/*下载按钮*/
+                $scope.UploadHide=true;/*上传返回*/
+                localStorage.setItem('notUp',0);
+                $scope.notUp=localStorage.getItem('notUp');
+                if(localStorage.getItem("OffList")){
+                    var OffList= JSON.parse(localStorage.getItem("OffList"))
+                    $scope.patrolRoteListData = OffList;
+                }
+                //签到样式
+                $scope.identify = {
+                    'padding': '5px',
+                    'line-height': '35px',
+                    'border-radius': '50%',
+                    'display': 'inline-block',
+                    'float': 'left',
+                    'color': '#fff',
+                    'margin-right': '10px',
+                    'font-size': '12px',
+                    'width': '45px',
+                    'text-align': 'center'
+                }
+            });
+            //跳转到巡检线路
+            $scope.toOsiLine = function (obj) {
+                var params = {
+                    DESCRIPTION:obj.DESCRIPTION,
+                    TEMP_ID:obj.TEMP_ID,
+                    START_TIME:obj.START_TIME,
+                    END_TIME:obj.END_TIME,
+                    INSPECT_TYPE:obj.INSPECT_TYPE,
+                    INSPECTED:obj.INSPECTED,
+                    INSPECT:obj.INSPECT,
+                    childList:obj.childList
+                }
+                console.log(obj.childList);
+                $state.go('OffLine/OffLineDetail',params);
+            }
+
+            /*扫描二维码开始阶段*/
+
+            //点击扫二维码
+            $scope.toScanCode = function () {
+                $cordovaBarcodeScanner.scan()
+                    .then(function (barcodeData) {
+                        $scope.barcodeDataText = barcodeData.text;
+                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
+                        $scope.patrolHome($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+                    }, function (error) {
+
+                    });
+            }
+            //获取设备位置和名称
+            $scope.patrolHome = function (MCH_CODE, CONTRACT) {
+                // alert(JSON.stringify($scope.patrolRoteListData));
+                for(var i=0;i<$scope.patrolRoteListData.length;i++){
+
+                    var childListOF=$scope.patrolRoteListData[i].childList;
+                    // alert(JSON.stringify(childListOF));
+                    for(var j=0;j<childListOF.length;j++){
+                        if(childListOF[j].MCH_CODE==MCH_CODE){
+                            if(childListOF[j].IS_MATCH=='TRUE'){
+                                $scope.OFFlineHomeData=childListOF[j];
+                                blueToothEnable(childListOF[j].SN_CODE);
+                                break;
+                            }else{
+                                // alert('=======IS_MATCH不为TRUE=======');
+                                $scope.patrolHomeData=childListOF[j];
+                                $scope.inputHide = true;
+                                $scope.osiListHide=true;
+                                $scope.positionHide = false;
+                            }
+                        }else{
+                            showAlert.showMsg('', '', "没有匹配到巡查路线！");
+                        }
+                    }
+                }
+            }
+            //开启本机蓝牙
+            function blueToothEnable(SN_CODE) {
+                ble.enable(
+                    function () {
+                        scanBlueTooth(SN_CODE);
+                    },
+                    function () {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg("", "", "打开蓝牙失败！");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scanBlueTooth(SN_CODE) {
+                loadingAnimation.hideLoading();
+                ble.scan([], 5, function (device) {
+                        //成功的回调函数
+                    // alert(JSON.stringify(device));
+                    var SNdeviceID=device.id.replace(new RegExp(/(:)/g),"");
+                    // alert('=======device.id'+SNdeviceID);
+                    // alert('=======SN_CODE'+SN_CODE);
+                        if (SNdeviceID==SN_CODE) {
+                            $scope.patrolHomeData=$scope.OFFlineHomeData;
+                            $scope.inputHide = true;
+                            $scope.osiListHide=true;
+                            $scope.positionHide = false;
+                        }
+                    }, function () {
+                        //失败的回调函数
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg('', '', "未扫描到有效蓝牙！");
+                    }
+                );
+            }
+            /*扫描二维码结束阶段*/
+
+
+            /*搜索蓝牙开始阶段*/
+
+            //点击搜索蓝牙
+            $scope.searchsBlueTooth = function () {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                openblueToothEnable();
+            }
+            //开启本机蓝牙
+            function openblueToothEnable() {
+                ble.enable(
+                    function () {
+                        scansBlueToothnow();
+                    },
+                    function () {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg("","","蓝牙未开启");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scansBlueToothnow() {
+                $scope.OffToothList = [];
+                $scope.timer = $timeout(function () {
+                    loadingAnimation.hideLoading();
+                    if ($scope.OffToothList.length > 0) {
+                        upWindows($scope.OffToothList);
+                    } else {
+                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
+                    }
+                }, 5000);
+                ble.scan([], 5, function (device) {//成功的回调函数
+                     getBluesToothList(device);
+                    }, function () {
+                        //失败的回调函数
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg('', '', "扫描蓝牙失败");
+
+                    }
+                );
+            }
+            //获取蓝牙列表
+            function getBluesToothList(device) {
+                var SNID=device.id.replace(new RegExp(/(:)/g),"");
+                for(var i=0;i<$scope.patrolRoteListData.length;i++){
+                    var childListOF=$scope.patrolRoteListData[i].childList;
+                    for(var j=0;j<childListOF.length;j++){
+                        if(childListOF[j].SN_CODE==SNID){
+                            $scope.OffToothList.push(childListOF[j])
+                        }
+                    }
+                }
+            }
+            //弹出页面，显示扫描到的设备
+            var searchequipPopup;
+            function upWindows(OffToothList) {
+                searchequipPopup = $ionicPopup.show({
+                    template:'<div>' +
+                    '<ul>' +
+                    '<li id="devices_{{$index}}" ng-click="selectsBlueTooth($index)" ng-repeat="equipTooth in OffToothList track by $index" ng-style="searchPopupli">' +
+                    '{{equipTooth.ADDRESS}}' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>',
+                    title: '扫描到的蓝牙设备',
+                    scope: $scope,
+                });
+            }
+            $scope.searchPopupli = {
+                "line-height": "35px",
+                "font-size": "12px",
+                "text-align": "center",
+                "border-bottom": "1px dotted #f4f4f4",
+            };
+            //点击选择蓝牙设备
+            $scope.selectsBlueTooth= function (index) {
+                searchequipPopup.close();
+                $scope.patrolHomeData=$scope.OffToothList[index];
+                $scope.searchsBlueHide=true;
+                $scope.osiListHide=true;
+                $scope.positionHide = false;
+            }
+
+            /*搜索蓝牙结束阶段*/
+
+            //首页签到 点击签到事件
+            $scope.OffLineSignIn=[];
+            $scope.OffLineSign = function () {
+                var params = {
+                    BLUETOOTH_SERIAL_NO:$scope.patrolHomeData.BLUETOOTH_SERIAL_NO,
+                    LOCATION_DESCRIPTION:$scope.patrolHomeData.ADDRESS,
+                    IS_MATCH:$scope.patrolHomeData.IS_MATCH,
+                    PLAN_ID:$scope.patrolHomeData.PLAN_ID,
+                    EQUIP_NO:$scope.patrolHomeData.MCH_CODE,
+                    CONTRACT:$scope.patrolHomeData.CONTRACT,
+                    MCH_NAME:$scope.patrolHomeData.MCH_NAME,
+                    DESCRIPTION:$scope.patrolHomeData.DESCRIPTION,
+                    RECORD_TIME:$scope.patrolHomeData.RECORD_TIME,
+                }
+                $scope.OffLineSignIn.push(params);
+                localStorage.setItem("OffLineSignList",JSON.stringify($scope.OffLineSignIn));
+                $scope.positionHide = true;
+                $scope.inputHide = false;
+                $scope.searchsBlueHide=false;
+                $scope.osiListHide=false;
+            }
+            //返回事件
+            $scope.goBack = function () {
+                $scope.positionHide = true;
+                $scope.inputHide = false;
+                $scope.searchsBlueHide=false;
+                $scope.osiListHide=false;
+            }
+            /*点击下载*/
+            $scope.OffLineDownload=function () {
+                $http.post('ServiceName=InspectionService&TransName=downLoadXcData')
+                        .then(function (res) {
+                            if (res.code == 0) {
+                                showAlert.showMsg('', '', "下载巡查路线成功");
+                                var obj =res.data.deList;
+                                localStorage.setItem("OffList",JSON.stringify(obj));
+                                var OffList= JSON.parse(localStorage.getItem("OffList"))
+                                $scope.patrolRoteListData = OffList;
+                                $scope.OfflineList=new Array();
+                                for(var i=0;i<OffList.length;i++){
+                                    $scope.OfflineList=$scope.OfflineList.concat(res.data.deList[i].childList);
+                                }
+                                console.log($scope.OfflineList);
+                            } else {
+                                showAlert.showMsg('', '', res.data.msg);
+                            }
+                        }, function (error) {
+                            showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                        });
+            }
+            /*点击查看巡查记录*/
+            $scope.OffLineLook=function () {
+                if(localStorage.getItem("OffLineSignList")){
+                    $state.go('OffLine/OffLineLook');
+                }else{
+                    showAlert.showMsg('', '', "还未有巡查记录!");
+                }
+
+
+            }
+        }
+    ])

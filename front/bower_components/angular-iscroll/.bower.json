@@ -1,0 +1,38 @@
+{
+  "name": "angular-iscroll",
+  "version": "2.0.1",
+  "description": "AngularJS module that enables iScroll 5 functionality, wrapping it in an easy-to-use directive.",
+  "main": "dist/lib/angular-iscroll.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mtr/angular-iscroll.git"
+  },
+  "keywords": [
+    "iscroll",
+    "angular",
+    "directive"
+  ],
+  "author": {
+    "name": "Martin Thorsen Ranang",
+    "email": "mtr@ranang.org"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mtr/angular-iscroll/issues"
+  },
+  "homepage": "https://github.com/mtr/angular-iscroll",
+  "dependencies": {
+    "angular": ">=1.2",
+    "iscroll": "^5.1.3"
+  },
+  "_release": "2.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.1",
+    "commit": "2693a26b1682250c624d2ce6ffacb91f6e311b54"
+  },
+  "_source": "git://github.com/mtr/angular-iscroll.git",
+  "_target": "~2.0.1",
+  "_originalSource": "angular-iscroll",
+  "_direct": true
+}

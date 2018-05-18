@@ -1,0 +1,21 @@
+<ion-view class="employeeAddressCSS" >
+ <ion-nav-title>{{title}}</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false" class="itm">
+      <div class=" searchVal">
+	  <label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" ng-model="search.$" placeholder="搜索">
+	  </label>
+    </div>
+    	<div class="list" ng-repeat="item in items | filter:search" >
+        <a class="item" href="#" ng-click="addressDetail(item)">
+           <span class="headImg">
+             <!-- <img  src="{{item.pictureId}}}"> -->
+            
+           </span>
+           <span class="nameMsg"> {{item.INTERNAL_DISPLAY_NAME}}</span>
+          <span class="bagImg"></span>
+        </a>
+      </div>
+    </ion-content>
+</ion-view>

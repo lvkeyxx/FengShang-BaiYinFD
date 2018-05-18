@@ -1,0 +1,66 @@
+angular.module('BaiYin.OSI', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('OSI', {
+            url: '/OSI',
+            controller: 'OSIController',
+            templateUrl: 'OSI/OSI.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+    }])
+    .controller('OSIController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+
+            $scope.$on('$ionicView.enter', function () {
+                //获取当前月份
+                getNowDate();
+            });
+            var date = new Date();
+
+            function getNowDate() {
+                $scope.now = $filter("date")(date, "yyyy-MM-dd");
+            }
+
+            //日历插件
+            var ipObj1 = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    $scope.now = $filter("date")(val, "yyyy-MM-dd");
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+            //跳转到巡检详情
+            $scope.toInspectionDetail = function(){
+              $state.go('OSI/OSIDetail');
+            }
+        }
+    ])

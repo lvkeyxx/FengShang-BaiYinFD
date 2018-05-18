@@ -1,0 +1,189 @@
+angular.module('BaiYin.tabs.mine', [
+    'BaiYin.tabs.mine.mock',
+    'BaiYin.mine.netWork',
+    'BaiYin.APPfeedback'
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('tabs/mine', {
+        url: '/tabs/mine',
+        controller: 'mineController',
+        templateUrl: 'tabs/mine/mine.tpl.html',
+        cache: 'false',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('mineController', ['$rootScope','$scope', '$ionicLoading', '$location', '$ionicHistory', '$http', '$ionicTabsDelegate', 'CurrentUserService', '$ionicPopup', '$state', '$timeout', 'Session', 'SavePopShowFristService',
+    function($rootScope,$scope, $ionicLoading, $location, $ionicHistory, $http, $ionicTabsDelegate, CurrentUserService, $ionicPopup, $state, $timeout, Session, SavePopShowFristService) {
+        $scope.$on('$ionicView.enter', function() {
+            //显示tabs
+            $rootScope.hideTabs = false;
+            $scope.currentTab = 'tabs/mine';
+            $ionicTabsDelegate.select(3);
+        })
+
+        //判断登录平台
+        if (Session.user.DeviceType) {
+            $scope.DeviceType = Session.user.DeviceType;
+        }
+
+        $scope.showLoadingToast = function() {
+            // Setup the loader
+            $ionicLoading.show({
+                template: '正在清除...',
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 300,
+                showDelay: 0
+            });
+        }
+        $scope.hideLoadingToast = function() {
+            $ionicLoading.hide();
+        }
+        $scope.cleaHistory = function() {
+            $scope.showLoadingToast();
+            $ionicHistory.clearHistory();
+            sessionStorage.clear();
+            $ionicHistory.clearCache();
+            var cookies = document.cookie;
+            console.log(cookies, $ionicHistory.clearHistory(), sessionStorage.clear(), $ionicHistory.clearCache());
+            //这里使用定时器是为了缓存一下加载过程，防止加载过快
+            $timeout(function() {
+                //停止缓冲提示
+                $scope.hideLoadingToast();
+                var alertYo = $ionicPopup.alert({
+                    template: '清除成功',
+                    okText: "确定"
+                })
+            }, 1500);
+
+        }
+
+        //显示当前登录人
+        if (Session.userInfoData.UserInfo) {
+            if (Session.userInfoData.UserInfo.INTERNAL_DISPLAY_NAME || Session.userInfoData.UserInfo.INTERNAL_DISPLAY_NAME != '') {
+                $scope.userName = Session.userInfoData.UserInfo.INTERNAL_DISPLAY_NAME;
+            } else {
+                $scope.userName = Session.userInfoData.UserInfo.PERSON_ID;
+            }
+        } else {
+            $scope.userName = Session.userInfoData.USER_NAME;
+        }
+
+        $scope.appVersion = appVersion;
+        //版本更新
+        $scope.checkVersion = function() {
+            document.addEventListener("deviceready", function() {
+                $http.get('ServiceName=SysManageService&TransName=getNewVersion&APP_VERSION=' + appVersion).then(function(res) {
+                    if (res.data.exist == 'Y') {
+                        showVersionPop('发现新版本是否更新？', '更新', '取消', res.data.url, 1);
+                    } else {
+                        showAlert('', '已是最新版本', '确认');
+                    }
+                }, function(err) {
+                    showAlert('', '版本检测失败', '确认');
+                });
+            }, false);
+        }
+
+        var showVersionPop = function(template, leftText, rightText, downUrl, num) {
+            var messagePopup = $ionicPopup.confirm({
+                template: template,
+                okText: leftText,
+                cancelText: rightText
+            });
+            messagePopup.then(function(res) {
+                if (res) {
+                    if (num == 1) {
+                        console.log(downUrl);
+                        MRUpdateVersion.updateVersion(function success() {}, function failed(message) {}, downUrl);
+                    }
+                }
+            })
+        }
+        var showAlert = function(title, template, okText) {
+            var alertPopup = $ionicPopup.alert({
+                title: title,
+                okText: okText,
+                template: template
+            });
+            alertPopup.then(function(res) {});
+        };
+
+        $scope.logout = function() {
+            showMessage('您确定要退出登录？', '确定', '取消');
+            // if (localStorage.getItem('promptMsg') && localStorage.getItem('promptMsg') != 'false') {
+            //     showMessage('您确定要退出登录？', '确定', '取消');
+            // } else {
+            //     showpromptMsg();
+            // }
+        };
+
+        //提示客户退出后无法收到推送消息
+        $scope.isChecked = false;
+        var showpromptMsg = function() {
+            $scope.popup = $ionicPopup.show({
+                templateUrl: "tabs/mine/showpromptMsg.tpl.html",
+                scope: $scope,
+            });
+        };
+
+        $scope.seleteShowpromptMsg = function(isChecked) {
+            if (isChecked) {
+                localStorage.setItem('promptMsg', true);
+            } else {
+                localStorage.setItem('promptMsg', false);
+            }
+        }
+
+        $scope.closePop = function() {
+            $scope.popup.close();
+            showMessage('您确定要退出登录？', '确定', '取消');
+        }
+
+        // 消息提示
+        var showMessage = function(content, leftText, rightText) {
+            var messagePopup = $ionicPopup.confirm({
+                template: content,
+                okText: leftText,
+                cancelText: rightText
+            }).then(function(res) {
+                if (res) {
+                    $http.get('ServiceName=UserService&TransName=logout').then(function(res) {
+                        $ionicHistory.clearHistory();
+                        $ionicHistory.clearCache().then(function() {
+                            $ionicHistory.nextViewOptions({
+                                disableAnimate: true,
+                                disableBack: true,
+                                historyRoot: true
+                            });
+                            token = null;
+                            var user = null;
+                            CurrentUserService.destroyUserSession();
+                            SavePopShowFristService.setPopShowBlr(false);
+                            if (isApp) {
+                                window.plugins.jPushPlugin.setTags(''); //设置tag为空
+                                window.plugins.jPushPlugin.stopPush(); //停止推送
+                                //退出jmessage
+                                window.JMessage.logout(function(response) {
+                                    console.log("退出成功");
+                                }, function(response) {
+                                    console.log(response);
+                                });
+                            }
+                            //清理缓存
+                            console.log('清理缓存');
+                            localStorage.removeItem("autoLogin",'0');
+                            $state.go("blankPage", {}, { location: 'replace' });
+                        });
+
+                    }, function(err) {
+                        showAlert('', '退出失败', '确认');
+                    });
+                }
+            })
+        };
+    }
+])

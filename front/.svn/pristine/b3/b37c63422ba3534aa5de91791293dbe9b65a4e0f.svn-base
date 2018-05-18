@@ -1,0 +1,6 @@
+<div class="card" ng-bind-html="data.MSG_INFO"></div>
+<div>
+    <div class="card text">********.doc</div>
+    <div class="card text">********.doc</div>
+    <div class="card text">********.doc</div>
+</div>

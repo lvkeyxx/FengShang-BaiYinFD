@@ -1,0 +1,32 @@
+<ion-view class="myAttenceCSS">
+    <ion-nav-title>我的考勤</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <button class="myleftSelect" ng-click="getPreMonth(now)"></button>
+            {{now | date : "yyyy年MM月"}}
+            <button class="rightSelect" ng-click="getNextMonth(now)"></button>
+        </div>
+        <div class="tips">
+            <span>提示：点击下面备注栏可编辑未打卡事由</span>
+        </div>
+        <div class="myAttencelist">
+            <table>
+                <tr>
+                    <th>日期</th>
+                    <th>打卡时间</th>
+                    <th>备注</th>
+                </tr>
+                <tbody ng-repeat="countvalue in attenceList">
+                    <tr ng-repeat="item in countvalue.list track by $index">
+                        <td ng-if="$index == 0" rowspan="{{countvalue.list.length}}" class="countdate">
+                            {{countvalue.month}}/{{countvalue.date}}
+                            <span>{{countvalue.week}}</span>
+                        </td>
+                        <td ng-click="toPosition(item)" class="{{item.confirmDate.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{item.actualStartTime}}-{{item.actualEndTime}}</td>
+                        <td ng-bind-html="item.remarks" class="{{item.confirmDate.length>0 ? 'abnormalgreen' : 'abnormalAttence'}} coustvalueright" ng-click="to_edit(item)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

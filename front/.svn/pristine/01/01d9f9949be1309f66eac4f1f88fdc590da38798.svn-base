@@ -1,0 +1,112 @@
+angular.module('BaiYin.taskManage', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('taskManage', {
+            url: '/taskManage',
+            controller: 'taskManageController',
+            templateUrl: 'taskManage/taskManage.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('taskManageController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet) {
+            $ionicTabsDelegate.select(0);
+            $scope.$on('$ionicView.afterEnter', function () {
+                $ionicTabsDelegate.select(0);
+                $scope.spanUsually = {
+                    "color": "#3492e9",
+                    "background": "#fff",
+                    "padding": "5px 10px",
+                    "border-top-left-radius": "10px",
+                    "border-bottom-left-radius": "10px"
+                };
+                $scope.spanSpecial = {
+                    "color": "#fff",
+                    "background": "rgba(0,0,0,0.2)",
+                    "padding": "5px 10px",
+                    "margin-left": "-5px",
+                    "border-top-right-radius": "10px",
+                    "border-bottom-right-radius": "10px"
+                }
+                //隐藏专项任务数据
+                $scope.specialHide = true;
+            });
+            //点击日常
+            $scope.toUsually = function () {
+                $scope.spanUsually = {
+                    "color": "#3492e9",
+                    "background": "#fff",
+                    "padding": "5px 10px",
+                    "border-top-left-radius": "10px",
+                    "border-bottom-left-radius": "10px"
+                };
+                $scope.spanSpecial = {
+                    "color": "#fff",
+                    "background": "rgba(0,0,0,0.2)",
+                    "padding": "5px 10px",
+                    "margin-left": "-5px",
+                    "border-top-right-radius": "10px",
+                    "border-bottom-right-radius": "10px"
+                }
+                //显示日常任务数据
+                $scope.rcrwHide = false;
+                //隐藏专项任务数据
+                $scope.specialHide = true;
+            }
+            //点击专项
+            $scope.toSpecial = function () {
+                $scope.spanUsually = {
+                    "color": "#fff",
+                    "background": "rgba(0,0,0,0.2)",
+                    "padding": "5px 10px",
+                    "border-top-left-radius": "10px",
+                    "border-bottom-left-radius": "10px"
+                };
+                $scope.spanSpecial = {
+                    "color": "#3492e9",
+                    "background": "#fff",
+                    "padding": "5px 10px",
+                    "margin-left": "-5px",
+                    "border-top-right-radius": "10px",
+                    "border-bottom-right-radius": "10px"
+                }
+                //隐藏日常任务数据
+                $scope.rcrwHide = true;
+                //显示专项任务数据
+                $scope.specialHide = false;
+            }
+            $scope.toAllData = function () {
+                $ionicTabsDelegate.select(0);
+            }
+            $scope.toClzData = function () {
+                $ionicTabsDelegate.select(1);
+            }
+            $scope.toYwcData = function () {
+                $ionicTabsDelegate.select(2);
+            }
+            //点击选择项目类型
+            var commitStatus = '';
+            var stustList = [{"text": "单独报批重大项目"}, {"text": "跨年度技改项目"}, {"text": "一般项目"}, {"text": "重大项目"}, {"text": "自控项目"}];
+            $scope.toSelectStatus = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: stustList,
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        commitStatus = stustList[index].text;
+                        $("#taskStatusID").val(commitStatus);
+                        return true;
+                    }
+                });
+            }
+            //点击跳转到设备详情
+            $scope.toTmDetail = function () {
+                $state.go("taskManage/tmDetail");
+            }
+        }
+    ])

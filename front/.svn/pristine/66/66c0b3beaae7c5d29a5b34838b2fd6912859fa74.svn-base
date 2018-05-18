@@ -1,0 +1,33 @@
+.NewsCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .newsList {
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    background-color: #f4f4f4;
+    ul {
+      padding: 10px;
+      background: #fff;
+      border-bottom: 1px dotted #f4f4f4;
+    }
+    .date_m {
+      line-height: 0.55555556rem;
+      font-size: 40/@rem;
+      color: #ccc;
+      text-align: right;
+      transform: translateY(0/@rem);
+      display: inline-block;
+      float: right;
+    }
+    .msg_colo {
+      color: #000;
+      font-weight: bold;
+      font-size: 40/@rem;
+      line-height: 80/@rem;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

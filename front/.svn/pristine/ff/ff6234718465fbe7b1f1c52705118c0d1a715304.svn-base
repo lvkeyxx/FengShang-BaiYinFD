@@ -1,0 +1,14 @@
+<ion-tabs ng-controller="tabController" class="tab tabs-icon-top tabs-color-active-positive tabs-icon-only footTabs" ng-class="{'tabs-item-hide': $root.hideTabs}">
+    <ion-tab title="首页" icon-off="ion-index1" icon-on="ion-index-active1" ng-click="goTab('tabs/homePage')" href="/tabs/homePage">
+        <ion-view ng-include="getContentTpl('tabs/homePage')" ng-if="isActived('tabs/homePage')"></ion-view>
+    </ion-tab>
+    <ion-tab title="生产管理" icon-off="ion-index2" icon-on="ion-index-active2" ng-click="goTab('tabs/porductManage')" href="/tabs/porductManage">
+        <ion-view ng-include="getContentTpl('tabs/porductManage')" ng-if="isActived('tabs/porductManage')"></ion-view>
+    </ion-tab>
+    <ion-tab title="经营管理" icon-off="ion-index3" icon-on="ion-index-active3" ng-click="goTab('tabs/OMA')" href="/tabs/OMA">
+        <ion-view ng-include="getContentTpl('tabs/OMA')" ng-if="isActived('tabs/OMA')"></ion-view>
+    </ion-tab>
+    <ion-tab title="我" icon-off="ion-index4" icon-on="ion-index-active4" ng-click="goTab('tabs/mine')" href="/tabs/mine">
+        <ion-view ng-include="getContentTpl('tabs/mine')" ng-if="isActived('tabs/mine')"></ion-view>
+    </ion-tab>
+</ion-tabs>

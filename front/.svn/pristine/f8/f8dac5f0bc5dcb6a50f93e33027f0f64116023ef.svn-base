@@ -1,0 +1,3 @@
+angular.module('BaiYin.taskManageA', [
+    'BaiYin.taskManage',
+])

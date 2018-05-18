@@ -1,0 +1,42 @@
+<ion-view class="cdListCSS">
+    <ion-nav-title>早退</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="content">
+            <h3><span>{{dateTimeShow}}</span>早退<span>共{{personNum}}人</span></h3>
+            <ul class="list">
+                <li class="item item-icon-right" ng-click="towdDetail(x)" ng-repeat="x in ztList">
+                    <div class="leftShow">
+                        <span class="name">{{x.PERSON_NAME}}</span>
+                        <span class="glassname">{{partName}}</span>
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">{{x.COUNT}}次</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </div>
+                </li>
+                <!--<li class="item item-icon-right" ng-click="toztDetail()">
+                    <div class="leftShow">
+                        <span class="name">王明霞</span>
+                        <span class="glassname">国投白银风电</span>
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">10次</span>
+                        <span class="totalTime">254分钟</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </div>
+                </li>
+                <li class="item item-icon-right" ng-click="toztDetail()">
+                    <div class="leftShow">
+                        <span class="name">张小明</span>
+                        <span class="glassname">国投白银风电</span>
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">2次</span>
+                        <span class="totalTime">12分钟</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </div>
+                </li>-->
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

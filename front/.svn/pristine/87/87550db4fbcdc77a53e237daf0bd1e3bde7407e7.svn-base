@@ -1,0 +1,104 @@
+.messageCSS {
+    background-color: #e6e6e6;
+    .tabTopAndroid {
+        height: .8rem;
+        width: 100%;
+        background-color: #fff;
+        z-index: 99;
+        position: relative;
+        top: 44px;
+        li {
+            float: left;
+            color: #666;
+            width: 50%;
+            text-align: center;
+            font-size: .28rem;
+            margin-top: .18rem;
+            line-height: .6rem;
+            border-bottom: .05rem solid #dddddd;
+        }
+        li.active {
+            color: #119BF8;
+            border-bottom: .05rem solid #119BF8;
+        }
+        .borderRight {
+            height: .5rem;
+            top: .15rem;
+            left: 50%;
+            border-right: 1px solid #ddd;
+            position: absolute;
+        }
+    }
+    .tabTopIOS {
+        height: .8rem;
+        width: 100%;
+        background-color: #fff;
+        z-index: 99;
+        position: relative;
+        top: 64px;
+        li {
+            float: left;
+            color: #666;
+            width: 50%;
+            text-align: center;
+            font-size: .28rem;
+            margin-top: .18rem;
+            line-height: .6rem;
+            border-bottom: .05rem solid #dddddd;
+        }
+        li.active {
+            color: #119BF8;
+            border-bottom: .05rem solid #119BF8;
+        }
+        .borderRight {
+            height: .5rem;
+            top: .15rem;
+            left: 50%;
+            border-right: 1px solid #ddd;
+            position: absolute;
+        }
+    }
+    .list {
+        top: 43px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+    .rj-head-pic {
+        float: left;
+        border-radius: 1rem;
+        background-color: #09f;
+        height: 40px;
+        width: 40px;
+        text-align: -webkit-center;
+        padding-top: 10px;
+        font-size: 15px;
+        color: #fff;
+        padding-left: px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+    a.item,
+    a.item-content {
+        padding: 10px;
+    }
+    .messageNum {
+        position: absolute;
+        width: .4rem;
+        height: .4rem;
+        text-align: -webkit-center;
+        background-color: red;
+        border-radius: 1rem;
+        color: #fff;
+        right: .2rem;
+    }
+    .scroll-refresher {
+        position: absolute;
+        top: -30px;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        margin: auto;
+        height: 60px;
+    }
+}

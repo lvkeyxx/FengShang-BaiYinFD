@@ -1,0 +1,56 @@
+<ion-view class="agentsList">
+    <ion-nav-title>出差列表</ion-nav-title>
+    <ion-nav-buttons side="right">
+     <button  class="button buttton-icon ion-ios-plus-outline" style="font-size: 1.6em" ng-click="newVacation()">
+        </button>
+        <button class="button buttton-icon icon ion-ios-search " ng-click="showOrhide()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">
+        </ion-refresher>
+        <div class="fade" ng-show="trueStr">
+            <div class="filterAllList">
+                <span>标题：</span>
+                <textarea ng-model="vom" class="filterTitleCss" style="resize: none;"></textarea>
+            </div>
+            <div class="filterAllList">
+                <span>时间：</span>
+                <span class="timeInp" ng-click="chooseTime('1')" ng-model="filterDate">{{filterDate | date : "yyyy-MM-dd"}}</span>
+                <span>~</span>
+                <span class="timeInp" ng-click="chooseTime('2')" ng-model="filterDate2">{{filterDate2 | date : "yyyy-MM-dd"}}</span>
+            </div>
+            <div class="item item-input item-select">
+                <div class="input-label">
+                    状态：
+                </div>
+                <select ng-model="type" data-tap-disabled="true">
+                    <option value="">请选择</option>
+                    <option ng-repeat="item3 in item3s" value={{item3.BUSIN_NAME}}>{{item3.BUSIN_NAME}}</option>
+                </select>
+            </div>
+            <div class="butAll">
+                <button class="makeSur" ng-click="listAll()">清空</button>
+                <button class="makeSur" ng-click="allChoose(type,vom)">确定</button>
+            </div>
+        </div>
+        <div class="agentList">
+            <div style="width: 20%;">出差原因</div>
+            <div class="handleTime" style="width: 20%;">提交时间</div>
+            <div class="handleTime" style="width: 30%;">状态</div>
+        </div>
+        <div class="agentsDetail" ng-repeat="item in items" ng-click="leavesDetail(item)">
+            <div class="agentsTitle" style="width: 30%;text-align: left;">
+                <span class="bagDian"></span> {{item.APPLY_DESC}}
+            </div>
+            <div class="agentsData" style="width: 30%;text-align: left;">{{item.BEGIN_TIME | date : "yyyy年MM月dd日"}}
+            </div>
+            <div style="width: 30%;">
+                {{item.APPROVE_STATUS}}
+                <span class="bagImg" style="float: right;    transform: translateY(0.3em);"></span>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" immediate-check="false">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

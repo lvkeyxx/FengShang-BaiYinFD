@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, target-densitydpi=device-dpi, user-scalable=yes"/>
+    <title>下载页</title>
+    <style>
+        body {
+            background: url("images/upload_imgbg.png");
+            background-size: cover;
+            height: 100%;
+        }
+
+        .uploadHeader {
+            margin-top: 60px;
+            text-align: center;
+            height: 225px;
+        }
+
+        .uploadHeader img {
+            width: 200px;
+            height: 109px;
+            margin: 0 auto;
+        }
+
+        .versionNumber {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .uploadBtn {
+            height: 50px;
+            line-height: 50px;
+            width: 180px;
+            margin: 0 auto;
+            background: #1296db;
+            border: none;
+            font-family: "Microsoft YaHei UI";
+            font-size: 18px;
+            color: #fff;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            outline: none;
+        }
+
+        .uploadBtn i {
+            background: url("images/upload_icom.png");
+            height: 35px;
+            width: 35px;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .blackBg{
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top:0;
+            left: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1;
+        }
+        .openBrowse{
+            top: 20px;
+            position: absolute;
+            z-index: 9;
+            text-align: right;
+            width: 100%;
+        }
+        .openBrowse img{
+            width: 111px;
+            height:100px;
+            text-align: right;
+            margin-right: 20px;
+        }
+        .Tips ul{
+            margin: 0;
+            padding: 0;
+        }
+        .Tips ul li:first-child{
+            line-height: 0;
+            margin-bottom: 20px;
+        }
+        .Tips ul li{
+            text-align: left;
+            color:#fff;
+            list-style: none;
+            line-height: 50px;
+        }
+        .Tips ul li i{
+            color: #fff;
+            font-style: normal;
+            background: #ff0000;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            border-radius: 20px;
+            margin: 0 10px;
+            display: inline-block;
+            text-align: center;
+        }
+        .Tips ul li em{
+            color: #fff;
+            font-style: normal;
+            background: #1296db;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="uploadHeader">
+    <img src="images/logo.png">
+</div>
+<div class="versionNumber">以下为最新客户端版本</div>
+<div style="text-align: center">
+    <a href="download/byfd.apk">
+        <button class="uploadBtn"><i class="iconupload"></i>下载更新</button>
+    </a>
+</div>
+<!--浏览器中打开-->
+<div class="blackBg" style="display: none;"></div>
+<div class="openBrowse" style="display: none;">
+    <img src="images/upload_point.png">
+    <div class="Tips">
+        <ul>
+            <li><i class="orderNum">1</i> 点击右上角<em>...</em>按钮</li>
+            <li><i class="orderNum">2</i>选择在<em>浏览器中打开</em></li>
+        </ul>
+    </div>
+</div>
+    <!--判断是否微信登陆-->
+    <script type="text/javascript" src="jquery-3.1.1.js"></script>
+    <script type="text/javascript">
+    window.onload = function(){
+        if(isWeiXin()){
+            $(".blackBg").show();
+            $(".openBrowse").show();
+        }
+    }
+    function isWeiXin(){
+        var ua = window.navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

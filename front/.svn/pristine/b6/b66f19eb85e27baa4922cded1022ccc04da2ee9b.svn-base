@@ -1,0 +1,25 @@
+<ion-view class="userConfigCSS">
+    <ion-nav-title>
+        <p ng-if="userInfo.nickname == '' ">{{userInfo.userName}}资料</p>
+        <p ng-if="userInfo.nickname != '' ">{{userInfo.nickname}}资料</p>
+    </ion-nav-title>
+    <ion-content class="userConfigContent" has-bouncing="false" scrollbar-y="false">
+        <div class="userItemContent">
+            <div class="items clearfix">
+                <div class="lft">真实姓名</div>
+                <div class="rgt" ng-if="userInfo.userName != '' ">{{userInfo.userName?userInfo.userName:userInfo.username}}</div>
+                <div class="rgt" ng-if="userInfo.userName == '' ">无</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">昵称</div>
+                <div class="rgt" ng-if="userInfo.nickname != '' ">{{userInfo.nickname}}</div>
+                <div class="rgt" ng-if="userInfo.nickname == '' ">无</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">与我关系</div>
+                <div class="rgt" ng-if="userInfo.isFriend == '0' ">不是好友</div>
+                <div class="rgt" ng-if="userInfo.isFriend == '1' ">好友</div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,28 @@
+<div class="card">
+    <div>订单号：3</div>
+    <div>状态：已关闭</div>
+    <div>域：WX</div>
+    <div>领料人：张大力</div>
+    <div>预算科目：生产成本-基本生产成本-制造费用-修理费-C级检修-3号机组-标准项目-材料费_乌金峡_设备管理部</div>
+    <div>责任部门：检修管理部</div>
+    <div>总额：1890.87</div>
+</div>
+<div class="applyForLineHead">详情</div>
+<div class="applyForLine">
+    <div class="card text">
+        <div>物资描述：频率数显表</div>
+        <div>型号规格：PD195F-5K1</div>
+        <div>测频范围：0-55HZ</div>
+        <div>数量：1 个</div>
+        <div>总价：700.03</div>
+        <div>状态：关闭</div>
+    </div>
+    <div class="card text">
+        <div>物资描述：频率数显表</div>
+        <div>型号规格：PD195F-5K1</div>
+        <div>测频范围：0-55HZ</div>
+        <div>数量：1 个</div>
+        <div>总价：700.03</div>
+        <div>状态：关闭</div>
+    </div>
+</div>

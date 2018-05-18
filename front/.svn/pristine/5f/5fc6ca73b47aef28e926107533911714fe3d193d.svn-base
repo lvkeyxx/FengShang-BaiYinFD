@@ -1,0 +1,19 @@
+<ion-view class="erpCSS">
+    <ion-nav-title>待审批列表</ion-nav-title>
+    <ion-content class="padding" has-header="true">
+        <div class="card" ng-click="toDetailsPage();">
+            <div>出差申请审批完成</div>
+            <div class="time text">3月2日</div>
+            <div class="text">
+                XSX452：
+                <br/> 您好，您的出差申请单审批完成。开始日期&lg;2018.02.26>，结束日期&lg;2018.02.28>,事由&lg;参加中投咨询公司组织的开标、评标会议>，出差路线&lg;兰州-北京-兰州>。
+            </div>
+            <div class="details text">
+                <span>详情</span>
+                <span>
+                    <i class="icon ion-chevron-right"></i>
+                </span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

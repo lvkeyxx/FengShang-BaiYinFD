@@ -1,0 +1,54 @@
+.historyJournalCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .journalList{
+    margin: 20/@rem;
+  }
+  .journalList ul li:first-child{
+    .dateTimeshow{
+      line-height: 120/@rem;
+      background: url("../images/PM/roundimg_icon.png")left no-repeat;
+      margin-left: -15px;
+      padding-left: 15px;
+    }
+  }
+  .journalList ul li{
+    display: block;
+    line-height: 80/@rem;
+    border-left: 1px solid #ddd;
+    padding-left: 10px;
+    .dateTimeshow{
+      line-height: 120/@rem;
+      background: url("../images/PM/roundimg_black_icon.png")left no-repeat;
+      margin-left: -15px;
+      padding-left: 15px;
+    }
+    .dateTimeshow em{
+         float: right;
+    }
+    .journalDes{
+      background: #fff;
+      border-radius: 40/@rem;
+      padding: 20/@rem;
+      .journalxx{
+        border-bottom: 1px solid #ddd;
+        line-height: 30px;
+        font-size: 40/@rem;
+        padding-bottom: 20/@rem;
+        span{
+          display: block;
+        }
+        span em{
+          float:right;
+        }
+        .rightShow{
+          float:right;
+        }
+      }
+      .journalcontent{
+        color: #999;
+        line-height: 80/@rem;
+      }
+    }
+  }
+}

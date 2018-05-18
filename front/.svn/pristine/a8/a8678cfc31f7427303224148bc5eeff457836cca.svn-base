@@ -1,0 +1,35 @@
+<ion-view>
+    <ion-nav-title>上传隐患</ion-nav-title>
+    <ion-content class="newProblems">
+        <button class="tackPhotos">拍照</button>
+        <!--   <div class="photosNum"></div> -->
+        <div class="upTime">
+            <div>发现时间：</div>
+            <div>{{nowDate |date : "MM月dd日HH时mm分"}}</div>
+        </div>
+        <div ng-click="selectWhich()" class="upTime">
+            <div>隐患类型：</div>
+            <div class="positionCss">
+                <div ng-model="valueCont">{{valueCont}}</div>
+                <div ng-if="selectShow" class="posCss">
+                    <div ng-repeat="cont in conts" class="bagCol">
+                        <div ng-click="selectCont(cont.val)" ng-model="valueCont2">{{cont.val}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="upTime">
+            <div>上传人：</div>
+            <div>{{}}</div>
+        </div>
+        <div class="upTime">
+            <div>上报部门:</div>
+            <div ng-repeat="num in nums">
+                <div>{{}}</div>
+            </div>
+        </div>
+        <div class="describeCss">描述：</div>
+        <textarea class="textSize"></textarea>
+        <button class="button">上传</button>
+    </ion-content>
+</ion-view>

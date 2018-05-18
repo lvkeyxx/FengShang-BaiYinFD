@@ -1,0 +1,41 @@
+angular
+    .module('BaiYin.erp', [
+        'ionic',
+        'BaiYin.erp.details',
+        'BaiYin.erp.my',
+        'BaiYin.erp.todolist'
+    ])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('erp', {
+            url: '/erp',
+            controller: 'erpController',
+            templateUrl: 'erp/erp.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('erpController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup,  ionicDatePicker) {
+            //进入页面
+            $scope.$on('$ionicView.enter', function () {
+                console.log("进入erp页面");
+            });
+            //详情
+            $scope.toDetailsPage = function(){
+                $state.go('erpDetails');
+            };
+            //我申请的
+            $scope.toMyApplyPage = function () {
+                $state.go('erpMy', {item: {index: 0}});
+            };
+            //我审批的
+            $scope.toMyJudgePage = function () {
+                $state.go('erpMy', {item: {index: 1}});
+            };
+            //代办列表
+            $scope.toDoListPage = function () {
+                $state.go('erpTodolist');
+            };
+        }
+    ]);

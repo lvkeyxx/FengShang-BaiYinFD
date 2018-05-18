@@ -1,0 +1,70 @@
+<ion-view class="KPICSS">
+    <ion-nav-title>生产指标(全公司 万KW·h)</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-rqselect" ng-click="openPopover()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="kpiList">
+            <ul>
+                <li class="col col-33">
+                    日发电量
+                    <span>{{(allm.DAY_ELE_AMOUNT)|number:2}}</span>
+                </li>
+                <li class="col col-33">
+                    月发电量
+                    <span>{{(allm.MONTH_ELE_AMOUNT)|number:2}}</span>
+                </li>
+                <li class="col col-33">
+                    年发电量
+                    <span>{{(allm.YEAR_ELE_AMOUNT)|number:2}}</span>
+                </li>
+                <li class="col col-33">
+                    日限负荷损失电量
+                    <span>{{(allm.DAY_LOSS_AMOUNT)|number:2}}</span>
+                </li>
+                <li class="col col-33">
+                    月限负荷损失电量
+                    <span>{{(allm.MONTH_LOSS_AMOUNT)|number:2}}</span>
+                </li>
+                <li class="col col-33">
+                    年限负荷损失电量
+                    <span>{{(allm.YEAR_LOSS_AMOUNT)|number:2}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="">
+            <div class="graph">
+                <div class="timeDes">{{dateStr}}</div>
+                <div class="graphImg">
+                    <line1 id="main1" legend="legend" item="item" data="data"></line1>
+                </div>
+            </div>
+        </div>
+        <div class="infoList">
+            <div class="dayList">
+                <!--<div class="iconbtn">
+                    <span class="yearIcon"></span>
+                    <button class="dltbBtn"><i class="dltbicon"></i></button>
+                </div>-->
+                <!--<div class="litop">
+                    <div class="relativeRatio">同比：<em>-52.5%</em></div>
+                </div>-->
+                <div class="allshow">
+                    <ul class="allshowul">
+                        <li class="name" style="width: 50%">项目现场名称</li>
+                        <li class="" style="width: 20%">日发电量</li>
+                        <li class="" style="width: 30%">日限负荷损失<br>电量(万KW·h)</li>
+                    </ul>
+                </div>
+                <div class="lifoot">
+                    <ul class="dayequally" ng-repeat="x in daylist track by $index">
+                        <li class="name" style="width: 50%">{{x.CONTRACT}}</li>
+                        <li class="" style="width: 20%">{{(x.DAY_ELE_AMOUNT)|number:2}}</li>
+                        <li class="" style="width: 30%">{{(x.DAY_LOSS_AMOUNT)|number:2}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

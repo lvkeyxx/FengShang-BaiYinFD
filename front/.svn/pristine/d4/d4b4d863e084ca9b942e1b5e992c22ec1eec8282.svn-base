@@ -1,0 +1,88 @@
+<ion-view class="taskManageCSS">
+    <ion-nav-title>
+        <div class="taskTitle">
+            <span ng-style="spanUsually" ng-click="toUsually()">日常</span>
+            <span ng-style="spanSpecial" ng-click="toSpecial()">专项</span>
+        </div>
+    </ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab" ng-hide="rcrwHide">
+        <ion-tab title="全部" ng-click="toAllData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="allTask">
+                    <ul>
+                        <li ng-repeat="daily in DailyList[0]">
+                            <h3>{{daily.ITEM_NAME}}<em>{{daily.STATE}}</em></h3>
+                            <span>负责部门：{{daily.RESPONSER_DEPT}}</span>
+                            <span>监督部门：{{daily.SUPERVISER_DEPT}}</span>
+                            <span>安排时间：{{daily.CREATE_TIME}}</span>
+                            <span>计划完成时间：{{daily.PLAN_FINISH_TIME}}</span>
+                            <span>实际完成时间：{{daily.REAL_FINISH_TIME}}</span>
+                            <span>备注：{{daily.REMARK}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <ion-infinite-scroll ng-if="hasDaily[0]" on-infinite="getDailyData(0);" distance="10%" immediate-check="false"></ion-infinite-scroll>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="处理中" ng-click="toClzData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="allTask">
+                    <ul>
+                        <li ng-repeat="daily in DailyList[1]">
+                            <h3>{{daily.ITEM_NAME}}<em>{{daily.STATE}}</em></h3>
+                            <span>负责部门：{{daily.RESPONSER_DEPT}}</span>
+                            <span>监督部门：{{daily.SUPERVISER_DEPT}}</span>
+                            <span>安排时间：{{daily.ITEM_NAME}}</span>
+                            <span>计划完成时间：{{daily.PLAN_FINISH_TIME}}</span>
+                            <span>实际完成时间：{{daily.REAL_FINISH_TIME}}</span>
+                            <span>备注：{{daily.det}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <ion-infinite-scroll ng-if="hasDaily[1]" on-infinite="getDailyData(1);" distance="10%" immediate-check="false"></ion-infinite-scroll>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="已完成" ng-click="toYwcData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="allTask">
+                    <ul>
+                        <li ng-repeat="daily in DailyList[2]">
+                            <h3>{{daily.ITEM_NAME}}<em>{{daily.STATE}}</em></h3>
+                            <span>负责部门：{{daily.RESPONSER_DEPT}}</span>
+                            <span>监督部门：{{daily.SUPERVISER_DEPT}}</span>
+                            <span>安排时间：{{daily.ITEM_NAME}}</span>
+                            <span>计划完成时间：{{daily.PLAN_FINISH_TIME}}</span>
+                            <span>实际完成时间：{{daily.REAL_FINISH_TIME}}</span>
+                            <span>备注：{{daily.det}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <ion-infinite-scroll ng-if="hasDaily[2]" on-infinite="getDailyData(2);" distance="10%" immediate-check="false"></ion-infinite-scroll>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+    <ion-content ng-hide="specialHide">
+        <div class="specialData">
+            <ul>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" id="_label-0">项目类型：</span>
+                        <input type="text" class="rightselect" ng-model="commitStatus" readonly="readonly" placeholder="全部" ng-click="toSelectStatus()">
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="specialList">
+            <ul>
+                <li ng-repeat="specia in SpeciaList"  ng-click="toTmDetail(specia)">
+                    <h3>{{specia.ITEM_NAME}}<em>{{specia.STATE}}</em></h3>
+                    <span>负责人：{{specia.ITEM_RESPONSER}}<i>项目监督人：{{specia.ITEM_SUPERVISER}}</i></span>
+                    <span>域：{{specia.CONTRACT}}</span>
+                    <span>计划开始时间：{{specia.PLAN_START_TIME}}</span>
+                    <span>计划完工时间：{{specia.PLAN_FINISH_TIME}}</span>
+                </li>
+            </ul>
+        </div>
+        <ion-infinite-scroll ng-if="hasSpecia" on-infinite="getSpecialData();" distance="10%" immediate-check="false"></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,20 @@
+<div class="card" ng-bind-html="data.MSG_INFO"></div>
+<div class="applyForLineHead">详情</div>
+<div class="applyForLine">
+    <div class="card text">
+        <div>物资描述：频率数显表</div>
+        <div>型号规格：PD195F-5K1</div>
+        <div>测频范围：0-55HZ</div>
+        <div>数量：1 个</div>
+        <div>总价：700.03</div>
+        <div>状态：关闭</div>
+    </div>
+    <div class="card text">
+        <div>物资描述：频率数显表</div>
+        <div>型号规格：PD195F-5K1</div>
+        <div>测频范围：0-55HZ</div>
+        <div>数量：1 个</div>
+        <div>总价：700.03</div>
+        <div>状态：关闭</div>
+    </div>
+</div>

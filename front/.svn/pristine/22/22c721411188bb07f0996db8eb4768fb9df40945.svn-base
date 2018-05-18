@@ -1,0 +1,30 @@
+<ion-view class="OSIHistoryCSS">
+    <ion-nav-title>巡检记录</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIHistory">
+            <div class="historyTime">
+                <em class="startEm"><button class="selectDateBtn" ng-click="openStartDatePicker()" id="StartHistoryID">{{timeStart | date : "yyyy-MM-dd"}}</button></em>-
+                <em class="endEm"><button class="selectDateBtn" ng-click="openEndDatePicker()" id="endHistoryID">{{timeEnd | date : "yyyy-MM-dd"}}</button></em>
+            </div>
+            <div class="content">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-click="toHistoryDetail()">
+                        巡查路线1(月)
+                        <span class="item-note ng-binding">21/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toHistoryDetail()">
+                        巡查路线2(周)
+                        <span class="item-note ng-binding">2/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toHistoryDetail()">
+                        范围外任务
+                        <span class="item-note ng-binding">50</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

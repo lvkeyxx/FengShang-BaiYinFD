@@ -1,0 +1,200 @@
+angular
+    .module('BaiYin.taskManage', [
+        'ionic',
+    ])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('taskManage', {
+            url: '/taskManage',
+            controller: 'taskManageController',
+            templateUrl: 'taskManage/taskManage.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('taskManageController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet', '$ionicScrollDelegate',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet, $ionicScrollDelegate) {
+             //日常tab对应状态
+             var TabState = ["New", "Excuting", "Finished"];
+             //状态转换
+             var StateContrast = {"New": "新建", "Excuting": "处理中", "Finished": "已完成"};
+
+            $scope.DailyList = [new Array(), new Array(), new Array()];//日常数据
+            $scope.SpeciaList = new Array();//专项数据
+            //是否还有数据可以加载
+            $scope.hasDaily = [true, true, true];
+            $scope.hasSpecia = true;
+            //分页
+            var dailyIndex = [0, 0, 0],
+                specialIndex = 0;
+            $scope.$on('$ionicView.afterEnter', function (event, view) {
+                if(view.direction == "forward"){
+                    $ionicScrollDelegate.scrollTop();
+
+                    $scope.toUsually();
+                    $ionicTabsDelegate.select(0);
+    
+                    $scope.reDaily();
+                    $scope.reSpecia();
+                }
+            });
+            //重置日常
+            $scope.reDaily = function(){
+                $scope.DailyList = [new Array(), new Array(), new Array()];
+                dailyIndex = [0, 0, 0];
+                $scope.hasDaily = [true, true, true];
+
+                $scope.getDailyData(0);
+                $scope.getDailyData(1);
+                $scope.getDailyData(2);
+            };
+            //重置专项
+            $scope.reSpecia = function(){
+                $scope.SpeciaList = new Array();
+                specialIndex = 0;
+                $scope.hasSpecia = true;
+
+                $scope.getSpecialData();
+            };
+            //点击日常
+            $scope.toUsually = function () {
+                $scope.spanUsually = {
+                    "color": "#3492e9",
+                    "background": "#fff",
+                    "padding": "5px 10px",
+                    "border-top-left-radius": "10px",
+                    "border-bottom-left-radius": "10px"
+                };
+                $scope.spanSpecial = {
+                    "color": "#fff",
+                    "background": "rgba(0,0,0,0.2)",
+                    "padding": "5px 10px",
+                    "margin-left": "-5px",
+                    "border-top-right-radius": "10px",
+                    "border-bottom-right-radius": "10px"
+                }
+                //显示日常任务数据
+                $scope.rcrwHide = false;
+                //隐藏专项任务数据
+                $scope.specialHide = true;
+            }
+            //点击专项
+            $scope.toSpecial = function () {
+                $scope.spanUsually = {
+                    "color": "#fff",
+                    "background": "rgba(0,0,0,0.2)",
+                    "padding": "5px 10px",
+                    "border-top-left-radius": "10px",
+                    "border-bottom-left-radius": "10px"
+                };
+                $scope.spanSpecial = {
+                    "color": "#3492e9",
+                    "background": "#fff",
+                    "padding": "5px 10px",
+                    "margin-left": "-5px",
+                    "border-top-right-radius": "10px",
+                    "border-bottom-right-radius": "10px"
+                }
+                //隐藏日常任务数据
+                $scope.rcrwHide = true;
+                //显示专项任务数据
+                $scope.specialHide = false;
+            }
+            $scope.toAllData = function () {
+                $ionicTabsDelegate.select(0);
+            }
+            $scope.toClzData = function () {
+                $ionicTabsDelegate.select(1);
+            }
+            $scope.toYwcData = function () {
+                $ionicTabsDelegate.select(2);
+            }
+            //点击选择项目类型
+            $scope.commitStatus = '';
+            var stustList = ["全部", "单独报批重大项目", "跨年度技改项目", "一般项目", "重大项目", "自控项目"].map(function(v, i){
+                return {text: v};
+            });
+            $scope.toSelectStatus = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: stustList,
+                    buttonClicked: function (index) {
+                        stustList[index].text == "全部"
+                            ? $scope.commitStatus = ""
+                            : $scope.commitStatus = stustList[index].text;
+                        $scope.reSpecia();
+                        return true;
+                    }
+                });
+            }
+            //点击跳转到设备详情
+            $scope.toTmDetail = function (data) {
+                $state.go("taskManage/tmDetail", {item: {data: data}});
+            }
+
+            //获取日常任务数据
+            $scope.getDailyData = function(state){
+                if(!$scope.hasDaily[state]){
+                    return;
+                }
+                loadingAnimation.showLoading('加载中...', 'loding', 0);
+                $http.post("ServiceName=TaskService&TransName=getDailyList", {
+                    state: TabState[state],
+                    pageIndex: dailyIndex[state]++
+                })
+                .then(function (res) {
+                    loadingAnimation.hideLoading();
+                    if(res.code == "0"){
+                        if(!res.data.length){
+                            $scope.hasDaily[state] = false;
+                        }else{
+                            $scope.DailyList[state] = $scope.DailyList[state].concat(res.data.map(function(v, i){
+                                v.PLAN_FINISH_TIME = $filter("date")(new Date(v.PLAN_FINISH_TIME), "yyyy-MM-dd");
+                                v.PLAN_FINISH_TIME = $filter("date")(new Date(v.PLAN_FINISH_TIME), "yyyy-MM-dd");
+                                v.REAL_FINISH_TIME = $filter("date")(new Date(v.REAL_FINISH_TIME), "yyyy-MM-dd");
+                                v.STATE = StateContrast[v.STATE];
+                                return v;
+                            }));
+                        }
+                    }else{
+                        showAlert.showMsg(res, '', '', '确认')
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }, function (error) {
+                    loadingAnimation.hideLoading();
+                    showAlert.showMsg(error, '', '网络异常', '确认')
+                });
+            };
+            //获取专项任务数据
+            $scope.getSpecialData = function(){
+                if(!$scope.hasSpecia){
+                    return;
+                }
+                loadingAnimation.showLoading('加载中...', 'loding', 0);
+                $http.post("ServiceName=TaskService&TransName=getSpecialList", {
+                    item_catelogy: $scope.commitStatus,
+                    pageIndex: specialIndex++
+                })
+                .then(function (res) {
+                    loadingAnimation.hideLoading();
+                    if(res.code == "0"){
+                        if(!res.data.length){
+                            $scope.hasSpecia = false;
+                        }else{
+                            $scope.SpeciaList = $scope.SpeciaList.concat(res.data.map(function(v, i){
+                                v.PLAN_START_TIME = $filter("date")(new Date(v.PLAN_START_TIME), "yyyy-MM-dd");
+                                v.PLAN_FINISH_TIME = $filter("date")(new Date(v.PLAN_FINISH_TIME), "yyyy-MM-dd");
+                                v.STATE = StateContrast[v.STATE];
+                                return v;
+                            }));
+                        }
+                    }else{
+                        showAlert.showMsg(res, '', '', '确认')
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }, function (error) {
+                    loadingAnimation.hideLoading();
+                    showAlert.showMsg(error, '', '网络异常', '确认')
+                });
+            };
+        }
+    ]);

@@ -1,0 +1,57 @@
+<ion-view class="powerDetailCSS">
+    <ion-nav-title>月电量</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="barGraph">
+            <bar id="mainMounth" legend="legend" data="data"></bar>
+        </div>
+        <div class="dayPowerList">
+            <table>
+                <tr>
+                    <th>
+                        <span>日期</span>
+                        <span>(月)</span>
+                    </th>
+                    <th>
+                        <span>发电量</span>
+                        <span class="unitShow">(万KW·h)</span>
+                    </th>
+                    <th>
+                        <span>月限负荷损失电量</span>
+                        <span class="unitShow">(万KW·h)</span>
+                    </th>
+                    <th>计划完成率</th>
+                </tr>
+                <tr ng-repeat="mouthList in monthList.slice().reverse()">
+                    <td>{{mouthList.YEAR_MONTH}}</td>
+                    <td>{{mouthList.MONTH_ELE_AMOUNT | number:2}}</td>
+                    <td>{{mouthList.MONTH_LOSS_AMOUNT | number:2}}</td>
+                    <td>{{mouthList.MONTH_PLAN_COMPLETE | number:2}}</td>
+                </tr>
+                <!--<tr>
+                    <td>2016-6</td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>2016-7</td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>2016-8</td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>2016-9</td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>-->
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

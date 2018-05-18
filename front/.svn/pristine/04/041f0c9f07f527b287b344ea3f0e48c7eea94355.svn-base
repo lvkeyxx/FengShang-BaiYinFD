@@ -1,0 +1,65 @@
+<ion-view class="attenceCSS">
+    <ion-nav-title>{{DeptName}}</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="attence">
+            <div class="attenceTop">
+                <!--<div class="head">
+                    <div class="backIndex" ng-click="goindex()"></div>
+                    <div class="glass" ng-style="glassStyle">人力资源部</div>
+                    <div class="name">邹欣</div>
+                </div>-->
+                <div class="dateShow">
+                    <div class="weekShow">{{homePageDate.week}}</div>
+                    <div class="dayShow">{{homePageDate.day}}</div>
+                    <div class="name">{{UserName}}</div>
+                </div>
+            </div>
+            <div class="bluetooth">
+                <i class="blueToothIcon"></i><em id="blueToothAddress"></em>
+                <button class="searchBlootBtn" ng-click="searchBlueTooth()">搜索蓝牙</button></div>
+            <div class="punchClock">
+                <div class="clockIn">
+                    <div class="clockinIcon"><!--<img src="../images/attence/clockIn_icon.png">--></div>
+                    <div class="clockinDes">
+                        <div class="clockinname">上班</div>
+                        <div class="clockinTime" id="sbtime"></div>
+                    </div>
+                    <div class="clockinShow">
+                        <span ng-hide="sbdktimeShow" id="clockInid">{{punckClockOn.clockTips}}</span>
+                        <button id="sbPunchClock" class="clockingreyBtn" ng-click="toClockIn()" ng-hide="clockinBtn" disabled="true">打卡</button>
+                    </div>
+                </div>
+                <div class="clockout">
+                    <div class="clockoutIcon"><!--<img src="../images/attence/clockOut_icon.png">--></div>
+                    <div class="clockoutDes">
+                        <div class="clockoutname">下班</div>
+                        <div class="clockoutTime" id="xbtime"></div>
+                    </div>
+                    <div class="clockoutShow">
+                        <span ng-hide="xbdktimeShow" id="clockOutid">{{punckClockOff.clockTips}}</span>
+                        <span ng-hide="xbdktimeShow">
+                            <a href="" class="upClockoutBtn" ng-click="toClockupdate()">更新打卡></a>
+                        </span>
+                        <button id="xbPunchClock" class="clockoutgreyBtn" ng-click="toClockout()" ng-hide="clockoutBtn" disabled="true">打卡</button>
+                    </div>
+                </div>
+            </div>
+            <div class="navList">
+                <ul>
+                    <li class="col col-33" ng-click="toMyattence()">
+                        <div class="myattence_img"></div>
+                        <p>我的考勤</p>
+                    </li>
+                    <li class="col col-33" ng-click="tocountAttence()">
+                        <div class="count_img"></div>
+                        <p>考勤统计</p>
+                    </li>
+                    <li class="col col-33" ng-click="tofillCause()">
+                        <div class="reason_img"></div>
+                        <p>缺勤事由</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

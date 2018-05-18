@@ -1,0 +1,80 @@
+<ion-view class="countAttenceCSS">
+    <ion-nav-title>考勤统计</ion-nav-title>
+
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="日统计" ng-click="toCountDay()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="selectDateBtn" ng-click="openDatePicker()" id="countDayId">{{now | date : "yyyy-MM-dd"}}</button>
+                    <!-- <i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy-MM-dd"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>-->
+
+                    <div class="selectGlass">
+                        <input type="text" placeholder="请选择部门" id="countgalssId" ng-click="selectGlass()" readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <pie id="main" legend="legend"  data="data"></pie>
+                    </div>
+                </div>
+                <div class="countNum">
+                    <ul>
+                        <li class="col col-33" ng-click="towdDetail(countDayList.unclockPerson)">
+                            <span>{{countDayList.unclockPerson}}</span>
+                            <span>未打卡</span>
+                            <!--<i class="cdIcon"></i>3--></li>
+                        <li class="col col-33" ng-click="tocdDetail(countDayList.latePerson)">
+                            <span>{{countDayList.latePerson}}</span>
+                            <span>迟到</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                        <li class="col col-33" ng-click="tocdDetail(countDayList.earlyPerson)">
+                            <span>{{countDayList.earlyPerson}}</span>
+                            <span>早退</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                    </ul>
+                </div>
+                <div class="tips">
+                    <span>提示：点击上面栏目可查看考勤统计详情</span>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="月统计" ng-click="toCountMounth()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <!--<button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM"}}</button>-->
+                    <button class="leftSelect" ng-click="getPreMonth(nowMounth)" id="countMouthShowID"></button>
+                    {{nowMounth | date : "yyyy-MM"}}
+                    <button class="rightSelect" ng-click="getNextMonth(nowMounth)" disabled></button>
+                    <div class="selectGlassMounth">
+                        <input type="text" id="glassMounthId" placeholder="请选择部门" ng-click="toSelectGlass()" value="{{deptName}}" readonly>
+                    </div>
+                </div>
+
+                <div class="content">
+
+                    <ul class="list">
+
+                        <li class="item item-icon-right" ng-click="towdkList(coutnMounthList.unclockPerson)">
+                            未打卡
+                            <span class="item-note">{{coutnMounthList.unclockPerson}}人</span>
+                            <i class="icon ion-chevron-right"></i>
+                        </li>
+                        <li class="item item-icon-right" ng-click="tocdList(coutnMounthList.latePerson)">
+                            迟到
+                            <span class="item-note">{{coutnMounthList.latePerson}}人</span>
+                            <i class="icon ion-chevron-right"></i>
+                        </li>
+                        <li class="item item-icon-right" ng-click="toztList(coutnMounthList.earlyPerson)">
+                            早退
+                            <span class="item-note">{{coutnMounthList.earlyPerson}}人</span>
+                            <i class="icon ion-chevron-right"></i>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

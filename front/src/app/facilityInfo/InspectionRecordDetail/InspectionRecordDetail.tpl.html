@@ -1,0 +1,28 @@
+<ion-view class="OSIHistoryDetailCSS">
+    <ion-nav-title>巡查记录</ion-nav-title>
+    <ion-content class="padding" has-header="true">
+        <div class="OSIDetail">
+            <div class="OSIList">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-repeat="DetailList in InspectiomRecordDetailList">
+                        <div class="leftShow">
+                            <i ng-style="identify" ng-if="DetailList.RECORD_TIME!='' && DetailList.RECORD_TIME!=null"  style="background: #83ecad">签到</i>
+                            <i ng-style="identify" ng-if="DetailList.RECORD_TIME=='' || DetailList.RECORD_TIME==null" style="background: #ccc">未签到</i>
+                            <span class="name">{{DetailList.MCH_NAME}}</span>
+                            <span class="name">{{DetailList.LOCATION}}</span>
+                            <span class="glassname">{{DetailList.RECORD_TIME}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<!--
+@author: tigerITman
+@contact: 2811744265@qq.com
+@software: webstorm
+@file: InspectionRecordDetail.tpl.html
+@time: 2018-05-17 10:20
+@desc:
+-->

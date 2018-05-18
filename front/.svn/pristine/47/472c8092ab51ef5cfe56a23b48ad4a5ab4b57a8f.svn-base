@@ -1,0 +1,213 @@
+<ion-view class="powerCSS">
+    <ion-nav-title>电量</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="全厂" ng-click="toQcData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="loadList">
+                    <div class="dayList" ng-click="toDayInfo()">
+                        <div class="iconbtn">
+                            <span class="yearIcon"></span>
+                        </div>
+                        <div class="litop">
+                            <div class="relativeRatio"><span class="powertime">{{companyPower.YEARS_TODAY_DATE}}</span>同比：<em>{{companyPower.DAY_COMPARED_WITH_SAME|number:2}}</em></div>
+                        </div>
+                        <div class="allshow">
+                            <ul class="allshowul">
+                                <!--<li class="col col-33">&nbsp</li>-->
+                                <li class="num col col-66">{{(companyPower.DAY_ELE_AMOUNT)|number:2}}</li>
+                                <li class="unit col col-33">(万KW·h)</li>
+                            </ul>
+                        </div>
+                        <div class="lifoot">
+                            <ul class="dayequally">
+                                <li class="col col-33">日平均负荷数</li>
+                                <li class="num col col-33">{{(companyPower.DAY_ELE_AVG_CAPACITY)|number:2}}</li>
+                                <li class="unit col col-33">MW</li>
+                            </ul>
+                            <ul class="dayequally">
+                                <li class="col col-33">日利用小时数</li>
+                                <li class="num col col-33">{{(companyPower.DAY_USE_HOUR)|number:2}}</li>
+                                <li class="unit col col-33">h</li>
+                            </ul>
+                            <ul class="dayequally">
+                                <li class="col col-33">昨日电量</li>
+                                <li class="num col col-33">--</li>
+                                <li class="unit col col-33">(万KW·h)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="monthList" ng-click="toMounthInfo()">
+                        <div class="iconbtn">
+                            <span class="mounthIcon"></span>
+                        </div>
+                        <div class="litop">
+                            <div class="relativeRatio"> <span class="powertime">{{companyPower.YEARS_TODAY_DATE|date:"yyyy-MM" }}</span>同比：<em>{{companyPower.MONTH_COMPARED_WITH_SAME|number:2}}</em></div>
+                        </div>
+                        <div class="allshow">
+                            <ul class="allshowul">
+                                <!--<li class="col col-33">&nbsp;</li>-->
+                                <li class="num col col-66">{{(companyPower.MONTH_ELE_AMOUNT)|number:2}}</li>
+                                <li class="unit col col-33">(万KW·h)</li>
+                            </ul>
+                        </div>
+                        <div class="lifoot">
+                            <ul class="dayequally">
+                                <li class="col col-33">月计划电量</li>
+                                <li class="num col col-33">{{(companyPower.MONTH_PLAN_AMOUNT)|number:2}}</li>
+                                <li class="unit col col-33">(万KW·h)</li>
+                            </ul>
+                            <ul class="dayequally">
+                                <li class="col col-33">月计划完成率</li>
+                                <li class="num col col-33">{{(companyPower.MONTH_PLAN_COMPLETE)|number:2}}</li>
+                                <li class="unit col col-33">%</li>
+                            </ul>
+                            <ul class="dayequally">
+                                <li class="col col-33">月利用小时数</li>
+                                <li class="num col col-33">{{(companyPower.MONTH_USE_HOUR)|number:2}}</li>
+                                <li class="unit col col-33">h</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="yearList" ng-click="toYearInfo()">
+                        <div class="iconbtn">
+                            <span class="yearIcon"></span>
+                        </div>
+                        <div class="litop">
+                            <div class="relativeRatio"><span class="powertime">{{companyPower.YEARS_TODAY_DATE|date:"yyyy" }}年</span>同比：<em>{{(companyPower.YEAR_COMPARED_WITH_SAME)|number:2}}</em></div>
+                        </div>
+                        <div class="allshow">
+                            <ul class="allshowul">
+                                <!--<li class="col col-33">&nbsp;</li>-->
+                                <li class="num col col-66">{{(companyPower.YEAR_ELE_AMOUNT)|number:2}}</li>
+                                <li class="unit col col-33">(万KW·h)</li>
+                            </ul>
+                        </div>
+                        <div class="lifoot">
+                            <ul class="dayequally">
+                                <li class="col col-33">年计划电量</li>
+                                <li class="num col col-33">{{(companyPower.YEAR_PLAN_AMOUNT)|number:2}}</li>
+                                <li class="unit col col-33">(万KW·h)</li>
+                            </ul>
+                            <ul class="dayequally">
+                                <li class="col col-33">年计划完成率</li>
+                                <li class="num col col-33">{{(companyPower.YEAR_PLAN_COMPLETE)|number:2}}</li>
+                                <li class="unit col col-33">%</li>
+                            </ul>
+                            <ul class="dayequally">
+                                <li class="col col-33">年利用小时数</li>
+                                <li class="num col col-33">{{(companyPower.YEAR_USE_HOUR)|number:2}}</li>
+                                <li class="unit col col-33">h</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="甘" ng-click="toGsData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="graphImg">
+                        <powerline id="gszst" legend="legend" item="item" data="data"></powerline>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>日发电量(万KW·h)</th>
+                            <th>月发电量(万KW·h)</th>
+                            <th>年发电量(万KW·h)</th>
+                        </tr>
+                        <tr ng-repeat="gsvalue in gsCompanyPower track by $index">
+                            <td>{{gsvalue.CONTRACT_NAME}}</td>
+                            <td>{{gsvalue.DAY_ELE_AMOUNT | number:2}}</td>
+                            <td>{{gsvalue.MONTH_ELE_AMOUNT | number:2}}</td>
+                            <td>{{gsvalue.YEAR_ELE_AMOUNT | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="青" ng-click="toQhData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="graphImg">
+                        <powerline id="qhzst" legend="legend" item="item" data="data"></powerline>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>日发电量(万KW·h)</th>
+                            <th>月发电量(万KW·h)</th>
+                            <th>年发电量(万KW·h)</th>
+                        </tr>
+                        <tr ng-repeat="qhvalue in qhCompanyPower track by $index">
+                            <td>{{qhvalue.CONTRACT_NAME}}</td>
+                            <td>{{qhvalue.DAY_ELE_AMOUNT | number:2}}</td>
+                            <td>{{qhvalue.MONTH_ELE_AMOUNT | number:2}}</td>
+                            <td>{{qhvalue.YEAR_ELE_AMOUNT | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="宁" ng-click="toNxData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="graphImg">
+                        <powerline id="nxzst" legend="legend" item="item" data="data"></powerline>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>日发电量(万KW·h)</th>
+                            <th>月发电量(万KW·h)</th>
+                            <th>年发电量(万KW·h)</th>
+                        </tr>
+                        <tr ng-repeat="nxvalue in nxCompanyPower track by $index">
+                            <td>{{nxvalue.CONTRACT_NAME}}</td>
+                            <td>{{nxvalue.DAY_ELE_AMOUNT | number:2}}</td>
+                            <td>{{nxvalue.MONTH_ELE_AMOUNT | number:2}}</td>
+                            <td>{{nxvalue.YEAR_ELE_AMOUNT | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="新" ng-click="toXjData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="graphImg">
+                        <powerline id="xjzst" legend="legend" item="item" data="data"></powerline>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>日发电量(万KW·h)</th>
+                            <th>月发电量(万KW·h)</th>
+                            <th>年发电量(万KW·h)</th>
+                        </tr>
+                        <tr ng-repeat="xjvalue in xjCompanyPower track by $index">
+                            <td>{{xjvalue.CONTRACT_NAME}}</td>
+                            <td>{{xjvalue.DAY_ELE_AMOUNT | number:2}}</td>
+                            <td>{{xjvalue.MONTH_ELE_AMOUNT | number:2}}</td>
+                            <td>{{xjvalue.YEAR_ELE_AMOUNT | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

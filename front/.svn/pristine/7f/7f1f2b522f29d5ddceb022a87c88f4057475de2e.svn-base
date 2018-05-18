@@ -1,0 +1,186 @@
+<ion-view class="fillCauseCSS">
+    <ion-nav-title>缺勤事由</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="迟到/早退" on-select="changeTabType('lateAndEarly');">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM-dd"}}</button>
+                </div>
+                <div class="tips">
+                    <span>提示：点击下面栏目可进行事由确认</span>
+                </div>
+                <div class="chidaoList">
+                    <table>
+                        <tr>
+                            <th>员工</th>
+                            <th>打卡时间</th>
+                            <th>备注</th>
+                        </tr>
+                        <tr ng-click="tofillCause(lateAndEarlyList, $index)" ng-repeat="lateAndEarly in lateAndEarlyList track by $index">
+                            <td>{{lateAndEarly.PERSON_NAME}}</td>
+                            <!--<td>-->
+                                <!--<ion-span class="{{lateAndEarly.CHECK_IN_STATE != '正常' ? 'abnormalAttence' : ''}}">{{lateAndEarly.ACTUAL_START_TIME}}</ion-span>-->
+                                <!-- - -->
+                                <!--<ion-span class="{{lateAndEarly.CHECK_OUT_STATE != '正常' ? 'abnormalAttence' : ''}}">{{lateAndEarly.ACTUAL_END_TIME}}</ion-span>-->
+                            <!--</td>-->
+                            <td>
+                                <ion-span class="{{lateAndEarly.CONFIRM_DATE.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{lateAndEarly.ACTUAL_START_TIME}}</ion-span>
+                                -
+                                <ion-span class="{{lateAndEarly.CONFIRM_DATE.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{lateAndEarly.ACTUAL_END_TIME}}</ion-span>
+                            </td>
+                            <td >
+                                <i class="{{lateAndEarly.CONFIRM_DATE.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{lateAndEarly.CHECK_IN_INFO}}</br>{{lateAndEarly.NOTE}}</i>
+                                <!--<ion-span class="{{lateAndEarly.CHECK_IN_STATE != '正常'||lateAndEarly.CHECK_OUT_STATE != '正常' ? 'abnormalAttence' : ''}}">{{lateAndEarly.CHECK_IN_INFO}}</br>{{lateAndEarly.NOTE}}</ion-span>-->
+                                <!--<i ng-if="lateAndEarly.CONFIRM_DATE.length>0">{{lateAndEarly.CHECK_IN_INFO}}</br>{{lateAndEarly.NOTE}}</i>-->
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="未打卡" on-select="changeTabType('unClock');">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM-dd"}}</button>
+                </div>
+                <div class="chidaoList">
+                    <table>
+                        <tr>
+                            <th>员工</th>
+                            <th>备注</th>
+                        </tr>
+                        <tr ng-click="tofillCause(unClockList, $index)" ng-repeat="unClock in unClockList track by $index">
+                            <td>{{unClock.PERSON_NAME}}</td>
+                            <td>
+                            <!--<ion-span class="abnormalAttence">{{unClock.REMARKS}}</br>事由:{{unClock.NOTE}}</ion-span>-->
+                            <ion-span class="{{unClock.CONFIRM_DATE.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{unClock.REMARKS}}</br>事由:{{unClock.NOTE}}</ion-span>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+    <!--<ion-content has-bouncing="false" scrollbar-y="true">
+        <div class="selectMounth">
+            <i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>
+            <div class="selectGlass">
+                <input type="text" placeholder="请选择人员" id="countPersonId" ng-click="selectPerson()" readonly>
+            </div>
+        </div>
+        <div class="tips">
+            <span>提示：点击下面栏目可查看考勤详情</span>
+        </div>
+        <div class="myAttencelist">
+            <table>
+                <tr>
+                    <th>日期</th>
+                    <th>打卡时间</th>
+                    <th>备注</th>
+                </tr>
+                <tr>
+                    <td>3/31 六</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/30 五</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/29 四</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/28 三</td>
+                    <td>08:45 - 18:56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/27 二</td>
+                    <td class="abnormalAttence" ng-click="tofillCause()">10:45 - 14:56</td>
+                    <td><span>迟到2小时45分</span><span>早退6小时4分</span></td>
+                </tr>
+                <tr>
+                    <td>3/26 一</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/25 日</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/24 六</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/23 五</td>
+                    <td>08:45 - 18:56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/22 四</td>
+                    <td class="abnormalAttence" ng-click="tofillCause($event)">10:45 - 14:56</td>
+                    <td><span>迟到2小时45分</span><span>早退6小时4分</span></td>
+                </tr>
+                <tr>
+                    <td>3/21 六</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/20 五</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/19 四</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/18 三</td>
+                    <td>08:45 - 18:56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/17 二</td>
+                    <td class="abnormalAttence" ng-click="tofillCause()">10:45 - 14:56</td>
+                    <td><span>迟到2小时45分</span><span>早退6小时4分</span></td>
+                </tr>
+                <tr>
+                    <td>3/16 一</td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/15 日</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/14 六</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/13 五</td>
+                    <td>08:45 - 18:56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/12 四</td>
+                    <td class="abnormalAttence" ng-click="tofillCause($event)">10:45 - 14:56</td>
+                    <td><span>迟到2小时45分</span><span>早退6小时4分</span></td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>-->
+</ion-view>

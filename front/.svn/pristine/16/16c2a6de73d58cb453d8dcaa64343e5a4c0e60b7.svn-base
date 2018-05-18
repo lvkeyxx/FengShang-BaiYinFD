@@ -1,0 +1,53 @@
+<ion-view class="erpMyCSS erpCSS">
+    <ion-nav-title>{{titles[index]}}</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="slideToggle();">
+            <i class="icon ion-loop"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="padding" has-header="true">
+        <div class="query">
+            <ul>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="业务类型：" id="_label-0">业务类型：</span>
+                        <input ng-model="queryData.type" type="text" class="rightselect" readonly="readonly" placeholder="业务类型" ng-click="toSelectType()">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="关键字：" id="_label-1">关键字：</span>
+                        <input ng-model="queryData.key" type="text" placeholder="关键字">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="提交时间：" id="_label-2">提交时间：</span>
+                        <input ng-model="queryData.time" type="text" class="rightselect" readonly="readonly" placeholder="提交时间" ng-click="toSelectTime()">
+                    </label>
+                </li>
+            </ul>
+            <button class="inquiryBtn" ng-click="toInquiry()">查询</button>
+        </div>
+        <div class="dataList">
+            <div class="card" ng-click="toDetailsPage();">
+                <div>订单号：3</div>
+                <div>状态：已关闭</div>
+                <div>域：WX</div>
+                <div>领料人：张大力</div>
+                <div>预算科目：生产成本-基本生产成本-制造费用-修理费-C级检修-3号机组-标准项目-材料费_乌金峡_设备管理部</div>
+                <div>责任部门：检修管理部</div>
+                <div>总额：1890.87</div>
+            </div>
+            <div class="card" ng-click="toDetailsPage();">
+                <div>订单号：3</div>
+                <div>状态：已关闭</div>
+                <div>域：WX</div>
+                <div>领料人：张大力</div>
+                <div>预算科目：生产成本-基本生产成本-制造费用-修理费-C级检修-3号机组-标准项目-材料费_乌金峡_设备管理部</div>
+                <div>责任部门：检修管理部</div>
+                <div>总额：1890.87</div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

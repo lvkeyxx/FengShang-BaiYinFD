@@ -1,0 +1,144 @@
+angular.module('BaiYin.attence.fillCause', [
+    'ionic'
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('attence/fillCause', {
+            url: '/attence/fillCause',
+            controller: 'fillCauseController',
+            templateUrl: 'attence/fillCause/fillCause.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('fillCauseController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup','$ionicActionSheet',
+
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup,$ionicActionSheet) {
+
+            $scope.$on('$ionicView.enter', function () {
+                //获取当前月份
+                getNowDate();
+            });
+            //隐藏填写事由
+            $scope.fillCause = true;
+            $scope.blackShow = true;
+            var date = new Date();
+
+            function getNowDate() {
+                $scope.now = $filter("date")(date, "yyyy-MM");
+            }
+
+            //点击向前一个月
+            $scope.getPreMonth = function (date) {
+                console.log("date==" + date);
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) - 1;
+                if (month2 == 0) {
+                    year2 = parseInt(year2) - 1;
+                    month2 = 12;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+                var t2 = year2 + '-' + month2;
+                $scope.now = t2;
+            }
+            //点击向后一个月
+            $scope.getNextMonth = function (date) {
+                console.log("date==" + date);
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+
+                var t2 = year2 + '-' + month2;
+                $scope.now = t2;
+            }
+            //点击选择人员
+            var glassName = '';
+            var glassArray = [{"text": "王小华"}, {"text": "马丽荣"}, {"text": "张奎"}, {"text": "李世丽"}, {"text": "杨天成"}, {"text": "杜晓明"}, {"text": "刘步成"}];
+            $scope.selectPerson = function() {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: glassArray,
+                    //destructiveText: 'Delete',
+                    //titleText: 'Modify your album',
+                    //cancelText: 'Cancel',
+                    cancel: function() {
+                        // add cancel code..
+                    },
+                    buttonClicked: function(index) {
+                        glassName = glassArray[index].text;
+                        $("#countPersonId").val(glassName);
+                        console.log("inputVal=="+$("#countPersonId").val());
+                        return true;
+                    }
+                });
+            };
+            /*$scope.tofillCause = function ($event) {
+                $scope.fillCause = false;
+                $scope.blackShow = false;
+                var top = ($(window).height()) / 2 - 150;
+                var left = ($(window).width() - $('.fillCause').width()) / 2;
+                var scrollTop = $(document).scrollTop() ;
+                var scrollLeft = $(document).scrollLeft();
+                console.log("top=="+top+"/left=="+left+"/scrollTop=="+scrollTop+"/scrollLeft=="+scrollLeft);
+                $('.fillCause').css({'top': top + scrollTop, left: left + scrollLeft}).show();
+            }*/
+            //点击异常考勤填写事由
+            $scope.tofillCause = function () {
+                $scope.data = {}
+                // 自定义弹窗
+                var myPopup = $ionicPopup.show({
+                    template: '<textarea ng-style="syWidth"></textarea>',
+                    title: '填写事由',
+                    scope: $scope,
+                    buttons: [
+                        {
+                            text: '取消',
+                            type: 'button-cancel'
+                        },
+                        {
+                            text: '<b>确认</b>',
+                            type: 'button-positive',
+                            onTap: function (e) {
+                                if (!$scope.data.wifi) {
+                                    // 不允许用户关闭，除非输入 wifi 密码
+                                    e.preventDefault();
+                                } else {
+                                    return $scope.data.wifi;
+                                }
+                            }
+                        },
+                    ]
+                });
+                myPopup.then(function (res) {
+                    console.log('Tapped!', res);
+                });
+            };
+            //缺勤事由编辑框样式
+            $scope.syWidth = {
+                "height": '100px',
+                "border": '1px solid #f4f4f4',
+                "margin": '0 auto',
+            }
+            //点击取消
+            $scope.toFillCancel = function () {
+                $scope.fillCause = true;
+                $scope.blackShow = true;
+            }
+
+        }
+
+    ])

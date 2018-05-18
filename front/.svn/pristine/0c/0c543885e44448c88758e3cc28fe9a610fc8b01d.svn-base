@@ -1,0 +1,94 @@
+<ion-view class="homePageCSS">
+    <ion-content has-bouncing="false" scrollbar-y="false" class="itm">
+        <div class="handImage"></div>
+        <!--<img class="wrap" src="{{handImage}}">-->
+        <!--<div class="rowLation rowLa">
+          <div ng-repeat="com in companys track by $index" class="col col-33" ng-click="comClick(com)">
+              <div><img src="{{com.src}}"></div>
+              <p>{{com.CANAME}}</p>
+          </div>-->
+        </div>
+        <div class="notice">
+            <div class="noticeShow">
+                <span ng-click="goNewsDatil(companPro2[0],0)" ng-style="maqueeWidth"><i class="notice_icon"></i>
+                    <marquee direction="left" behavior="scroll" loop="-1" scrolldelay="30">{{companPro2[0].FILETITLE}}</marquee></span>
+            </div>
+            <!--<div class="dclrw">
+                <span><i class="dclrw_icon"></i>待处理任务：<em>22</em></span>
+            </div>-->
+        </div>
+        <div class="row row_pl">
+            <div class="col col-20">
+                <a ng-click="toERP()" class="rowLation">
+                    <div class="erp_img">
+                    </div>
+                    <p>ERP审批</p>
+                </a>
+            </div>
+            <div class="col col-20">
+                <a ng-click="toSCZB()" class="rowLation">
+                    <div class="sczb_img"></div>
+                    <p>生产指标</p>
+                </a>
+            </div>
+            <div class="col col-20">
+                <a ng-click="public('7')" class="rowLation">
+                    <div class="gsxw_img"></div>
+                    <p>公司新闻</p>
+                </a>
+            </div>
+            <div class="col col-20">
+                <a ng-click="public('32')" class="rowLation">
+                    <div class="qywh_img"></div>
+                    <p>公司发文</p>
+                </a>
+            </div>
+            <div class="col col-20">
+                <a ng-click="public('31')" class="rowLation">
+                    <div class="tzgg_img"></div>
+                    <p>通知公告</p>
+                </a>
+            </div>
+        </div>
+        <div class="listCss">
+            <ol class="olList" ng-repeat="cont in companPro track by $index">
+                <!--<div class="{{cont.isShow=='true'?'news_msg':'news_List'}}" ng-click="goNewsDatil(cont,$index)" ng-show="gsdt">-->
+                <div class="news_List" ng-click="goNewsDatil(cont,$index)" ng-show="gsdt">
+                    <!--<div class="news_img" ng-show="cont.isShow=='true'"><img
+                            ng-src="{{cont.FILENAME}}">
+                    </div>
+                    <div class="news_cont" ng-show="cont.isShow=='true'">
+                        <div class="all_msg">
+                            <span class="msg_colo" ng-model="gsxw">{{cont.FILETITLE}}</span>
+                            <div class="date_m"><i class="date_m_icon"></i>{{cont.PUBDATE | date : "MM月dd日" }}</div>
+                        </div>
+                    </div>-->
+                    <!--<div class="newslist" ng-hide="cont.isShow=='true'">-->
+                    <div class="newslist">
+                        <ul>
+                            <li class="msg_colo" ng-model="gsxw" ng-style="newslistLi">{{cont.FILETITLE}}</li>
+                            <li class="date_m" ng-model="gsxw"><i class="date_m_icon"></i>{{cont.PUBDATE | date : "MM月dd日" }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="news_List" ng-click="goNewsDatil(cont,$index)" ng-hide="gsdt">
+                    <!--<div class="news_img" ng-if="true"><img
+                            src="{{cont.FILENAME=='null'||cont.FILENAME==''?'../images/homePage/default_img.png':cont.FILENAME}}">
+                    </div>-->
+                    <div class="newslist">
+                        <ul>
+                            <li class="msg_colo" ng-model="gsxw">{{cont.FILETITLE}}</li>
+                            <li class="date_m" ng-model="gsxw"><i class="date_m_icon"></i>{{cont.PUBDATE | date : "MM月dd日" }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<li class="new_lo" ng-click="goNewsDatil(cont,$index)">
+                    <div class="olItem ">{{cont.FILETITLE}}</div>
+                    <div class="date_msg">{{cont.PUBDATE | date : "MM月dd日" }}</div>
+                </li>-->
+            </ol>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,47 @@
+<ion-view class="messageDetailCSS">
+    <ion-nav-title>
+        {{groupInfo.groupName?groupInfo.groupName:groupInfo.name}}
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-person" ng-click="goOthersInfo()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false" class="rj-stable-content" delegate-handle="groupDetailsScroll">
+        <ion-refresher pulling-text="..." on-refresh="doRefresh()" pulling-icon=""></ion-refresher>
+        <div ng-repeat="item in messageArray track by $index">
+            <div ng-if="item.contentType == 'image' || item.contentType == 'text'">
+                <p class="rj-message-time">{{item.createTimeInMillis | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                <div ng-if="item.direct == 'receive'" class="rj-message-wrap">
+                    <div ng-if="item.fromUser.nickname == '' " class="rj-head-pic">{{item.fromUser.userName.substring(item.fromUser.userName.length-2)}}</div>
+                    <div ng-if="item.fromUser.nickname != '' " class="rj-head-pic">{{item.fromUser.nickname.substring(item.fromUser.nickname.length-2)}}</div>
+                    <span class="rj-triangle-left"></span>
+                    <span ng-if="item.fromUser.nickname == '' " class="name_left" ng-bind="item.fromUser.userName"></span>
+                    <span ng-if="item.fromUser.nickname != '' " class="name_left" ng-bind="item.fromUser.nickname"></span>
+                    <p ng-if="item.contentType == 'text'" class="rj-message" ng-bind="item.content.text"></p>
+                    <img ng-if="item.contentType == 'image'" src="{{item.content.localThumbnailPath}}" class="rj-message"></p>
+                </div>
+                <div ng-if="item.direct == 'send'" class="rj-message-wrap">
+                    <div ng-if="item.fromName == '' " class="rj-head-pic-right">{{item.fromID.substring(item.fromID.length-2)}}</div>
+                    <div ng-if="item.fromName != '' " class="rj-head-pic-right">{{item.fromName.substring(item.fromName.length-2)}}</div>
+                    <span class="rj-triangle-right"></span>
+                    <span ng-if="item.fromName != ''" class="name_right" ng-bind="item.fromName"></span>
+                    <span ng-if="item.fromName == ''" class="name_right" ng-bind="item.fromID"></span>
+                    <p ng-if="item.contentType == 'text'" class="rj-message-right" ng-bind="item.content.text"></p>
+                    <img ng-if="item.contentType == 'image'" src="{{item.content.localThumbnailPath}}" class="rj-message-right"></p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar-light" resize-foot-bar>
+        <div class="rj-footer-btn-wrap">
+            <button ng-click="addAttachment()" class="button button-icon icon ion-camera rj-footer-btn-left">
+            </button>
+        </div>
+        <label class="item item-input rj-footer-input">
+            <textarea msd-elastic ng-model="send_content"></textarea>
+        </label>
+        <div class="rj-footer-btn-wrap">
+            <button ng-disabled="!send_content || send_content === ''" class="rj-send-button" ng-click="sendContent(send_content)">发送</button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,1119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list id="288f40b9-e61a-4d51-a7ce-1395848212c4" name="nocommit" comment="nocommit" />
+    <list default="true" readonly="true" id="98dfab53-cb72-4e04-9abf-ce7da7858548" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/app/OSI/OSI.js" afterPath="$PROJECT_DIR$/src/app/OSI/OSI.js" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.config.js" afterPath="$PROJECT_DIR$/src/app/app.config.js" />
+      <change beforePath="$PROJECT_DIR$/src/less/OSICSS.less" afterPath="$PROJECT_DIR$/src/less/OSICSS.less" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="OSI.tpl.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/OSI/OSI.tpl.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="28" column="43" lean-forward="false" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OSICSS.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/less/OSICSS.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="93" column="21" lean-forward="false" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OSI.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/OSI/OSI.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="223">
+              <caret line="164" column="95" lean-forward="false" selection-start-line="164" selection-start-column="88" selection-end-line="164" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/app.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-105">
+              <caret line="23" column="53" lean-forward="false" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="Less File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>draw</find>
+      <find>type</find>
+      <find>orgList</find>
+      <find>countgalssId</find>
+      <find>galssMounthId</find>
+      <find>$scope.now</find>
+      <find>searchBlootBtn</find>
+      <find>更新打卡</find>
+      <find>transform</find>
+      <find>sbPunchClock</find>
+      <find>getWorkTime</find>
+      <find>xbdktimeShow</find>
+      <find>punckTheClockOn</find>
+      <find>punckClockOff</find>
+      <find>alert</find>
+      <find>toClockout</find>
+      <find>display: block;</find>
+      <find>clockoutgreyBtn</find>
+      <find>clockoutBtn</find>
+      <find>punckTheClockOff</find>
+      <find>clockoutShow</find>
+      <find>ng-click</find>
+      <find>towdkList</find>
+      <find>$scope.selectGlass</find>
+      <find>selectGlass</find>
+      <find>countByDay</find>
+      <find>showAlert.showMsg</find>
+      <find>countnMounth</find>
+      <find>localStorage.setItem</find>
+      <find>parse</find>
+    </findStrings>
+    <dirStrings>
+      <dir>D:\stormSpace\front\src</dir>
+      <dir>D:\bmzsFront\front\dist</dir>
+      <dir>D:\bmzsFront\front</dir>
+      <dir>D:\bmzsFront\front\src</dir>
+      <dir>D:\fengshang\GTXNY\BaiYin\SRC\front\src\app</dir>
+      <dir>D:\fengshang\GTXNY\BaiYin\SRC\front</dir>
+      <dir>D:\fengshang\GTXNY\BaiYin\SRC\front\src</dir>
+    </dirStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/app/onspotInspection/onspotInspection.tpl.html" />
+        <option value="$PROJECT_DIR$/src/less/base.less" />
+        <option value="$PROJECT_DIR$/src/app/app.js" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIDetail/OSIDetail.js" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIDetail/OSIDetail.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSI.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/tabs/porductManage/porductManage.js" />
+        <option value="$PROJECT_DIR$/src/less/PMCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIcount/OSIcount.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIcount/OSIcount.js" />
+        <option value="$PROJECT_DIR$/src/less/OSILineCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSILine/OSILine.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIA.js" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIArear/OSIArear.js" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSILine/OSILine.js" />
+        <option value="$PROJECT_DIR$/src/less/OSIArearCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSIArear/OSIArear.tpl.html" />
+        <option value="$PROJECT_DIR$/src/less/OSIDetail.less" />
+        <option value="$PROJECT_DIR$/src/less/OSIcountCSS.less" />
+        <option value="$PROJECT_DIR$/src/less/myAttenceCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/pm/defectFill/adddefectFill/adddefectFill.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/myAttence/myAttence.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/fillCause/fillCause.tpl.html" />
+        <option value="$PROJECT_DIR$/src/less/fillCauseCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/attence/fillCause/fillCause.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/attence.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/attence.js" />
+        <option value="$PROJECT_DIR$/src/less/attenceCSS.less" />
+        <option value="$PROJECT_DIR$/src/less/countAttenceCSS.less" />
+        <option value="$PROJECT_DIR$/src/less/attenceDetailCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/attence/attenceCdDetail/attenceCdDetail.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/attenceWdDetail/attenceWdDetail.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/attenceCdDetail/attenceCdDetail.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/attenceWdDetail/attenceWdDetail.js" />
+        <option value="$PROJECT_DIR$/src/less/cdListCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/wdkList/wdkList.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/countAttence.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/countAttence.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/ztList/ztList.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/cdList/cdList.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/wdkDetail/wdkDetail.tpl.html" />
+        <option value="$PROJECT_DIR$/src/less/wdkDetailCSS.less" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/wdkDetail/wdkDetail.js" />
+        <option value="$PROJECT_DIR$/src/app/userServers/login/login.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/wdkList/wdkList.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/cdList/cdList.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/countAttence/ztList/ztList.js" />
+        <option value="$PROJECT_DIR$/src/app/attence/myAttence/myAttence.js" />
+        <option value="$PROJECT_DIR$/src/less/OSICSS.less" />
+        <option value="$PROJECT_DIR$/src/app/app.config.js" />
+        <option value="$PROJECT_DIR$/src/app/OSI/OSI.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1022" />
+    <option name="height" value="726" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="front" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="front" type="b2602c69:ProjectViewProjectNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.phonegap.settings.workdir" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/fengshang/GTXNY/BaiYin/SRC/front/src/index.html&#10;ionic&#9;FILE&#9;file://D:/bmzsFront/front/vendor/ionic/ionic.bundle.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="list.type.of.created.stylesheet" value="Less" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\app\attence\countAttence" />
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\app\attence" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\images\OSI" />
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\less" />
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\images\attence" />
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\app\attence\countAttence" />
+      <recent name="D:\fengshang\GTXNY\BaiYin\SRC\front\src\app\attence" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Ionic run" type="PhoneGap" factoryName="PhoneGap/Cordova">
+      <option name="myExecutable" value="C:\Users\wangyg\AppData\Roaming\npm\ionic.cmd" />
+      <option name="myWorkDir" value="$PROJECT_DIR$" />
+      <option name="myCommand" value="emulate" />
+      <option name="myPassParent" value="true" />
+      <option name="myPlatform" value="android" />
+      <option name="myExtraArgs" />
+      <option name="hasTarget" value="false" />
+      <option name="target" />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration" myUseAcceleration="nothing" cleanupOnStartRun="true">
+    <configuration>C:\Users\彦国\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\fengshang\GBYFD\SRC\front" />
+          <option name="myCopyRoot" value="D:\fengshang\GBYFD\SRC\front" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\fengshang\GBYFD\SRC\front" />
+          <option name="myCopyRoot" value="D:\fengshang\GBYFD\SRC\front" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="98dfab53-cb72-4e04-9abf-ce7da7858548" name="Default" comment="" />
+      <created>1515130522146</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1515130522146</updated>
+      <workItem from="1515130550872" duration="466000" />
+      <workItem from="1515131041332" duration="7000" />
+      <workItem from="1515131838173" duration="848000" />
+      <workItem from="1516265965748" duration="2761000" />
+      <workItem from="1516324364112" duration="6733000" />
+      <workItem from="1516584279839" duration="17699000" />
+      <workItem from="1516669992576" duration="4358000" />
+      <workItem from="1516755701874" duration="16202000" />
+      <workItem from="1516845860934" duration="22072000" />
+      <workItem from="1516929909246" duration="16034000" />
+      <workItem from="1517188009529" duration="336000" />
+      <workItem from="1517188910419" duration="6216000" />
+      <workItem from="1517276834237" duration="13633000" />
+      <workItem from="1517360864046" duration="20131000" />
+      <workItem from="1517446825621" duration="22102000" />
+      <workItem from="1517533688581" duration="20789000" />
+      <workItem from="1517626007077" duration="17205000" />
+      <workItem from="1517793332495" duration="25918000" />
+      <workItem from="1517827293131" duration="29000" />
+      <workItem from="1517879541376" duration="13611000" />
+      <workItem from="1517965440553" duration="2632000" />
+      <workItem from="1517972198232" duration="1587000" />
+      <workItem from="1518055184305" duration="16526000" />
+      <workItem from="1518162695795" duration="1194000" />
+      <workItem from="1518251923982" duration="148000" />
+      <workItem from="1518261476311" duration="632000" />
+      <workItem from="1518395724532" duration="482000" />
+      <workItem from="1519265954839" duration="3817000" />
+      <workItem from="1519288100781" duration="10000" />
+      <workItem from="1519452255425" duration="765000" />
+      <workItem from="1519609231491" duration="672000" />
+      <workItem from="1519865854207" duration="11554000" />
+      <workItem from="1519963065744" duration="3057000" />
+      <workItem from="1519970716960" duration="2421000" />
+      <workItem from="1519980941333" duration="3737000" />
+      <workItem from="1520228435555" duration="22919000" />
+      <workItem from="1520298552829" duration="23372000" />
+      <workItem from="1520384575776" duration="28020000" />
+      <workItem from="1520470824310" duration="26037000" />
+      <workItem from="1520557099693" duration="17307000" />
+      <workItem from="1520903094568" duration="12528000" />
+      <workItem from="1520989621401" duration="27241000" />
+      <workItem from="1521075509935" duration="21599000" />
+      <workItem from="1521102880385" duration="8194000" />
+      <workItem from="1521161788601" duration="29726000" />
+      <workItem from="1521421376400" duration="27985000" />
+      <workItem from="1521508459348" duration="22104000" />
+      <workItem from="1525343994814" duration="2515000" />
+      <workItem from="1525395917673" duration="5695000" />
+    </task>
+    <task id="LOCAL-00064">
+      <created>1520316620109</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1520316620109</updated>
+    </task>
+    <task id="LOCAL-00065">
+      <created>1520318955113</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1520318955113</updated>
+    </task>
+    <task id="LOCAL-00066">
+      <created>1520321794114</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1520321794114</updated>
+    </task>
+    <task id="LOCAL-00067">
+      <created>1520386058141</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1520386058142</updated>
+    </task>
+    <task id="LOCAL-00068">
+      <created>1520388644122</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1520388644122</updated>
+    </task>
+    <task id="LOCAL-00069">
+      <created>1520500061116</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1520500061117</updated>
+    </task>
+    <task id="LOCAL-00070">
+      <created>1520500143112</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1520500143112</updated>
+    </task>
+    <task id="LOCAL-00071">
+      <created>1520500603110</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1520500603110</updated>
+    </task>
+    <task id="LOCAL-00072">
+      <created>1520500883112</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1520500883112</updated>
+    </task>
+    <task id="LOCAL-00073">
+      <created>1520501740111</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1520501740111</updated>
+    </task>
+    <task id="LOCAL-00074">
+      <created>1520560288109</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1520560288110</updated>
+    </task>
+    <task id="LOCAL-00075">
+      <created>1520560760105</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1520560760105</updated>
+    </task>
+    <task id="LOCAL-00076">
+      <created>1520904957114</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1520904957114</updated>
+    </task>
+    <task id="LOCAL-00077">
+      <created>1520906363108</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1520906363108</updated>
+    </task>
+    <task id="LOCAL-00078">
+      <created>1520906793106</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1520906793106</updated>
+    </task>
+    <task id="LOCAL-00079">
+      <created>1520908301112</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1520908301112</updated>
+    </task>
+    <task id="LOCAL-00080">
+      <created>1520929944119</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1520929944119</updated>
+    </task>
+    <task id="LOCAL-00081">
+      <created>1521013465158</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1521013465159</updated>
+    </task>
+    <task id="LOCAL-00082">
+      <created>1521015601112</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1521015601112</updated>
+    </task>
+    <task id="LOCAL-00083">
+      <created>1521017707109</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1521017707109</updated>
+    </task>
+    <task id="LOCAL-00084">
+      <created>1521020478111</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1521020478111</updated>
+    </task>
+    <task id="LOCAL-00085">
+      <created>1521025715110</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1521025715110</updated>
+    </task>
+    <task id="LOCAL-00086">
+      <created>1521078001111</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1521078001111</updated>
+    </task>
+    <task id="LOCAL-00087">
+      <created>1521080157130</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1521080157130</updated>
+    </task>
+    <task id="LOCAL-00088">
+      <created>1521081109112</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1521081109112</updated>
+    </task>
+    <task id="LOCAL-00089">
+      <created>1521081378108</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1521081378108</updated>
+    </task>
+    <task id="LOCAL-00090">
+      <created>1521084227110</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1521084227110</updated>
+    </task>
+    <task id="LOCAL-00091">
+      <created>1521085728111</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1521085728111</updated>
+    </task>
+    <task id="LOCAL-00092">
+      <created>1521086239110</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1521086239110</updated>
+    </task>
+    <task id="LOCAL-00093">
+      <created>1521093184113</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1521093184113</updated>
+    </task>
+    <task id="LOCAL-00094">
+      <created>1521094057110</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1521094057110</updated>
+    </task>
+    <task id="LOCAL-00095">
+      <created>1521097651114</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1521097651114</updated>
+    </task>
+    <task id="LOCAL-00096">
+      <created>1521109774117</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1521109774118</updated>
+    </task>
+    <task id="LOCAL-00097">
+      <created>1521162679101</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1521162679111</updated>
+    </task>
+    <task id="LOCAL-00098">
+      <created>1521162955110</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1521162955110</updated>
+    </task>
+    <task id="LOCAL-00099">
+      <created>1521164108107</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1521164108107</updated>
+    </task>
+    <task id="LOCAL-00100">
+      <created>1521180686110</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1521180686110</updated>
+    </task>
+    <task id="LOCAL-00101">
+      <created>1521192864114</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1521192864114</updated>
+    </task>
+    <task id="LOCAL-00102">
+      <created>1521426069112</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1521426069113</updated>
+    </task>
+    <task id="LOCAL-00103">
+      <created>1521429119106</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1521429119107</updated>
+    </task>
+    <task id="LOCAL-00104">
+      <created>1521429969122</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1521429969122</updated>
+    </task>
+    <task id="LOCAL-00105">
+      <created>1521444343109</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1521444343109</updated>
+    </task>
+    <task id="LOCAL-00106">
+      <created>1521444500110</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1521444500110</updated>
+    </task>
+    <task id="LOCAL-00107">
+      <created>1521444517110</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1521444517110</updated>
+    </task>
+    <task id="LOCAL-00108">
+      <created>1521449541113</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1521449541113</updated>
+    </task>
+    <task id="LOCAL-00109">
+      <created>1521449744109</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1521449744109</updated>
+    </task>
+    <task id="LOCAL-00110">
+      <created>1521508996108</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1521508996108</updated>
+    </task>
+    <task id="LOCAL-00111">
+      <created>1521517724106</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1521517724106</updated>
+    </task>
+    <task id="LOCAL-00112">
+      <created>1525346813116</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1525346813116</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="561105000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21726191" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32755905" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30228758" sideWeight="0.56473213" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43464053" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32789558" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30228758" sideWeight="0.43526787" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.69820553" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32352942" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="CHANGE_BROWSER_SETTINGS">
+      <map>
+        <entry key="svn">
+          <value>
+            <ChangeBrowserSettings />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSILine/OSILine.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="19" column="15" lean-forward="false" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSILine/OSILine.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="35" lean-forward="false" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/OSIArearCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="60" column="7" lean-forward="false" selection-start-line="60" selection-start-column="7" selection-end-line="60" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSIArear/OSIArear.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="4" column="50" lean-forward="false" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSIArear/OSIArear.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/OSIcountCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="30" column="6" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="32" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/OSIDetail.less" />
+    <entry file="file://$PROJECT_DIR$/src/app/pm/defectFill/adddefectFill/adddefectFill.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="313" column="26" lean-forward="false" selection-start-line="313" selection-start-column="19" selection-end-line="313" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSIA.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="2" lean-forward="false" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/load/load.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="40" lean-forward="false" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/pm/trouble/hideTrouble/hideTrouble.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2205">
+          <caret line="105" column="61" lean-forward="false" selection-start-line="105" selection-start-column="53" selection-end-line="105" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/fillCause/fillCause.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="48" column="27" lean-forward="false" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/fillCauseCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/load/load.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="401" column="73" lean-forward="false" selection-start-line="401" selection-start-column="67" selection-end-line="401" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/fillCause/fillCause.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="42" column="44" lean-forward="true" selection-start-line="42" selection-start-column="44" selection-end-line="42" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/attenceCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="431">
+          <caret line="164" column="11" lean-forward="true" selection-start-line="164" selection-start-column="11" selection-end-line="164" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/countAttenceCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1911">
+          <caret line="91" column="12" lean-forward="false" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/tabs/homePage/content.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="91" column="53" lean-forward="false" selection-start-line="91" selection-start-column="53" selection-end-line="91" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/pm/defectFill/defectFill/defectFill.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="41" column="45" lean-forward="false" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/pm/defectFill/defectFillDetail/defectFillDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/pm/defectFill/defectFill/defectFill.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2331">
+          <caret line="111" column="44" lean-forward="false" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/attence.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/attenceDetailCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="64" column="15" lean-forward="false" selection-start-line="64" selection-start-column="15" selection-end-line="64" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/attenceWdDetail/attenceWdDetail.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/attenceCdDetail/attenceCdDetail.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/attenceCdDetail/attenceCdDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1555">
+          <caret line="99" column="30" lean-forward="false" selection-start-line="99" selection-start-column="30" selection-end-line="99" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttenceA.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="36" lean-forward="false" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/attenceWdDetail/attenceWdDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="36" column="16" lean-forward="false" selection-start-line="36" selection-start-column="16" selection-end-line="39" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/cdListCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="49" column="38" lean-forward="false" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/wdkList/wdkList.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="70" lean-forward="false" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/myAttence/myAttence.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="31" column="14" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="31" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/myAttenceCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="42" column="2" lean-forward="false" selection-start-line="42" selection-start-column="2" selection-end-line="87" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttence.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="368" column="29" lean-forward="false" selection-start-line="368" selection-start-column="19" selection-end-line="368" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttence.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="65" column="29" lean-forward="false" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/ztList/ztList.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="69" lean-forward="false" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/cdList/cdList.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="70" lean-forward="false" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/wdkDetailCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="26" column="20" lean-forward="false" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/attence.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="45" lean-forward="false" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/wdkDetail/wdkDetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="35" column="42" lean-forward="false" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/userServers/login/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="131" column="54" lean-forward="false" selection-start-line="131" selection-start-column="54" selection-end-line="131" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/tabs/homePage/homePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6258">
+          <caret line="298" column="29" lean-forward="false" selection-start-line="298" selection-start-column="29" selection-end-line="298" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/ztList/ztList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="34" column="17" lean-forward="false" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/cdList/cdList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="34" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/wdkDetail/wdkDetail.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-357">
+          <caret line="22" column="51" lean-forward="true" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/myAttence/myAttence.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="90" column="20" lean-forward="true" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/wdkList/wdkList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="70" column="43" lean-forward="false" selection-start-line="70" selection-start-column="43" selection-end-line="70" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/OSICSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="93" column="21" lean-forward="false" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSI.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="28" column="43" lean-forward="false" selection-start-line="28" selection-start-column="41" selection-end-line="28" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.mock.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/app.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-105">
+          <caret line="23" column="53" lean-forward="false" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/OSI/OSI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="164" column="95" lean-forward="false" selection-start-line="164" selection-start-column="88" selection-end-line="164" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

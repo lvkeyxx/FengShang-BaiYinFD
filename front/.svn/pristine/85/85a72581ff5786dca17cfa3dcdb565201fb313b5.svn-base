@@ -1,0 +1,20 @@
+<ion-view class="bulletinBoardCSS">
+    <ion-nav-title>公告白板</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="tips">
+            <span>提示：点击标题进入编辑页</span>
+        </div>
+        <div class="bulletinBoardList">
+            <table>
+                <tr>
+                    <th>排序号</th>
+                    <th>标题</th>
+                </tr>
+                <tr ng-repeat=" board in tList track by $index">
+                    <td>{{board.SORT}}</td>
+                    <td ng-click="toEdit(board.LINE_NO)">{{board.NEWS_TITLE}}</td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>	
+    <sqlMap resource="DaoCommon.xml"/>
+    <sqlMap resource="com/sqlmap/USER_SqlMap.xml"/>
+    <sqlMap resource="com/sqlmap/LOG_SqlMap.xml"/>
+    <sqlMap resource="com/sqlmap/IFSAPP_SDIC_INDEX_DATA_SqlMap.xml"/>
+    <sqlMap resource="com/sqlmap/IFSAPP_SDIC_INDEX_DIMENSION_SqlMap.xml"/>
+    <sqlMap resource="com/sqlmap/IFSAPP_SDIC_SIS_INDEX_MAPPING_SqlMap.xml"/>
+</sqlMapConfig>

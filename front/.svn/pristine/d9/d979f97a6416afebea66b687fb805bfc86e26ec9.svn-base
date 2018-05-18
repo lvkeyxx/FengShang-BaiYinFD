@@ -1,0 +1,118 @@
+.erpDetailsCSS{
+    @rem: 144rem;
+    .icon.ion-record::before{
+        font-size: 0.2em;
+    }
+    .slider{
+        height: 100%;
+    }
+    .slider-pager{
+        display: none;
+    }
+    .slider-slide{
+        display: flex;
+        flex-direction: column;
+    }
+    .slide-content{
+        flex: 1;
+        padding: 10px;
+        overflow: auto;
+    }
+    .slide-content::-webkit-scrollbar {
+        display: none;
+    }
+    .progress{
+        display: flex;
+        background-color: #e2e2e2;
+        border-radius: 1.2em;
+        height: 1.6em;
+    }
+    .progress > div:first-child{
+        background-color: #33cd5f;
+        border-radius: 1.2em;
+    }
+    .text-right{
+        text-align: right;
+    }
+    .document{
+        font-size: 1.5em;
+        font-weight: 700;
+    }
+    textarea{
+        width: 100%;
+    }
+    .applyForLineHead{
+        padding: 0.3em 1em;
+        background-color: #f2f2f2;
+    }
+    .applyForLine{
+        border: 1px solid #f2f2f2;
+        padding: 1em;
+    }
+    .process{
+        display: flex;
+    }
+    .process > .left{
+        position: relative;
+    }
+    .process > .left::after{
+        content: " ";
+        width: 0.2em;
+        height: e("calc(100% - 1.2em)");
+        background-color: #3492e9;
+        position: absolute;
+        margin: auto;
+        top: 1.2em;
+        left: e("calc(50% - 0.1em)");
+        z-index: -100;
+    }
+    .process:last-child > .left::after{
+        height: 0px;
+    }
+    .process > .left > .imgBox{
+        background-color: #3492e9;
+        width: 1.8em;
+        height: 1.8em;
+        border-radius: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFFFFF;
+        font-size: 1.6em;
+        font-weight: 600;
+    }
+    .process > .left > .imgBox > img{
+        width: 100%;
+    }
+    .process > .right{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-left: 0.6em;
+        font-size: 0.8em;
+        color: #bebebe;
+    }
+    .process > .right > .card{
+        padding: 0.3em;
+        font-size: 1.2em;
+        color: black;
+        display: flex;
+        line-height: 2.4em;
+        min-height: 5em;
+        margin-bottom: 1em;
+    }
+    .process > .right > .card > table tr td:nth-of-type(1){
+        vertical-align:middle;
+    }
+    .process > .right > .card > table tr td:nth-of-type(1){
+        font-size: 2em;
+    }
+    .process > .right > .card > table tr td:nth-of-type(2){
+        padding-left: 0.6em;
+        width: 100%;
+    }
+    .process > .right > .card > table tr td:nth-of-type(3){
+        white-space:nowrap; 
+    }
+}

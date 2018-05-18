@@ -1,0 +1,20 @@
+<ion-view class="editingUserInfoContent">
+    <ion-nav-title>修改登录密码</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <form name="pwd" class="editContent">
+            <div class="items">
+                <span class="head">原密码：</span>
+                <input type="password" class="items" placeholder="请输入您的原密码" ng-model="userPwd.password">
+            </div>
+            <div class="items">
+                <span class="head">新密码：</span>
+                <input type="password" class="items" placeholder="请输入您的新密码" ng-model="userPwd.newPassword">
+            </div>
+            <div class="items">
+                <span class="head">重新输入：</span>
+                <input type="password" class="items" placeholder="请重新输入您的新密码" ng-model="userPwd.repeatPwd">
+            </div>
+            <div class="button appSbmtBtn" ng-disabled="!pwd.$valid || pwd.$submitted" ng-click="updateUserInfor();">完成</div>
+        </form>
+    </ion-content>
+</ion-view>

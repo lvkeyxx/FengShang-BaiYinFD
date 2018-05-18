@@ -1,0 +1,40 @@
+<ion-view class="defectFillDetailCSS">
+    <ion-nav-title>缺陷详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="detail" ng-hide="defectdetail">
+            <ul>
+                <li class="bhnum">编号：{{defectDetail.FAULT_REP_ID}}<em class="status">{{defectDetail.STATE}}</em></li>
+                <li class="dzname">电站：{{defectDetail.CONTRACT}}</li>
+                <li class="jhtime">计划开始时间：{{defectDetail.REQUIRED_START_DATE | limitTo:10}}<em>计划完成时间：{{defectDetail.REQUIRED_END_DATE | limitTo:10}}</em></li>
+                <li class="wgtime">实际完成时间：{{defectDetail.REAL_END_DATE | limitTo:10}}</li>
+                <li class="faperson">发现人：{{defectDetail.REPORTED_BY_ID}}<em>发现时间：{{defectDetail.REG_DATE | limitTo:10}}</em></li>
+                <li class="sbbm">设备编码：{{defectDetail.MCH_CODE}}</li>
+                <li class="sbmc">设备名称：{{defectDetail.MCH_NAME}}</li>
+                <li class="zxbm">执行部门：{{defectDetail.ORG_CODE}}<em>现象：{{defectDetail.ERR_SYMPTOM}}</em></li>
+                <li class="qxfl">缺陷分类：<i style="color: #ff0000">{{defectDetail.QX_TYPE}}</i><em>缺陷专业：{{defectDetail.FAULT_DEPARTMENT}}</em></li>
+                <li class="qxname">
+                    缺陷名称:<i style="color:#999">{{defectDetail.ERR_DESCR}}</i>
+                </li>
+                <li class="content">
+                    缺陷描述:
+                    <div class="" style="color:#999">{{defectDetail.ERR_DESCR_LO}}</div>
+                </li>
+                <li class="qxzfyy">
+                    缺陷作废原因：{{defectDetail.FAULT_CANCEL_DESC}}
+                </li>
+                <li class="qxzfyy">
+                    缺陷遗留原因：{{defectDetail.FAULT_LEAVE_DESC}}
+                </li>
+                <li class="qxzfyy">
+                    缺陷验收情况：{{defectDetail.FAULT_ACCEPTANCE}}
+                </li>
+            </ul>
+            <div class="content" ng-show="isShow">
+                <div ng-repeat="detail in docList track by $index">
+                    <div class="imgShow"> <a ng-show="detail.isImage=='1'"><img src="{{detail.FILE_URL}}"></a></div>
+                    <a href="{{detail.FILE_URL}}" ng-hide="detail.isImage=='1'"><i >{{detail.FILE_NAME}}</i> </a>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,62 @@
+<ion-view class="agentsView">
+    <ion-nav-title>休假详情</ion-nav-title>
+    <ion-content class="padding">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="allCss lastDate">
+            <div class=myCss>人员类别:</div>
+            <div class=myCss>{{item.EMPLOYEE_TYPE_NEW}}</div>
+            <div class=myCss>休假类型:</div>
+            <div class=myCss>{{item.FURLOUGH_TYPE_NEW}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class="myCss">天数:</div>
+            <div class="myCss">{{item.DAYS}}</div>
+            <div class="myCss">状态:</div>
+            <div class="myCss">{{item.APPLYFORLEAVESTATE}}</div>
+        </div>
+        <div class="beizhu">
+            <div class="riseCss">事由:</div>
+            <div class="explainCss">{{item.APPLY_DESC}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class=myCss>申请人:</div>
+            <div class=myCss>{{item.USER_NAME}}</div>
+            <div class=myCss>部门:</div>
+            <div class=myCss>{{item.ORG_NAME}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class="myCss">申请日期:</div>
+            <div class="myCss">{{item.APPLY_DATE | date : "yyyy年MM月dd日"}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class=myCss>开始日期:</div>
+            <div class=myCss>{{item.BEGIN_DATE | date : "yyyy年MM月dd日"}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class=myCss>结束日期:</div>
+            <div class=myCss>{{item.END_DATE | date : "yyyy年MM月dd日"}}</div>
+        </div>
+        <div class="beizhu">
+            <div class="riseCss">休假原因:</div>
+            <div class="explainCss">{{item.CAUSATION}}</div>
+        </div>
+        <div class="beizhu">
+            <div class="riseCss">移交工作内容:</div>
+            <div class="explainCss">{{item.HANDOVER_CONTENT}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class="myCss">申请编号:</div>
+            <div class="myCss">{{item.APPLY_NO}}</div>
+        </div>
+        <div class="allCss lastDate">
+            <div class="myCss">审批流程编号:</div>
+            <div class="myCss">{{item.STANDARD_FLOW_ID}}</div>
+        </div>
+        <div class="buttonCss">
+            <button ng-if="submitL" class=" button back2" ng-click="submit()">提交</button>
+            <button ng-if="editL" class=" button back3" ng-click="edit(item)">编辑</button>
+            <!-- <button ng-if="backLeaveL" class=" button back1" ng-click="backLeave()">销假</button> -->
+          <!--   <button ng-if="deleL" class=" button back2" ng-click="dele()">删除</button> -->
+        </div>
+    </ion-content>
+</ion-view>

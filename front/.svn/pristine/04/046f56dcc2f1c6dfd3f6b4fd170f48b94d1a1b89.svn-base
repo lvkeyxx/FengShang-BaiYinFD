@@ -1,0 +1,36 @@
+<div class="card" ng-bind-html="data.MSG_INFO"></div>
+<div>
+    <div class="progress">
+        <div {{"style='flex:" + step.now + "';"}}></div>
+        <div {{"style='flex:" + (step.now - step.now) + "';"}}></div>
+    </div>
+    <div class="text-right">{{step.now}}/{{step.total}}</div>
+</div>
+<div>
+    <div class="process" ng-repeat="item in step.list track by $index">
+        <div class="left">
+            <div class="imgBox">
+                {{$index + 1}}
+            </div>
+        </div>
+        <div class="right">
+            {{item.DESCRIPTION}}
+            <div class="card">
+                <table>
+                    <tr>
+                        <td>
+                            <i class="icon {{item.NOTE == '同意' ? 'ion-checkmark-circled balanced' : item.NOTE == '拒绝' ? 'ion-close-circled assertive' : ''}}"></i>
+                        </td>
+                        <td>{{item.APP_SIGN}}</td>
+                        <td>{{item.APP_DATE}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>{{item.NOTE}}</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

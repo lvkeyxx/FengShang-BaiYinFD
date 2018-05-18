@@ -1,0 +1,12 @@
+<ion-view class="APPfeedbackCSS">
+    <ion-nav-title>APP反馈</ion-nav-title>
+    <ion-content class="appFeedbackContent" has-bouncing="false" scrollbar-y="false">
+        <form name="appFeedback">
+            <div class="feedbackTitle">意见或建议</div>
+            <textarea class="feedbackContent" cols="30" rows="10" ng-model="opinion" placeholder="请输入您对APP的意见或建议(限200字)" maxlength="200" required></textarea>
+            <div class="feedbackTitle">联系电话</div>
+            <input type="tel" maxlength="11" class="phoneNumber" ng-model="phone" placeholder="请输入您的联系方式，便于我们与您联系" required/>
+            <div class="button appSbmtBtn" type="submit" ng-click="appFeedback2(opinion,phone)" ng-disabled="!appFeedback.$valid || appFeedback.$submitted">完成</div>
+        </form>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,467 @@
+angular.module('BaiYin.attence', [
+    'ionic'
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('attence', {
+            url: '/attence',
+            controller: 'attenceController',
+            templateUrl: 'attence/attence.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('attenceController', ['$timeout', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout','$filter',
+
+        function ($timeout, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout,$filter) {
+
+            $scope.$on('$ionicView.afterEnter', function () {
+                var nowtady=new Date();
+                $scope.nowDate = $filter("date")(nowtady, "yyyy-MM-dd");
+                // $scope.nowDate+' '+
+                $("#sbtime").text('');
+                $("#xbtime").text('');
+                getHomePageDate();
+            });
+            $scope.$on('$ionicView.leave',function () {
+                $scope.searchBtn = false;
+                $scope.$apply(function () {
+                    $("#blueToothAddress").text('');
+                });
+            })
+            //返回
+            $scope.goindex = function () {
+                $state.go('tabs/homePage');
+            }
+            //显示和隐藏上班打卡时间
+            $scope.sbdktimeShow = true;
+            $scope.clockinBtn = false;
+            $scope.searchBtn = false;
+            $scope.xbdktimeShow = true;
+            $scope.clockoutBtn = false;
+            //点击上班打卡
+            $scope.toClockIn = function () {
+                loadingAnimation.showLoading('加载中', 'loding', 0);
+                judgeTimes($scope.workTime.detail.START_TIME,'punckTheClockOn');
+
+
+                // punckTheClockOn();
+
+            }
+            //点击下班打卡
+            $scope.toClockout = function () {
+                loadingAnimation.showLoading('加载中', 'loding', 0);
+                judgeTimes($scope.workTime.detail.END_TIME,'punckTheClockOff');
+
+
+                // punckTheClockOff();
+
+            }
+            //点击更新打卡
+            $scope.toClockupdate = function () {
+                if($("#blueToothAddress").text() == ''){
+                    showAlert.showMsg('','','请先搜索蓝牙设备');
+                    return false;
+                }
+                loadingAnimation.showLoading('加载中', 'loding', 0);
+                // punckTheClockOff();
+                judgeTimes($scope.workTime.detail.END_TIME,'punckTheClockOff');
+            }
+            //点击我的考勤
+            $scope.toMyattence = function () {
+                $state.go('attence/myAttence');
+            }
+            //点击考勤统计
+            $scope.tocountAttence = function () {
+                /*var sec = token.sec;
+                var noAuth=true;
+                if(sec!=undefined){
+                    if(sec.length>0){
+                        for(var no in sec){
+                            if(sec[no].SEC_NO=='K001'){
+                                noAuth=false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(noAuth){
+                    showAlert.showMsg('', '', '您无权操作考勤统计', '确认');
+                    return;
+                }*/
+                $state.go('attence/countAttence');
+            }
+            //点击缺勤事由
+            $scope.tofillCause = function () {
+                /*var sec = token.sec;
+                var noAuth=true;
+                if(sec!=undefined){
+                    if(sec.length>0){
+                        for(var no in sec){
+                            if(sec[no].SEC_NO=='K002'){
+                                noAuth=false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(noAuth){
+                    showAlert.showMsg('', '', '您无权操作考勤事由', '确认');
+                    return;
+                }*/
+                $state.go('attence/fillCause');
+            }
+            //点击搜索蓝牙
+            $scope.searchBlueTooth = function () {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                // $scope.searchBtn = true;
+                blueToothEnable();
+            }
+
+            //开启本机蓝牙
+            function blueToothEnable() {
+                ble.enable(
+                    function () {
+                        // $('#searchBtnBloot').setAttribute("disabled");
+                        scanBlueTooth();
+                    },
+                    function () {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg("","","蓝牙未开启");
+                    }
+                );
+            }
+
+            //扫描蓝牙
+            function scanBlueTooth() {
+                $scope.blueToothList = [];
+                $scope.timer = $timeout(function () {
+                    if ($scope.blueToothList.length > 0) {
+                        upWindow($scope.blueToothList);
+                    } else {
+                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
+                        loadingAnimation.hideLoading();
+                    }
+                }, 5000);
+                ble.scan([], 5, function (device) {//成功的回调函数
+                        getBlueToothList(device);
+                    }, function () {
+                        //失败的回调函数
+                        showAlert.showMsg('', '', "扫描蓝牙失败");
+                    }
+                );
+            }
+
+            //获取蓝牙列表
+            function getBlueToothList(device) {
+                $http.post('ServiceName=ClockService&TransName=blueToothDetail&SN=' + device.id)
+                    .then(function (res) {
+                        if (res.data.code == '0') {
+                            // alert(JSON.stringify(res));
+                            $scope.blueToothdetail=res.data.detail;
+                            // alert(res.data.detail.length);
+                            for(var i=0;i<$scope.blueToothdetail.length;i++){
+                                $scope.blueToothList.push($scope.blueToothdetail[i]);
+                            }
+
+
+
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+
+            //获取首页日期
+            function getHomePageDate() {
+                $http.post('ServiceName=ClockService&TransName=clockPage')
+                    .then(function (res) {
+                        console.log(res);
+                        //获取部门、姓名
+                        $scope.DeptName = token.DeptName;
+                        $scope.UserName = token.UserName;
+                        if(res.code == '0'){
+                            $scope.homePageDate = res.data;
+                            if (res.data.detail.ACTUAL_START_TIME != null && res.data.detail.ACTUAL_START_TIME != '') {
+                                $("#clockInid").text(res.data.detail.ACTUAL_START_TIME);
+                                var startworktimes=res.data.detail.START_TIME_HOUR;
+                                var endworktimes=res.data.detail.END_TIME_HOUR;
+                                $("#sbtime").text(startworktimes);
+                                $("#xbtime").text(endworktimes);
+                                $scope.sbdktimeShow = false;
+                                $scope.clockinBtn = true;
+                            }
+                            if (res.data.detail.ACTUAL_END_TIME != null && res.data.detail.ACTUAL_END_TIME != '') {
+                                $("#clockOutid").text( res.data.detail.ACTUAL_END_TIME);
+                                var startworktimess=res.data.detail.START_TIME_HOUR;
+                                var endworktimess=res.data.detail.END_TIME_HOUR;
+                                $("#sbtime").text(startworktimess);
+                                $("#xbtime").text(endworktimess);
+                                $scope.xbdktimeShow = false;
+                                $scope.clockoutBtn = true;
+                            }
+                            if (res.data.detail.ACTUAL_END_TIME == null || res.data.detail.ACTUAL_END_TIME == '') {
+                                $scope.xbdktimeShow = true;
+                                $scope.clockoutBtn = false;
+                                $("#xbPunchClock").attr("disabled", true);
+                                $("#xbPunchClock").addClass("clockoutgreyBtn");
+                                $("#xbPunchClock").removeClass("clockoutBtn");
+                            }
+                        }
+                        if(res.code == '1'){
+                            $("#sbPunchClock").attr("disabled", true);
+                            $("#sbPunchClock").addClass("clockingreyBtn");
+                            $("#sbPunchClock").removeClass("clockinBtn");
+                            $("#xbPunchClock").attr("disabled", true);
+                            $("#xbPunchClock").addClass("clockoutgreyBtn");
+                            $("#xbPunchClock").removeClass("clockoutBtn");
+                        }else {
+                            showAlert.showMsg(res.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //截取时间字符串转换格式
+            function substrDate(datetime){
+                var olddatetime=datetime.substr(0,8);
+                return olddatetime.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
+            }
+            //获取上下班时间
+            function getWorkTime(SN, CONTRACT,RULE_ID) {
+                $http.post('ServiceName=ClockService&TransName=clockTimeBySn&SN=' + SN + '&CONTRACT=' + CONTRACT+'&RULE_ID='+RULE_ID)
+                    .then(function (res) {
+                        console.log(res);
+                        //alert(JSON.stringify(res));
+                        if (res.data.code == '0') {
+                            $scope.workTime = res.data;
+                            $scope.TRANSACTION_ID = $scope.workTime.detail.TRANSACTION_ID;
+                            $scope.startworktime=$scope.workTime.detail.START_TIME_HOUR;
+                            $scope.endworktime=$scope.workTime.detail.END_TIME_HOUR;
+                            $("#sbtime").text($scope.startworktime);
+                            $("#xbtime").text($scope.endworktime);
+                            if ($scope.workTime.detail.ACTUAL_START_TIME != null && $scope.workTime.detail.ACTUAL_START_TIME != '') {
+                                $("#clockInid").text( $scope.workTime.detail.ACTUAL_START_TIME);
+                                $scope.sbdktimeShow = false;
+                                $scope.clockinBtn = true;
+                            }else{
+                                $scope.sbdktimeShow = true;
+                                $scope.clockinBtn = false;
+                            }
+                            if ($scope.workTime.detail.ACTUAL_END_TIME != null && $scope.workTime.detail.ACTUAL_END_TIME != '') {
+                                $("#clockOutid").text($scope.workTime.detail.ACTUAL_END_TIME);
+                                $scope.xbdktimeShow = false;
+                                $scope.clockoutBtn = true;
+                            }else{
+                                $scope.xbdktimeShow = true;
+                                $scope.clockoutBtn = false;
+                            }
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //判讀打卡時間
+            function judgeTimes(workdate,punck){
+                var t1 = workdate;
+                var d1 = t1.replace(/\-/g, "/");
+                var date1 = new Date(d1);
+                var nowdate=new Date();
+                console.log("=======");
+                var chatime=Math.abs((date1 - nowdate) / 1000 / 60/60);
+                if(chatime>4){
+                    loadingAnimation.hideLoading();
+                    $scope.data = new Object();
+                    $scope.data.tishi="当前时间与计划打卡时间大约相差"+Math.round(chatime)+"小时,您确定打卡吗?"
+                    // 自定义弹窗
+                    var mynewPopup = $ionicPopup.show({
+                        template:$scope.data.tishi,
+                        title: '提示',
+                        $scope:$scope,
+                        buttons: [
+                            {
+                                text: '取消',
+                                type: 'button-cancel',
+                                onTap: function(e) {
+                                    // if(punck=='punckTheClockOn'){
+                                    //     $scope.sbdktimeShow = true;
+                                    //     $scope.clockinBtn = false;
+                                    // }else if(punck=='punckTheClockOff'){
+                                    //     $scope.xbdktimeShow = true;
+                                    //     $scope.clockoutBtn = false;
+                                    // }
+
+
+                                }
+
+                            },
+                            {
+                                text: '<b>确认</b>',
+                                type: 'button-positive',
+                                onTap: function (e) {
+                                    if(punck=='punckTheClockOn'){
+                                        $scope.sbdktimeShow = false;
+                                        $scope.clockinBtn = true;
+                                        punckTheClockOn()
+                                    }else if(punck=='punckTheClockOff'){
+                                        $scope.xbdktimeShow = false;
+                                        $scope.clockoutBtn = true;
+                                        punckTheClockOff()
+                                    }
+
+
+                                }
+                            },
+                        ]
+                    });
+                    mynewPopup.then(function (res) {
+                        console.log('Tapped!', res);
+                    });
+                }else{
+                    if(punck=='punckTheClockOn'){
+                        $scope.sbdktimeShow = false;
+                        $scope.clockinBtn = true;
+                        punckTheClockOn()
+                    }else if(punck=='punckTheClockOff'){
+                        $scope.xbdktimeShow = false;
+                        $scope.clockoutBtn = true;
+                        punckTheClockOff()
+                    }
+                }
+            }
+
+            //上班打卡
+            function punckTheClockOn() {
+                var parmas = {
+                    SN: $scope.SERIAL_NO_CODE,
+                    ADDR: $scope.ADDR,
+                    START_TIME:$scope.workTime.detail.START_TIME,
+                    END_TIME:$scope.workTime.detail.END_TIME,
+                    TRANSACTION_ID: $scope.workTime.detail.TRANSACTION_ID,
+                    FLG:0
+                };
+                $http.post('ServiceName=ClockService&TransName=punchClock', parmas)
+                    .then(function (res) {
+                        if (res.data.code == '0') {
+                            loadingAnimation.hideLoading();
+                            $scope.punckClockOn = res.data;
+                            $("#clockInid").text($scope.punckClockOn.clockTips);
+
+                        } else {
+                            showAlert.showMsg('','',res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+
+            //下班打卡
+            function punckTheClockOff() {
+                var parmas = {
+                    SN: $scope.SERIAL_NO_CODE,
+                    ADDR: $scope.ADDR,
+                    START_TIME:$scope.workTime.detail.START_TIME,
+                    END_TIME:$scope.workTime.detail.END_TIME,
+                    TRANSACTION_ID: $scope.workTime.detail.TRANSACTION_ID,
+                    FLG:1
+                };
+                if($scope.clockinBtn==false){
+                    showAlert.showMsg('','','你还未上班打卡!');
+                    $scope.xbdktimeShow = true;
+                    $scope.clockoutBtn = false;
+                    loadingAnimation.hideLoading();
+                    return ;
+                }
+                $http.post('ServiceName=ClockService&TransName=punchClock', parmas)
+                    .then(function (res) {
+                        if (res.data.code == '0') {
+                            $scope.punckClockOff = res.data;
+                            $("#clockOutid").text($scope.punckClockOff.clockTips);
+                            loadingAnimation.hideLoading();
+                        } else {
+                            showAlert.showMsg('','',res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+
+            //弹出页面，显示扫描到的设备
+            var searchPopup;
+
+            function upWindow(blueToothList) {
+                // alert(JSON.stringify($scope.blueToothList));
+                loadingAnimation.hideLoading();
+                searchPopup = $ionicPopup.show({
+                    template:'<div ng-style="closesearchequip" ng-click="closeBlueTooths()">X</div>'+ '<div>' +
+                    '<ul>' +
+                    '<li id="device_{{$index}}" ng-click="selectBlueTooth($index)" ng-repeat="blueTooth in blueToothList track by $index" ng-style="searchPopupli">' +
+                    '{{blueTooth.DEVICE_LOCATION}}-{{blueTooth.RULE_DESC}}' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>',
+                    title: '扫描到的蓝牙设备',
+                    scope: $scope,
+                });
+            }
+            $scope.closesearchequip= {
+                "width": "20px",
+                "height": "20px",
+                "position": "absolute",
+                "top":"5px",
+                "color":"#333333",
+                "font-size":"15px",
+                "line-height":"18px",
+                "font-family":"sans-serif",
+                "text-align":"center",
+                "border-radius":'50%',
+                "border":"1px solid #333333",
+                "right":"10px"
+            };
+            $scope.closeBlueTooths=function () {
+                searchPopup.close();
+                $scope.searchBtn = false;
+            }
+            //点击选择蓝牙设备
+            $scope.selectBlueTooth = function (index) {
+                $scope.searchBtn = false;
+                //alert("device=="+$("#device_"+index).text());
+                $("#blueToothAddress").text($("#device_" + index).text());
+                searchPopup.close();
+                $scope.SERIAL_NO_CODE = $scope.blueToothList[index].SERIAL_NO;
+                $scope.RULE_ID = $scope.blueToothList[index].RULE_ID;
+                $scope.ADDR = $scope.blueToothList[index].DEVICE_LOCATION;
+                getWorkTime($scope.blueToothList[index].SN_CODE, $scope.blueToothList[index].CONTRACT,$scope.RULE_ID);
+                $("#sbPunchClock").attr("disabled", false);
+                $("#sbPunchClock").addClass("clockinBtn");
+                $("#sbPunchClock").removeClass("clockingreyBtn");
+                $("#xbPunchClock").attr("disabled", false);
+                $("#xbPunchClock").addClass("clockoutBtn");
+                $("#xbPunchClock").removeClass("clockoutgreyBtn");
+
+            }
+            $scope.searchPopupli = {
+                "line-height": "35px",
+                "font-size": "12px",
+                "text-align": "center",
+                "border-bottom": "1px dotted #f4f4f4",
+            }
+
+        }
+
+    ])

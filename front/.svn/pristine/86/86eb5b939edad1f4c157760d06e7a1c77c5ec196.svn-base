@@ -1,0 +1,7 @@
+<ion-view class="companyNewsDetailsCSS">
+    <ion-nav-title>白板公告详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="title ">{{detail.NEWS_TITLE}}</div>
+        <div class="contentText">{{detail.NEWS_CONTENT}}</div>
+    </ion-content>
+</ion-view>

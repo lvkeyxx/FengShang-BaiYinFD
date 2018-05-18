@@ -1,0 +1,92 @@
+.bulletinBoardCSS {
+  @rem: 144rem;
+  background-color: #fff;
+  .tips{
+    padding: 10px 10px 0px 15px;
+    color: #ff0000;
+    border-top: 10px solid #f4f4f4;
+  }
+  .bulletinBoardList{
+    //border-top:10px solid #f4f4f4;
+    background: #fff;
+    padding: 10px;
+    table{
+      width: 100%;
+    }
+    table th {
+      padding: 10px 5px;
+      background: #e1effc;
+      vertical-align: middle;
+      color: #3492e9;
+    }
+    table th:first-child {
+      border-top-left-radius: 15px;
+      border-right: 1px solid #d7e2ec;
+      width: 70px;
+    }
+    table th:last-child {
+      border-top-right-radius: 15px;
+    }
+    table td {
+      border: 1px solid #fefefe;
+      border-collapse: collapse;
+      padding: 10px 5px;
+      text-align: center;
+      vertical-align: middle;
+      border-right: 1px solid #e1effc;
+      border-bottom: 1px solid #e1effc;
+    }
+    table tr td:first-child {
+      border-left: 1px solid #e1effc;
+      border-right: 1px solid #e1effc;
+      color: #3492e9;
+    }
+  }
+//编辑页面
+  .input-label {
+    width: 60px;
+  }
+  textarea{
+    border: 1px solid #f4f4f4;
+    margin-right: 10px;
+  }
+  .button1{
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    button{
+      outline: none;
+      border:none;
+      color: #fff;
+      border-radius: 15px;
+    }
+    .goback{
+      width: 48%;
+      margin: 0 auto;
+      display: inline-block;
+      height: 35px;
+      line-height: 35px;
+      background: #ccc;
+    }
+    .toedit{
+      width: 48%;
+      margin: 0 auto;
+      display: inline-block;
+      height: 35px;
+      line-height: 35px;
+      background: #3492e9;
+    }
+  }
+  .editForm{
+    ul li{
+      line-height: 120/@rem;
+      .tips{
+        padding: 10px 10px 0px 15px;
+        color: #ff0000;
+        font-size: 12px;
+        border:none;
+      }
+    }
+  }
+}

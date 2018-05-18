@@ -1,0 +1,130 @@
+.mineCSS {
+    @rem: 144rem;
+    background: #eeeeee;
+    .remindOne {
+        background-color: #ff0000;
+        border-radius: .4rem;
+        text-align: center;
+        color: #fff;
+        padding: 0 .1rem;
+        height: .4rem;
+        min-width: .4rem;
+        text-align: center;
+        line-height: .4rem;
+        position: relative;
+        right: .15rem;
+        z-index: 99;
+        font-size: .3rem;
+        position: absolute;
+        top: .28rem;
+        right: 9%;
+    }
+    .outList {
+        /*margin-top: 40/@rem;*/
+        height: 130/@rem;
+        background-color: white;
+        line-height: 130/@rem;
+        margin-bottom: .5rem;
+    }
+    .quit {
+        text-align: center;
+        font-size: 43/@rem;
+    }
+    .remindTwo {
+        background-color: #ff0000;
+        border-radius: 8px;
+        height: 8px;
+        width: 8px;
+        text-align: center;
+        position: relative;
+        right: .15rem;
+        z-index: 99;
+        position: absolute;
+        right: 53px;
+    }
+    .banner {
+        background: url(../images/mine/bg.png) no-repeat center top;
+        background-size: 100%;
+        height: 550/@rem;
+        overflow: hidden;
+        .head {
+            background: url(../images/mine/head.png) no-repeat center;
+            background-size: 100%;
+            width: 176/@rem;
+            height: 176/@rem;
+            margin: auto;
+            margin-top: 99/@rem;
+            border-radius: 100%;
+        }
+        .info {
+            text-align: center;
+            color: #fff;
+            font-size: .36rem;
+            margin-top: .2rem;
+        }
+    }
+    .menuList {
+        margin: 23/@rem 0 0 0;
+        padding: 0 45/@rem;
+        box-shadow: none;
+        border-bottom: 1px solid #e9ebed;
+        margin-bottom: 8px;
+        a {
+            font-size: .30rem;
+            color: #333333;
+        }
+        .item {
+            padding-left: .8rem;
+            border-color: #e9ebed;
+            height: 123/@rem;
+            line-height: .3rem;
+        }
+        a.item {
+            background: url(../images/mine/youjiantou.png) no-repeat 97% center;
+            background-size: .2rem;
+        }
+        .versionOne {
+            background: none;
+        }
+        .ion-data {
+            background: url(../images/mine/icon_01.png) no-repeat center center;
+        }
+        .ion-myMsg {
+            background: url(../images/mine/icon_02.png) no-repeat center center;
+        }
+        .ion-deleMsg {
+            background: url(../images/mine/icon_03.png) no-repeat center center;
+        }
+        .ion-commend {
+            background: url(../images/mine/icon_06.png) no-repeat center center;
+        }
+        .ion-version {
+            background: url(../images/mine/icon_04.png) no-repeat center center;
+        }
+        .ion-quit {
+            background: url(../images/mine/icon_04.png) no-repeat center center;
+        }
+        .icon {
+            background-size: .4rem;
+            width: .44rem;
+            margin-top: .03rem;
+        }
+        .ion-bluetooth{
+            color: #0099cc;
+        }
+        .versionTwo {
+            font-size: .3rem;
+            float: right;
+            color: #666666;
+        }
+        .link {
+            float: right;
+            width: .2rem;
+            height: .26rem;
+            vertical-align: middle;
+        }
+    }
+    span.handText {
+        font-size: .3rem;
+    }
+}

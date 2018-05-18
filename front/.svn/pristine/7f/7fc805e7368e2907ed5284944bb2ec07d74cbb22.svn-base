@@ -1,0 +1,56 @@
+<ion-view class="defectFillCSS">
+    <ion-nav-title>缺陷填报</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-addyh" ng-click="addTrouble()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false" on-drag-down="onDragDown()">
+        <div class="troubleTop">
+            <ul>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="状态：" id="_label-0">状态：</span>
+                        <input type="text" class="rightselect" id="statusid" readonly="" placeholder="请选择状态"
+                               ng-click="toSelectStatus()">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="域：" id="_label-1">域：</span>
+                        <input type="text" class="rightselect" id="defectYuId" readonly="" placeholder="请选择域"
+                               ng-click="toSelectYu()">
+                    </label>
+                </li>
+                <li>
+                    <button class="commitBtn" ng-click="searchDefect()">查询</button>
+                </li>
+            </ul>
+            <!--<div class="selectStuts">
+                <select class="rightShow" id="selectedOption" ng-change="toSelectStatus()" ng-model="statusModel">
+                    <option value="{{$index}}" ng-repeat="t in status" ng-selected="$index==0">{{t}}</option>
+                </select>
+            </div>
+            <div class="search">
+                <select id="selectedYu" class="yuShow" ng-style="yuWidth" ng-change="toSelectYu()" ng-model="yumodel">
+                    <option value="{{$index}}" ng-repeat="x in yuList track by $index" ng-selected="$index==0">{{x.DESCRIPTION}}
+                    </option>
+                </select>
+            </div>-->
+        </div>
+        <div class="troubleList">
+            <div class="content ionic-pseudo">
+                <div class="list" ng-repeat="x in defectArr">
+                    <a class="item item-avatar" href="#" ng-click="toDetail(x)">
+                        <div class="numstatus"><i class="jiicon" ng-style="statusColor(x.QX_TYPE)">{{x.QX_TYPE | limitTo
+                            : 1}}</i></div>
+                        <div class="titleDes">{{(x.ERR_DESCR).length>20 ? (x.ERR_DESCR | limitTo:20)+'...' :
+                            (x.ERR_DESCR)}}<em class="ji">{{x.STATE}}</em></div>
+                        <div class="author">{{x.REPORTED_BY_ID}}<em>{{x.REG_DATE | limitTo:10}}</em></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,25 @@
+angular.module('BaiYin.OSI.OSILine', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI/OSILine', {
+            url: '/OSI/OSILine',
+            controller: 'OSILineController',
+            templateUrl: 'OSI/OSILine/OSILine.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSILineController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+            });
+            $scope.toOSIArear = function(){
+                $state.go("OSI/OSIArear");
+            }
+        }
+    ])

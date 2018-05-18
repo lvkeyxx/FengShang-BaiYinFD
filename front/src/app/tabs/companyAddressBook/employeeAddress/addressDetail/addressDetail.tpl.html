@@ -1,0 +1,40 @@
+<ion-view class="addressDetailCSS">
+    <ion-nav-title>{{user.INTERNAL_DISPLAY_NAME}}</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="iranImg" >
+            <!-- <img class="headImg" src="{{user.pictureId}}}" > -->
+            <span class="headImg" ng-click="showAddFriends1()"></span>
+            <span class="chatImg" ng-click="goMessageDetail()"></span>
+        </div>
+        <ul class="phoneMes">
+            <li>
+                <a href="tel:{{user.MOBILE}}">{{user.MOBILE=='null'?'  ':user.MOBILE}}
+                  <a  class="phoneImg" href="tel:{{user.MOBILE}}"></a>
+                <a class="smsImg" href="sms:{{user.MOBILE}}"></a>
+                </a>
+            </li>
+        </ul>
+        <div class="phonePar">
+            <div class="phoneOp">
+                <div class="phoneStyle">email:</div>
+                <div class="phoneAlo">
+                    <a href="mailto:{{user.EMAIL}}">
+                            {{user.EMAIL=='null'?' ':user.EMAIL}}
+                        </a>
+                </div>
+            </div>
+            <div class="phoneOp">
+                <div class="phoneStyle">状态:</div>
+                <div class="phoneAlo">{{user.EMPLOYEE_STATUS}}</div>
+            </div>
+            <div class="phoneOp">
+                <div class="phoneStyle">职位:</div>
+                <div class="phoneAlo">{{user.POSITION_TITLE}}</div>
+            </div>
+            <div class="phoneOp">
+                <div class="phoneStyle">部门:</div>
+                <div class="phoneAlo">{{user.ORG_NAME}}
+                </div>
+            </div>
+    </ion-content>
+</ion-view>

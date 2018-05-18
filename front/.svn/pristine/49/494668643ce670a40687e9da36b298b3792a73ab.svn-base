@@ -1,0 +1,31 @@
+<ion-view class="attenceDetailCSS">
+    <ion-nav-title>早退详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <button class="selectDateBtn" ng-click="openDatePicker()" id="attenceCdTimeid">{{now | date : "yyyy-MM-dd"}}</button>
+            <!--<i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>-->
+            <div class="selectGlass">
+                <input type="text" id="attenceCdGlassid" placeholder="请选择部门" ng-click="selectGlass()" readonly>
+            </div>
+        </div>
+        <!--<div class="tips">
+            <span>提示：点击上面栏目可查看迟到事由</span>
+        </div>-->
+        <div class="attencelist">
+            <table>
+                <tr>
+                    <th>员工/部门</th>
+                    <th>打卡时间</th>
+                    <th>备注</th>
+                </tr>
+                <tr ng-repeat="count in cdztList">
+                    <td ng-if="count.CHECK_OUT_STATE=='早退'">{{count.PERSON_NAME}}</td>
+                    <td ng-if="count.CHECK_OUT_STATE=='早退'">
+                        <span class="{{count.CONFIRM_DATE.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{count.ACTUAL_START_TIME}}-{{count.ACTUAL_END_TIME}}</span>
+                    </td>
+                    <td class="{{count.CONFIRM_DATE.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}" ng-if="count.CHECK_OUT_STATE=='早退'" ng-bind-html="count.REMARKS"></td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

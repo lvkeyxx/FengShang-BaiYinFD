@@ -1,0 +1,58 @@
+.OSILineCSS {
+  @rem: 144rem;
+  background-color: #fff;
+  .item-note {
+    float: right;
+    color: #aaa;
+    font-size: 14px;
+    transform: translateY(5px);
+  }
+  .item{
+    padding:10px;
+  }
+  .item-icon-right .icon {
+    right: 0;
+  }
+  .item-icon-right {
+    padding-right: 34px;
+  }
+  .item-icon-left .icon, .item-icon-right .icon {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    top: 0;
+    height: 100%;
+    font-size: 14px;
+    color: #ddd;
+  }
+  .OSIDetail {
+    background: #fff;
+    .OSITitle {
+      height: 120/@rem;
+      line-height: 120/@rem;
+      text-align: left;
+      background: #f4f4f4;
+      color: #1296db;
+      padding-left: 10px;
+    }
+    .OSIList {
+      ul li {
+        .weekShow {
+          width: 30px;
+          height: 30px;
+          display: inline-block;
+          background: #1296db;
+          border-radius: 10px;
+          vertical-align: middle;
+          margin-right: 10px;
+          text-align:center;
+          line-height:30px;
+          color:#fff;
+        }
+      }
+    }
+  }
+}

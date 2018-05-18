@@ -1,0 +1,42 @@
+<ion-view class="attenceDetailCSS">
+    <ion-nav-title>迟到详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM-dd"}}</button>
+            <!--<i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>-->
+            <div class="selectGlass">
+                <input type="text" id="detailGalssId" placeholder="请选择部门" ng-click="selectGlass()" readonly>
+            </div>
+        </div>
+        <div class="attencelist">
+            <table>
+                <tr>
+                    <th>员工/部门</th>
+                    <th>打卡时间</th>
+                    <th>备注</th>
+                </tr>
+                <tr ng-click="toCause()">
+                    <td>张云/人资部</td>
+                    <td>10:50-14:20</td>
+                    <td>迟到50分钟早退20分钟</td>
+                </tr>
+                <tr ng-click="toCause()">
+                    <td>张云/人资部</td>
+                    <td>10:50-14:20</td>
+                    <td>迟到50分钟早退20分钟</td>
+                </tr>
+            </table>
+        </div>
+        <div class="tips">
+            <span>提示：点击上面栏目可查看迟到事由</span>
+        </div>
+        <div class="qqCause" ng-hide="qqCause">
+            <ul>
+                <li>
+                    <label>迟到事由：</label>
+                    <span>去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会</span>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

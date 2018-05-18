@@ -1,0 +1,71 @@
+<ion-view class="journalListCSS">
+    <ion-nav-title>日志</ion-nav-title>
+    <!--<ion-nav-buttons side="right">
+        <button class="button-icon icon ion-lsrz" ng-click="tohistoryJournal()">
+        </button>
+    </ion-nav-buttons>-->
+    <ion-content>
+        <div class="journal">
+            <div class="journalForm">
+                <ul>
+                    <li><label>日期</label>
+                        <!--<input placeholder="请选择日期" readonly>-->
+                        <input class="selectdate" ng-change="dateChangeEvent()" ng-model="value" type="text" name="select_date" id="select_date_please" class="selectDateicon" placeholder="选择开始日期" readonly="readonly" />
+                        <!--<span><i class="selectDateicon"></i></span>-->
+                    </li>
+                    <li><label>班次</label>
+                        <input id="selectclass" class="selectclass" placeholder="请选择班次" readonly ng-click="toSelectClass()">
+                    </li>
+                </ul>
+            </div>
+            <div class="journalList">
+                <ul ng-hide="flag2" ng-style="getBackground(color)">
+                    <li>
+                        <div class="journalDes" ng-click="toDetailListCenter(x)" ng-repeat="x in journal2 track by $index">
+                            <div class="journalxx" ng-show="$index==0">
+                                <span>电站：{{x.CONTRACT}}</span>
+                            </div>
+                            <div class="journalcontent">
+                                <ul>
+                                    <li>
+                                        <span>班次：{{x.WORK_SEQ}}</span>
+                                        <span class="rightShow">值别：{{x.OPER_GROUP}}</span>
+                                    </li>
+                                    <li>
+                                        <span>记录人：{{x.RECORD_PERSON}}</span>
+                                        <span class="rightShow">日志类别：{{x.OPELOG_TYPE}}</span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+                <ul ng-hide="flag" ng-style="getBackground(color)">
+                    <li>
+                        <div class="journalDes" ng-click="toDetailList(x)" ng-repeat="x in journal">
+                            <div class="journalxx" ng-hide="x.CONTRACT==''">
+                                <span>电站：{{x.CONTRACT}}</span>
+                            </div>
+                            <div class="journalcontent">
+                                <ul>
+                                    <li>
+                                        <span>班次：{{x.WORK_SEQ}}</span>
+                                        <span class="rightShow">值别：{{x.OPER_GROUP}}</span>
+                                    </li>
+                                    <li>
+                                        <span>记录人：{{x.RECORD_PERSON}}</span>
+                                        <span class="rightShow">日志类别：{{x.OPELOG_TYPE}}</span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

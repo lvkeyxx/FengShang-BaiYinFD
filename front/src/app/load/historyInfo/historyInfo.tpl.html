@@ -1,0 +1,18 @@
+<ion-view class="historyInfoCSS">
+    <ion-nav-title>历史日负荷({{name}})</ion-nav-title>
+    <ion-content>
+        <div class="historyList">
+            <table>
+                <tr>
+                    <th>日期</th>
+                    <th>实时负荷(MW)</th>
+                </tr>
+                <tr ng-repeat="power in hList track by $index">
+                    <td>{{power.OCCUR_TIME}}</td>
+                    <td>{{((power[type+'_POWER'] - 0) < 0 ? 0 : ((power[type+'_POWER'] - 0) > 999) ? 999 :power[type+'_POWER'])|number:2}}</td>
+                </tr>
+
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

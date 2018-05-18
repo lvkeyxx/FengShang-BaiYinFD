@@ -1,0 +1,29 @@
+<ion-view class="erpCSS">
+	<ion-nav-title>选择人员</ion-nav-title>
+	<ion-content class="padding" has-header="true">
+		<div class="card" ng-click="selectUser();">
+			赵**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			钱**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			孙**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			李**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			周**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			吴**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			郑**
+		</div>
+		<div class="card" ng-click="selectUser();">
+			王**
+		</div>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,28 @@
+<ion-view class="attenceDetailCSS">
+    <ion-nav-title>未打卡详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <button id="wdkDetailtimeID" class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM-dd"}}</button>
+            <!--<i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>-->
+            <div class="selectGlass">
+                <input type="text" id="unClockGalssId" placeholder="请选择部门" ng-click="selectGlass()" readonly>
+            </div>
+        </div>
+        <!--<div class="tips">
+            <span>提示：点击下面栏目可查看未打卡事由</span>
+        </div>-->
+        <div class="attencelist">
+            <table>
+                <tr>
+                    <th>员工</th>
+                    <th>备注</th>
+                </tr>
+                <tr ng-repeat="count in unClockList">
+                    <td>{{count.PERSON_NAME}}</td>
+                    <td>{{count.REMARKS}}</td>
+                </tr>
+            </table>
+        </div>
+
+    </ion-content>
+</ion-view>

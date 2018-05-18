@@ -1,0 +1,25 @@
+<ion-view class="erpCSS">
+    <ion-nav-title>ERP审批</ion-nav-title>
+    <ion-content class="padding" has-header="true">
+        <div ng-repeat="item in todoList" class="card" ng-click="toDetailsPage(item);">
+            <div>{{item.LU_DESCRIPTION}}</div>
+            <div class="time text">
+                    {{item.OBJVERSION.substr(0, 4)}}年
+                    {{item.OBJVERSION.substr(4, 2)}}月
+                    {{item.OBJVERSION.substr(6, 2)}}日
+            </div>
+            <div class="text" ng-bind-html="item.MSG_INFO"></div>
+            <div class="details text">
+                <span>详情</span>
+                <span>
+                    <i class="icon ion-chevron-right"></i>
+                </span>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="getTodoList();" distance="10%" immediate-check="false"></ion-infinite-scroll>
+    </ion-content>
+    <ion-footer-bar>
+        <span ng-click="toMyApplyPage();">我申请的</span>
+        <span ng-click="toMyJudgePage();">我审批的</span>
+    </ion-footer-bar>
+</ion-view>

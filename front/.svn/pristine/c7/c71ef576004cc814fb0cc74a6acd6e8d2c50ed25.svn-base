@@ -1,0 +1,133 @@
+angular.module('BaiYin.attence', [
+    'ionic'
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('attence', {
+            url: '/attence',
+            controller: 'attenceController',
+            templateUrl: 'attence/attence.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('attenceController', ['$timeout', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams','$ionicPopup','$timeout',
+
+        function ($timeout, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams,$ionicPopup,$timeout) {
+
+            $scope.$on('$ionicView.afterEnter', function () {
+                blueToothEnable();
+            });
+            //返回
+            $scope.goindex = function () {
+                $state.go('tabs/homePage');
+            }
+            //显示和隐藏上班打卡时间
+            $scope.sbdktimeShow = true;
+            $scope.clockinBtn = false;
+            $scope.xbdktimeShow = true;
+            $scope.clockoutBtn = false;
+            //点击上班打卡
+            $scope.toClockIn = function () {
+                $scope.sbdktimeShow = false;
+                $scope.clockinBtn = true;
+            }
+            //点击下班打卡
+            $scope.toClockout = function () {
+                $scope.xbdktimeShow = false;
+                $scope.clockoutBtn = true;
+            }
+            //点击我的考勤
+            $scope.toMyattence = function () {
+                $state.go('attence/myAttence');
+            }
+            //点击考勤统计
+            $scope.tocountAttence = function () {
+                $state.go('attence/countAttence');
+            }
+            //点击缺勤事由
+            $scope.tofillCause = function () {
+                $state.go('attence/fillCause');
+            }
+            //开启本机蓝牙
+            function blueToothEnable() {
+                ble.enable(
+                    function() {
+                        scanBlueTooth();
+                        showAlert.showMsg("","","Bluetooth is enabled");
+                    },
+                    function() {
+                        showAlert.showMsg("","","The user did *not* enable Bluetooth");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scanBlueTooth() {
+                $scope.devices = [];
+                loadingAnimation.showLoading('扫描中...', 'loding', 0);
+                $scope.timer = $timeout(function(){
+                    if ($scope.devices.length > 0) {
+                        loadingAnimation.hideLoading();
+                        upWindow($scope.devices);
+                    } else {
+                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
+                    }
+                },5000);
+                ble.scan([], 5, function (device) {//成功的回调函数
+                        $scope.devices.push(device);
+                    }, function () {
+                        //失败的回调函数
+                        showAlert.showMsg('', '', "扫描蓝牙失败");
+                    }
+                );
+            }
+            //弹出页面，显示扫描到的设备
+            function upWindow(devices) {
+                 var searchPopup = $ionicPopup.show({
+                    template:'<div><ul><li ng-repeat="device in devices">{{device.id}}</li></ul></div>',
+                    title: '扫描到的蓝牙设备',
+                    scope: $scope,
+                    //backdropClickToClose: true,
+                    //cssClass: 'form-popup',
+                    //animation: 'slide-in-up',
+                    buttons: [{
+                        text: '<b>取 消</b>',
+                        type: 'button-light',
+                        /*onTap: function (e) {
+                            $scope.searchPopup.close();
+                        }*/
+                    }, {
+                        text: '<b>连 接</b>',
+                        type: 'button-positive',
+                        /*onTap: function (e) {
+                            connectBlueTooth();
+                        }*/
+                    }]
+                });
+            }
+            //判断蓝牙是否可用
+            function blueToothIsEnabled(){
+                ble.isEnabled(
+                    function() {
+                        console.log("Bluetooth is enabled");
+                    },
+                    function() {
+                        console.log("Bluetooth is *not* enabled");
+                    }
+                );
+            }
+            //连接蓝牙
+            function connectBlueTooth(device) {
+                ble.connect(device.id, $scope.onConnected, $scope.onError);
+                readBlueToothData();
+            }
+
+            //读取数据
+            function readBlueToothData() {
+                ble.read(device.id, $scope.serviceUUID, $scope.counterCharacteristic, $scope.onDataReader, $scope.onReadError);
+            }
+
+        }
+
+    ])

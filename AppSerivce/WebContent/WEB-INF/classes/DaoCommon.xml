@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DaoCommon">  
+
+	<sql id="common_table_bak">
+  	SELECT 
+    <iterate property="columeList" conjunction=",">
+    	$columeList[]$ 
+    </iterate>
+    FROM $tableName$
+  </sql>
+  <sql id="common_selectColumnsListAndTable">
+  	SELECT 
+    <iterate property="columeList" conjunction=",">
+    	$columeList[]$ 
+    </iterate>
+    FROM $tableName$
+  </sql>
+  
+  <sql id="common_andListContions"> 
+	<dynamic prepend="where">		
+			<iterate property="conditions" conjunction="and">
+			$conditions[].name$$conditions[].value$
+			</iterate>
+	</dynamic>  
+  </sql>
+  <sql id="common_OrListContions"> 
+	<dynamic prepend="where">		
+			<iterate property="conditions" conjunction="or">
+			$conditions[].name$
+			$conditions[].value$
+			</iterate>
+	</dynamic>  
+  </sql>
+  
+  <sql id="common_orNestedListContions">
+  	<dynamic prepend="where">
+		<iterate property="outsideConditions" conjunction="or">
+		(
+			<iterate property="outsideConditions[].insideConditions" conjunction="and">
+			$outsideConditions[].insideConditions[].name$
+			#outsideConditions[].insideConditions[].value#
+			</iterate>
+		)
+		</iterate>
+	</dynamic> 	
+  </sql> 
+  <sql id="common_andNestedListContions">
+  	<dynamic prepend="where">
+		<iterate property="outsideConditions" conjunction="and">
+		(
+			<iterate property="outsideConditions[].insideConditions" conjunction="or">
+			$outsideConditions[].insideConditions[].name$
+			#outsideConditions[].insideConditions[].value#
+			</iterate>
+		)
+		</iterate>
+	</dynamic> 	
+  </sql> 
+	<select id="common_table" remapResults ="true"  resultClass="java.util.HashMap" parameterClass="com.domain.CommonDomain" >		  	
+    		select * from  $tableName$	
+    		<isNotNull property="conditions" >
+    			<include refid="common_andListContions"/>		
+    		</isNotNull>
+    		<isNotNull property="orderString" >
+    			$orderString$		
+    		</isNotNull>    
+    					
+	</select>  
+	<select id="execute_free_sql" remapResults ="true"  resultClass="java.util.HashMap" parameterClass="java.lang.String" >		  	
+    		$value$   					
+	</select>	
+	
+<!--
+		<isNotNull prepend="where" property="condition" >
+        		$condition$
+		</isNotNull>
+
+-->	
+</sqlMap>  
+ 

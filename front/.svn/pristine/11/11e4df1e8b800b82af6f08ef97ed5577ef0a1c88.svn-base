@@ -1,0 +1,167 @@
+.journalDetailListCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .tabs-positive > .tabs, .tabs.tabs-positive {
+    border-color: #fff;
+    background-color: #fff;
+    background-image: linear-gradient(0deg, #0c60ee, #0c60ee 50%, transparent 50%);
+    color: #000;
+  }
+  .pane, .view {
+    position: absolute;
+    top: 100px;
+    height: 100%;
+    background-color: #f4f4f4;
+  }
+  .tab-item.tab-item-active {
+    opacity: 1;
+    color: #3492e9;
+    border-bottom: 3px solid #3492e9;
+  }
+  .tab-item.tab-item-active span {
+    color: #3492e9;
+  }
+  //运行日志
+  .yxrzList {
+    margin-bottom: 120px;
+  }
+  .yxrzList ul li {
+    background: #fff;
+    border-radius: 40/@rem;
+    margin: 20/@rem;
+    padding: 20/@rem;
+    .jlxx {
+      line-height: 100/@rem;
+      color: #3492e9;
+      border-bottom: 1px solid #3492e9;
+      em{
+        float: right;
+      }
+      .bcxx{
+        display: block;
+      }
+    }
+    .jlcontent {
+      line-height: 80/@rem;
+      padding: 0 10px;
+      color: #999;
+      padding-top: 10px;
+    }
+    .jlcontent ul li{
+      border-bottom: 1px dotted #ddd;
+      border-radius: 0;
+      margin: 0;
+      padding: 10px 0;
+    }
+  }
+  //运行方式
+  .yxfsList {
+    margin-bottom: 120px;
+  }
+  .yxfsList ul li {
+    background: #fff;
+    border-radius: 40/@rem;
+    margin: 20/@rem;
+    padding: 20/@rem;
+    .xtname {
+      line-height: 100/@rem;
+      color: #3492e9;
+      border-bottom: 1px solid #3492e9;
+      em {
+        float: right;
+      }
+    }
+    .bzcontent {
+      line-height: 80/@rem;
+      padding: 0 10px;
+      color: #999;
+      padding-top: 10px;
+    }
+  }
+  .jjbList {
+    margin-bottom: 120px;
+  }
+  //交接班记录
+  .jjbList ul li {
+    background: #fff;
+    border-radius: 40/@rem;
+    margin: 20/@rem;
+    padding: 20/@rem;
+    /*.yuname {
+      line-height: 100/@rem;
+      color: #3492e9;
+      border-bottom: 1px solid #3492e9;
+    }*/
+    .jiaobanxx{
+      line-height: 80/@rem;
+      border-bottom: 1px dotted #ddd;
+      padding: 10PX;
+      .jiaobanrname{
+        display: block;
+      }
+      .jiaobanjl{
+        display: block;
+      }
+    }
+    .jiebanxx{
+      line-height: 80/@rem;
+      padding: 10px;
+      .jiebanrname{
+        display: block;
+        em{
+          float: right;
+        }
+      }
+      .jiebanjl{
+        display: block;
+      }
+    }
+    .bzcontent {
+      line-height: 80/@rem;
+      padding: 0 10px;
+      color: #999;
+      padding-top: 10px;
+    }
+  }
+  //接地线
+  .jdxList{
+      margin-bottom: 120px;
+  }
+  .jdxList ul li{
+    background: #fff;
+    border-radius: 40/@rem;
+    margin: 20/@rem;
+    padding: 20/@rem;
+    .yuname{
+      line-height: 100/@rem;
+      color: #3492e9;
+      border-bottom: 1px solid #3492e9;
+      em{
+        float: right;
+      }
+    }
+    .zsxxShow{
+      line-height: 80/@rem;
+      padding: 0 10px;
+      color: #999;
+      padding-top: 10px;
+      em{
+        float: right;
+      }
+    }
+  }
+  /*.journalDetailList {
+    margin: 20/@rem;
+  }
+  .journalDetailList ul li{
+    background: #fff;
+    padding: 20/@rem;
+    line-height: 80/@rem;
+    border-radius: 40/@rem;
+    margin-bottom: 20/@rem;
+    .timeli em{
+      float:right;
+      display: block;
+    }
+  }*/
+}

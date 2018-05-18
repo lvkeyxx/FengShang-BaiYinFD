@@ -1,0 +1,97 @@
+angular.module('BaiYin.OSI.OSIHistory', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('OSI/OSIHistory', {
+            url: '/OSI/OSIHistory',
+            controller: 'OSIHistoryController',
+            templateUrl: 'OSI/OSIHistory/OSIHistory.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+    }])
+    .controller('OSIHistoryController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.xclxListHide = true;
+            $scope.$on('$ionicView.afterEnter', function () {
+                getNowDate();
+            });
+            //获取当前日期
+            var date = new Date();
+
+            function getNowDate() {
+                $scope.timeStart = $filter("date")(date, "yyyy-MM-dd");
+                $scope.timeEnd = $filter("date")(date, "yyyy-MM-dd");
+            }
+
+            //获取日历插件
+            var startIpObj = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    $scope.timeStart = $filter("date")(val, "yyyy-MM-dd");
+                    $("#StartHistoryID").val($scope.timeStart);
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            var endIpObj = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    $scope.timeEnd = $filter("date")(val, "yyyy-MM-dd");
+                    $("#endHistoryID").val($scope.timeEnd);
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            //开始时间
+            $scope.openStartDatePicker = function () {
+                ionicDatePicker.openDatePicker(startIpObj);
+            };
+            //结束时间
+            $scope.openEndDatePicker = function () {
+                ionicDatePicker.openDatePicker(endIpObj);
+            };
+            //上拉弹出搜索框
+            $scope.onDragDown = function () {
+                $(".selectTime").show('slow');
+            }
+            //点击查询按钮
+            $scope.searchDefect = function () {
+                $scope.xclxListHide = false;
+                $(".selectTime").hide('slow');
+                $(".content").show('slow');
+            }
+            //点击巡查记录详情
+            $scope.toHistoryDetail = function () {
+                $state.go("OSI/OSIHistoryDetail");
+            }
+
+        }
+    ])

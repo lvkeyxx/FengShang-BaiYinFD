@@ -1,0 +1,451 @@
+.powerCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .tabs-positive > .tabs, .tabs.tabs-positive {
+    border-color: #fff;
+    background-color: #fff;
+    background-image: linear-gradient(0deg, #0c60ee, #0c60ee 50%, transparent 50%);
+    color: #000;
+  }
+  .xj_dc{
+    cursor: pointer;
+    height: 20px;
+    width: 50px;
+    position: absolute;
+    right:60/@rem;
+    top:154/@rem;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .xjyue_dc{
+    cursor: pointer;
+    height: 20px;
+    width: 50px;
+    position: absolute;
+    right:220/@rem;
+    top: 154/@rem;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .my_dc {
+    cursor: pointer;
+    height: 20px;
+    width: 50px;
+    position: absolute;
+    right:60/@rem;
+    top:120/@rem;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .dcactive{
+    border: 1px solid #ffffff;
+    background: #36a2ef;
+    color: #ffffff;
+  }
+  .dcnone{
+    border: 1px solid #36a2ef;
+    background: none;
+    color: #36a2ef;
+  }
+  .yue_dc{
+    cursor: pointer;
+    height: 20px;
+    width: 50px;
+    position: absolute;
+    right:220/@rem;
+    top: 120/@rem;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .pane, .view {
+    position: absolute;
+    top: 100px;
+    height: 100%;
+    background-color: #f4f4f4;
+  }
+  .tab-item.tab-item-active {
+    opacity: 1;
+    color: #3492e9;
+    border-bottom: 3px solid #3492e9;
+  }
+  .tab-item.tab-item-active span {
+    color: #3492e9;
+  }
+  .loadList {
+    /*margin-bottom: 110px;*/
+    .dayList {
+      background: #fff;
+      border-radius: 40/@rem;
+      margin: 0 20/@rem 20/@rem 20/@rem;
+      /*padding: 20/@rem;*/
+      .iconbtn {
+        display: block;
+        .yearIcon {
+          background: url("../images/power/day_power_icon.png") no-repeat;
+          width: 45px;
+          height: 41px;
+          display: block;
+          float: left;
+        }
+        .dltbBtn {
+          float: right;
+          background: #3492e9;
+          color: #fff;
+          border-top-left-radius: 0/@rem;
+          border-top-right-radius: 40/@rem;
+          border-bottom-right-radius: 0/@rem;
+          border-bottom-left-radius: 60/@rem;
+          border: none;
+          width: 120/@rem;
+          height: 120/@rem;
+        }
+        .dltbBtn .dltbicon {
+          background: url("../images/power/fillForm_icon.png") no-repeat;
+          width: 27px;
+          height: 27px;
+          display: block;
+          margin: 0 auto;
+        }
+      }
+      .litop {
+        padding: 40/@rem;
+        .relativeRatio {
+          //text-align: right;
+          line-height: 80/@rem;
+        }
+        .powertime{
+
+        }
+        .powerright{
+          float: right;
+        }
+        .relativeRatio em {
+          color: #3492e9;
+        }
+      }
+      .litop ul {
+        font-size: 0;
+        border-bottom: 2px solid #3492e9;
+      }
+      .litop ul li {
+        font-size: 40/@rem;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .allshow {
+        padding: 0 30/@rem;
+        border-bottom: 2px solid #3492e9;
+        .allshowul {
+          font-size: 0;
+        }
+        .allshowul li {
+          font-size: 60/@rem;
+          display: inline-block;
+          text-align: center;
+
+        }
+        .allshowul .num {
+          color: #3492e9;
+          text-align: right;
+          padding-right: 25px;
+        }
+        .allshowul .unit {
+          color: #000;
+        }
+      }
+      .lifoot {
+        padding: 20/@rem;
+        .dayequally {
+          font-size: 0;
+        }
+        .dayequally li {
+          font-size: 40/@rem;
+          display: inline-block;
+          text-align: center;
+        }
+        .dayequally .num {
+          color: #3492e9;
+        }
+      }
+    }
+    /*月电量*/
+    .monthList {
+      background: #fff;
+      border-radius: 40/@rem;
+      margin: 0 20/@rem 20/@rem 20/@rem;
+      /*padding: 20/@rem;*/
+      .iconbtn {
+        .mounthIcon {
+          background: url("../images/power/mounth_power_icon.png") no-repeat;
+          width: 45px;
+          height: 41px;
+          display: block;
+          float: left;
+        }
+        .dltbBtn {
+          float: right;
+          background: #3492e9;
+          color: #fff;
+          border-top-left-radius: 0/@rem;
+          border-top-right-radius: 40/@rem;
+          border-bottom-right-radius: 0/@rem;
+          border-bottom-left-radius: 60/@rem;
+          border: none;
+          width: 120/@rem;
+          height: 120/@rem;
+        }
+        .dltbBtn .dltbicon {
+          background: url("../images/power/fillForm_icon.png") no-repeat;
+          width: 27px;
+          height: 27px;
+          display: block;
+          margin: 0 auto;
+        }
+      }
+      .litop {
+        padding: 40/@rem;
+        .relativeRatio {
+          //text-align: right;
+          line-height: 80/@rem;
+        }
+        .powertime{
+
+        }
+        .powerright{
+          float: right;
+        }
+        .relativeRatio em {
+          color: #34e853;
+        }
+      }
+      .litop ul {
+        font-size: 0;
+        border-bottom: 2px solid #3492e9;
+      }
+      .litop ul li {
+        font-size: 40/@rem;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .allshow {
+        padding: 0 30/@rem;
+        border-bottom: 2px solid #33ea54;
+        .allshowul {
+          font-size: 0;
+        }
+        .allshowul li {
+          font-size: 60/@rem;
+          display: inline-block;
+          text-align: center;
+
+        }
+        .allshowul .num {
+          color: #3492e9;
+          text-align: right;
+        }
+        .allshowul .unit {
+          color: #000;
+        }
+      }
+      .lifoot {
+        padding: 20/@rem;
+        .dayequally {
+          font-size: 0;
+        }
+        .dayequally li {
+          font-size: 40/@rem;
+          display: inline-block;
+          text-align: center;
+        }
+        .dayequally .num {
+          color: #3492e9;
+        }
+      }
+    }
+    /*年电量*/
+    .yearList {
+      background: #fff;
+      border-radius: 40/@rem;
+      margin: 0 20/@rem 20/@rem 20/@rem;
+      /*padding: 20/@rem;*/
+      .iconbtn {
+        .yearIcon {
+          background: url("../images/power/year_power_icon.png") no-repeat;
+          width: 45px;
+          height: 41px;
+          display: block;
+          float: left;
+        }
+        .dltbBtn {
+          float: right;
+          background: #3492e9;
+          color: #fff;
+          border-top-left-radius: 0/@rem;
+          border-top-right-radius: 40/@rem;
+          border-bottom-right-radius: 0/@rem;
+          border-bottom-left-radius: 60/@rem;
+          border: none;
+          width: 120/@rem;
+          height: 120/@rem;
+        }
+        .dltbBtn .dltbicon {
+          background: url("../images/power/fillForm_icon.png") no-repeat;
+          width: 27px;
+          height: 27px;
+          display: block;
+          margin: 0 auto;
+        }
+      }
+      .litop {
+        padding: 40/@rem;
+        .relativeRatio {
+          //text-align: right;
+          line-height: 80/@rem;
+        }
+        .powertime{
+
+        }
+        .powerright{
+          float: right;
+        }
+        .relativeRatio em {
+          color: #fbb80b;
+        }
+      }
+      .litop ul {
+        font-size: 0;
+        border-bottom: 2px solid #3492e9;
+      }
+      .litop ul li {
+        font-size: 40/@rem;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .allshow {
+        padding: 0 30/@rem;
+        border-bottom: 2px solid #fbb80c;
+        .allshowul {
+          font-size: 0;
+        }
+        .allshowul li {
+          font-size: 60/@rem;
+          display: inline-block;
+          text-align: center;
+
+        }
+        .allshowul .num {
+          color: #3492e9;
+          text-align: right;
+        }
+        .allshowul .unit {
+          color: #000;
+        }
+      }
+      .lifoot {
+        padding: 20/@rem;
+        .dayequally {
+          font-size: 0;
+        }
+        .dayequally li {
+          font-size: 40/@rem;
+          display: inline-block;
+          text-align: center;
+        }
+        .dayequally .num {
+          color: #3492e9;
+        }
+      }
+    }
+
+  }
+  //甘肃切换
+  .graph {
+    background: #fff;
+    margin: 0 20/@rem 20/@rem 20/@rem;
+    border-radius: 40/@rem;
+    padding: 20/@rem;
+    .jctIcon {
+      background: #ff0000;
+    }
+    .bdqdIcon {
+      background: green;
+    }
+    .qddeIcon {
+      background: #ffee00;
+    }
+    .dhIcon {
+      background: #3492e9;
+    }
+    .stbIcon{
+      background: #e94fd9;
+    }
+    .graphImg {
+      text-align: center;
+      height: 300px;
+    }
+  }
+  .graph ul {
+    text-align: right;
+  }
+  .graph ul li {
+    display: inline-block;
+    line-height: 120/@rem;
+    margin-right: 20/@rem;;
+  }
+  .graph ul li i {
+    width: 40/@rem;
+    height: 40/@rem;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20/@rem;
+    transform: translateY(-5/@rem);
+  }
+  .graphList {
+    background: #fff;
+    margin: 0 20/@rem 20/@rem 20/@rem;
+    border-radius: 40/@rem;
+    /*margin-bottom: 110px;*/
+
+    /*padding: 20/@rem;*/
+    table{
+      width: 100%;
+    }
+    table th {
+      padding: 10px 5px;
+      background: #e1effc;
+      vertical-align: middle;
+      color: #3492e9;
+    }
+    table th:first-child {
+      border-top-left-radius: 15px;
+      border-right: 1px solid #d7e2ec;
+      width: 70px;
+    }
+    table th:last-child {
+      border-top-right-radius: 15px;
+    }
+    table td {
+      border: 1px solid #fefefe;
+      border-collapse: collapse;
+      padding: 10px 5px;
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: 1px solid #e1effc;
+    }
+    table tr td:first-child {
+      border-left: 1px solid #e1effc;
+      border-right: 1px solid #e1effc;
+      color: #3492e9;
+    }
+    /*table tr:nth-child(odd)	{
+      background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+      background-color: #ffffff;
+    }*/
+  }
+
+}

@@ -1,0 +1,69 @@
+angular.module('BaiYin.OffLine.OffLineLook', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OffLine/OffLineLook', {
+            url: '/OffLine/OffLineLook',
+            controller: 'OffLineLookController',
+            templateUrl: 'OffLine/OffLineLook/OffLineLook.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {
+                TEMP_ID: null,
+                DESCRIPTION: null,
+                INSPECT_TYPE: null,
+                START_TIME: null,
+                END_TIME: null,
+                INSPECTED: null,
+                INSPECT: null,
+                childList: null
+            }
+        })
+    }])
+    .controller('OffLineLookController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                var OffLineUpList= JSON.parse(localStorage.getItem("OffLineSignList"));
+                // alert(JSON.stringify(OffLineUpList))
+                $scope.hDetail=OffLineUpList;
+                for (var i = 0; i < $scope.hDetail.length; i++) {
+                    if ($scope.hDetail[i].RECORD_TIME == '' || $scope.hDetail[i].RECORD_TIME == null) {
+                        /*$scope.identifyShow = '未签到';*/
+                        console.log('', '', 'i==' + i);
+                        $("#qdIconColorid" + i).css('background', '#ccc');
+                        $("#qdIconColorid" + i).text('未签到');
+                    } else {
+                        $("#qdIconColorid" + i).text('已签到');
+                        $("#qdIconColorid" + i).css("background", "#83ecad");
+                    }
+                }
+                //签到样式
+                $scope.identify = {
+                    'padding': '5px',
+                    'line-height': '35px',
+                    'border-radius': '50%',
+                    'display': 'inline-block',
+                    'float': 'left',
+                    'color': '#fff',
+                    'margin-right': '10px',
+                    'font-size': '12px',
+                    'width': '45px',
+                    'text-align': 'center'
+                }
+            });
+            /*点击上传*/
+            $scope.OffLineUpload=function () {
+                var OffLineUpList= JSON.parse(localStorage.getItem("OffLineSignList"));
+                alert(JSON.stringify(OffLineUpList))
+                $http.post('ServiceName=InspectionService&TransName=upLoadXcData',OffLineUpList)
+                    .then(function (res) {
+                        console.log(res);
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+
+
+        }
+    ])

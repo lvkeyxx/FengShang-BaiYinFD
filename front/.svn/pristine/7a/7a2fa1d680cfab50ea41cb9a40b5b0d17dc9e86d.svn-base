@@ -1,0 +1,375 @@
+.PMCSS {
+  * {
+
+  }
+  @rem: 144rem;
+  background-color: #fff;
+  //background-color: #f4f4f4;
+
+  .kpiheader {
+    /*background: url(../images/KPI/weather_img_bg.png) no-repeat center;*/
+    background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#50b2fb), to(#a6d4f6));
+    background-size: 100%;
+    padding-top: 10px;
+    /*height: 690/@rem;*/
+  }
+  .kpiheader .goBack {
+    display: inline-block;
+  }
+  .kpiheader .electricSelect {
+    display: inline-block;
+    margin-left: 10px;
+    color: #fff;
+    transform: translateY(20/@rem);
+    .rightselect{
+      background: transparent;
+      border:none;
+      background: url("../images/PM/selectdown_icon.png")no-repeat right;
+      color:#fff;
+      width: 150px;
+    }
+    .selectOther {
+      background: url("../images/PM/selectdown_icon.png");
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 15px;
+    }
+  }
+
+  //返回首页
+  .goBack {
+    height: 100/@rem;
+    line-height: 100/@rem;
+    color: #fff;
+    font-size: 40/@rem;
+    transform: translateY(28/@rem);
+    margin-left: 10px;
+    margin-right: 20px;
+  }
+  .goback_icon {
+    display: inline-block;
+    background: url(../images/KPI/goback_icon.png) no-repeat center;
+    width: 80/@rem;
+    height: 80/@rem;
+  }
+  //选择电厂
+  .electricSelect {
+    /*transform: translateY(18/@rem);*/
+  }
+  .electricSelect select {
+    appearance:none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    //background: transparent;
+    height: 100/@rem;
+    line-height: 100/@rem;
+    color: #fff;
+    background: url("../images/selectDown_icon.png")no-repeat scroll right center transparent;
+    .blue{
+      background: #fff;
+      color:#000;
+    }
+  }
+  //显示天气
+  .kpiheader .headmiddle {
+    margin-top: 5px;
+    width: 100%;
+    padding: 0 0px 5px 0px;
+  }
+  .kpiheader .headmiddle .weatherShow {
+    display: inline-block;
+  }
+  .kpiheader .headmiddle .weatherShow .weatherImg {
+    display: inline-block;
+    /*margin-right: 15px;*/
+    text-align: center;
+    float: left;
+  }
+  .kpiheader .headmiddle .weatherShow .weatherImg img {
+    width: 180/@rem;
+    height: 180/@rem;
+    display: block;
+    transform: translateY(-20/@rem);
+    margin: 0 auto;
+  }
+  .kpiheader .headmiddle .weatherShow .weatherImg p {
+    display: block;
+    text-align: center;
+    color: #fff;
+    transform: translateY(10/@rem);
+    font-size: 40/@rem;
+    padding: 0;
+    margin: 0;
+  }
+  .kpiheader .headmiddle .weatherShow .weatherDes {
+    display: inline-block;
+  }
+  .kpiheader .headmiddle .weatherShow .weatherDes ul li {
+    /*height: 70/@rem;*/
+    line-height: 70/@rem;
+    color: #fff;
+    font-size: 40/@rem;
+  }
+  .kpiheader .headmiddle .weatherShow .weatherDes .wendu {
+    font-size: 60/@rem;
+  }
+  .kpiheader .headmiddle .power {
+    display: inline-block;
+    height: 70/@rem;
+    line-height: 70/@rem;
+    color: #fff;
+    font-size: 40/@rem;
+    float: right;
+    /*transform: translateY(20/@rem);*/
+  }
+  .kpiheader .headmiddle .power .comLoad {
+    display: inline-block;
+    text-align: right;
+  }
+  .kpiheader .headmiddle .power .comLoad span {
+    display: block;
+  }
+  .kpiheader .headmiddle .power .comPower {
+    display: inline-block;
+    text-align: right;
+    float: right;
+  }
+  .kpiheader .headmiddle .power .comPower span {
+    display: block;
+  }
+  //各厂信息显示
+  .kpiheader .headerFoot {
+    background: rgba(0, 0, 0, 0.5);
+    /*display: none;*/
+  }
+  .kpiheader .headerFoot ul {
+    font-size: 0;
+  }
+  .kpiheader .headerFoot ul li {
+    display: inline-block;
+    font-size: 40/@rem;
+    height: 140/@rem;
+    line-height: 70/@rem;
+    color: #fff;
+    text-align: center;
+    margin: 5px 0;
+  }
+  .kpiheader .headerFoot ul li p {
+    margin: 0;
+    padding: 0;
+  }
+  .kpiheader .headerFoot .rightBorder {
+    border-right: 1px solid #eeeeee26;
+  }
+  //负荷电量显示按钮
+  .btnnav {
+    padding: 10px 35/@rem;
+    background-color: #f4f4f4;
+  }
+  .btnnav ul{
+    font-size: 0;
+  }
+  .btnnav ul li {
+    display: inline-block;
+    text-align: center;
+    font-size: 80/@rem;
+    color: #1296db;
+    text-shadow: #fff 1px 1px 1px;
+
+    /*border: 2px solid #fff;*/
+  }
+  .btnnav .goFuhe {
+    background: url(../images/KPI/fuhe_btn_img.png) no-repeat center;
+    width: 488/@rem;
+    height: 230/@rem;
+    margin-right: 20/@rem;
+    border-radius: 15px;
+    line-height: 230/@rem;
+    padding: 0;
+  }
+  .btnnav .goFuhe .fhicon_img {
+    background: url(../images/KPI/fhicon_img.png) no-repeat center;
+    display: inline-block;
+    width: 150/@rem;
+    height: 150/@rem;
+    vertical-align: middle;
+    margin-right: 20/@rem;
+  }
+  .btnnav .goDl {
+    background: url(../images/KPI/dianliang_bnt_img.png) no-repeat center;
+    width: 488/@rem;
+    height: 230/@rem;
+    border-radius: 15px;
+    line-height: 230/@rem;
+    padding: 0;
+  }
+  .btnnav .goDl .dlicon_img {
+    background: url(../images/KPI/dlicon_img.png) no-repeat center;
+    display: inline-block;
+    width: 150/@rem;
+    height: 150/@rem;
+    vertical-align: middle;
+    margin-right: 20/@rem;
+  }
+  //九宫格信息显示
+  .navlist {
+    /*margin-top: 10px;
+    background: #fff;*/
+    border-top: 5px solid #f4f4f4;
+  }
+  .navlist ul {
+    font-size: 0px;
+  }
+  .navlist ul li {
+    display: inline-block;
+    padding: 0 35/@rem;
+    text-align: center;
+    font-size: 40/@rem;
+    border-bottom: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist ul li:nth-child(2) {
+    border-right: 1px solid rgba(208, 234, 234, 0.3);
+    border-left: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist ul li:nth-child(4) {
+    border-left: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist ul li:nth-child(5) {
+    border-left: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist ul li:nth-child(8) {
+    border-right: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist ul li:nth-child(7) {
+    border-right: 1px solid rgba(208, 234, 234, 0.3);
+    border-left: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist ul li:nth-child(9) {
+    border-right: 1px solid rgba(208, 234, 234, 0.3);
+  }
+  .navlist .rowLation p {
+    text-align: center;
+    transform: translateY(85/@rem);
+    font-size: 0.27777778rem;
+    align-content: center;
+    color: black;
+    margin: 0;
+  }
+  .navlist .col-20 {
+    height: 290/@rem;
+    padding: 0;
+  }
+  .fhyc_img {
+    display: inline-block;
+    background: url(../images/PM/fuheyuce_img_icon_grey.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .yxri_img {
+    display: inline-block;
+    background: url(../images/PM/yxrz_img_icon.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .yhpc_img {
+    display: inline-block;
+    background: url(../images/PM/yhpc_img_icon.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .qxtb_img {
+    display: inline-block;
+    background: url(../images/PM/qxtb_img_icon.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .kqqd_img {
+    display: inline-block;
+    background: url(../images/PM/kqqd_img_icon_grey.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .rwgl_img {
+    display: inline-block;
+    background: url(../images/PM/rwgl_img_icon_grey.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .sbxx_img {
+    display: inline-block;
+    background: url(../images/PM/sbxx_img_icon.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .xcxc_img {
+    display: inline-block;
+    background: url(../images/PM/xcxc_img_icon.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .xctj_img {
+    display: inline-block;
+    background: url(../images/PM/xctj_img_icon.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  .sczb_img {
+    display: inline-block;
+    background: url(../images/PM/sczbIcon_img.png) no-repeat center;
+    background-size: 100%;
+    width: 80/@rem;
+    height: 80/@rem;
+    transform: translateY(50/@rem);
+  }
+  //广告显示
+  .advert {
+    margin-top: 5px;
+  }
+  .advert img {
+    width: 100%;
+    height: 1.2rem;
+  }
+  .allbg {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:90/@rem;
+    z-index: 99;
+  }
+  .otherList{
+    background: #fff;
+    position: fixed;
+    z-index: 9999;
+    top:90/@rem;
+    width: 100%;
+    height: 100px;
+    overflow: scroll;
+  }
+  .otherList ul li{
+    color: #3492e9;
+    line-height: 100/@rem;
+    text-align: center;
+  }
+}

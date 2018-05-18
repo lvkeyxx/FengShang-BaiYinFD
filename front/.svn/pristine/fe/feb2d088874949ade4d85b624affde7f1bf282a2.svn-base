@@ -1,0 +1,200 @@
+.adddefectfillCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .bg{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    top:0;
+    z-index: 9999;
+    display: none;
+  }
+  img {
+    display: inline-block;
+    width: 30%;
+    margin-right: 2%;
+    height:150px;
+  }
+  .action-sheet .button {
+    font-size: 40/@rem;
+  }
+  .defectifll {
+    /*background: #fff;*/
+    padding: 40/@rem;
+  }
+  .defectifll ul li {
+    line-height: 80/@rem;
+    em {
+      float: right;
+    }
+  }
+  .addTroubleForm {
+    background: #fff;
+    .list {
+      .item-input input, .item-input textarea {
+        width: 98%;
+      }
+      .item {
+        margin: 0;
+        border-width: 1px;
+        border-style: none;
+        border-bottom: 1px solid #eee;
+        i {
+          color: #999;
+          font-size: 40/@rem;
+
+        }
+        textarea {
+          border: 1px solid #eee;
+          margin-right: 10px;
+          height: 100px;
+          margin-left: 12px;
+        }
+        .rightselect {
+          background: url("../images/PM/rightselect_icon.png") no-repeat right;
+          width: 15px;
+          height: 15px;
+          color: #999;
+          text-align: right;
+        }
+        .smewm {
+          background: url("../images/PM/saoyisaoewm.png") no-repeat right;
+          width: 25px;
+          height: 25px;
+          color: #999;
+          text-align: right;
+          padding-right: 30px;
+          margin-right: 10px;
+        }
+        .sbmc {
+          background: url("../images/PM/sliede_right.png") no-repeat right;
+          width: 25px;
+          height: 25px;
+          color: #999;
+          text-align: right;
+          padding-right: 30px;
+          margin-right: 10px;
+        }
+        .uploadimg {
+          display: block;
+          button {
+            position: absolute;
+            color: #ff0000;
+            border: none;
+            background: rgba(0, 0, 0, 0.5);
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            z-index: 99;
+          }
+          img {
+            display: block;
+            z-index: 9;
+            width: 100%;
+            height: auto;
+          }
+        }
+        .uploadimgShow {
+          display: inline-block;
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+          button {
+            display: block;
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: none;
+            outline: none;
+            background-image: url("../images/PM/addimg_icon.png");
+          }
+        }
+
+      }
+      .input-label {
+        width: 25%;
+        font-size: 40/@rem;
+        text-align: right;
+      }
+      .imglist{
+        margin-top: 10px;
+        position: relative;
+        display: inline;
+        img{
+          width: 30%;
+          margin-right: 2%;
+        }
+        button{
+          position: absolute;
+          color: #ff0000;
+          border: none;
+          background: #ddd;
+          width: 30px;
+          height: 30px;
+          border-radius: 30px;
+          line-height: 30px;
+          z-index: 99;
+          margin-left: -40px;
+        }
+      }
+    }
+  }
+  .allbg {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0/@rem;
+    z-index: 99;
+  }
+  .troubleList {
+    background: #fff;
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    overflow: scroll;
+  }
+  .troubleList ul li {
+    color: #3492e9;
+    line-height: 100/@rem;
+    text-align: center;
+  }
+  .sliderightShow {
+    margin-top: 20/@rem;
+    background: #fff;
+    .input-label {
+      width: 25%;
+      font-size: 0.27777778rem;
+      text-align: right;
+    }
+  }
+  .sblist {
+    background: #fff;
+    /*margin: 20/@rem;*/
+    border-radius: 20/@rem;
+    /*height: 100%;*/
+    display:none;
+    table {
+      width: 100%;
+      td {
+        border: 1px solid #fefefe;
+        border-collapse: collapse;
+        padding: 10px 5px;
+        text-align: center;
+        vertical-align: middle;
+        border-bottom: 1px solid #e1effc;
+      }
+      th {
+        padding: 10px 5px;
+        background: #e1effc;
+        vertical-align: middle;
+        color: #3492e9;
+      }
+    }
+
+  }
+
+}

@@ -1,0 +1,15 @@
+<ion-view class="KPIdetailCSS">
+    <ion-nav-title>{{title}}</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="btnView">
+            <div ng-repeat="val in data">
+                <div class="btnCss"   ng-click="seleteItem(val)">
+                    {{val=='0#'?'全厂':val}}
+                    <!-- <div  class="decLine"></div> -->
+                </div>
+            </div>
+        </div>
+        <div id="main" style="width: 8rem;height:6rem;"></div>
+    </ion-content>
+</ion-view>

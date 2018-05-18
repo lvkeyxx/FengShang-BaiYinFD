@@ -1,0 +1,17 @@
+<ion-view class="agents">
+    <ion-nav-title>业务申请</ion-nav-title>
+    <ion-content class="padding">
+        <div class="list">
+            <a class="item item-icon-left" ng-click="goLeaves(1)">
+                <i class="icon ion-ios-paper-outline"></i>
+                <h2>休假申请<!-- <span class="c_red">{{listLength}}</span> --> </h2>
+                <p></p>
+            </a>
+            <a class="item item-icon-left" ng-click="goLeaves(2)">
+                <i class="icon ion-compose"></i>
+                <h2>出差申请<!-- <span class="c_red">{{listLength}}</span> --></h2>
+                <p></p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

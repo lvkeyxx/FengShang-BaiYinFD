@@ -1,0 +1,15 @@
+<ion-view class="EditBluetoothCSS">
+	<ion-nav-title>录入蓝牙信息</ion-nav-title>
+	<ion-content class="EditBluetoothController" has-bouncing="false" scrollbar-y="false">
+        <div class="card">
+            <textarea ng-model="device.bluetooth_desc" rows="5" placeholder="请输入蓝牙描述..."></textarea>
+        </div>
+        <div class="card">
+            <textarea ng-model="device.address" rows="5" placeholder="请输入蓝牙地址..."></textarea>
+        </div>
+    </ion-content>
+    <ion-footer-bar>
+        <span ng-click="save();">保存</span>
+        <span ng-click="back();">取消</span>
+    </ion-footer-bar>
+</ion-view>

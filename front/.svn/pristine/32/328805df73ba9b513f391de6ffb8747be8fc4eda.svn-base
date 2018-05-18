@@ -1,0 +1,42 @@
+<ion-view class="OSIcountCSS">
+    <ion-nav-title>巡检人员</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIcount">
+            <div class="tips">提示：点击姓名可查看巡检线路</div>
+            <div class="OSIList">
+                <table>
+                    <tr>
+                        <th ng-click="toOSILine()">姓名</th>
+                        <th>巡查状况</th>
+                        <th>百分比</th>
+                    </tr>
+                    <tr>
+                        <td ng-click="toOSILine()">马晓春</td>
+                        <td>合格</td>
+                        <td>99.8%</td>
+                    </tr>
+                    <tr>
+                        <td ng-click="toOSILine()">杜鹏淘</td>
+                        <td>不合格</td>
+                        <td>96%</td>
+                    </tr>
+                    <tr>
+                        <td ng-click="toOSILine()">张会丽</td>
+                        <td>合格</td>
+                        <td>89.2%</td>
+                    </tr>
+                    <tr>
+                        <td ng-click="toOSILine()">李在天</td>
+                        <td>不合格</td>
+                        <td>99.8%</td>
+                    </tr>
+                    <tr>
+                        <td ng-click="toOSILine()">景小辉</td>
+                        <td>合格</td>
+                        <td>96%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,44 @@
+<ion-view class="tmDetailCSS">
+    <ion-nav-title>设备详情</ion-nav-title>
+    <ion-content>
+        <div class="specialList">
+            <h3>#3取水泵改造</h3>
+            <ul>
+                <li>
+                    <span>类型：单独报批重大项目<em>编号：528556464656</em></span>
+                    <span>计划开始时间：2018-03-11<em>实际开始时间：2018-03-22</em></span>
+                    <span>计划完成时间：2018-03-21<em>实际完成时间：2018-03-22</em></span>
+                    <span>负责人：杨金星<em>监督人：冯志宇</em></span>
+                    <span>项目预算：</span>
+                </li>
+            </ul>
+        </div>
+        <div class="xmContent">
+            <h3>项目内容</h3>
+            <span>项目是指一系列独特的、复杂的并相互关联的活动，这些活动有着一个明确的目标或目的，必须在特定的时间、预算、资源限定内，依据规范完成。项目管理的主要内容有范围管理、时间管理、费用管理、质量管理、人力资源管理、风险管理、沟通管理、采购与合同管理和综合管理。</span>
+        </div>
+        <div class="xmMarker">
+            <h3>项目里程碑</h3>
+            <ul>
+                <li>
+                    <i class="lcbNum">1</i>
+                    <h3>备件到货</h3>
+                    <span>开始时间：2017-01-11</span>
+                    <span>完成时间：</span>
+                </li>
+                <li>
+                    <i class="lcbNum">2</i>
+                    <h3>转固</h3>
+                    <span>开始时间：2018-02-30</span>
+                    <span>完成时间：</span>
+                </li>
+                <li>
+                    <i class="lcbNum">3</i>
+                    <h3>转固</h3>
+                    <span>开始时间：2018-03-11</span>
+                    <span>完成时间：</span>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

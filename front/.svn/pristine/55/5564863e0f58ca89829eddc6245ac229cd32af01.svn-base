@@ -1,0 +1,50 @@
+<ion-view class="agentsList">
+ <ion-nav-title>历史列表</ion-nav-title>
+  <ion-nav-buttons side="right">
+      <button class="button buttton-icon icon ion-ios-search " ng-click="showOrhide()">
+      </button>
+    </ion-nav-buttons>
+ <ion-content>
+  <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+     <div class="fade"   ng-if="trueStr">
+      <div class="filterAllList" >
+         <span>标题：</span>
+         <textarea ng-model="inpTitle.vom"  class="filterTitleCss"></textarea>   
+      </div>
+      <div class="filterAllList">
+         <span>时间：</span>
+         <span class="timeInp" ng-click="chooseTime('1')"  ng-model="filterDate">{{filterDate | date : "yyyy-MM-dd"}}</span>
+         <span>~</span>
+           <span class="timeInp" ng-click="chooseTime('2')"  ng-model="filterDate2">{{filterDate2 | date : "yyyy-MM-dd"}}</span>
+      </div>
+      <div class="filterAllList">
+         <span>审批源：</span><span class="timeInp choseA" ng-click="chooseWhich()" ng-model="chooseNum">{{chooseNum}}</span>
+         <span ng-if="showChoose" ng-repeat="cont in conts" >
+           <span class="whichFrom" ng-click="chooseFrom(cont.name)" ng-model="cont.name" >{{cont.name}}</span>
+         </span>
+       </div>
+       <div class="butAll">
+        <button  class="makeSur" ng-click="listAll()">清空</button>
+         <button class="makeSur" ng-click="allChoose(inpTitle.vom)">确定</button>
+       </div>
+       
+   </div>
+   <div class="agentList ">
+     <div class="historyTitleCss">标题</div>
+     <div class="historyListCss">最新处理时间</div>
+     <div>审批源</div>
+   </div>
+   <div class="agentsDetail historyChangeCss" ng-repeat="item in items" ng-click="agentsItem(item)" >
+     <div class="agentsTitle hsitoryTitle">
+     <span class="bagDian"></span>
+     {{item.TITLE}}
+     </div>
+     <div  class="agentsData  historyData">{{item.CREATED_DATE | date : "MM月dd日HH时mm分"}}</div>
+     <div class="terminalCss">{{item.FROM_CLIENT}}
+      <span class="bagImg"></span></div>
+   </div>
+      <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%"
+       immediate-check="false">
+      </ion-infinite-scroll>
+ </ion-content>
+</ion-view>

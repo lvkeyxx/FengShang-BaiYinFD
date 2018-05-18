@@ -1,0 +1,150 @@
+<ion-view class="taskManageCSS">
+    <ion-nav-title>
+        <div class="taskTitle">
+            <span ng-style="spanUsually" ng-click="toUsually()">日常</span>
+            <span ng-style="spanSpecial" ng-click="toSpecial()">专项</span>
+        </div>
+    </ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab" ng-hide="rcrwHide">
+        <ion-tab title="全部" ng-click="toAllData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="allTask">
+                    <ul>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>已完成</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：2016-09-28</span>
+                            <span>实际完成时间：2016-09-28</span>
+                            <span>备注：完成</span>
+                        </li>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>处理中</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：2016-09-28</span>
+                            <span>实际完成时间：2016-09-28</span>
+                            <span>备注：</span>
+                        </li>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>处理中</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：2016-09-28</span>
+                            <span>实际完成时间：</span>
+                            <span>备注：</span>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="处理中" ng-click="toClzData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="allTask">
+                    <ul>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>处理中</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：2016-09-28</span>
+                            <span>实际完成时间：</span>
+                            <span>备注：</span>
+                        </li>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>处理中</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：2016-09-28</span>
+                            <span>实际完成时间：</span>
+                            <span>备注：</span>
+                        </li>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>处理中</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：2016-09-28</span>
+                            <span>实际完成时间：</span>
+                            <span>备注：</span>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="已完成" ng-click="toYwcData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="allTask">
+                    <ul>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>已完成</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：</span>
+                            <span>实际完成时间：2016-09-28</span>
+                            <span>备注：完成</span>
+                        </li>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>已完成</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：</span>
+                            <span>实际完成时间：2016-09-28</span>
+                            <span>备注：完成</span>
+                        </li>
+                        <li>
+                            <h3>编制2017年预算要考虑3、4机组<em>已完成</em></h3>
+                            <span>负责部门：生产部，运行部，设备部，燃管部</span>
+                            <span>监督部门：生技部</span>
+                            <span>安排时间：2016-09-22</span>
+                            <span>计划完成时间：</span>
+                            <span>实际完成时间：2016-09-28</span>
+                            <span>备注：完成</span>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+    <ion-content ng-hide="specialHide">
+        <div class="specialData">
+            <ul>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" id="_label-0">项目类型：</span>
+                        <input type="text" class="rightselect" id="taskStatusID" readonly="" placeholder="单独报批重大项目"
+                               ng-click="toSelectStatus()">
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="specialList">
+            <ul>
+                <li>
+                    <h3>#3取水泵改造<em>备件到货</em></h3>
+                    <span>负责人：马晓华<i>项目监督人：张潇</i></span>
+                    <span>计划开始时间：2018-03-11</span>
+                    <span>计划开始时间：2018-03-21</span>
+                </li>
+                <li>
+                    <h3>#3取水泵改造<em>备件到货</em></h3>
+                    <span>负责人：马晓华<i>项目监督人：张潇</i></span>
+                    <span>计划开始时间：2018-03-11</span>
+                    <span>计划开始时间：2018-03-21</span>
+                </li>
+                <li>
+                    <h3>#3取水泵改造<em>备件到货</em></h3>
+                    <span>负责人：马晓华<i>项目监督人：张潇</i></span>
+                    <span>计划开始时间：2018-03-11</span>
+                    <span>计划开始时间：2018-03-21</span>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

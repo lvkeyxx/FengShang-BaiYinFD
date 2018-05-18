@@ -1,0 +1,25 @@
+angular.module('BaiYin.OSI.OSIcount', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI/OSIcount', {
+            url: '/OSI/OSIcount',
+            controller: 'OSIcountController',
+            templateUrl: 'OSI/OSIcount/OSIcount.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSIcountController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+            });
+            $scope.toOSILine = function(){
+                $state.go('OSI/OSILine');
+            }
+        }
+    ])

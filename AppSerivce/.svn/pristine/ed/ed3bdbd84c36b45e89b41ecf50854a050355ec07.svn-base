@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="USERDOMAIN" >
+  <resultMap id="abatorgenerated_UserDomainResult" class="com.domain.UserDomain" >
+	<result column="PERSON_ID" property="personId" jdbcType="VARCHAR" />
+    <result column="picture_id" property="pictureId" jdbcType="VARCHAR" />
+    <result column="internal_display_name" property="internalDisplayName" jdbcType="VARCHAR" />
+    <result column="employee_status" property="employeeStatus" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="POSITION_TITLE" property="positionTitle" jdbcType="VARCHAR" />
+    <result column="Mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <select id="selectForListUserDomain" resultClass="java.util.HashMap" parameterClass="com.domain.UserDomain" >
+    select PERSON_ID,ORG_CODE,picture_id,internal_display_name,employee_status		
+		<!-- ,COMPANY_ORG_API.GET_ORG_NAME(COMPANY_ID,COMPANY_PERS_ASSIGN_API.GET_ORG_CODE_EMPLOYEE(COMPANY_ID,EMP_NO,SYSDATE))    as ORG_NAME
+		,COMPANY_POSITION_API.GET_POSITION_TITLE(COMPANY_ID,COMPANY_PERS_ASSIGN_API.GET_POS_CODE_EMPLOYEE(COMPANY_ID,EMP_NO)) as POSITION_TITLE
+		,PERS_COMMS_API.Get_Mobile(EMP_NO) as Mobile,PERS_COMMS_API.Get_E_Mail(EMP_NO) as Email -->
+    from ifsapp.COMPANY_PERSON
+	<dynamic prepend="where" >
+		<isNotNull property="orgCode" >        
+        ORG_CODE = #orgCode:VARCHAR#
+     	</isNotNull> 
+		<isNotNull property="personId" >        
+        PERSON_ID = #personId:VARCHAR#
+     	</isNotNull>      	
+    </dynamic>
+    order by pos_code
+  </select>
+</sqlMap>

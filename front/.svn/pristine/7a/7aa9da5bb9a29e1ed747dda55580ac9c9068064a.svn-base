@@ -1,0 +1,79 @@
+<ion-view class="myAttenceCSS">
+    <ion-nav-title>我的考勤</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <i class="myleftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>
+        </div>
+        <!--<div class="tips">
+            <span>提示：点击下面栏目可查看考勤详情</span>
+        </div>-->
+        <div class="myAttencelist">
+            <table>
+                <tr>
+                    <th>日期</th>
+                    <th>打卡时间</th>
+                    <th>备注</th>
+                </tr>
+                <tr>
+                    <td>3/1 <span>星期六</span></td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/2 <span>星期五</span></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/3 <span>星期四</span></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/4 <span>星期三</span></td>
+                    <td ng-click="showPositon(t)">08:45 - 18:56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/5 <span>星期二</span></td>
+                    <td class="abnormalAttence" ng-click="showPositon(t)">10:45 - 14:56</td>
+                    <td><span>迟到2小时45分</span><span>早退6小时4分</span></td>
+                </tr>
+                <tr>
+                    <td>3/6 <span>星期一</span></td>
+                    <td>-</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/7 <span>星期日</span></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/8 <span>星期六</span></td>
+                    <td ng-click="showPositon()"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/9 <span>星期五</span></td>
+                    <td ng-click="showPositon()">08:45 - 18:56</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3/10 <span>星期四</span></td>
+                    <td class="abnormalAttence" ng-click="showPositon()">10:45 - 14:56</td>
+                    <td><span>迟到2小时45分</span><span>早退6小时4分</span></td>
+                </tr>
+            </table>
+        </div>
+        <!--<div class="bg" ng-hide="blackShow"></div>
+        <div class="fillCause" ng-hide="fillCause" ng-style="fillCauseStyle">
+            <h3>填写事由</h3>
+            <textarea></textarea>
+            <div class="fillBtn">
+                <button>取消</button>
+                <button>确定</button>
+            </div>
+        </div>-->
+    </ion-content>
+</ion-view>

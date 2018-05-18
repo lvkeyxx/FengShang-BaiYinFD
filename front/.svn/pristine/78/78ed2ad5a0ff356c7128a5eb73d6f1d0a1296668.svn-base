@@ -1,0 +1,76 @@
+<ion-view class="agentsView">
+    <ion-nav-title>待办审批</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-ios-list-outline" ng-click="Toflow(item)">
+        
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="padding">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+        <div class="beizhu">
+            <div class="riseCss">标题:</div>
+            <div class="explainCss">{{item.TITLE}}</div>
+        </div>
+        <div class="allCss">
+            <div class="riseCss">流程最终处理时间:</div>
+            <div class="explainCss">{{item.CREATED_DATE | date : "MM月dd日HH时mm分"}}</div>
+        </div>
+        <div class="allCss">
+            <div class="riseCss">附加信息:</div>
+            <div class="addInformation explainCss">
+                <div class="addMessage" ng-repeat="MSG in item.FORM_INFO">
+                    <div class="fromIn">
+                        <!-- <div>{{key+':'}}</div> -->
+                        <div>{{MSG}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accessoryCss" ng-show="disFile" ng-click="accessoryCont()">附件</div>
+        <div ng-show="displayFile" class="explainCss" ng-repeat="i in item.ATTACHMENT">
+            <a ng-click="openUrl(i.URL)">{{i.TITLE}}</a>
+        </div>
+        <div class="lineCss"></div>
+        <div class="beizhu">
+            <div class="riseCss">备注:</div>
+            <div class="explainCss">{{item.ITEM_MESSAGE}}</div>
+        </div>
+        <div class="allCss">
+            <div class="riseCss">提交人姓名:</div>
+            <div class="explainCss">{{item.SUBMIT_PERSON_NAME}}</div>
+        </div>
+        <div class="allCss">
+            <div class="riseCss">当前审批人姓名:</div>
+            <div class="explainCss">{{item.PERSON_NAME}}</div>
+        </div>
+        <div class="allCss">
+            <div class="riseCss">流程发起时间:</div>
+            <div class="explainCss">{{item.SUBMIT_DATE | date : "MM月dd日HH时mm分"}}</div>
+        </div>
+        <!-- <div class="allCss">
+            <div class="riseCss">*附件（仅限图片）：</div>
+            <div class="form_img">
+                <div class="pictures">
+                    <ion-scroll direction="x" scrollbar-x="false" scroll="true" class="scrollBox">
+                        <ul ng-model="imageList">
+                            <li class="itemPicture" ng-click="deletePicture($index)" ng-repeat="pictureItem in imageList track by $index">
+                                <img src="{{pictureItem}}" />
+                            </li>
+                            <li class="caremaImg" ng-click="addAttachment()"></li>
+                        </ul>
+                    </ion-scroll>
+                </div>
+            </div>
+        </div> -->
+        <div class="approvalCss">审批意见:</div>
+        <div>
+            <textarea type="text" name="" class="inputCss" ng-model="APP_FORM_INFO">
+            </textarea>
+        </div>
+        <div class="buttonCss">
+            <button class=" button back1" ng-click="doApproval('APP',APP_FORM_INFO)">批准</button>
+            <button class=" button back2" ng-click="doApproval('REJ',APP_FORM_INFO)">拒绝</button>
+            <button class=" button back3" ng-click="back()">返回</button>
+        </div>
+    </ion-content>
+</ion-view>

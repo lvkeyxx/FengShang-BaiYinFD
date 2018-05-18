@@ -1,0 +1,42 @@
+<ion-view class="OSILineCSS">
+    <ion-nav-title>巡检线路</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIDetail">
+            <div class="OSITitle">设备部-热控机控线路</div>
+            <div class="OSIList">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <i class="weekShow">周</i>热控机控（每日）
+                        <span class="item-note">5/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <i class="weekShow">周</i>热控机控（1周1次）
+                        <span class="item-note">3/7</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <i class="weekShow">周</i>控机控（每日）
+                        <span class="item-note">4/16</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <i class="weekShow">周</i>热控机控（每日）
+                        <span class="item-note">5/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <i class="weekShow">周</i>热控机控（1周1次）
+                        <span class="item-note">3/7</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <i class="weekShow">周</i>控机控（每日）
+                        <span class="item-note">4/16</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

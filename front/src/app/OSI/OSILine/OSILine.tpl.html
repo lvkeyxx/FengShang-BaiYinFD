@@ -1,0 +1,73 @@
+<ion-view class="OSILineCSS" >
+    <ion-nav-title>巡查路线</ion-nav-title>
+    <ion-nav-buttons side="right" >
+        <button class="button-icon icon ion-timedimension" ng-click="toOsiHistory()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIDetail" ng-hide="OSIDetailHide">
+            <div class="OSITitle">
+                <div class="osiLeft">
+                    <span>{{description}}({{inspectType}})</span>
+                    <span class="osiTime">{{startTime | limitTo:10}} ~  {{endTime | limitTo:10}}</span>
+                </div>
+                <!--<div class="osiRight">
+                    <button ng-click="searchsBlueTooth()">搜索蓝牙</button>
+                </div>-->
+            </div>
+            <div class="scanQRcode" ng-hide="inputHide">
+                <input type="text" placeholder="请扫描设备二维码" class="scanCode"
+                       ng-click="toScanCode()" readonly>
+            </div>
+            <div class="OSIList">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-repeat="h in hDetail track by $index">
+                        <div class="leftShow">
+                            <!--<i ng-style="identify" id="qdIconColorid{{$index}}">{{identifyShow}}</i>-->
+                            <i ng-style="identify" ng-if="h.RECORD_TIME!='' && h.RECORD_TIME!=null"  style="background: #83ecad">签到</i>
+                            <i ng-style="identify" ng-if="h.RECORD_TIME=='' || h.RECORD_TIME==null" style="background: #ccc" id="qdIconColorid{{$index}}">未签到</i>
+                            <span class="name">{{h.ADDRESS}}</span>
+                            <span class="name">{{h.MCH_NAME}}</span>
+                            <span class="glassname" id="recordTimeid{{$index}}">{{h.RECORD_TIME}}</span>
+                            <span class="glassname" id="newRecordTimeid{{$index}}"
+                                  style="display: none">{{recordTime}}</span>
+                            <button id="recordID" class="itemQdBtn{{$index}}" style="display: none"
+                                    ng-click="toSigned(h,$index)" ng-hide="itemQdBtnHide">签到
+                            </button>
+                        </div>
+                    </li>
+                    <!--<li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="wqdShow">未签到</i>
+                            <span class="name">#2风机</span>
+                            &lt;!&ndash;<span class="glassname">2018-01-12 12:12:12</span>&ndash;&gt;
+                        </div>
+
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">#3风机</span>
+                            <span class="glassname">2018-01-12 12:12:12</span>
+                        </div>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="wqdShow">未签到</i>
+                            <span class="name">#4风机</span>
+                            &lt;!&ndash;<span class="glassname">2018-01-12 12:12:12</span>&ndash;&gt;
+                        </div>
+                    </li>-->
+
+                </ul>
+            </div>
+        </div>
+        <div class="position" ng-hide="positionHide">
+            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}
+            <span style="display: block;">
+                设备名称：{{patrolHomeData.MCH_NAME}}
+            </span>
+            <button class="qdBtn" ng-click="patrolSign()">签到</button>
+        </div>
+    </ion-content>
+</ion-view>

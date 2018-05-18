@@ -1,0 +1,109 @@
+angular.module('BaiYin.pdDay', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('power/pdDay', {
+            url: '/power/pdDay',
+            controller: 'pdDayController',
+            templateUrl: 'power/pdDay/pdDay.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('pdDayController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                drawBarGraph();
+            });
+
+            //画柱状图
+            function drawBarGraph() {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.get('ServiceName=TargetService&TransName=getPdDay')
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        console.log("res==" + JSON.stringify(res.data));
+                        $scope.pdDayPower = res.data;
+                        $scope.DayDate =[];
+                        $scope.DayVal = [];
+                        var labelTop = {
+                            normal: {
+                                color: '#ff9900',
+                                label: {
+                                    position: 'center',
+                                    textStyle: {
+                                        baseline: 'bottom'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            }
+                        };
+                        for(var i=0 ;i<$scope.pdDayPower.length;i++){
+                            $scope.DayDate.push($scope.pdDayPower[i].REPORT_ID.substring(5,10));
+                            $scope.DayVal.push({
+                                value: $scope.pdDayPower[i].DAY_ELE_AMOUNT,
+                                itemStyle: labelTop});
+                        }
+
+                        var option = {
+                            title: {
+                                text: $scope.pdDayPower[0].REPORT_ID + ' ~ ' + $scope.pdDayPower[$scope.pdDayPower.length-1].REPORT_ID,
+                                x: 'center'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            toolbox: {
+                                show: true,
+                            },
+                            calculable: true,
+                            xAxis: [
+                                {
+                                    type: 'category',
+                                    data: $scope.DayDate,
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                    name: '(万KW.h)',
+                                    type: 'value'
+                                },
+                            ],
+                            series: [
+                                {
+                                    name: '电量',
+                                    type: 'bar',
+                                    data: $scope.DayVal,
+                                }
+                            ]
+                        };
+                        var myChart = echarts.init(document.getElementById('mainDay'), 'macarons');
+                        myChart.setOption(option);
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+
+            }
+
+        }
+    ])
+    .directive('bar', function () {
+        return {
+            scope: {
+                id: "@",
+                legend: "=",
+                //item: "=",
+                data: "="
+            },
+            restrict: 'E',
+            template: '<div style="height:350px; width:350px; margin: 0 auto"></div>',
+            replace: true,
+            link: function () {
+            }
+        };
+    });

@@ -1,0 +1,5 @@
+<ion-view hide-nav-bar="true">
+    <ion-nav-title>国投新能源</ion-nav-title>
+    <div ng-include="'tabs/tab/tab.tpl.html'">
+    </div>
+</ion-view>

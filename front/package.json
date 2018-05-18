@@ -1,0 +1,28 @@
+{
+  "author": "earl",
+  "name": "baiyin",
+  "homepage": "http://www.bmsoft.com.cn",
+  "version": "0.0.1-SNAPSHOT",
+  "engines": {
+    "node": ">= 0.8.4"
+  },
+  "dependencies": {
+    "angular-chart.js": "^1.0.3",
+    "gulp-minify-css": "^1.2.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "*",
+    "gulp-concat": "*",
+    "gulp-connect": "*",
+    "gulp-csso": "*",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-jshint": "*",
+    "gulp-less": "^3.3.2",
+    "gulp-ng-html2js": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-uglify": "*",
+    "del": "^2.2.0",
+    "gulp-css2js": "^1.0.2"
+  }
+}

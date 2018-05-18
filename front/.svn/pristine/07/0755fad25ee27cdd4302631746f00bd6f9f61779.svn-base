@@ -1,0 +1,14 @@
+<div class="card">
+    <div ng-repeat="item in MainTable[0] track by $index">{{item.fieldName}}：{{item.fieldText}}</div>
+</div>
+<div ng-click="changeTypeIndex('审批流程');">
+    <div class="progress">
+        <div ng-style="{flex: step.now}"></div>
+        <div ng-style="{flex: (step.total - step.now)}"></div>
+    </div>
+    <div class="text-right">{{step.now}}/{{step.total}}</div>
+</div>
+<div ng-if="docList.length > 0" class="document" ng-click="changeTypeIndex('文档');">文档（{{docList.length}}）</div>
+<div class="card" ng-if="showType == 'approve'">
+    <textarea ng-model="data.opinion" rows="5" placeholder="请输入审批意见..."></textarea>
+</div>

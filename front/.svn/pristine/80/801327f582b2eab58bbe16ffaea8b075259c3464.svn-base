@@ -1,0 +1,25 @@
+angular.module('BaiYin.attence.countAttence.ztList', [
+    'ionic'
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('attence/countAttence/ztList', {
+            url: '/attence/countAttence/ztList',
+            controller: 'ztListController',
+            templateUrl: 'attence/countAttence/ztList/ztList.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('ztListController', ['$timeout', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state',
+
+        function ($timeout, $scope, showAlert, loadingAnimation, $http, $state) {
+            $scope.$on('$ionicView.enter', function () {
+
+            });
+            $scope.toztDetail = function(){
+                $state.go('attence/countAttence/ztDetail');
+            }
+        }
+    ])

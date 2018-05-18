@@ -1,0 +1,135 @@
+<ion-view hide-nav-bar="true">
+    <ion-nav-title>白银风电</ion-nav-title>
+    <div ng-include="'tabs/tab/tab.tpl.html'">
+    </div>
+</ion-view>
+<!--<ion-view hide-nav-bar="true" class="PMCSS" >
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        &lt;!&ndash;<div ng-include="'tabs/tab/tab.tpl.html'"></div>&ndash;&gt;
+        <div class="kpiheader">
+            <div class="goBack"><i class="goback_icon"></i> </div>
+            <div class="electricSelect">
+                <select>
+                    <option value="集控中心">集控中心</option>
+                    <option value="捡财塘" ng-selected="">捡财塘</option>
+                    <option value="敦煌">敦煌</option>
+                    <option value="北大桥东">北大桥东</option>
+                </select>
+            </div>
+            <div class="headmiddle">
+                <div class="weatherShow">
+                    <div class="weatherImg">
+                        <img src="../images/KPI/weather_type_img.png">
+                        <p>2013-3-25</p>
+                    </div>
+                    <div class="weatherDes">
+                        <ul>
+                            <li class="wendu">16~18<em></em></li>
+                            <li class="tqType">阴</li>
+                            <li class="wind">西南风三级</li>
+                            <li class="sd">湿度34cc</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="power">
+                    <div class="comLoad">
+                        <span>全公司总负荷</span>
+                        <span>869</span>
+                        <span>w</span>
+                    </div>
+                    <div class="comPower">
+                        <span>全公司日发电量</span>
+                        <span>1196.97</span>
+                        <span>MWH</span>
+                    </div>
+                </div>
+            </div>
+            <div class="headerFoot">
+                <ul>
+                    <li class="col col-20 rightBorder">集控中心<p>625W</p></li>
+                    <li class="col col-20 rightBorder">甘<p>625W</p></li>
+                    <li class="col col-20 rightBorder">青<p>625W</p></li>
+                    <li class="col col-20 rightBorder">宁<p>625W</p></li>
+                    <li class="col col-20">新<p>625W</p></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="btnnav">
+            <ul>
+                <li class="goFuhe col col-50"><i class="fhicon_img"></i>负荷</li>
+                <li class="goDl col col-50"><i class="dlicon_img"></i>电量</li>
+            </ul>
+        </div>
+        <div class="navlist">
+            <ul>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="fhyc_img">
+                        </div>
+                        <p>负荷预测</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="yxri_img">
+                        </div>
+                        <p>运行日志</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="yhpc_img">
+                        </div>
+                        <p>隐患排查</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="qxtb_img">
+                        </div>
+                        <p>缺陷填报</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="kqqd_img">
+                        </div>
+                        <p>考勤签到</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="rwgl_img">
+                        </div>
+                        <p>任务管理</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="sbxx_img">
+                        </div>
+                        <p>设备信息</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="xcxc_img">
+                        </div>
+                        <p>现场巡查</p>
+                    </a>
+                </li>
+                <li class="col col-33">
+                    <a ng-click="" class="rowLation">
+                        <div class="xctj_img">
+                        </div>
+                        <p>巡查统计</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="advert">
+            <img src="../images/PM/advert.png">
+        </div>
+    </ion-content>
+</ion-view>-->

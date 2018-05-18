@@ -1,0 +1,145 @@
+<ion-view class="facilityInfoCSS">
+    <ion-nav-title>设备台账</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="facilityList" ng-hide="scanQRcodeHide">
+            <div class="scanQRcode">
+                <input type="text" placeholder="请扫描设备二维码" class="scanCode" id="facilityInfoScanCodeID"
+                       ng-click="toScanCode()" readonly>
+            </div>
+        </div>
+        <div class="facilityList" ng-hide="scanInformationHide">
+            <div class="scanQRcodeNumber">
+                设备编码:{{equipmentDetail.MCH_CODE}}
+            </div>
+            <div class="scanQRcodeNumber">
+                所在域:{{equipmentDetail.CONTRACT_NAME}}
+            </div>
+            <div class="scanQRcodeNumber">
+                设备名称:{{equipmentDetail.MCH_NAME}}
+            </div>
+            <div class="scanQRcodeNumber">
+                工序状态:{{equipmentDetail.OPERATIONAL_STATUS}}
+            </div>
+        </div>
+        <div class="tab-box" ng-hide="jbxxHide">
+            <input type="radio" name="demo" id="tab-switch-input1" checked="">
+            <input type="radio" name="demo" id="tab-switch-input2">
+            <input type="radio" name="demo" id="tab-switch-input3">
+            <input type="radio" name="demo" id="tab-switch-input4">
+            <div class="tab-box-label">
+                <label for="tab-switch-input1">
+                    <span>设备信息</span>
+                </label>
+                <label for="tab-switch-input2">
+                    <span>缺陷履历</span>
+                </label>
+                <label for="tab-switch-input3">
+                    工单履历
+                </label>
+                <label for="tab-switch-input4">
+                    巡查记录
+                </label>
+            </div>
+            <div class="tab-contents">
+                <div class="tab-content">
+                    <ul>
+                        <li>
+                            <h3>设备参数</h3>
+                            <span>设备参数</span>
+                        </li>
+                        <li>
+                            <h3>设备概况</h3>
+                            <span>设备概况</span>
+                        </li>
+                        <li>
+                            <h3>巡查信息</h3>
+                            <span>巡查信息</span>
+                        </li>
+                        <li>
+                            <h3>维护信息</h3>
+                            <span>维护信息</span>
+                        </li>
+                        <li>
+                            <h3>危险因素及预防</h3>
+                            <table>
+                                <caption>危险源</caption>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>设备设施</th>
+                                    <th>危害形式</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption>运行巡视风险及预控</caption>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>危险点</th>
+                                    <th>可能存在的危害</th>
+                                    <th>预控措施</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption>检修作业风险及预控</caption>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>危险点</th>
+                                    <th>可能存在的危害</th>
+                                    <th>预控措施</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <ul>
+                        <li style="border:none; text-align: center">暂无内容</li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <ul>
+                        <li style="border:none; text-align: center">没内容</li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <ul>
+                        <li style="border:none; text-align: center">没内容4</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

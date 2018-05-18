@@ -1,0 +1,43 @@
+<ion-view class="tmDetailCSS">
+    <ion-nav-title>{{title}}</ion-nav-title>
+    <ion-content>
+        <div class="specialList">
+            <h3>{{data.ITEM_NAME}}</h3>
+            <ul>
+                <li>
+                    <span>类型：{{data.ITEM_CATELOGY}}<em>编号：{{data.SPECIAL_WORK_NO}}</em></span>
+                    <span>计划开始时间：{{data.PLAN_START_TIME}}<em>实际开始时间：{{data.REAL_START_TIME}}</em></span>
+                    <span>计划完成时间：{{data.PLAN_FINISH_TIME}}<em>实际完成时间：{{data.REAL_FINISH_TIME}}</em></span>
+                    <span>负责人：{{data.ITEM_RESPONSER}}<em>监督人：{{data.ITEM_SUPERVISER}}</em></span>
+                </li>
+            </ul>
+        </div>
+        <div class="xmContent">
+            <h3>项目内容</h3>
+            <span>{{data.ITEM_CONTENT}}</span>
+        </div>
+        <div class="xmMarker">
+            <h3>项目里程碑</h3>
+            <ul>
+                <li>
+                    <i class="lcbNum">1</i>
+                    <h3>备件到货</h3>
+                    <span>计划时间：{{data.PLAN_ARRIVAL_TIME}}</span>
+                    <span>实际时间：{{data.REAL_ARRIVAL_TIME}}</span>
+                </li>
+                <li>
+                    <i class="lcbNum">2</i>
+                    <h3>完工</h3>
+                    <span>开始时间：{{data.PLAN_FINISH_TIME}}</span>
+                    <span>完成时间：{{data.REAL_FINISH_TIME}}</span>
+                </li>
+                <li>
+                    <i class="lcbNum">3</i>
+                    <h3>转固</h3>
+                    <span>开始时间：{{data.PLAN_TURN_FIXED_TIME}}</span>
+                    <span>完成时间：{{data.REAL_TURN_FIXED_TIME}}</span>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

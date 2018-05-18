@@ -1,0 +1,36 @@
+<ion-view class="OSIDetailCSS">
+    <ion-nav-title>巡检详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIDetail">
+            <div class="OSITitle">清水泵房巡检记录</div>
+            <div class="OSIList">
+                <table>
+                    <tr>
+                        <th>序号</th>
+                        <th>时间</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2018-03-04 22:34</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2018-03-04 22:34</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2018-03-04 22:34</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>2018-03-04 22:34</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>2018-03-04 22:34</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

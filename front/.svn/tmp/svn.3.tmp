@@ -1,0 +1,148 @@
+<ion-view class="countAttenceCSS">
+    <ion-nav-title>考勤统计</ion-nav-title>
+
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="日统计">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM-dd"}}</button>
+                    <!-- <i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy-MM-dd"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>-->
+
+                    <div class="selectGlass">
+                        <input type="text" placeholder="请选择部门" id="countgalssId" ng-click="selectGlass()" readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <ul>
+                            <li>打卡人数/总人数</li>
+                            <li>42/50</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="countNum">
+                    <ul>
+                        <li class="col col-33" ng-click="towdDetail()">
+                            <span>1</span>
+                            <span>未打卡</span>
+                            <!--<i class="cdIcon"></i>3--></li>
+                        <li class="col col-33" ng-click="tocdDetail()">
+                            <span>1</span>
+                            <span>迟到</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                        <li class="col col-33" ng-click="toztDetail()">
+                            <span>1</span>
+                            <span>早退</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                    </ul>
+                </div>
+                <div class="tips">
+                    <span>提示：点击上面栏目可查看考勤统计详情</span>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="月统计">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <!--<button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM"}}</button>-->
+                    <i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy-MM"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>
+
+                    <div class="selectGlassMounth">
+                        <input type="text" placeholder="请选择部门" id="countgalssMounthId" ng-click="selectGlass()" readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <ul>
+                            <li>打卡人数/总人数</li>
+                            <li>42/50</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="countNum">
+                    <ul>
+                        <li class="col col-33" ng-click="towdDetail()">
+                            <span>1</span>
+                            <span>未打卡</span>
+                            <!--<i class="cdIcon"></i>3--></li>
+                        <li class="col col-33" ng-click="tocdDetail()">
+                            <span>1</span>
+                            <span>迟到</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                        <li class="col col-33" ng-click="towdDetail()">
+                            <span>1</span>
+                            <span>早退</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                    </ul>
+                </div>
+                <div class="tips">
+                    <span>提示：点击上面栏目可查看考勤统计详情!</span>
+                </div>
+                <div id="main2" style="width: 250px;height:200px;"></div>
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('main2'));
+                    // 指定图表的配置项和数据
+                    var option = {
+                        tooltip : { //提示框组件
+                            trigger: 'item', //触发类型(饼状图片就是用这个)
+                            formatter: "{a} <br/>{b} : {c} ({d}%)" //提示框浮层内容格式器
+                        },
+                        color:['#48cda6','#fd87ab','#11abff','#ffdf33','#968ade'],  //手动设置每个图例的颜色
+                        legend: {  //图例组件
+                            //right:100,  //图例组件离右边的距离
+                            orient : 'horizontal',  //布局  纵向布局 图例标记居文字的左边 vertical则反之
+                            width:40,      //图行例组件的宽度,默认自适应
+                            x : 'right',   //图例显示在右边
+                            y: 'center',   //图例在垂直方向上面显示居中
+                            itemWidth:10,  //图例标记的图形宽度
+                            itemHeight:10, //图例标记的图形高度
+                            data:['30%','10%','15%','20%','25%'],
+                            textStyle:{    //图例文字的样式
+                                color:'#333',  //文字颜色
+                                fontSize:12    //文字大小
+                            }
+                        },
+                        series : [ //系列列表
+                            {
+                                name:'随访次数',  //系列名称
+                                type:'pie',   //类型 pie表示饼图
+                                center:['30%','50%'], //设置饼的原心坐标 不设置就会默认在中心的位置
+                                radius : ['50%', '70%'],  //饼图的半径,第一项是内半径,第二项是外半径,内半径为0就是真的饼,不是环形
+                                itemStyle : {  //图形样式
+                                    normal : { //normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                                        label : {  //饼图图形上的文本标签
+                                            show : false  //平常不显示
+                                        },
+                                        labelLine : {     //标签的视觉引导线样式
+                                            show : false  //平常不显示
+                                        }
+                                    },
+                                    emphasis : {   //normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                                        label : {  //饼图图形上的文本标签
+                                            show : true,
+                                            position : 'center',
+                                            textStyle : {
+                                                fontSize : '10',
+                                                fontWeight : 'bold'
+                                            }
+                                        }
+                                    }
+                                },
+                                data:[
+                                    {value:30, name:'30%'},
+                                    {value:10, name:'10%'},
+                                    {value:15, name:'15%'},
+                                    {value:20, name:'20%'},
+                                    {value:25, name:'25%'}
+                                ]
+                            }
+                        ]
+                    }
+                    myChart.setOption(option);
+                </script>
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

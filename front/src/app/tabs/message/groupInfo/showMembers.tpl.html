@@ -1,0 +1,10 @@
+<ion-list class="inputPopCSS list">
+    <ion-item class="item" ng-repeat="member in members track by $index" ng-click="goMessageDetails(member)">
+        <span ng-if="member.nickname != '' ">{{member.nickname}}</span>
+        <span ng-if="member.nickname == '' ">{{member.userName}}</span>
+        <ion-option-button class="button-positive" ng-click="deleteMember($index,member.userName)">删除</ion-option-button>
+    </ion-item>
+    <div class="close" ng-click="closePop()">
+        <p class="closeImg"></p>
+    </div>
+</ion-list>

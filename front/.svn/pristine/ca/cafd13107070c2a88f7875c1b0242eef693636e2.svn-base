@@ -1,0 +1,66 @@
+<ion-view class="powerDetailCSS">
+    <ion-nav-title>周电量</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="barGraph">
+            <bar id="mainDay" legend="legend" data="data"></bar>
+        </div>
+        <div class="dayPowerList">
+            <table>
+                <tr >
+                    <th>
+                        <span>日期</span>
+                        <span>(日)</span>
+                    </th>
+                    <th>
+                        <span>发电量</span>
+                        <span class="unitShow">(万KW·h)</span>
+                    </th>
+                    <th>
+                        <span>日限负荷损失电量</span>
+                        <span class="unitShow">(万KW·h)</span>
+                    </th>
+                </tr>
+                <tr pdvalue in pdDayPowerList>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">5月5日</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">5月6日</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">5月7日</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">5月8日</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">5月9日</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1</td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

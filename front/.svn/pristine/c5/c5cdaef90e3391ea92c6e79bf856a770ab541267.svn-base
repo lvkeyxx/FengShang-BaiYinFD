@@ -1,0 +1,142 @@
+angular.module('BaiYin.attence.attenceCdDetail', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('attence/attenceCdDetail', {
+            url: '/attence/attenceCdDetail',
+            controller: 'attenceCdDetailController',
+            templateUrl: 'attence/attenceCdDetail/attenceCdDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {dateTimeShow: null, partName: null, partCode: null}
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+    }])
+    .controller('attenceCdDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicActionSheet', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicActionSheet, ionicDatePicker) {
+            var dateTimeShow, departCode;
+            $scope.$on('$ionicView.enter', function () {
+                //获取统计页面传来的时间和部门
+                dateTimeShow = $stateParams.dateTimeShow;
+                var departName = $stateParams.partName;
+                departCode = $stateParams.partCode;
+                console.log("dateTimeShow==" + dateTimeShow + "/departName==" + departName + "/departCode==" + departCode);
+                $("#attenceCdGlassid").val(departName);
+                $("#attenceCdTimeid").text(dateTimeShow);
+                cdztList(dateTimeShow, departCode);
+                orgList();
+            });
+            var date = new Date();
+
+            //点击选择部门
+            var glassName = '';
+            var glassArray;
+
+            //获取部门信息
+            function orgList() {
+                glassArray = [];
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ClockService&TransName=deptList')
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.orgList = res.data.tList;
+                            console.log("orgList==" + JSON.stringify($scope.orgList));
+                            //默认部门
+                            // $("#attenceCdGlassid").val($scope.orgList[0].ORG_NAME);
+                            for (var i = 0; i < $scope.orgList.length; i++) {
+                                var olist = {};
+                                olist.orgCode = $scope.orgList[i].ORG_CODE;
+                                olist.text = $scope.orgList[i].ORG_NAME;
+                                glassArray.push(olist);
+                            }
+                        } else {
+                            showAlert.showMsg(res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+
+            $scope.selectGlass = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: glassArray,
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        glassName = glassArray[index].text;
+                        departCode = glassArray[index].orgCode;
+                        console.log("glassName==" + glassName + "/departCode==" + departCode);
+                        $("#attenceCdGlassid").val(glassName);
+                        cdztList(dateTimeShow, departCode);
+                        return true;
+                    }
+                });
+            };
+
+            //获取迟到早退列表信息
+            function cdztList(dayTime, departNo) {
+                var parmas = {
+                    QUERY_DATE: dayTime,
+                    DEPT: departNo,
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=AttendReasonService&TransName=lateAndEarly', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.cdztList = res.data.tList;
+                            console.log("cdztList===" + JSON.stringify($scope.cdztList));
+                        } else {
+                            $scope.cdztList = '';
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+
+            var ipObj1 = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    dateTimeShow = $filter("date")(val, "yyyy-MM-dd");
+                    $("#attenceCdTimeid").text(dateTimeShow);
+                    cdztList(dateTimeShow, departCode);
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+        }
+
+    ])

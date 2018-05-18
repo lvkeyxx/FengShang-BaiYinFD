@@ -1,0 +1,8 @@
+angular.module('BaiYin.attenceA', [
+    'BaiYin.attence',
+    'BaiYin.attence.myAttence',
+    'BaiYin.attence.countAttence',
+    'BaiYin.attence.fillCause',
+    'BaiYin.attence.attenceCdDetail',
+    'BaiYin.attence.attenceWdDetail',
+])

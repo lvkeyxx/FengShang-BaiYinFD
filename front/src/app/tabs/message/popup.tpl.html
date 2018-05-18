@@ -1,0 +1,11 @@
+<ion-list class="inputPopCSS">
+    <ion-item ng-if="item.type == 'single'" class="my-popup" ng-click="addFriend()">
+        <h2>加为好友</h2>
+    </ion-item>
+    <ion-item class="my-popup" ng-click="deleteMessage()">
+        <h2>删除该聊天</h2>
+    </ion-item>
+    <div class="close" ng-click="closePop()">
+        <p class="closeImg"></p>
+    </div>
+</ion-list>

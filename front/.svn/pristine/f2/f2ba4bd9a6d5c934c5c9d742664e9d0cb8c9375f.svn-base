@@ -1,0 +1,11 @@
+.mineCSS {
+    background: #ededed;
+    .item-stacked-label .icon,
+    .item-stacked-label .input-label {
+        width: inherit;
+        display: inline-block;
+        padding: 0px;
+        vertical-align: middle;
+        float: left;
+    }
+}

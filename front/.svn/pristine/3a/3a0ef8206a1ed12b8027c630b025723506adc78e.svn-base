@@ -1,0 +1,64 @@
+angular
+    .module('BaiYin.OSI.OSIHistoryDetail', [
+        'ionic',
+    ])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI/OSIHistoryDetail', {
+            url: '/OSI/OSIHistoryDetail',
+            controller: 'OSIHistoryDetailController',
+            templateUrl: 'OSI/OSIHistoryDetail/OSIHistoryDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {TEMP_ID: null, DESCRIPTION: null, INSPECT_TYPE: null, START_TIME: null, END_TIME: null, MCH_CODE: null}
+        })
+    }])
+    .controller('OSIHistoryDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.tempID = $stateParams.TEMP_ID;
+                $scope.description = $stateParams.DESCRIPTION;
+                $scope.inspectType = $stateParams.INSPECT_TYPE;
+                $scope.startTime = $stateParams.START_TIME;
+                $scope.endTime = $stateParams.END_TIME;
+                $scope.mchCode = $stateParams.MCH_CODE;
+                HistoryDetail($scope.tempID);
+            });
+
+            function HistoryDetail(tempid) {
+                console.log("tempid==" + tempid);
+                var parmas = {
+                    TEMP_ID: tempid,
+                    START_TIME: $scope.startTime,
+                    END_TIME: $scope.endTime,
+                    MCH_CODE: $scope.mchCode
+                };
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=InspectionService&TransName=cInspectRouteDetailH', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.hDetail = res.data.dList;
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //签到样式
+            $scope.identify = {
+                'padding': '5px',
+                'line-height': '35px',
+                'border-radius': '50%',
+                'display': 'inline-block',
+                'float': 'left',
+                'color': '#fff',
+                'margin-right': '10px',
+                'font-size': '12px',
+                'width': '45px',
+                'text-align': 'center'
+            }
+        }
+    ]);

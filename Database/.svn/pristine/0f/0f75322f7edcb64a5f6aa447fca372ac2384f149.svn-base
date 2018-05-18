@@ -1,0 +1,1 @@
+select * from IFSAPP.COMPANY_SITE_ADDRESS

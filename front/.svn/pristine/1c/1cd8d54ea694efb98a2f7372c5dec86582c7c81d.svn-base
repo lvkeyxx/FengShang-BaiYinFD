@@ -1,0 +1,50 @@
+<ion-view class="problemsSolving">
+ <ion-nav-title>隐患详情</ion-nav-title>
+  <ion-nav-buttons side="right">
+      <button class="button" ng-click="tracking()">
+        跟踪
+      </button>
+    </ion-nav-buttons>
+ <ion-content class="contentCss">
+ <div class="listCss">
+    <div>隐患类型：</div>
+    <div>{{}}</div>
+ </div>
+ <div class="describeAllCss">
+ 	<div class="descCss">描述:</div>
+ <div>{{}}</div>
+ </div>
+ 
+ <div class="listCss">
+   	<div class="">提交部门：</div>
+   	<div class="">{{}}</div>
+ </div>
+ <div class="listCss">
+	<div class="">上传人：</div>
+   	<div class="">{{}}</div>
+ </div>
+  <div class="listCss">
+ 	<div class="">上传时间：</div>
+   	<div class="">{{}}</div>
+  </div>
+  <div class="listCss">
+  	<div class="">图片：</div>
+   	<div class="">{{}}</div>
+  </div>
+  <div class="listCss">
+	<div class="">当前处理人：</div>
+   	<div class="">{{}}</div>
+  </div>
+  <div class="listCss">
+  	<div>处理时间：</div>
+  	<div>{{}}</div>
+  </div>
+  <div class="ideaCss">意见:</div>
+  <textarea class="textareaCss"></textarea>
+  <div class="buttonCss">
+  	<div class="okCss">确定</div>
+  	<div class="noCss">取消</div>
+  </div>
+
+ </ion-content>
+</ion-view>

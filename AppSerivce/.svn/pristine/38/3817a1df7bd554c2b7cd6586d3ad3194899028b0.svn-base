@@ -1,0 +1,45 @@
+log4j.rootLogger=CON, DBG, ERR
+#console
+log4j.appender.CON=org.apache.log4j.ConsoleAppender
+log4j.appender.CON.Threshold = DEBUG
+log4j.appender.CON.layout=org.apache.log4j.PatternLayout
+log4j.appender.CON.layout.ConversionPattern=%c{1} - %m%n%n
+#debug.log
+log4j.appender.DBG=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.DBG.DatePattern = '.'yyyy-MM-dd
+log4j.appender.DBG.Threshold = DEBUG
+log4j.appender.DBG.File=./AppSerivceLog/debug.log
+log4j.appender.DBG.MaxFileSize=512KB
+log4j.appender.DBG.MaxBackupIndex=1
+log4j.appender.DBG.layout=org.apache.log4j.PatternLayout
+log4j.appender.DBG.layout.ConversionPattern=[%d] [%p] [%t] [%c] ---%n%m%n%n
+log4j.appender.DBG.Encoding=UTF-8
+#error.log
+log4j.appender.ERR=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.ERR.DatePattern = '.'yyyy-MM-dd
+log4j.appender.ERR.Threshold = ERROR
+log4j.appender.ERR.File=./AppSerivceLog/error.log
+log4j.appender.ERR.MaxFileSize=512KB
+log4j.appender.ERR.MaxBackupIndex=1
+log4j.appender.ERR.layout=org.apache.log4j.PatternLayout
+log4j.appender.ERR.layout.ConversionPattern=[%d] [%p] [%t] [%c] ---%n%m%n%n
+log4j.appender.ERR.Encoding=UTF-8
+
+#定义DEBUG优先级，R为日志输出目的的
+#log4j.rootLogger=debug,file
+#设置日志输出类型,为文件类型
+#log4j.appender.file=org.apache.log4j.FileAppender
+#设置日志输出类型,每天一个文件
+#log4j.appender.file=org.apache.log4j.DailyRollingFileAppender
+#在每天产生的文件后面追加
+#log4j.appender.file.DatePattern = '.'yyyyMMdd
+#设置日志文件名 /home/weblogic/oneboss/0068_stat.log
+#log4j.appender.file.file=bjapp.log
+#每次在文件尾写入新的日志信息  
+#log4j.appender.file.Append=true
+#日志输出信息格式类型
+#log4j.appender.file.layout=org.apache.log4j.PatternLayout 
+#日志输出信息格式为 换行、日期、优先级、[类名]、日志信息、换行   ==%n%d[%c]-%m%n  %m%n
+#log4j.appender.file.layout.ConversionPattern=[%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n
+#设置输出日志文件编码（可以控制乱码情况）
+#log4j.appender.file.encoding=UTF-8 

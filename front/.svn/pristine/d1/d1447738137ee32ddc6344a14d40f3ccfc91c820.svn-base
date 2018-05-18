@@ -1,0 +1,32 @@
+<ion-view class="countAttenceCSS">
+    <ion-nav-title>考勤统计</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>
+            <div class="selectGlass">
+                <input type="text" placeholder="请选择部门" id="countgalssId" ng-click="selectGlass()" readonly>
+            </div>
+        </div>
+        <div class="countResult">
+            <div class="ydNum">应到：40人</div>
+            <div class="pieShow">
+                <img src="../images/attence/pieImg.png">
+            </div>
+            <div class="pieColor">
+                <ul>
+                    <li>实到<i class="sdColor"></i></li>
+                    <li>未到<i class="wdColor"></i></li>
+                </ul>
+            </div>
+        </div>
+        <div class="countNum">
+            <ul>
+                <li class="col col-50" ng-click="tocdDetail()">迟到<i class="cdIcon"></i>3</li>
+                <li class="col col-50" ng-click="towdDetail()">未到<i class="wdIcon"></i>1</li>
+            </ul>
+        </div>
+        <div class="tips">
+            <span>提示：点击上面栏目可查看考勤统计详情</span>
+        </div>
+    </ion-content>
+</ion-view>

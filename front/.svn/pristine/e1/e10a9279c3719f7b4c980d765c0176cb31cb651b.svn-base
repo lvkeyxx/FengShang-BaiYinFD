@@ -1,0 +1,19 @@
+.agents {
+    .c_red {
+        color: white;
+        border-radius: 15px;
+        border: 1px solid red;
+        font-size: 16px;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        transform: translate;
+        transform: scale(.5);
+        line-height: 30px;
+        margin-left: 6px;
+        background-color: red;
+        font-weight: 700;
+    }
+}

@@ -1,0 +1,19 @@
+<ion-view class="troubleDetailCSS">
+    <ion-nav-title>隐患详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="detail">
+            <div class="yushow">电站：{{title.CONTRACT_NAME}}</div>
+            <div class="status">隐患等级：<i ng-style="setColor(title.DANGER_LEVEL)">{{title.DANGER_LEVEL}}</i><em>状态：{{title.STATE}}</em></div>
+            <div class="author">发现人：{{title.DISCOVER_USER}}<em class="date">发现时间：{{title.DISCOVER_TIME | limitTo:10}}</em></div>
+            <div class="content">
+                {{title.DANGER_CONTENT}}
+            </div>
+            <div class="content" ng-show="isShow">
+               <div ng-repeat="detail in docList track by $index">
+                   <div class="imgShow"> <a ng-show="detail.isImage=='1'"><img src="{{detail.FILE_URL}}"></a></div>
+                   <a href="{{detail.FILE_URL}}" ng-hide="detail.isImage=='1'"><i >{{detail.FILE_NAME}}</i> </a>
+               </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

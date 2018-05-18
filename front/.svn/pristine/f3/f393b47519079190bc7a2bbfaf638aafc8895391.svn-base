@@ -1,0 +1,87 @@
+    .companyNewsDetailsCSS {
+        background-color: #fff;
+        .title {
+            text-align: center;
+            font-size: 0.4rem;
+            margin-top: .2rem;
+            color: blue;
+            line-height: 0.7rem;
+        }
+        .contentText {
+            padding: 5px 10px;
+        }
+        .timePublic {
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+            color: gray;
+        }
+        .contentText p span {
+            font-size: 16px;
+            text-align: right !important;
+            color: black;
+        }
+        .companyNewReview {
+            .reviewBtn1 {
+                float: right;
+                background: url(../images/dianzan.png) no-repeat left;
+                background-size: 32%;
+                width: 86px;
+                height: 20px;
+                border: none;
+                vertical-align: middle;
+            }
+            .reviewBtn2 {
+                float: right;
+                background: url(../images/pinglun.png) no-repeat left;
+                background-size: 24%;
+                width: 86px;
+                height: 20px;
+                border: none;
+                vertical-align: middle;
+            }
+        }
+
+        .reviewCont {
+            margin-left: 10px;
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background: url(../images/hongxin.png) no-repeat center;
+            background-size: 100%;
+            vertical-align: middle;
+        }
+        .pingLun {
+            width: 95%;
+            margin: 0 auto;
+            height: 150px;
+            border: 1px solid #ddd;
+            resize: none;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        .pingLunCont {
+            background-color: #f2f2f2;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        .replyCss {
+            height: 25px;
+            width: 40px;
+            float: right;
+            margin-right: 10px;
+            margin-top: 3px;
+            border: none;
+            background-color: #f2f2f2;
+        }
+        .replyMsgCss {
+            width: 95%;
+            margin: 0 auto;
+            height: 80px;
+            border: 1px solid #ddd;
+            resize: none;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+    }

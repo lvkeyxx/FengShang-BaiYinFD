@@ -1,0 +1,46 @@
+<ion-view class="userConfigCSS">
+    <ion-nav-title>个人资料</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <a href="/userConfig/myDevice">
+            <button class="button">我的设备</button>
+        </a>
+    </ion-nav-buttons>
+    <ion-content class="userConfigContent" has-bouncing="false" scrollbar-y="false">
+        <div class="userInfo clearfix">
+            <div class="lft">我的信息</div>
+        </div>
+        <div class="userItemContent">
+            <div class="items clearfix">
+                <div class="lft">真实姓名</div>
+                <div class="rgt">{{UserInfo.INTERNAL_DISPLAY_NAME?UserInfo.INTERNAL_DISPLAY_NAME:"无"}}</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">用户ID</div>
+                <div class="rgt">{{UserInfo.PERSON_ID?UserInfo.PERSON_ID:"无"}}</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">在职情况</div>
+                <div class="rgt">{{UserInfo.EMPLOYEE_STATUS?UserInfo.EMPLOYEE_STATUS:"无"}}</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">所属部门</div>
+                <div class="rgt">{{UserInfo.ORG_NAME?UserInfo.ORG_NAME:"无"}}</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">职位</div>
+                <div class="rgt">{{UserInfo.POSITION_TITLE?UserInfo.POSITION_TITLE:"无"}}</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">邮箱</div>
+                <div class="rgt">{{UserInfo.EMAIL?UserInfo.EMAIL:"无"}}</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">手机号</div>
+                <div class="rgt">{{UserInfo.MOBILE?UserInfo.MOBILE:"无"}}</div>
+            </div>
+        </div>
+        <!--  <a href="/editingUserInfo">
+            <div class="button appSbmtBtn">修改</div>
+        </a> -->
+    </ion-content>
+</ion-view>

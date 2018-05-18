@@ -1,0 +1,115 @@
+<ion-view class="adddefectfillCSS">
+    <ion-nav-title>添加缺陷</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="firstShow">
+            <div class="defectifll">
+                <ul>
+                    <li style="color:#3492e9">电站:{{CONTRACT_NAME}}<em>部门：{{DEPT_NAME}}</em></li>
+                    <li>创建人:{{UserName}}<em>创建日期:{{nowDate}}</em></li>
+                </ul>
+            </div>
+            <div class="addTroubleForm">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">缺陷名称：</span>
+                        <input type="text" id="ERR_DESCR" placeholder="请输入缺陷名称">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">设备状态：</span>
+                        <input type="text" id="sbztid" class="rightselect" readonly placeholder="请选择设备状态"
+                               ng-click="toSbzt()">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">缺陷分类：</span>
+                        <input type="text" id="qxflid" class="rightselect" readonly placeholder="请选择缺陷分类"
+                               ng-click="toQxfl()">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">缺陷专业：</span>
+                        <input type="text" id="qxzyid" class="rightselect" readonly placeholder="请选缺陷专业"
+                               ng-click="toQxzy()">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">设备编码：</span>
+                        <input type="text" id="sbcodeid" class="smewm" placeholder="扫描设备编码" readonly ng-click="scanStart()">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">设备名称：</span>
+                        <input type="text" placeholder="设备名称" id="sbmcValue" class="sbmc" readonly ng-click="selectSb()">
+
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">执行部门：</span>
+                        <input type="text" placeholder="请选择部门" id="zxbmid" class="rightselect" readonly ng-click="toZxbm()">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">现象：</span>
+                        <input type="text" placeholder="请选择现象" id="xianxid" class="rightselect" readonly ng-click="toXianx()">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">缺陷描述：</span>
+                        <textarea id="qxmsid"></textarea>
+                    </label>
+
+                    <label class="item item-input">
+                        <span class="input-label">上传文件：</span>
+                        <div class="uploadimgShow">
+                            <button ng-src="{{uploadimageSrc}}" ng-click="toUploadImg()"></button>
+                        </div>
+                        <i>此处最多添加三张图片</i>
+                    </label>
+                    <div class="imglist" ng-repeat="img in images_list|limitTo:3 track by $index">
+                        <img id="timage{{$index}}" src="{{img}}" class="col col-33">
+                        <button class="deleteBtn" ng-if="img" ng-click="img_del($index)">X</button>
+                    </div>
+                    <!--<div class="imglist">
+                        <img src="../../../../images/PM/sbxx_img_icon.png" class="col col-30">
+                        <button class="deleteBtn">X</button>
+                    </div>
+                    <div class="imglist">
+                        <img src="../../../../images/PM/sbxx_img_icon.png" class="col col-30">
+                        <button class="deleteBtn">X</button>
+                    </div>
+                    <div class="imglist">
+                        <img src="../../../../images/PM/sbxx_img_icon.png" class="col col-30">
+                        <button class="deleteBtn">X</button>
+                    </div>-->
+                </div>
+                <div class="padding">
+                    <button class="button button-block button-positive" ng-click="commitdefectfill()">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="bg" ng-click="hideSearch()"></div>
+        <div class="sliderightShow" style="display: none; width: 95%; max-height: 100%;">
+            <label class="item item-input">
+                <span class="input-label">设备编码：</span>
+                <input type="text" id="sbbmid" placeholder="请输入设备编码">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">设备名称：</span>
+                <input type="text" id="sbmcid" placeholder="请输入设备名称">
+            </label>
+            <div class="padding">
+                <button class="searchSbBtn button button-block button-positive" ng-click="searchSblist()">查询</button>
+            </div>
+            <div class="sblist">
+                <table>
+                    <tr>
+                        <th>设备编码</th>
+                        <th>设备名称</th>
+                    </tr>
+                    <tr ng-repeat="x in sbxx" ng-click="toSbmx(x)">
+                        <td>{{x.MCH_CODE}}</td>
+                        <td>{{x.MCH_NAME}}</td>
+                    </tr>
+
+                </table>
+                <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">
+                </ion-infinite-scroll>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,156 @@
+angular.module('BaiYin.OSI.OSIcount', [
+    'ionic',
+])
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('OSI/OSIcount', {
+            url: '/OSI/OSIcount',
+            controller: 'OSIcountController',
+            templateUrl: 'OSI/OSIcount/OSIcount.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        });
+        var datePickerConfig = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2030, 12, 31),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: true
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerConfig);
+    }])
+    .controller('OSIcountController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet, ionicDatePicker) {
+            //查询条件
+            $scope.queryData = {
+                area: "",//区域
+                type: "",//类型
+                interval: ""//区间
+            };
+            //数据列表是否隐藏
+            $scope.OSIListHide = true;
+
+            $scope.$on('$ionicView.afterEnter', function () {
+                loadAreaList();
+            });
+
+            //上拉弹出搜索框
+            $scope.onDragDown = function () {
+                $(".countAttribute").show('slow');
+            }
+
+            //点击查询按钮
+            $scope.toInquiry = function () {
+                $scope.OSIListHide = false;
+                $(".countAttribute").hide('slow');
+                $(".OSIList").show('slow');
+            }
+
+            //区域列表
+            var areaList = [];
+            //获取电厂列表
+            var loadAreaList = function(){
+                $http
+                    .post('ServiceName=TargetService&TransName=listCompanySiteAddress&type=sel')
+                    .then(function (res) {
+                        if (res.code == '0') {
+                            res.data.forEach(function(v, i){
+                                areaList.push({ text: v.DESCRIPTION});
+                            });
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //点击域选择
+            $scope.toSelectStatus = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: areaList,
+                    buttonClicked: function (index) {
+                        $scope.queryData.area = areaList[index].text;
+                        return true;
+                    }
+                });
+            }
+
+            //点击类型选择
+            var stylelist = [{"text": "周"}, {"text": "半月"}, {"text": "月"}, {"text": "季"}];
+            $scope.toSelectStyle = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: stylelist,
+                    buttonClicked: function (index) {
+                        $scope.queryData.type = stylelist[index].text;
+                        $scope.queryData.interval = "";
+                        return true;
+                    }
+                });
+            };
+
+            var datePickerConfig = {
+                callback: function (val) {
+                    $scope.queryData.interval = getIntervalByTypeAndDate($filter("date")(val, "yyyy-MM-dd"));
+                }
+            };
+            //点击区间选择
+            $scope.toSelectArear = function () {
+                datePickerConfig.inputDate = new Date($scope.queryData.interval.initialDate || new Date());
+                ionicDatePicker.openDatePicker(datePickerConfig);
+            };
+            //根据类型和时间节点获取区间
+            var getIntervalByTypeAndDate = function (initialDate){
+                var start = "",
+                    end = "";
+                switch ($scope.queryData.type){
+                    case "周":
+                        var date = new Date(initialDate),
+                            weekDay = date.getDay();
+                        start = $filter("date")(date.getTime() - (weekDay == 0 ? 6 : weekDay - 1) * 24 * 60 * 60 * 1000, "yyyy-MM-dd");
+                        end = $filter("date")(date.getTime() + (weekDay == 0 ? 0 : 7 - weekDay) * 24 * 60 * 60 * 1000, "yyyy-MM-dd");
+                        break;
+                    case "半月":
+                        var date = new Date(initialDate),
+                            day = date.getDate();
+                        if(day <= 15){
+                            start = $filter("date")(initialDate, "yyyy-MM-01");
+                            end = $filter("date")(initialDate, "yyyy-MM-15");
+                        }else{
+                            start = $filter("date")(initialDate, "yyyy-MM-16");
+                            end = $filter("date")(new Date(date.getFullYear(), date.getMonth() + 1, 1).getTime() - 24 * 60 * 60 * 1000, "yyyy-MM-dd");
+                        }
+                        break;
+                    case "月":
+                        var date = new Date(initialDate);
+                        start = $filter("date")(initialDate, "yyyy-MM-01");
+                        end = $filter("date")(new Date(date.getFullYear(), date.getMonth() + 1, 1).getTime() - 24 * 60 * 60 * 1000, "yyyy-MM-dd");
+                        break;
+                    case "季":
+                        var date = new Date(initialDate);
+                        start = $filter("date")(new Date(date.getFullYear(), date.getMonth() - date.getMonth() % 3, 1), "yyyy-MM-01");
+                        end = $filter("date")(new Date(date.getFullYear(), date.getMonth() - date.getMonth() % 3 + 3, 1).getTime() - 24 * 60 * 60 * 1000, "yyyy-MM-dd");
+                        break;
+                    default: showAlert.showMsg({msg: "请先选择类型。"});
+                }
+                return {
+                    initialDate: initialDate,
+                    start: start,
+                    end: end,
+                    interval: start + " ~ " + end
+                };
+            }
+
+            //人员巡查记录
+            $scope.toOSILine = function () {
+                $state.go('OSI/OSIArear');
+            }
+        }
+    ])

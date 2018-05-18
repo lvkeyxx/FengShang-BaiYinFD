@@ -1,0 +1,46 @@
+package com.service.equipment;
+
+import com.exception.ServiceException;
+import com.service.AJsonService;
+import com.service.IJsonService;
+import com.service.equipment.sql.EquipServiceSQL;
+import com.utility.IbatisDBUtil;
+import com.utility.ListUtil;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Map;
+
+/**	设备信息查询
+ * Created by Administrator on 2018/5/15.
+ */
+public class EquipService extends AJsonService implements IJsonService {
+
+    public String equipmentInfo (Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String sql = EquipServiceSQL.equipmentInfo(map);
+            logger.info("sql=============="+sql);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "未查询到设备信息数据！";
+            } else {
+                json.put("detail", tList);
+            }
+        } catch (Throwable e) {
+            logger.error("7002", e);
+            e.printStackTrace();
+            throw new ServiceException("7002", "获取设备信息数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+}

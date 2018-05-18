@@ -1,0 +1,11 @@
+angular.module('BaiYin.attenceA', [
+    'BaiYin.attence',
+    'BaiYin.attence.myAttence',
+    'BaiYin.attence.countAttenceA',
+    'BaiYin.attence.fillCause',
+    'BaiYin.attence.attenceCdDetail',
+    'BaiYin.attence.attenceWdDetail',
+    'BaiYin.attence.attenceZtDetail',
+    'BaiYin.attence.attenZcDetail',
+    'BaiYin.attence.leaveEarlyDetail',
+])

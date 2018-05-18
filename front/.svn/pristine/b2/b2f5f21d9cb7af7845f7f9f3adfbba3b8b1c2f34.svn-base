@@ -1,0 +1,558 @@
+angular.module('BaiYin.power', [
+    'ionic',
+    'BaiYin.load'
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('power', {
+        url: '/power',
+        controller: 'powerController',
+        templateUrl: 'power/power.tpl.html',
+        cache: 'true',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('powerController', ['$scope','showAlert' ,'pageInitService', '$http', '$state','$ionicTabsDelegate','$interval','$timeout','loadingAnimation',
+        function($scope,showAlert,pageInitService,$http,$state,$ionicTabsDelegate,$interval,$timeout,loadingAnimation) {
+            $scope.$on('$ionicView.afterEnter', function() {
+                $ionicTabsDelegate.select(0);
+                getKPI();
+                // startInterval();
+            });
+            $scope.$on('$ionicView.leave',function () {
+                stopInterval();
+            });
+            //全场请求数据
+            $scope.toQcData = function () {
+                $ionicTabsDelegate.select(0);
+                getKPI();
+                // startInterval();
+            }
+            //甘肃数据请求
+            $scope.toGsData = function (){
+                $ionicTabsDelegate.select(1);
+                stopInterval();
+                selectGsData();
+            }
+            //青海数据请求
+            $scope.toQhData = function () {
+                $ionicTabsDelegate.select(2);
+                stopInterval();
+                selectQhData();
+            }
+            //宁夏数据请求
+            $scope.toNxData = function () {
+                $ionicTabsDelegate.select(3);
+                stopInterval();
+                selectNxData();
+            }
+            //新疆数据请求
+            $scope.toXjData = function () {
+                $ionicTabsDelegate.select(4);
+                stopInterval();
+                selectXjData();
+            }
+            //日电量柱状图
+            $scope.toDayInfo = function(){
+                $state.go('power/pdDay');
+            }
+            //月电量柱状图
+            $scope.toMounthInfo = function(){
+                $state.go('power/pdMounth');
+            }
+            //年电量柱状图
+            $scope.toYearInfo = function(){
+                $state.go('power/pdYear');
+            }
+            /**
+             * 开启定时器,五分钟执行一次
+             */
+            function startInterval() {
+                $scope.timer = $interval(function(){
+                    getKPI();
+                },5*60*1000);
+            }
+            //关闭定时器
+            function stopInterval(){
+                $interval.cancel($scope.timer);
+            }
+
+            // 获取集控中心负荷.......
+            function getKPI(){
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.get('ServiceName=TargetService&TransName=getTargetIndex')
+                    .then(function(res){
+                        loadingAnimation.hideLoading();
+                        $scope.companyPower = res.data;
+                    },function(error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error,'','网络异常','确认')
+                    })
+            }
+            //获取甘肃子发电厂发电量
+            function selectGsData(){
+                $http.post('ServiceName=TargetService&TransName=gsPower')
+                    .then(function (res) {
+                        $scope.gsCompanyPower = res.data.gsPower;
+                        if (res.code == '0') {
+                            draw(res.data.gsHourPower);
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            $scope.toweekGs = function(){
+                console.log('周发电量');
+            }
+            $scope.todateGs = function(){
+                console.log('天发电量');
+
+            }
+            //获取青海子发电厂发电量
+            function selectQhData() {
+                $http.post('ServiceName=TargetService&TransName=qhPower')
+                    .then(function (res) {
+                        if (res.code == '0') {
+                            $scope.qhCompanyPower = res.data.qhPower;
+                            draw2(res.data.qhHourPower,res.data.dateStr);
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+            $scope.toweekQh = function(){
+                console.log('周发电量');
+            }
+            $scope.todateQh = function(){
+                console.log('天发电量');
+
+            }
+            //获取宁夏子发电厂发电量
+            function selectNxData() {
+                $http.get('ServiceName=TargetService&TransName=nxPower')
+                    .then(function (res) {
+                        console.log(res);
+                        if (res.code == '0') {
+                            $scope.nxCompanyPower = res.data.nxPower;
+                            draw3(res.data.nxHourPower,res.data.dateStr);
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    },function (error) {
+                        showAlert.showMsg(error,'','网络异常','确认');
+                    });
+            }
+            $scope.toweekNx = function(){
+                console.log('周发电量');
+            }
+            $scope.todateNx = function(){
+                console.log('天发电量');
+
+            }
+            //获取新疆子发电厂发电量
+            function selectXjData() {
+                $http.get('ServiceName=TargetService&TransName=xjPower')
+                    .then(function (res) {
+                        console.log(res);
+                        if (res.code == '0') {
+                            $scope.xjCompanyPower = res.data.xjPower;
+                            draw1(res.data.xjHourPower,res.data.dateStr);
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    },function (error) {
+                        showAlert.showMsg(error,'','网络异常','确认');
+                    });
+            }
+            $scope.toweekXj = function(){
+                console.log('周发电量');
+            }
+            $scope.toweekXj = function(){
+                console.log('天发电量');
+
+            }
+
+            //甘肃
+            function draw(dayPower) {
+                $scope.dayGsone=[];
+                $scope.dayGstwo=[];
+                $scope.dayGsthree=[];
+                $scope.dayGsfour=[];
+                $scope.dayGstimeone=[];
+                // console.log(dayPower);
+                for (var v in dayPower) {
+                    // console.log(v)
+                    if(dayPower[v].CONTRACT=='1101'){
+                        $scope.dayGsone.push(dayPower[v].DAY_ELE_AMOUNT)
+                        $scope.dayGstimeone.push(dayPower[v].REPOART_ID)
+                    }
+                    if(dayPower[v].CONTRACT=='1201'){
+                        $scope.dayGstwo.push(dayPower[v].DAY_ELE_AMOUNT)
+                    }
+                    if(dayPower[v].CONTRACT=='1301'){
+                        $scope.dayGsthree.push(dayPower[v].DAY_ELE_AMOUNT)
+
+                    }
+                    if(dayPower[v].CONTRACT=='1401'){
+                        $scope.dayGsfour.push(dayPower[v].DAY_ELE_AMOUNT)
+
+                    }
+                }
+                drawGsdiagram()
+
+            }
+            /**
+             * 作者：
+             * 创建时间：2018.04.26
+             * 时间：15.54
+             * 版本：v1.1.2
+             * 描述：绘制甘肃图表
+             * 修改时间：
+             **/
+            function drawGsdiagram() {
+                var option = {
+                    title: {
+                        subtext: '万KW·h',
+                        top: '3%',
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['捡财塘','北大桥东风电厂','桥东第二风电场','敦煌光伏']
+                    },
+                    grid: {
+                        y2:80,
+                        top: '20%',
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: $scope.dayGstimeone
+                    },
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '捡财塘',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:$scope.dayGsone
+                        },
+                        {
+                            name: '北大桥东风电厂',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:$scope.dayGstwo
+                        },
+                        {
+                            name: '桥东第二风电场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:$scope.dayGsthree
+                        },
+                        {
+                            name: '敦煌光伏',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:$scope.dayGsfour
+                        }
+
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('gszst'), 'macarons');
+                myChart.setOption(option);
+            }
+
+            //新疆
+            function draw1(dayPower,dateStr) {
+                var powerone=[];
+                var powertwo=[];
+                var powerthree=[];
+                var powerfour=[];
+                var powerfive=[];
+                var powertime=[];
+                for (var v in dayPower) {
+                    if(dayPower[v].CONTRACT=='1801'){
+                        powerone.push(dayPower[v].DAY_ELE_AMOUNT)
+                        powertime.push(dayPower[v].REPOART_ID)
+                    }
+                    if(dayPower[v].CONTRACT=='1802'){
+                        powertwo.push(dayPower[v].DAY_ELE_AMOUNT)
+                    }
+                    if(dayPower[v].CONTRACT=='1803'){
+                        powerthree.push(dayPower[v].DAY_ELE_AMOUNT)
+                    }
+                    if(dayPower[v].CONTRACT=='1804'){
+                        powerfour.push(dayPower[v].DAY_ELE_AMOUNT)
+                    }
+                    if(dayPower[v].CONTRACT=='1901'){
+                        powerfive.push(dayPower[v].DAY_ELE_AMOUNT)
+                    }
+                }
+                var option = {
+                    title: {
+                        subtext: '万KW·h',
+                        top: '3%',
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['麻黄沟东风电一场','淖毛湖风电场','景峡风电场','烟墩风电场','小草湖北风电一场']
+                    },
+                    grid: {
+                        y2: 80,
+                        top: '20%',
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data:powertime
+                    },
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '麻黄沟东风电一场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powerone
+                        },
+                        {
+                            name: '淖毛湖风电场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powertwo
+                        },
+                        {
+                            name: '景峡风电场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powerthree
+                        },
+                        {
+                            name: '烟墩风电场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powerfour
+                        },
+                        {
+                            name: '小草湖北风电一场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powerfive
+                        },
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('xjzst'), 'macarons');
+                myChart.setOption(option);
+            }
+            //青海
+            function draw2(dayPower,dateStr) {
+                var powerone=[];
+                var powertwo=[];
+                var powerthree=[];
+                var powerfour=[];
+                var powertime=[];
+                for (var v in dayPower) {
+                    if(dayPower[v].CONTRACT=='1601'){
+                        powerone.push(dayPower[v].DAY_ELE_AMOUNT)
+                        powertime.push(dayPower[v].REPOART_ID)
+                    }
+                    if(dayPower[v].CONTRACT=='1701'){
+                        powertwo.push(dayPower[v].DAY_ELE_AMOUNT)
+                    }
+                }
+                var option = {
+                    title: {
+                        subtext: '万KW·h'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['格尔木光伏电站','贝壳梁诺木洪风电场']
+                    },
+                    grid: {
+                        y2: 80
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data:powertime
+                    },
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '格尔木光伏电站',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powerone
+                        },
+                        {
+                            name: '贝壳梁诺木洪风电场',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powertwo
+                        }
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('qhzst'), 'macarons');
+                myChart.setOption(option);
+            }
+            //宁夏
+            function draw3(dayPower,dateStr) {
+                var powerone=[];
+                var powertwo=[];
+                var powerthree=[];
+                var powerfour=[];
+                var powertime=[];
+                for (var v in dayPower) {
+                    if(dayPower[v].CONTRACT=='1501'){
+                        powerone.push(dayPower[v].DAY_ELE_AMOUNT)
+                        powertime.push(dayPower[v].REPOART_ID)
+                    }
+                }
+                var option = {
+                    title: {
+                        subtext: '万KW·h'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['石嘴山光伏电站']
+                    },
+                    grid: {
+                        y2: 80
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data:powertime
+                    },
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '石嘴山光伏电站',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:powerone
+                        }
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('nxzst'), 'macarons');
+                myChart.setOption(option);
+            }
+        }])
+    .directive('powerline', function () {
+        return {
+            scope: {
+                id: "@",
+                legend: "=",
+                item: "=",
+                data: "="
+            },
+            restrict: 'E',
+            template: '<div style="height:350px;"></div>',
+            replace: true,
+            link: function ($scope, element, attr, ctr) {
+                // $scope.$parent.initChart($scope);
+            }
+        };
+    });

@@ -1,0 +1,113 @@
+<ion-view class="facilityInfoCSS">
+    <ion-nav-title>设备信息</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="facilityList">
+            <div class="scanQRcode">
+                <input type="text" placeholder="请扫描设备二维码" class="scanCode" id="facilityInfoScanCodeID"
+                       ng-click="toScanCode()">
+            </div>
+        </div>
+        <div class="tab-box" ng-hide="jbxxHide">
+            <input type="radio" name="demo" id="tab-switch-input1" checked="">
+            <input type="radio" name="demo" id="tab-switch-input2">
+            <div class="tab-box-label">
+                <label for="tab-switch-input1">
+                    <span>基本信息</span>
+                </label>
+                <label for="tab-switch-input2">
+                    实时参数
+                </label>
+            </div>
+            <div class="tab-contents">
+                <div class="tab-content">
+                    <ul>
+                        <li>
+                            <h3>设备参数</h3>
+                            <span>设备参数</span>
+                        </li>
+                        <li>
+                            <h3>设备概况</h3>
+                            <span>设备概况</span>
+                        </li>
+                        <li>
+                            <h3>巡检信息</h3>
+                            <span>巡检信息</span>
+                        </li>
+                        <li>
+                            <h3>维护信息</h3>
+                            <span>维护信息</span>
+                        </li>
+                        <li>
+                            <h3>危险因素及预防</h3>
+                            <table>
+                                <caption>危险源</caption>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>设备设施</th>
+                                    <th>危害形式</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption>运行巡视风险及预控</caption>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>危险点</th>
+                                    <th>可能存在的危害</th>
+                                    <th>预控措施</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <table>
+                                <caption>检修作业风险及预控</caption>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>危险点</th>
+                                    <th>可能存在的危害</th>
+                                    <th>预控措施</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <ul>
+                        <li style="border:none; text-align: center">暂无内容</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,121 @@
+angular
+	.module('BaiYin.erp.details', [
+		'ionic',
+		'BaiYin.erp.selectUser'
+	])
+	.config(['$stateProvider', function($stateProvider) {
+		$stateProvider.state('erpDetails', {
+			url: '/erp/details',
+			controller: 'erpDetailsController',
+			templateUrl: 'erp/details/details.tpl.html',
+			cache: 'true',
+			authorizedRuleType: ['1'],
+			params: {
+				item: null
+			}
+		})
+	}])
+	.controller('erpDetailsController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker', '$ionicActionSheet', '$ionicScrollDelegate', '$ionicSlideBoxDelegate',
+		function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, ionicDatePicker, $ionicActionSheet, $ionicScrollDelegate, $ionicSlideBoxDelegate) {
+			//申请信息
+			$scope.data = new Object();
+			//标题
+			$scope.title = "物料申请";
+			$scope.typeIndex = 0;
+			$scope.types = ["申请单", "申请详情", "文档", "审批流程"];
+			//进入页面
+			$scope.$on('$ionicView.enter', function (event, view) {
+                if(view.direction == "forward"){
+                    $scope.data = $stateParams.item;
+					$scope.title = $scope.data.LU_DESCRIPTION;
+					getMainTable();
+                }
+            });
+
+			//滑动切换
+			$scope.slideHasChanged = function (index) {
+				$scope.typeIndex = index;
+			};
+
+            //切换typeIndex
+            $scope.changeTypeIndex = function(index){
+                $scope.typeIndex = index;
+				$ionicSlideBoxDelegate.slide(index);
+			};
+
+			//拒绝
+			$scope.toRefused = function () {
+				history.go(-1);
+			};
+
+			//同意
+			$scope.toSelectUser = function () {
+				$state.go('erpSelectUser');
+			};
+
+			//主子表主表
+			$scope.MainTable = new Array();
+			//获取主子表主表
+			var getMainTable = function(){
+				loadingAnimation.showLoading('加载中...', 'loding', 0);
+                $http
+                    .post("ServiceName=ErpService&TransName=getMainField",{
+						logic_unit: $scope.data.LU_NAME,
+						key_ref: escape($scope.data.KEY_REF)
+					})
+                    .then(function (res) {
+                        getStep();
+                        if(res.code == 0){
+							$scope.MainTable = res.data;
+                        }else{
+                            showAlert.showMsg(res, '', '', '确认');
+                        }
+                    }, function (error) {
+						getStep();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+			};
+
+			$scope.step = {now: 0, list: new Array(), total: 0};
+			//获取审批步骤
+			var getStep = function(){
+                $http
+                    .post("ServiceName=ErpService&TransName=getStep", {key_ref: escape($scope.data.KEY_REF)})
+                    .then(function (res) {
+                        getDoc();
+                        if(res.code == 0){
+							$scope.step.total = res.data.total;
+							$scope.step.list = res.data.list;
+							$scope.step.list.forEach(v => {
+								if(v.APP_SIGN && v.APP_DATE){
+									$scope.step.now++;
+								}
+							});
+                        }else{
+                            showAlert.showMsg(res, '', '', '确认');
+                        }
+                    }, function (error) {
+						getDoc();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+			};
+
+			$scope.docList = new Array();
+			//获取审批文档
+			var getDoc = function(){
+                $http
+                    .post("ServiceName=ErpService&TransName=getDoc", {key_ref: escape($scope.data.KEY_REF)})
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if(res.code == 0){
+							$scope.docList = res.data;
+                        }else{
+                            showAlert.showMsg(res, '', '', '确认');
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+			};
+		}
+	]);

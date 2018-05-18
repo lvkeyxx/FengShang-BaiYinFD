@@ -1,0 +1,27 @@
+<ion-modal-view hide-nav-bar="true" ng-controller="LoginController" class="loginCSS">
+    <ion-content has-bouncing="false" scrollbar-y="false" delegate-handle="loginScroll">
+        <!-- <div class="goBack" ng-click="goBack();">返回</div> -->
+        <!--  <div class="head"></div> -->
+        <!--   <p class="appIcon"></p> -->
+        <div class="empetDiv" ng-style="empty"></div>
+        <form class="login" name="loginForm" ng-submit="login(credentials,loginForm);" novalidate>
+            <div class="list">
+                <label class="item item-input">
+                    <span class="inputName">账号：</span>
+                    <input type="text" id="username" ng-model="credentials.UserID" placeholder="请填写ERP账号" required>
+                </label>
+                <label class="item item-input">
+                    <span class="inputPwd">密码：</span>
+                    <input type="password" id="password" ng-model="credentials.PassWord" placeholder="请填写密码" required>
+                </label>
+            </div>
+            <div class="remPwd">
+                <ion-checkbox ng-model="isChecked" ng-change="seletePwd(isChecked)">记住密码</ion-checkbox>
+            </div>
+           <!--  <div class="isauto">
+                <ion-checkbox ng-model="isAuto" ng-change="autoLogin(isAuto)">自动登录</ion-checkbox>
+            </div> -->
+            <button type="submit" ng-disabled="loginForm.$submitted" class="button">登录</button>
+        </form>
+    </ion-content>
+</ion-modal-view>

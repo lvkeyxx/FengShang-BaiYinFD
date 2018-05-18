@@ -1,0 +1,50 @@
+.OSIHistoryCSS {
+  @rem: 144rem;
+  background-color: #fff;
+  .item-icon-left .icon, .item-icon-right .icon {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    top: 0;
+    height: 100%;
+    font-size: 14px;
+    color: #ddd;
+  }
+  .item-icon-right {
+    padding-right: 34px;
+  }
+  .item-icon-right .icon {
+    right: 0px;
+  }
+  .OSIHistory {
+    .historyTime {
+      background: #f4f4f4;
+      text-align: center;
+      .startEm{
+        margin-right: 20px;
+      }
+      .endEm{
+        margin-left: 20px;
+      }
+      em {
+        display: inline-block;
+        height: 35px;
+        line-height: 35px;
+        .selectDateBtn {
+          line-height: 35px;
+          border: none;
+          text-align: left;
+          width: 100px;
+          display: block;
+          background: transparent;
+          color: #1296db;
+          background: url(../images/PM/selectDowm_blueicon.png) no-repeat right;
+        }
+      }
+    }
+
+  }
+}

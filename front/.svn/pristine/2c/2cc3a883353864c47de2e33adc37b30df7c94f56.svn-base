@@ -1,0 +1,20 @@
+<div class="card">
+    <div>订单号：3</div>
+    <div>状态：已关闭</div>
+    <div>域：WX</div>
+    <div>领料人：张大力</div>
+    <div>预算科目：生产成本-基本生产成本-制造费用-修理费-C级检修-3号机组-标准项目-材料费_乌金峡_设备管理部</div>
+    <div>责任部门：检修管理部</div>
+    <div>总额：1890.87</div>
+</div>
+<div ng-click="changeTypeIndex(3);">
+    <div class="progress">
+        <div style="flex: 3;"></div>
+        <div style="flex: 2;"></div>
+    </div>
+    <div class="text-right">3/5</div>
+</div>
+<div class="document" ng-click="changeTypeIndex(2);">文档（4）</div>
+<div class="card">
+    <textarea rows="5" placeholder="请输入审批意见..."></textarea>
+</div>

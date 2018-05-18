@@ -1,0 +1,178 @@
+.PRODUCTMANAGECSS {
+    *{
+
+    }
+    @rem: 144rem;
+    background-color: #f4f4f4;
+
+    .kpiheader {
+        /*background: url(../images/KPI/weather_img_bg.png) no-repeat center;*/
+        background: -webkit-gradient(linear,0% 0,0% 100%,from(#50b2fb),to(#a6d4f6));
+        background-size: 100%;
+        /*height: 690/@rem;*/
+    }
+    .kpiheader .goBack{
+        display: inline-block;
+    }
+    .kpiheader .electricSelect{
+        display: inline-block;
+    }
+    //返回首页
+    .goBack{
+        height: 100/@rem;
+        line-height: 100/@rem;
+        color: #fff;
+        font-size: 40/@rem;
+        transform: translateY(48/@rem);
+        margin-left: 10px;
+        margin-right: 20px;
+    }
+    .goback_icon{
+        display: inline-block;
+        background: url(../images/KPI/goback_icon.png) no-repeat center;
+        width: 80/@rem;
+        height: 80/@rem;
+    }
+    //选择电厂
+    .electricSelect{
+        transform: translateY(18/@rem);
+    }
+    .electricSelect select{
+        //-webkit-appearance: menulist;
+        border: none;
+        background: transparent;
+        height: 100/@rem;
+        line-height: 100/@rem;
+        color: #fff;
+    }
+    //显示天气
+    .kpiheader .headmiddle{
+        margin-top: 5px;
+        width: 100%;
+        padding: 10px;
+    }
+    .kpiheader .headmiddle .weatherShow{
+        display: inline-block;
+    }
+    .kpiheader .headmiddle .weatherShow .weatherImg{
+        display: inline-block;
+        margin-right: 15px;
+    }
+    .kpiheader .headmiddle .weatherShow .weatherImg img{
+         width: 180/@rem;
+         height: 180/@rem;
+         display: block;
+     }
+    .kpiheader .headmiddle .weatherShow .weatherImg p{
+        display: block;
+        text-align: center;
+        color: #fff;
+        transform: translateY(10/@rem);
+        font-size: 40/@rem;
+        padding: 0;
+        margin: 0;
+    }
+    .kpiheader .headmiddle .weatherShow .weatherDes{
+        display: inline-block;
+    }
+    .kpiheader .headmiddle .weatherShow .weatherDes ul li{
+        height: 70/@rem;
+        line-height: 70/@rem;
+        color: #fff;
+        font-size: 40/@rem;
+    }
+    .kpiheader .headmiddle .weatherShow .weatherDes .wendu{
+        font-size: 60/@rem;
+    }
+    .kpiheader .headmiddle .power{
+        display: inline-block;
+        height: 70/@rem;
+        line-height: 70/@rem;
+        color: #fff;
+        font-size: 40/@rem;
+        float: right;
+        /*transform: translateY(20/@rem);*/
+    }
+    .kpiheader .headmiddle .power .comLoad{
+        display: inline-block;
+        text-align: right;
+    }
+    .kpiheader .headmiddle .power .comLoad span{
+        display: block;
+    }
+    .kpiheader .headmiddle .power .comPower{
+        display: inline-block;
+        text-align: right;
+        margin-left: 20/@rem;
+    }
+    .kpiheader .headmiddle .power .comPower span{
+        display: block;
+    }
+    //各厂信息显示
+    .kpiheader .headerFoot{
+        background: rgba(0,0,0,0.5);
+    }
+    .kpiheader .headerFoot ul{
+        font-size: 0;
+    }
+    .kpiheader .headerFoot ul li{
+        display: inline-block;
+        font-size: 40/@rem;
+        height: 140/@rem;
+        line-height: 70/@rem;
+        color: #fff;
+        text-align: center;
+        margin: 10px 0;
+    }
+    .kpiheader .headerFoot ul li p{
+        margin: 0;
+        padding: 0;
+    }
+    .kpiheader .headerFoot .rightBorder{
+        border-right: 1px solid #eeeeee26;
+    }
+    //负荷电量显示按钮
+    .nav{
+        margin-top: 10px;
+        padding: 0 35/@rem;
+    }
+    .nav ul li{
+        display: inline-block;
+        text-align: center;
+        font-size: 80/@rem;
+        color: #1296db;
+        text-shadow: #fff 1px 1px 1px;
+        /*border: 2px solid #fff;*/
+    }
+    .nav .goFuhe{
+        background: url(../images/KPI/fuhe_btn_img.png) no-repeat center;
+        width: 488/@rem;
+        height: 300/@rem;
+        margin-right: 20/@rem;
+        border-radius: 15px;
+        line-height: 300/@rem;
+    }
+    .nav .goFuhe .fhicon_img{
+        background: url(../images/KPI/fhicon_img.png) no-repeat center;
+        display: inline-block;
+        width: 150/@rem;
+        height: 150/@rem;
+        vertical-align: middle;
+        margin-right: 20/@rem;
+    }
+    .nav .goDl{
+        background: url(../images/KPI/dianliang_bnt_img.png) no-repeat center;
+        width: 488/@rem;
+        height: 300/@rem;
+        border-radius: 15px;
+        line-height: 300/@rem;
+    }
+    .nav .goDl .dlicon_img{
+        background: url(../images/KPI/dlicon_img.png) no-repeat center;
+        display: inline-block;
+        width: 150/@rem;
+        height: 150/@rem;
+        vertical-align: middle;
+        margin-right:  20/@rem;
+    }
+}

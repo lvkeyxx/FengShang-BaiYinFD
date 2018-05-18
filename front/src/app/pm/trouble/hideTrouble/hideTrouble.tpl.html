@@ -1,0 +1,64 @@
+<ion-view class="hideTroubleCSS">
+    <ion-nav-title>隐患排查</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-addyh" ng-click="addTrouble()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false" on-drag-down="onDragDown()">
+        <div class="searchTrouble">
+            <ul>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="域：" id="_label-0">域：</span>
+                        <input type="text" class="rightselect" id="yuid" readonly placeholder="请选择域" ng-click="toSelectYu()">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="状态：" id="_label-1">状态：</span>
+                        <input type="text" id="stutsid" class="rightselect" readonly placeholder="请选择状态" ng-click="toSelectStuts()">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="起始时间：" id="_label2">起始时间：</span>
+                        <input type="text" name="start_date" id="start_date" onfocus="this.blur()" class="rightselect" placeholder="请选择开始日期" readonly="readonly" />
+                        <div id="dtBox"></div>
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="结束时间：" id="_label-3">结束时间：</span>
+                        <input type="text" name="end_date" id="end_date" class="rightselect"
+                               placeholder="请选择结束日期" onfocus="this.blur()" readonly="readonly" />
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="隐患等级：" id="_label-4">隐患等级：</span>
+                        <input type="text" id="yhdjid" class="rightselect" readonly placeholder="请选择隐患等级" ng-click="toSelectYhdj()">
+                    </label>
+                </li>
+                <li>
+                    <button class="commitBtn" ng-click="toCommit()">查询</button>
+                </li>
+            </ul>
+        </div>
+        <div class="troubleList" style="display:none">
+            <div class="content ionic-pseudo">
+                <div class="list">
+                    <a class="item item-avatar" href="#" ng-click="toDetail(x)"
+                       ng-repeat="x in troubleList track by $index">
+                        <!--<div class="numstatus"><i class="jiicon" ng-style="setbgColor(x.DANGER_LEVEL)">1</i></div>-->
+                        <div class="titleDes">{{x.DANGER_CONTENT}}</div>
+                        <div class="author">{{x.CONTRACT_NAME}}<em class="" ng-style="setColor(x.DANGER_LEVEL)">{{x.DANGER_LEVEL
+                            | limitTo:2}}</em></div>
+                        <div class="fxtime">{{x.STATE}}<em>{{x.DISCOVER_TIME | limitTo:10}}</em></div>
+                   </a>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

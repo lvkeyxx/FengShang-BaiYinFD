@@ -1,0 +1,27 @@
+<ion-view class="agentsList">
+ <ion-nav-title>待办列表</ion-nav-title>
+  <ion-nav-buttons side="right">
+      <button class=" button   icon  ion-navicon" ng-click="historySearch()">
+     
+      </button>
+    </ion-nav-buttons>
+ <ion-content>
+  <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+   <div class="agentList">
+     <div>标题</div>
+     <div class="handleTime">最新处理时间</div>
+   </div>
+   <div class="agentsDetail" ng-repeat="item in items" ng-click="agentsItem(item)" >
+     <div class="agentsTitle">
+     <span class="bagDian"></span>
+     {{item.TITLE}}
+     </div>
+     <div  class="agentsData">{{item.CREATED_DATE | date : "MM月dd日HH时mm分"}}
+      <span class="bagImg"></span>
+     </div>
+   </div>
+      <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%"
+       immediate-check="false">
+      </ion-infinite-scroll>
+ </ion-content>
+</ion-view>

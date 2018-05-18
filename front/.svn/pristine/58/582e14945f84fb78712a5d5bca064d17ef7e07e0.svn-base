@@ -1,0 +1,129 @@
+angular.module('BaiYin.OSI', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI', {
+            url: '/OSI',
+            controller: 'OSIController',
+            templateUrl: 'OSI/OSI.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSIController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker', '$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker, $cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.positionHide = true;
+                $scope.inputHide = false;
+                $scope.patrolRoteList();
+            });
+
+            //点击扫二维码
+            $scope.toScanCode = function () {
+                $cordovaBarcodeScanner.scan()
+                    .then(function (barcodeData) {
+                        $scope.barcodeDataText = barcodeData.text;
+                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
+                        $scope.patrolHome($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+                    }, function (error) {
+                        console.log("ERROR:" + error);
+                    });
+            }
+            //现场巡查首页
+            $scope.patrolHome = function (MCH_CODE, CONTRACT) {
+                $http.post('ServiceName=InspectionService&TransName=formCBluetoothEquip&MCH_CODE=' + MCH_CODE + '&CONTRACT=' + CONTRACT)
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolHomeData = res.data.detail;
+                            if ($scope.patrolHomeData.IS_MATCH) {
+                                //扫描蓝牙
+                                blueToothEnable($scope.patrolHomeData.SN_ADDRESS);
+                            }
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            //首页签到 点击签到
+            $scope.patrolSign = function () {
+                var params = {
+                    BLUETOOTH_SERIAL_NO:$scope.patrolHomeData.BLUETOOTH_SERIAL_NO,
+                    LOCATION_DESCRIPTION:$scope.patrolHomeData.ADDRESS,
+                    IS_MATCH:$scope.patrolHomeData.IS_MATCH,
+                    EQUIP_NO:$scope.patrolHomeData.MCH_CODE,
+                    CONTRACT:$scope.patrolHomeData.CONTRACT
+                }
+                $http.post('ServiceName=InspectionService&TransName=inspectRecord',params)
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolSignData = res.data;
+                            $scope.positionHide = true;
+                            $scope.inputHide = false;
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            //巡查路线列表
+            $scope.patrolRoteList = function () {
+                $http.post('ServiceName=InspectionService&TransName=listCInspectRoute')
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolRoteListData = res.data.dList;
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            //跳转到巡检线路
+            $scope.toOsiLine = function (obj) {
+                var params = {
+                    DESCRIPTION:obj.DESCRIPTION,
+                    TEMP_ID:obj.TEMP_ID,
+                    START_TIME:obj.START_TIME,
+                    END_TIME:obj.END_TIME,
+                    INSPECT_TYPE:obj.INSPECT_TYPE
+                }
+                $state.go('OSI/OSILine',params);
+            }
+            //跳转到巡检记录
+            $scope.toOsiHistory = function () {
+                $state.go('OSI/OSIHistory');
+            }
+            //开启本机蓝牙
+            function blueToothEnable(SN_ADDRESS) {
+                ble.enable(
+                    function () {
+                        scanBlueTooth(SN_ADDRESS);
+                    },
+                    function () {
+                        showAlert.showMsg("", "", "打开蓝牙失败！");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scanBlueTooth(SN_ADDRESS) {
+                ble.scan([], 5, function (device) {
+                        //成功的回调函数
+                        if (device.id == SN_ADDRESS) {
+                            $scope.$apply(function(){
+                                $scope.inputHide = true;
+                                $scope.positionHide = false;
+                            });
+                        }
+                    }, function () {
+                        //失败的回调函数
+                        showAlert.showMsg('', '', "未扫描到有效蓝牙！");
+                    }
+                );
+            }
+        }
+    ])

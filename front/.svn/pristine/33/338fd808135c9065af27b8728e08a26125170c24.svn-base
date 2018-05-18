@@ -1,0 +1,30 @@
+angular.module('BaiYin.taskManage', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('taskManage', {
+            url: '/taskManage',
+            controller: 'taskManageController',
+            templateUrl: 'taskManage/taskManage.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('taskManageController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                $ionicTabsDelegate.select(0);
+            });
+            $scope.toAllData = function () {
+                $ionicTabsDelegate.select(0);
+            }
+            $scope.toClzData = function(){
+                $ionicTabsDelegate.select(1);
+            }
+            $scope.toYwcData = function(){
+                $ionicTabsDelegate.select(2);
+            }
+        }
+    ])

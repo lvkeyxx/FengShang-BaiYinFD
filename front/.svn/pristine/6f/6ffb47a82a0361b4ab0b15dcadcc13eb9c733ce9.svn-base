@@ -1,0 +1,69 @@
+<ion-view class="powerDetailCSS">
+    <ion-nav-title>月电量</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="barGraph">
+            <bar id="mainMounth" legend="legend" data="data"></bar>
+        </div>
+        <div class="dayPowerList">
+            <table>
+                <tr>
+                    <th>
+                        <span>日期</span>
+                        <span>(月)</span>
+                    </th>
+                    <th>
+                        <span>发电量</span>
+                        <span class="unitShow">(万千万时)</span>
+                    </th>
+                    <th>完成率</th>
+                    <th>符合率</th>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">5月</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">6月</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">7月</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">8月</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="yearShow">2016</span>
+                        <span class="mdayShow">9月</span>
+                    </td>
+                    <td>82.1</td>
+                    <td>92.1%</td>
+                    <td>98.1%</td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,22 @@
+<ion-view class="InspectionRecordCSS">
+    <ion-nav-title>巡查记录</ion-nav-title>
+    <ion-content class="padding" has-header="true">
+        <div class="content">
+            <ul class="list">
+                <li class="item item-icon-right"  ng-repeat="RecordList in InspectiomRecordList" ng-click="goInspectionDetail(RecordList)">
+                    {{RecordList.DESCRIPTION}}
+                    <span class="item-note ng-binding">{{RecordList.PLAN_INSPECTED}}/{{RecordList.PLAN_INSPECT}}/{{RecordList.OUT_PLAN_INSPECTED}}</span>
+                    <i class="icon ion-chevron-right"></i>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>
+<!--
+@author: tigerITman
+@contact: 2811744265@qq.com
+@software: webstorm
+@file: InspectionRecord.tpl.html
+@time: 2018-05-17 10:19
+@desc:
+-->

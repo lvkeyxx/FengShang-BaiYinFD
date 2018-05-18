@@ -1,0 +1,85 @@
+angular.module('BaiYin.OSI.OSIcount', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI/OSIcount', {
+            url: '/OSI/OSIcount',
+            controller: 'OSIcountController',
+            templateUrl: 'OSI/OSIcount/OSIcount.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSIcountController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet) {
+            $scope.OSIListHide = true;
+            $scope.$on('$ionicView.afterEnter', function () {
+
+            });
+            //上拉弹出搜索框
+            $scope.onDragDown = function () {
+                $(".countAttribute").show('slow');
+            }
+            //点击查询按钮
+            $scope.toInquiry = function () {
+                $scope.OSIListHide = false;
+                $(".countAttribute").hide('slow');
+                $(".OSIList").show('slow');
+            }
+
+            //点击域选择
+            var dianchanglist = [{"text": "集控中心"}, {"text": "北大桥东风电场"}, {"text": "小草湖北风电一场"}, {"text": "格尔木光伏电站"}, {"text": "景峡光伏电站"}, {"text": "烟墩风电场"}, {"text": "景峡风电场"}];
+            $scope.toSelectStatus = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: dianchanglist,
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        commitYu = dianchanglist[index].text;
+                        yunum = dianchanglist[index].CONTRACT;
+                        $("#statusid").val(commitYu);
+                        return true;
+                    }
+                });
+            }
+            //点击类型选择
+            var stylelist = [{"text": "周"}, {"text": "双周"}, {"text": "月"}, {"text": "季"}];
+            $scope.toSelectStyle = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: stylelist,
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        commitYu = stylelist[index].text;
+                        yunum = stylelist[index].CONTRACT;
+                        $("#styleid").val(commitYu);
+                        return true;
+                    }
+                });
+            };
+
+            //点击区间选择
+            var arearlist = [{"text": "2018-01-01 - 2018-02-01"}, {"text": "2018-02-01 - 2018-03-01"}, {"text": "2018-03-01 - 2018-04-01"}, {"text": "2018-04-01 - 2018-05-01"}];
+            $scope.toSelectArear = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: arearlist,
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        commitYu = arearlist[index].text;
+                        yunum = arearlist[index].CONTRACT;
+                        $("#arearid").val(commitYu);
+                        return true;
+                    }
+                });
+            };
+            $scope.toOSILine = function () {
+                $state.go('OSI/OSIArear');
+            }
+        }
+    ])

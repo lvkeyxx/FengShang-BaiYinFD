@@ -1,0 +1,27 @@
+<ion-view class="userConfigCSS">
+    <ion-nav-title>{{groupInfo.groupName}}资料</ion-nav-title>
+    <ion-content class="userConfigContent" has-bouncing="false" scrollbar-y="false">
+        <div class="userItemContent">
+            <div class="items clearfix">
+                <div class="lft">组名</div>
+                <div class="rgt" ng-if="groupInfo.groupName != '' ">{{groupInfo.groupName?groupInfo.groupName:groupInfo.name}}</div>
+                <div class="rgt" ng-if="groupInfo.groupName == '' ">无</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">描述</div>
+                <div class="rgt" ng-if="groupInfo.groupDescription != '' ">{{groupInfo.groupDescription?groupInfo.groupDescription:groupInfo.desc}}</div>
+                <div class="rgt" ng-if="groupInfo.groupDescription == '' ">无</div>
+            </div>
+        </div>
+        <div>
+            <button class="button button-block button-positive" ng-click="showMembers()">
+                群组成员
+            </button>
+        </div>
+        <div>
+            <button class="button button-block button-positive" ng-click="showGroupMember()">
+                添加成员
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

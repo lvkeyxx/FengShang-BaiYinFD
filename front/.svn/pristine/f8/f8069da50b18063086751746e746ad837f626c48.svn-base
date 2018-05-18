@@ -1,0 +1,210 @@
+.attenceCSS {
+  @rem: 144rem;
+  background-color: #fff;
+  .attence {
+    .attenceTop {
+      //background: url(../images/attence/kqBanner.png);
+      //background-size: cover;
+      background: #3492e9;
+      color: #fff;
+      .head {
+        width: 100%;
+        padding: 10px;
+        padding-top: 20px;
+        text-align: center;
+        .backIndex {
+          display: inline-block;
+          background: url(../images/KPI/goback_icon.png) no-repeat center;
+          background-size: 100%;
+          width: 30px;
+          height: 30px;
+          transform: translateY(0.03rem);
+          float: left;
+        }
+        .glass {
+          display: inline-block;
+          height: 100/@rem;
+          line-height: 100/@rem;
+          font-size:19px;
+        }
+
+      }
+      .dateShow {
+        .name {
+          border-radius: 50%;
+          display: inline-block;
+          background: rgba(0, 0, 0, 0.2);
+          float: right;
+          text-align: center;
+          transform: translateY(-90/@rem);
+          margin-right: 10px;
+          width: 55px;
+          height: 55px;
+          line-height: 55px;
+        }
+        .weekShow {
+          font-size: 60/@rem;
+          padding: 10px;
+        }
+        .dayShow {
+          padding: 10px;
+          display: inline-block;
+        }
+      }
+    }
+    //蓝牙
+    .bluetooth {
+      border-top: 10px solid #f4f4f4;
+      padding: 10px 5px 10px 5px;
+      .blueToothIcon {
+        background: url("../images/attence/position_icon.png") no-repeat center;
+        background-size: 100%;
+        width: 25px;
+        height: 25px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .searchBlootBtn{
+        display: inline-block;
+        border: none;
+        background: #1BBB37;
+        width: 80px;
+        float: right;
+        color: #fff;
+        height: 30px;
+        line-height: 30px;
+        transform: translateY(-8/@rem);
+        border-radius: 10px;
+      }
+    }
+    //打卡
+    .punchClock {
+      border-top: 10px solid #f4f4f4;
+      //上班
+      .clockIn {
+        padding: 10px 5px 10px 5px;
+        border-bottom: 1px solid #f4f4f4;
+        .clockinIcon {
+          background-color: #3492e9;
+          width: 35px;
+          height: 35px;
+          text-align: center;
+          border-radius: 10px;
+          display: inline-block;
+          margin-right: 10px;
+          transform: translateY(5/@rem);
+          background-image: url("../images/attence/clockIn_icon.png");
+        }
+        .clockinDes {
+          display: inline-block;
+        }
+        .clockinShow {
+          float: right;
+          transform: translateY(20/@rem);
+          span{
+            color:#3492e9;
+          }
+          button {
+            width: 180/@rem;
+            border: none;
+            background: #3492e9;
+            outline: none;
+            color: #fff;
+            border-radius: 10px;
+            line-height: 80/@rem;
+            height: 80/@rem;
+          }
+          .clockingreyBtn{
+            background: #ccc;
+          }
+        }
+      }
+      .clockout {
+        padding: 10px 5px 10px 5px;
+        .clockoutIcon {
+          background-color: #3492e9;
+          width: 35px;
+          height: 35px;
+          text-align: center;
+          border-radius: 10px;
+          display: inline-block;
+          margin-right: 10px;
+          transform: translateY(5/@rem);
+          background-image: url("../images/attence/clockOut_icon.png");
+        }
+        .clockoutDes {
+          display: inline-block;
+        }
+        .clockoutShow {
+          float: right;
+          transform: translateY(20/@rem);
+          span{
+            color:#3492e9;
+          }
+          button {
+            width: 180/@rem;
+            border: none;
+            background: #3492e9;
+            outline: none;
+            color: #fff;
+            border-radius: 10px;
+            line-height: 80/@rem;
+            height: 80/@rem;
+          }
+          .clockoutgreyBtn{
+            background: #ccc;
+          }
+          .upClockoutBtn{
+            background: #3492e9;
+          }
+        }
+      }
+    }
+    //菜单列表
+    .navList {
+      border-top: 10px solid #f4f4f4;
+      ul {
+        font-size: 0;
+      }
+      ul li {
+        padding: 10px 5px 10px 5px;
+        display: inline-block;
+        padding: 0rem;
+        text-align: center;
+        font-size: 0.27777778rem;
+        border-bottom: 1px solid rgba(208, 234, 234, 0.2);
+        border-right: 1px solid rgba(208, 234, 234, 0.2);
+        p{
+          line-height: 80/@rem;
+          padding: 10px;
+          margin-top: 20/@rem;
+        }
+        .myattence_img{
+          display: inline-block;
+          background: url(../images/attence/myEttence.png) no-repeat center;
+          background-size: 100%;
+          width: 0.55555556rem;
+          height: 0.55555556rem;
+          transform: translateY(0.34722222rem);
+        }
+        .count_img{
+          display: inline-block;
+          background: url(../images/attence/ettenceCount.png) no-repeat center;
+          background-size: 100%;
+          width: 0.55555556rem;
+          height: 0.55555556rem;
+          transform: translateY(0.34722222rem);
+        }
+        .reason_img{
+          display: inline-block;
+          background: url(../images/attence/absence.png) no-repeat center;
+          background-size: 100%;
+          width: 0.55555556rem;
+          height: 0.55555556rem;
+          transform: translateY(0.34722222rem);
+        }
+      }
+    }
+  }
+
+}

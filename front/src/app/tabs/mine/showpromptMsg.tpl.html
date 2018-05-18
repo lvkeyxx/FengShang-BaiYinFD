@@ -1,0 +1,14 @@
+<div class="promptPopCSS">
+    <div class="prompt">
+        <span>提示:</span>
+        <p>退出登录后，将不再收到推送通知。</p>
+    </div>
+    <div class="checkPrompt">
+        <ion-checkbox ng-model="isChecked" ng-change="seleteShowpromptMsg(isChecked)">
+            <span>不再提醒</span>
+        </ion-checkbox>
+    </div>
+    <button class="button button-block button-positive" ng-click="closePop()">
+        确定
+    </button>
+</div>

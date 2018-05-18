@@ -1,0 +1,66 @@
+<ion-view class="attenceCSS" hide-nav-bar="true" hide-back-button="true">
+    <ion-nav-title>考勤签到</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="attence">
+            <div class="attenceTop">
+                <div class="head">
+                    <div class="backIndex" ng-click="goindex()"></div>
+                    <div class="glass" ng-style="glassStyle">人力资源部</div>
+                    <div class="name">邹欣</div>
+                </div>
+                <div class="dateShow">
+                    <div class="weekShow">星期三</div>
+                    <div class="dayShow">2018年03月07日</div>
+                </div>
+            </div>
+            <div class="bluetooth"><i class="blueToothIcon"></i>当前蓝牙地址：黄河家园1号楼</div>
+            <div class="punchClock">
+                <div class="clockIn">
+                    <div class="clockinIcon"><img src="../images/attence/clockIn_icon.png"></div>
+                    <div class="clockinDes">
+                        <div class="clockinname">上班</div>
+                        <div class="clockinTime">09:00</div>
+                    </div>
+                    <div class="clockinShow">
+                        <span ng-hide="sbdktimeShow">上班打卡08:56</span>
+                        <button class="clockinBtn" ng-click="toClockIn()" ng-hide="clockinBtn">打卡</button>
+                    </div>
+                </div>
+                <div class="clockout">
+                    <div class="clockoutIcon"><img src="../images/attence/clockOut_icon.png"></div>
+                    <div class="clockoutDes">
+                        <div class="clockoutname">下班</div>
+                        <div class="clockoutTime">18:00</div>
+                    </div>
+                    <div class="clockoutShow">
+                        <span ng-hide="xbdktimeShow">下班打卡08:56</span>
+                        <button class="clockoutBtn" ng-click="toClockout()" ng-hide="clockoutBtn">打卡</button>
+                    </div>
+                </div>
+            </div>
+            <div class="navList">
+                <ul>
+                    <li class="col col-33" ng-click="toMyattence()">
+                        <div class="myattence_img"></div>
+                        <p>我的考勤</p>
+                    </li>
+                    <li class="col col-33" ng-click="tocountAttence()">
+                        <div class="count_img"></div>
+                        <p>考勤统计</p>
+                    </li>
+                    <li class="col col-33" ng-click="tofillCause()">
+                        <div class="reason_img"></div>
+                        <p>缺勤事由</p>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div ng-hide="blueToothFlag">
+            <ul>
+                <li ng-repeat="blootList in devices">{{blootList}}</li>
+                <li>你好，蓝牙</li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

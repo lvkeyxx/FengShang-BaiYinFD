@@ -1,0 +1,46 @@
+<ion-view class="OSIHistoryCSS">
+    <ion-nav-title>巡查记录</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false" on-drag-down="onDragDown()">
+        <div class="dragdiv" style="display: none;">下拉查询</div>
+        <div class="OSIHistory">
+            <div class="selectTime">
+                <ul>
+                    <li>
+                        <label class="item item-input">
+                            <span class="input-label" aria-label="开始时间：" id="_label-0">开始时间：</span>
+                            <input type="text" class="rightselect" id="StartHistoryID" readonly="" placeholder="请选择开始时间" ng-click="openStartDatePicker()">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="item item-input">
+                            <span class="input-label" aria-label="结束时间：" id="_label-1">结束时间：</span>
+                            <input type="text" class="rightselect" id="endHistoryID" readonly="" placeholder="请选择结束时间" ng-click="openEndDatePicker()">
+                        </label>
+                    </li>
+                    <li>
+                        <button class="commitBtn" ng-click="searchDefect()">查询</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="content" ng-hide="xclxListHide">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-click="toHistoryDetail(h)" ng-repeat="h in hList">
+                        {{h.DESCRIPTION}}({{h.INSPECT_TYPE}})
+                        <span class="item-note ng-binding">{{h.INSPECTED}}/{{h.INSPECT}}</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <!--<li class="item item-icon-right" ng-click="toHistoryDetail()">
+                        巡查路线2(周)
+                        <span class="item-note ng-binding">2/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toHistoryDetail()">
+                        范围外任务
+                        <span class="item-note ng-binding">50</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

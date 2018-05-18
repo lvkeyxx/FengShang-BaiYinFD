@@ -1,0 +1,145 @@
+<ion-view class="homePageCSS" hide-tabs>
+    <ion-content has-bouncing="false" scrollbar-y="false" class="itm">
+        <div class="handImage" id="bannerid"></div>
+        <!--<img class="wrap" src="{{handImage}}">-->
+        <!--<div class="rowLation rowLa">
+          <div ng-repeat="com in companys track by $index" class="col col-33" ng-click="comClick(com)">
+              <div><img src="{{com.src}}"></div>
+              <p>{{com.CANAME}}</p>
+          </div>-->
+        </div>
+        <div class="weather">
+            <div class="weatherShow">
+                <span>今天是{{now | date : "yyyy年MM月dd"}}  {{str}}
+                {{frontW.weather}}
+                {{frontW.temperature}}
+                {{frontW.wind.indexOf('微风')>=0?'微风':frontW.wind}}
+                </span>
+            </div>
+        </div>
+        <div class="navList">
+            <ul>
+                <li class="col col-20">
+                    <a ng-click="toSCGL()" class="rowLation">
+                        <div class="scgl_img">
+                        </div>
+                        <p>生产管理</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toERP()" class="rowLation">
+                        <div class="jygl_img">
+                        </div>
+                        <p>经营管理</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toAttence()" class="rowLation">
+                        <div class="kqqd_img">
+                        </div>
+                        <p>考勤签到</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toERP()" class="rowLation">
+                        <div class="erp_img">
+                        </div>
+                        <p>ERP审批</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toOA()" class="rowLation">
+                        <div class="oa_img">
+                        </div>
+                        <p>OA审批</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toNEWS('7')" class="rowLation">
+                        <div class="gsxw_img">
+                        </div>
+                        <p>公司新闻</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toNEWS('32')" class="rowLation">
+                        <div class="gsfw_img"></div>
+                        <p>公司发文</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toNEWS('31')" class="rowLation">
+                        <div class="tzgg_img"></div>
+                        <p>通知公告</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="tobBoard()" class="rowLation">
+                        <div class="ggbb_img"></div>
+                        <p>公告白板</p>
+                    </a>
+                </li>
+                <li class="col col-20">
+                    <a ng-click="toMINE()" class="rowLation">
+                        <div class="grzx_img"></div>
+                        <p>个人中心</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="listCss">
+            <ol class="olList" ng-repeat="count in newslist track by $index">
+                <div class="news_List" ng-click="goNewsDatil(count)">
+                    <div class="newslist">
+                        <ul>
+                            <li class="msg_colo" ng-model="gsxw" ng-style="newslistLi">{{count.FILETITLE}}</li>
+                            <li class="date_m" ng-model="gsxw"><i class="date_m_icon"></i>{{count.PUBDATE | date : "yyyy-MM-dd" }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </ol>
+        </div>
+        <div class="advert">
+            <ion-slide-box active-slide="myActiveSlide" slide-interval="3000" does-continue="true" auto-play="true">
+                <ion-slide ng-click="boardDetail(advert[0].LINE_NO)">
+                    <div class="box box0">
+                        <span class="titleShow" ng-model="ggbbmodel" ng-style="titleShow">{{advert[0].NEWS_TITLE}}</span>
+                    </div>
+                </ion-slide>
+                <ion-slide ng-click="boardDetail(advert[1].LINE_NO)">
+                    <div class="box box1">
+                        <span class="titleShow" ng-model="ggbbmodel" ng-style="titleShow">{{advert[1].NEWS_TITLE}}</span>
+                    </div>
+                </ion-slide>
+                <ion-slide ng-click="boardDetail(advert[2].LINE_NO)">
+                    <div class="box box2">
+                        <span class="titleShow" ng-model="ggbbmodel" ng-style="titleShow">{{advert[2].NEWS_TITLE}}</span>
+                    </div>
+                </ion-slide>
+                <ion-slide ng-click="boardDetail(advert[3].LINE_NO)">
+                    <div class="box box3">
+                        <span class="titleShow" ng-model="ggbbmodel" ng-style="titleShow">{{advert[3].NEWS_TITLE}}</span>
+                    </div>
+                </ion-slide>
+                <ion-slide ng-click="boardDetail(advert[4].LINE_NO)" >
+                    <div class="box box4">
+                        <span class="titleShow" ng-model="ggbbmodel" ng-style="titleShow">{{advert[4].NEWS_TITLE}}</span>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+        <!--<div class="advert">
+            <ion-slide-box active-slide="myActiveSlide" slide-interval="3000" does-continue="true" auto-play="true">
+                <ion-slide>
+                    <div class="box"><img ng-src="{{advert.advert0}}"></div>
+                </ion-slide>
+                <ion-slide>
+                    <div class="box"><img ng-src="{{advert.advert1}}"></div>
+                </ion-slide>
+                <ion-slide>
+                    <div class="box"><img ng-src="{{advert.advert2}}"></div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>-->
+    </ion-content>
+</ion-view>

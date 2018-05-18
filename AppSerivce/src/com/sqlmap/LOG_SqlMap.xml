@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="LOGDOMAIN" >
+  <resultMap id="abatorgenerated_LogDomainResult" class="com.domain.LogDomain" >
+
+    <result column="ID" property="ID" jdbcType="INTEGER" />
+    <result column="REQUEST_URL" property="requestURL" jdbcType="VARCHAR" />
+    <result column="CLIENT_IP" property="clientIP" jdbcType="VARCHAR" />
+    <result column="CLIENT_TYPE" property="clientType" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userID" jdbcType="VARCHAR" />
+    <result column="SERVICE_NAME" property="serviceName" jdbcType="VARCHAR" />
+    <result column="TRANS_NAME" property="transName" jdbcType="VARCHAR" />
+    <result column="RESPONSE_CODE" property="responseCode" jdbcType="VARCHAR" />
+    <result column="INPUT_PARAM_MAP" property="inputRaramMap" jdbcType="VARCHAR" />
+    <result column="OUTPUT_PARAM_MAP" property="outputParamMap" jdbcType="CLOB" />
+    <result column="START_TIME" property="startTime" jdbcType="date" />
+    <result column="END_TIME" property="endTime" jdbcType="date" />
+  </resultMap>
+  
+  <parameterMap class="com.domain.LogDomain" id="abatorgenerated_LogDomainParameter">
+  	<parameter property="requestURL" jdbcType="VARCHAR"/>
+  	<parameter property="clientIP" jdbcType="VARCHAR"/>
+  	<parameter property="clientType" jdbcType="VARCHAR"/>
+  	<parameter property="userID" jdbcType="VARCHAR"/>
+  	<parameter property="serviceName" jdbcType="VARCHAR"/>
+  	<parameter property="transName" jdbcType="VARCHAR"/>
+  	<parameter property="responseCode" jdbcType="VARCHAR"/>
+  	<parameter property="inputRaramMap" jdbcType="VARCHAR"/>
+  	<parameter property="outputParamMap" jdbcType="CLOB"/>
+  	<parameter property="startTime" jdbcType="date"/>
+  	<parameter property="endTime" jdbcType="date"/>
+  </parameterMap>
+ 
+  <select id="selectForListLogDomain" resultMap="abatorgenerated_LogDomainResult" parameterClass="com.domain.LogDomain" >
+    	select ID,REQUEST_URL,CLIENT_IP,CLIENT_TYPE,USER_ID,SERVICE_NAME,
+    	 TRANS_NAME,RESPONSE_CODE,INPUT_PARAM_MAP,OUTPUT_PARAM_MAP,
+    	 START_TIME,END_TIME from SDICAPP.SDIC_APP_LOG
+  </select>
+  
+  <insert id="insertLogDomain" parameterClass="com.domain.LogDomain">
+  	insert into SDICAPP.SDIC_APP_LOG(ID,REQUEST_URL,CLIENT_IP,
+  		CLIENT_TYPE,USER_ID,SERVICE_NAME,TRANS_NAME,RESPONSE_CODE,
+  		INPUT_PARAM_MAP,OUTPUT_PARAM_MAP,START_TIME,
+  		END_TIME) values (SDICAPP.seqLog.NEXTVAL,#requestURL:VARCHAR#,
+  		#clientIP:VARCHAR#, #clientType:VARCHAR#,
+  		#userID:VARCHAR#, #serviceName:VARCHAR#,
+  		#transName:VARCHAR#, #responseCode:VARCHAR#,
+  		#inputRaramMap:VARCHAR#, #outputParamMap:CLOB#,
+  		#startTime:date#, #endTime:date#)
+  </insert>
+  
+  <insert id="insertForListLogDomain" parameterClass="com.domain.LogDomain">
+  	insert into SDICAPP.SDIC_APP_LOG(ID,REQUEST_URL,CLIENT_IP,
+  		CLIENT_TYPE,USER_ID,SERVICE_NAME,TRANS_NAME,RESPONSE_CODE,
+  		INPUT_PARAM_MAP,OUTPUT_PARAM_MAP,START_TIME_MILLIS,
+  		END_TIME_MILLIS) values (SDICAPP.seqLog.NEXTVAL,#requestURL:VARCHAR#,
+  		#clientIP:VARCHAR#, #clientType:VARCHAR#,
+  		#userID:VARCHAR#, #serviceName:VARCHAR#,
+  		#transName:VARCHAR#, #responseCode:VARCHAR#,
+  		#inputRaramMap:VARCHAR#, #outputParamMap:CLOB#,
+  		#startTime:date#, #endTime:date#)
+  </insert>
+  
+</sqlMap>

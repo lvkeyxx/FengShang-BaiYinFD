@@ -1,0 +1,143 @@
+angular.module('BaiYin.companyNewsDetails', [])
+
+    .config(['$stateProvider', function($stateProvider) {
+        $stateProvider.state('companyNewsDetails', {
+            url: 'companyNewsDetails',
+            controller: 'companyNewsDetailsController',
+            templateUrl: 'companyNewsDetails/companyNewsDetails.tpl.html',
+            cache: 'false',
+            params: { 'item': null, msg: null },
+            authorizedRuleType: ['1', '0']
+        })
+    }])
+
+    .controller('companyNewsDetailsController', ['$scope', '$timeout', '$http', '$location', '$anchorScroll', '$stateParams', 'pageInitService', '$ionicPopup',
+        function($scope, $timeout, $http, $location, $anchorScroll, $stateParams, pageInitService, $ionicPopup) {
+            //评论显示隐藏
+            if($stateParams.item.whichNew==7){
+                $scope.reviewShow=true;
+            };
+            /*var apis = [
+                'ServiceName=CMSService&TransName=getContentDetail&ID=' + $stateParams.item.ID,
+                "ServiceName=CMSService&TransName=getPraiseList&ID=" + $stateParams.item.ID,
+              "ServiceName=CMSService&TransName=getCommentsList&ID=" + $stateParams.item.ID
+              ];*/
+            var apis = [
+                'ServiceName=CMSService&TransName=getContentDetail&ID=' + $stateParams.item.ID
+              ];
+            pageInitService.pageInit(apis).then(function(result) {
+                $scope.data = result[0].data;
+
+                // $scope.contMsg = result[1].data;
+                // $scope.comments=result[2].data;
+                $scope.data.PUBDATE = new Date($scope.data.PUBDATE)
+                $scope.title = $stateParams.item;
+                $scope.gsxw = $scope.title.CANAME;
+            }, function(error) {
+                if (error.msg) {
+                    $scope.showAlert('', error.msg, '确认');
+                } else {
+                    $scope.showAlert('', error, '确认');
+                }
+            });
+            $scope.showAlert = function(title, template, okText) {
+                var alertPopup = $ionicPopup.alert({
+                    title: title,
+                    okText: okText,
+                    template: template
+                });
+                alertPopup.then(function(res) {});
+            };
+           /* //回复
+            $scope.replyMsg = function(res) {
+                $scope.pingLunMsg = false;
+                $scope.backName = res;
+                $scope.replyContMsg = true;
+                $timeout(function() {
+                    var oflel = document.getElementById("borrom");
+                    oflel.scrollIntoView(false);
+                })
+
+            };
+            $scope.cancleBtn2 = function() {
+                $scope.replyContMsg = false;
+            };
+            //回复
+            $scope.replyBtn2 = function(getId,getHuiMsg) {
+                var huiParam={
+                    ID:$stateParams.item.ID,
+                    comments:getHuiMsg,
+                    PingLunID:getId.id
+               };
+                $http.post("ServiceName=CMSService&TransName=doComments",huiParam)
+                    .then(function(res) {
+                        $scope.replyContMsg = false;
+                        $scope.showAlert('', res.msg, '确认');
+                        reviewDetail();
+                    }, function(error) {
+                        $scope.showAlert('', error.msg, '确认');
+                    });
+            };
+            //查询评论的详情
+            function reviewDetail() {
+                $http.get("ServiceName=CMSService&TransName=getCommentsList&ID=" + $stateParams.item.ID)
+                    .then(function(res) {
+                        $scope.comments = res.data;
+                    }, function(error) {
+                        $scope.showAlert('', error.msg, '确认')
+                    });
+            };
+            //查询点赞
+            function pingDetail() {
+                $http.get("ServiceName=CMSService&TransName=getPraiseList&ID=" + $stateParams.item.ID)
+                    .then(function(res) {
+                        $scope.contMsg = res.data;
+                    }, function(error) {
+                        $scope.showAlert('', error.msg, '确认')
+                    });
+            };
+            //点赞
+            $scope.likeM = function(needId) {
+                console.log(needId);
+                $http.get("ServiceName=CMSService&TransName=doPraise&ID="+$stateParams.item.ID)
+                    .then(function(res) {
+                          $scope.showAlert('', res.msg, '确认');
+                          pingDetail();
+                    }, function(error) {
+                        $scope.showAlert('', error.msg, '确认');
+                    });
+            };
+            //评论
+            $scope.reviewM = function() {
+                $scope.replyContMsg = false;
+                $scope.pingLunMsg = !$scope.pingLunMsg;
+            };
+            //发表评论
+            $scope.publishBtn = function(res) {
+                var pinParam={
+                    ID:$stateParams.item.ID,
+                    comments:res,
+                    PingLunID:"0"
+                };
+                 $http.post("ServiceName=CMSService&TransName=doComments",pinParam)
+                     .then(function(res) {
+                         $scope.pingLunMsg=false;
+                         $scope.showAlert('', res.msg, '确认');
+                         reviewDetail();
+                     }, function(error) {
+                         $scope.showAlert('', error.msg, '确认');
+                     });
+            };
+            //发表取消
+            $scope.cancleBtn1 = function() {
+                $scope.pingLunMsg = false;
+            };
+            //锚点
+            $scope.toView = function(module) {
+
+                //移动到锚点  
+            };
+*/
+
+        }
+    ])

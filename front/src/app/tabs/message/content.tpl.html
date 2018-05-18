@@ -1,0 +1,73 @@
+<ion-view class="messageCSS">
+    <div ng-class="{'tabTopAndroid':DeviceType == 'Android','tabTopIOS':DeviceType == 'iOS'}">
+        <ul>
+            <li ng-class="{'active':sortShow == 0}" ng-click="changeItem(0);">会话</li>
+            <span class="borderRight"></span>
+            <li ng-class="{'active':sortShow == 1}" ng-click="changeItem(1);">好友</li>
+        </ul>
+    </div>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <ion-refresher pulling-text="..." on-refresh="doRefresh()" pulling-icon=""></ion-refresher>
+        <!-- Android -->
+        <div class="list" ng-if="sortShow == 0 && DeviceType == 'Android'" ng-repeat="conversation in conversations track by $index" on-hold="popupMessageOpthins(conversation)">
+            <a class="item item-avatar" href="/message/messageDetail/{{conversation.targetId}}" ng-if="conversation.type == 'single' ">
+                <div ng-if="conversation.title" class="rj-head-pic">{{conversation.title.substring(conversation.title.length-2)}}</div>
+                <div ng-if="conversation.title == '' " class="rj-head-pic">{{conversation.targetId.substring(conversation.targetId.length-2)}}</div>
+                <h2 ng-if="conversation.title">
+                    {{conversation.title}}
+                </h2>
+                <h2 ng-if="conversation.title == '' ">
+                    {{conversation.targetId}}
+                </h2>
+                <p>{{conversation.latestText}}</p>
+                <span ng-show="conversation.unReadMsgCnt != 0" class="messageNum">{{conversation.unReadMsgCnt}}</span>
+                <p>{{conversation.lastMsgDate | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+            </a>
+            <a class="item item-avatar" href="/message/groupDetail/{{conversation.targetId}}" ng-if="conversation.type == 'group' ">
+                <div class="rj-head-pic">{{conversation.title.substring(conversation.title.length-2)}}</div>
+                <h2>{{conversation.title}}</h2>
+                <p>{{conversation.latestText}}</p>
+                <span ng-show="conversation.unReadMsgCnt != 0" class="messageNum" ng-bind="conversation.unReadMsgCnt"></span>
+                <p>{{conversation.lastMsgDate | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+            </a>
+        </div>
+        <!-- iOS -->
+        <div class="list" ng-if="sortShow == 0 && DeviceType != 'Android'" ng-repeat="conversation in conversations track by $index" on-hold="popupMessageOpthins(conversation)">
+            <a class="item item-avatar" href="/message/messageDetail/{{conversation.username}}" ng-if="!conversation.name">
+                <div ng-if="conversation.nickname" class="rj-head-pic">{{conversation.nickname.substring(conversation.nickname.length-2)}}</div>
+                <div ng-if="conversation.nickname == '' " class="rj-head-pic">{{conversation.username.substring(conversation.username.length-2)}}</div>
+                <h2 ng-if="conversation.nickname">
+                    {{conversation.nickname}}
+                </h2>
+                <h2 ng-if="conversation.nickname == '' ">
+                    {{conversation.username}}
+                </h2>
+                <p>{{conversation.lastMessage}}</p>
+                <span ng-show="conversation.unreadCount != 0" class="messageNum">{{conversation.unreadCount}}</span>
+                <p>{{conversation.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+            </a>
+            <a class="item item-avatar" href="/message/groupDetail/{{conversation.gid}}" ng-if="conversation.name">
+                <div class="rj-head-pic">{{conversation.name.substring(conversation.name.length-2)}}</div>
+                <h2>{{conversation.name}}</h2>
+                <p>{{conversation.lastMessage}}</p>
+                <span ng-show="conversation.unreadCount != 0" class="messageNum" ng-bind="conversation.unreadCount"></span>
+                <p>{{conversation.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+            </a>
+        </div>
+        <div class="list" ng-show="sortShow == 1">
+            <div class="item item-divider" ng-if="groupList.length>0">
+                我的群组
+            </div>
+            <a class="item" href="/message/groupDetail/{{group.groupID?group.groupID:group.gid}}" ng-repeat="group in groupList track by $index" ng-if="groupList.length>0" on-hold="deleteGroup(group.groupID,group.gid,$index)">
+                {{group.groupName?group.groupName:group.name}}
+            </a>
+            <div class="item item-divider" ng-if="friendList.length>0">
+                我的好友
+            </div>
+            <a class="item" href="/message/messageDetail/{{friend.userName?friend.userName:friend.username}}" ng-if="friendList.length>0" ng-repeat="friend in friendList track by $index" on-hold="deleteFrient(friend.userName,$index)">
+                <p ng-if="friend.nickname == '' ">{{friend.userName?friend.userName:friend.username}}</p>
+                <p ng-if="friend.nickname != '' ">{{friend.nickname}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

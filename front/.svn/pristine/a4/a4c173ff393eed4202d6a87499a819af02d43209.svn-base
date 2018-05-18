@@ -1,0 +1,38 @@
+<ion-view class="myAttenceCSS">
+    <ion-nav-title>我的考勤</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <button class="myleftSelect" ng-click="getPreMonth(now)"></button>
+            {{now | date : "yyyy年MM月"}}
+            <button class="rightSelect" ng-click="getNextMonth(now)"></button>
+        </div>
+        <div class="tips">
+            <span>提示：点击下面备注栏可编辑未打卡事由</span>
+        </div>
+        <div class="myAttencelist">
+            <table>
+                <tr>
+                    <th>日期</th>
+                    <th>打卡时间</th>
+                    <th>备注</th>
+                </tr>
+                <tr ng-repeat="count in attenceList track by $index">
+                    <td>{{count.month}}/{{count.date}} <span>{{count.week}}</span></td>
+                    <td ng-click="toPosition(count)">
+                        <i ng-if="count.checkInState=='正常'">{{count.actualStartTime | limitTo:-8}}</i>
+                        <i ng-if="count.checkInState!='正常'" style="color: red">{{count.actualStartTime | limitTo:-8}}</i>
+                        -
+                        <i ng-if="count.checkOutState=='正常'">{{count.actualEndTime | limitTo:-8 }}</i>
+                        <i ng-if="count.checkOutState!='正常'" style="color: red">{{count.actualEndTime | limitTo:-8 }}</i>
+                    </td>
+                    <td   ng-click="to_edit(count)">
+                        <!--<i ng-if="count.confirmDate.length>0">{{count.checkInInfo }}<br/>{{count.checkOutInfo }}<br/>{{count.note }}</i>-->
+                        <!--<i ng-if="count.confirmDate==''" style="color: red">{{count.checkInInfo }}<br/>{{count.checkOutInfo }}<br/>{{count.note }}</i>-->
+                        <i class="{{count.confirmDate.length>0 ? 'abnormalgreen' : 'abnormalAttence'}}">{{count.checkOutInfo }}<br/>{{count.note }}</i>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,57 @@
+angular
+	.module('BaiYin.erp.details', [
+		'ionic',
+		'BaiYin.erp.selectUser'
+	])
+	.config(['$stateProvider', function($stateProvider) {
+		$stateProvider.state('erpDetails', {
+			url: '/erp/details',
+			controller: 'erpDetailsController',
+			templateUrl: 'erp/details/details.tpl.html',
+			cache: 'true',
+			authorizedRuleType: ['1'],
+			params: {
+				item: null
+			}
+		})
+	}])
+	.controller('erpDetailsController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker', '$ionicActionSheet', '$ionicScrollDelegate', '$ionicSlideBoxDelegate',
+		function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, ionicDatePicker, $ionicActionSheet, $ionicScrollDelegate, $ionicSlideBoxDelegate) {
+			//进入页面
+			$scope.$on('$ionicView.enter', function() {
+                console.log("进入详情页面");
+			});
+			//标题
+			$scope.title = "物料申请";
+			$scope.typeIndex = 0;
+			$scope.types = ["申请单", "申请详情", "文档", "审批流程"];
+
+			//滑动切换
+			$scope.slideHasChanged = function (index) {
+				$scope.typeIndex = index;
+			};
+
+            //切换typeIndex
+            $scope.changeTypeIndex = function(index){
+                $scope.typeIndex = index;
+				$ionicSlideBoxDelegate.slide(index);
+			};
+
+			//拒绝
+			var nowIndex = 5;//当前所在步骤
+			$scope.toRefused = function () {
+				var hideSheet = $ionicActionSheet.show({
+					buttons: new Array(nowIndex - 1).join("-").split("-").map((v, i) => {return {text: "回退至第" + (i + 1) + "步"};}),
+					buttonClicked: function (index) {
+						console.log("返回第" + (index + 1) + "步");
+						return true;
+					}
+				});
+			};
+
+			//同意
+			$scope.toSelectUser = function () {
+				$state.go('erpSelectUser');
+			};
+		}
+	]);

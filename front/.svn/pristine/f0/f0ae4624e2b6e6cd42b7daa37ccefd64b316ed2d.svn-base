@@ -1,0 +1,67 @@
+angular
+    .module('BaiYin.erp', [
+        'ionic',
+        'BaiYin.erp.details',
+        'BaiYin.erp.my'
+    ])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('erp', {
+            url: '/erp',
+            controller: 'erpController',
+            templateUrl: 'erp/erp.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('erpController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup,  ionicDatePicker) {
+            //页码
+            $scope.pageIndex = 1;
+            //是否还有数据可以加载
+            $scope.hasMore = true;
+            //待办列表
+            $scope.todoList = new Array();
+            //进入页面
+            $scope.$on('$ionicView.enter', function () {
+                $scope.pageIndex = 1;
+                $scope.hasMore = true;
+                $scope.todoList = new Array();
+                $scope.getTodoList();
+            });
+            //详情
+            $scope.toDetailsPage = function(data){
+                $state.go('erpDetails', {item: data});
+            };
+            //我申请的
+            $scope.toMyApplyPage = function () {
+                $state.go('erpMy', {item: {index: 0}});
+            };
+            //我审批的
+            $scope.toMyJudgePage = function () {
+                $state.go('erpMy', {item: {index: 1}});
+            };
+            //待办列表
+            $scope.getTodoList = function(){
+                loadingAnimation.showLoading('加载中...', 'loding', 0);
+                $http
+                    .post("ServiceName=ErpService&TransName=getTodoList", {pageIndex: $scope.pageIndex++})
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if(res.code == 0){
+                            if(res.data.length == 0){
+                                $scope.hasMore = false;
+                            }else{
+                                $scope.todoList = $scope.todoList.concat(res.data);
+                            }
+                        }else{
+                            showAlert.showMsg(res, '', '', '确认');
+                        }
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            };
+        }
+    ]);

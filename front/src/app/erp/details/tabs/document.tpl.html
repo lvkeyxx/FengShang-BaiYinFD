@@ -1,0 +1,8 @@
+<div class="card">
+    <div ng-repeat="item in MainTable[1] track by $index">{{item.fieldName}}：{{item.fieldText}}</div>
+</div>
+<div>
+    <div ng-repeat="item in docList track by $index" class="card text">
+        <a href="{{item.FILE_URL}}">{{item.USER_FILE_NAME}}</a>
+    </div>
+</div>

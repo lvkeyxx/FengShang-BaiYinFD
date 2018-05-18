@@ -1,0 +1,56 @@
+.editingUserInfoCSS {
+    background-color: #e6e6e6;
+    padding-top: 0.2rem;
+    .editContent {
+        margin-bottom: 0.3rem;
+        .items {
+            background-color: #fff;
+            padding: 0.1rem;
+            margin-bottom: 2px;
+            display: inline-block;
+            width: 100%;
+        }
+        .editUserinfo {
+            background-color: #fff;
+            padding: 0.2rem;
+            margin-bottom: 1px;
+        }
+        .hiredate {
+            background-color: #fff;
+            padding: 0.2rem;
+            margin-bottom: 1px;
+            .items {
+                width: 70%;
+                display: -webkit-inline-box;
+                margin-left: .29rem;
+            }
+        }
+        .brithday {
+            background-color: #fff;
+            padding: 0.2rem;
+            margin-bottom: 1px;
+            .items {
+                width: 70%;
+                display: -webkit-inline-box;
+                margin-left: .29rem;
+            }
+        }
+        input.items {
+            float: right;
+            width: 75%;
+        }
+        .head {
+            display: inline-block;
+            margin-top: .11rem;
+            margin-left: .1rem;
+        }
+        .appSbmtBtn {
+            width: 85%;
+            background-color: #38c092;
+            font-size: 0.3rem;
+            color: #fff;
+            margin-left: 7.5%;
+            margin-top: .2rem;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+<ion-view class="OSIcountCSS">
+    <ion-nav-title>巡查统计</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false" on-drag-down="onDragDown()">
+        <div class="OSIcount">
+            <div class="countAttribute">
+                <ul>
+                    <li>
+                        <label class="item item-input">
+                            <span class="input-label" aria-label="域：" id="_label-0">域：</span>
+                            <input ng-model="queryData.area.name" type="text" class="rightselect" readonly="readonly" placeholder="域" ng-click="toSelectStatus()">
+                        </label>
+					</li>
+					<li>
+						<label class="item item-input">
+                            <span class="input-label" aria-label="类型：" id="_label-1">类型：</span>
+                            <input ng-model="queryData.type" type="text" class="rightselect" readonly="readonly" placeholder="类型" ng-click="toSelectStyle()">
+                        </label>
+					</li>
+					<li>
+						<label class="item item-input">
+                            <span class="input-label" aria-label="区间：" id="_label-2">区间：</span>
+                            <input ng-model="queryData.interval.interval" type="text" class="rightselect" readonly="readonly" placeholder="区间" ng-click="toSelectArear()">
+                        </label>
+					</li>
+					<!--<li>
+                        <label>域</label>
+                        <input type="text">
+                    </li>
+                    <li>
+                        <label>类型</label>
+                        <input type="text">
+                    </li>
+                    <li>
+                        <label>区间</label>
+                        <input type="text">
+                    </li>-->
+				</ul>
+				<button class="inquiryBtn" ng-click="toInquiry()">查询</button>
+			</div>
+			<!--<div class="tips">提示：点击姓名可查看巡检线路</div>-->
+			<div class="OSIList" ng-hide="OSIListHide">
+				<table>
+					<tr>
+						<th ng-click="toOSILine()">姓名</th>
+						<th>巡查状况</th>
+						<th>巡检完成情况</th>
+					</tr>
+					<tr ng-click="toOSILine(data)" ng-repeat="data in list track by $index">
+						<td>{{data.PERSON_NAME}}</td>
+						<td>{{data.IN_PLAN >= data.INSPECT ? "" : "不"}}合格</td>
+						<td>{{data.OUT_PLAN}} - {{data.IN_PLAN}} / {{data.INSPECT}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

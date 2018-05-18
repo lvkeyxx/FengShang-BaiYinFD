@@ -1,0 +1,79 @@
+angular
+	.module('BaiYin.erp.details', [
+		'ionic',
+		'BaiYin.erp.selectUser'
+	])
+	.config(['$stateProvider', function($stateProvider) {
+		$stateProvider.state('erpDetails', {
+			url: '/erp/details',
+			controller: 'erpDetailsController',
+			templateUrl: 'erp/details/details.tpl.html',
+			cache: 'true',
+			authorizedRuleType: ['1'],
+			params: {
+				item: null
+			}
+		})
+	}])
+	.controller('erpDetailsController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker', '$ionicActionSheet', '$ionicScrollDelegate', '$ionicSlideBoxDelegate',
+		function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, ionicDatePicker, $ionicActionSheet, $ionicScrollDelegate, $ionicSlideBoxDelegate) {
+			//申请信息
+			$scope.data = new Object();
+			//标题
+			$scope.title = "物料申请";
+			$scope.typeIndex = 0;
+			$scope.types = ["申请单", "申请详情", "文档", "审批流程"];
+			//进入页面
+			$scope.$on('$ionicView.enter', function() {
+				$scope.data = $stateParams.item;
+				$scope.title = $scope.data.LU_DESCRIPTION;
+				getStep();
+			});
+
+			//滑动切换
+			$scope.slideHasChanged = function (index) {
+				$scope.typeIndex = index;
+			};
+
+            //切换typeIndex
+            $scope.changeTypeIndex = function(index){
+                $scope.typeIndex = index;
+				$ionicSlideBoxDelegate.slide(index);
+			};
+
+			//拒绝
+			$scope.toRefused = function () {
+				history.go(-1);
+			};
+
+			//同意
+			$scope.toSelectUser = function () {
+				$state.go('erpSelectUser');
+			};
+
+			$scope.step = {now: 0, list: new Array(), total: 0};
+			//获取审批步骤
+			var getStep = function(){
+				loadingAnimation.showLoading('加载中...', 'loding', 0);
+                $http
+                    .post("ServiceName=ErpService&TransName=getStep", {key_ref: escape($scope.data.KEY_REF)})
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if(res.code == 0){
+							$scope.step.total = res.data.total;
+							$scope.step.list = res.data.list;
+							$scope.step.list.array.forEach(v => {
+								if(v.APP_SIGN && v.APP_DATE){
+									$scope.step.now++;
+								}
+							});
+                        }else{
+                            showAlert.showMsg(res, '', '', '确认');
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+			};
+		}
+	]);

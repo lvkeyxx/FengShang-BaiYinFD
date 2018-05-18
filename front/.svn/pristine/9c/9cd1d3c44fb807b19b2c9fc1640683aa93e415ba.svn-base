@@ -1,0 +1,39 @@
+<ion-view class="erpDetailsCSS erpCSS">
+    <ion-nav-title>{{title}}-{{types[typeIndex]}}</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button erpDetailsCSS" ng-click="selectType();">
+            <i class="icon ion-record {{typeIndex == 0 ? 'energized' : ''}}"></i>
+            <i class="icon ion-record {{typeIndex == 1 ? 'energized' : ''}}"></i>
+            <i class="icon ion-record {{typeIndex == 2 ? 'energized' : ''}}"></i>
+            <i class="icon ion-record {{typeIndex == 3 ? 'energized' : ''}}"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="content" scroll="false" has-header="true">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)">
+            <ion-slide>
+                <!-- 物流申请单 -->
+                <div class="slide-content" ng-include="'erp/details/tabs/single.tpl.html'"></div>
+                <ion-footer-bar>
+                    <span class="balanced" ng-click="toSelectUser();">同意</span>
+                    <span class="assertive" ng-click="toRefused();">拒绝</span>
+                </ion-footer-bar>
+            </ion-slide>
+            <ion-slide>
+                <!-- 物流申请行 -->
+                <div class="slide-content" ng-include="'erp/details/tabs/line.tpl.html'"></div>
+                <ion-footer-bar>
+                    <span class="balanced" ng-click="toSelectUser();">同意</span>
+                    <span class="assertive" ng-click="toRefused();">拒绝</span>
+                </ion-footer-bar>
+            </ion-slide>
+            <ion-slide>
+                <!-- 审批流程 -->
+                <div class="slide-content" ng-include="'erp/details/tabs/process.tpl.html'"></div>
+            </ion-slide>
+            <ion-slide>
+                <!-- 文档 -->
+                <div class="slide-content" ng-include="'erp/details/tabs/document.tpl.html'"></div>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>

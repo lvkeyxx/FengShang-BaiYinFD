@@ -1,0 +1,506 @@
+package com.service.attendence;
+
+import com.cache.ConfigCache;
+import com.constant.Constant;
+import com.domain.UserProfile;
+import com.exception.ServiceException;
+import com.service.AJsonService;
+import com.service.IJsonService;
+import com.service.attendence.constant.AttendConstant;
+import com.service.attendence.entity.AttendancePeriod;
+import com.service.attendence.sql.ClockServiceSQL;
+import com.utility.*;
+import com.utility.baiyin.BaiyinUtils;
+
+import ipacs.dataaccess.service.ServiceManager;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.json.JSONObject;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Types;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+/**
+ * @Author:wangyg
+ * @Description:打卡相关服务
+ * @Date:Created in 2018-03-7 10:15
+ * @Modied By:
+ **/
+public class ClockService extends AJsonService implements IJsonService {
+
+    /**
+     * 打卡首页数据获取
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String clockPage(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+            String personId = userProfile.getUserId();
+            /*   String transactionId = BaiyinUtils.genTransactionId(userProfile.getUserId());
+            String ruleId = "";*/
+            //通过交易号查询是否今天已经打卡
+            String sql = ClockServiceSQL.getClockDetailIn(personId);
+            logger.info("sql=="+sql);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                code="1";
+                msg="还未考勤";
+            }else{
+                json.put("detail", tList.get(0));
+            }
+            //获取星期
+            json.put("week", DateUtil.getDayOfWeekByDate(DateUtil.getNow("")));
+            //获取日期，格式yyyy年MM月dd日
+            json.put("day", DateUtil.getNow("yyyy年MM月dd日"));
+            //获取当前时间
+            json.put("now", DateUtil.getNow("HH:mm:ss"));
+        } catch (Throwable e) {
+            logger.error("7001", e);
+            e.printStackTrace();
+            throw new ServiceException("7001", "获取打卡首页数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 
+     * 通过蓝牙设备获取上下班时间
+     *  
+     * @param map
+     * @return
+     * @throws ServiceException
+     * 
+     */
+    public String clockTimeBySn(Map map) throws ServiceException {
+        logger.info("map=="+map);
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+            String personId = userProfile.getUserId();
+            String ruleId = MapUtil.stringValue(map,"RULE_ID");
+            //通过rule_id查询上班start_time
+            String timeSql = ClockServiceSQL.getSbTime(map);
+            logger.info("sql=="+timeSql);
+            List<Map> sbTime = new IbatisDBUtil().executeSql(timeSql);
+            logger.info("sbTime======"+sbTime);
+             String transactionId = "";         
+
+            //通过交易号查询是否当前班次 已经打卡
+            String sql = ClockServiceSQL.getClockDetail(personId,ruleId);
+            
+            logger.info("sql=="+sql);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                AttendancePeriod period = BaiyinUtils.genTransactionDayPeriod(MapUtil.stringValue(sbTime.get(0),"START_TIME"),MapUtil.stringValue(sbTime.get(0),"END_TIME"),null);
+                transactionId = period.getPeriodDayStr()+personId+"_"+ruleId;
+                //按蓝牙查询考勤时间 。
+                sql = ClockServiceSQL.clockTimeBySn(map);
+                logger.info("sql=="+sql);
+                tList = new IbatisDBUtil().executeSql(sql);
+                for(Map m : tList){
+                    m.put("START_TIME",DateUtil.formDate(period.getStartTime(),"yyyy-MM-dd HH:mm:ss"));
+                    m.put("END_TIME",DateUtil.formDate(period.getEndTime(),"yyyy-MM-dd HH:mm:ss"));
+                    m.put("START_TIME_HOUR",DateUtil.formDate(period.getStartTime(),"HH:mm"));
+                    m.put("END_TIME_HOUR",DateUtil.formDate(period.getEndTime(),"HH:mm"));
+                    m.put("TRANSACTION_ID",transactionId);
+                }
+            }
+
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "您可能不在打卡范围内！";
+            } else {
+            	/*
+            	 * 处理上下班打卡在一个类型不在一个考勤规则上的情况。
+            	 * */
+            	Map rec = tList.get(0);
+                AttendancePeriod period = BaiyinUtils.genTransactionDayPeriod(MapUtil.stringValue(sbTime.get(0),"START_TIME"),MapUtil.stringValue(sbTime.get(0),"END_TIME"),(String)rec.get("TRANSACTION_ID"));
+                transactionId = period.getPeriodDayStr()+personId+"_"+ruleId;
+                
+            	if(!transactionId.equals(rec.get("TRANSACTION_ID"))) {                    
+            		rec.put("END_TIME",DateUtil.formDate(period.getEndTime(),"yyyy-MM-dd HH:mm:ss"));
+            		rec.put("END_TIME_HOUR",DateUtil.formDate(period.getEndTime(),"HH:mm"));
+            	}
+
+             /*   ((Map)tList.get(0)).put("END_TIME",DateUtil.formDate(period.getEndTime(),"yyyy-MM-dd HH:mm:ss"));
+                ((Map)tList.get(0)).put("END_TIME_HOUR",DateUtil.formDate(period.getEndTime(),"HH:mm"));*/
+      
+                json.put("detail", tList.get(0));
+            }
+        } catch (Throwable e) {
+            logger.error("7005", e);
+            e.printStackTrace();
+            throw new ServiceException("7005", "获取打卡时间数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        System.out.println(json.toString());
+        return json.toString();
+    }
+
+    /**
+     * 通过蓝牙sn获取蓝牙数据
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     * 
+     */
+    public String blueToothDetail(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String sql = ClockServiceSQL.blueToothDetail(map);
+            logger.info("sql=============="+sql);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "此蓝牙未对应数据！";
+            } else {
+                json.put("detail", tList);
+            }
+        } catch (Throwable e) {
+            logger.error("7002", e);
+            e.printStackTrace();
+            throw new ServiceException("7002", "获取打卡蓝牙数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    
+    
+    /**
+     * 获取蓝牙列表
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String blueToothList(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String sql = ClockServiceSQL.blueToothList(map);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "未设置任何蓝牙，请先联系管理员设置！";
+            }
+            json.put("tList", tList);
+        } catch (Throwable e) {
+            logger.error("7003", e);
+            e.printStackTrace();
+            throw new ServiceException("7003", "获取所有蓝牙数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 获取所有蓝牙的数量-考勤类
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String blueToothCount(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String sql = ClockServiceSQL.blueToothCount(map);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            json.put("count", tList.get(0).get("COUNT"));
+        } catch (Throwable e) {
+            logger.error("7004", e);
+            e.printStackTrace();
+            throw new ServiceException("7004", "获取所有蓝牙数量");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 打卡
+     * 打卡的可能情况：
+     * 1.判断当前日期是否是首次打卡，如果是则新建数据；
+     * 2.如果不是首次打卡，判断是否已经打过上班卡，如果是则应该是打第二天上班卡；
+     * 3.下班卡的判断：如果已经存在数据，则更新下班打卡数据，如果是没有数据，则考虑是上天加班到第二天所致。
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String punchClock(Map map) throws ServiceException {
+        logger.info("map==" + map);
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+            String userid = userProfile.getUserId();
+        //    AttendancePeriod attendancePeriod = BaiyinUtils.genTransactionDayPeriod(MapUtil.stringValue(map,"START_TIME").substring(MapUtil.stringValue(map,"START_TIME").length()-5),MapUtil.stringValue(map,"END_TIME").substring(MapUtil.stringValue(map,"END_TIME").length()-5));
+            logger.info("时间"+MapUtil.stringValue(map,"START_TIME").substring(MapUtil.stringValue(map,"START_TIME").length()-5));
+
+            String ruleId = MapUtil.stringValue(map,"RULE_ID");
+            String transactionId = "";
+            transactionId = MapUtil.stringValue(map,"TRANSACTION_ID");
+
+            //flg  0:上班，1:下班
+            String flg = map.get("FLG").toString();
+            //查询是否存在考勤数据
+            String sql = ClockServiceSQL.getClockDetail(transactionId);
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            Map hm = null;
+            boolean insert = true;
+            if (ListUtil.isNotEmpty(tList)) {
+                insert = false;
+                hm = tList.get(0);
+            } else {
+                hm = map;
+            }
+            Date now = DateUtil.parse2Date(DateUtil.getNow("yyyy-MM-dd HH:mm"),"yyyy-MM-dd HH:mm");
+
+            String clockTips = "";
+            if ("1".equals(flg)) {//是下班打卡,下班一定是更新，上班为必填。
+                String state = AttendConstant.CHECK_OUT_STATE_NORMAL;
+                String info = state;
+                String endTimeStr = MapUtil.stringValue(map, "END_TIME");
+
+                //比对时间
+                Date endTime = DateUtil.parse2Date(endTimeStr, "yyyy-MM-dd HH:mm");
+                logger.info("endTime2======="+endTime.getTime());
+                logger.info("now======="+now.getTime());
+                if (endTime.getTime() > now.getTime() && DateUtil.getMinBetweenTwoDate(endTime, now) > 1) {
+                    state = AttendConstant.CHECK_OUT_STATE_EARLY;
+                    info = "早退" + DateUtil.getMinBetweenTwoDate(now, endTime) + "分钟";
+                }
+                map.put("ACTUAL_END_TIME", DateUtil.formDate(now, "yyyy-MM-dd HH:mm:ss"));
+                map.put("CHECK_OUT_STATE", state);
+                map.put("OUT_BLUETOOTH_NO", BaiyinUtils.getSnWithoutColon(MapUtil.stringValue(map, "SN")));
+                map.put("CHECK_OUT_ADDR", MapUtil.stringValue(map, "ADDR"));
+                map.put("CHECK_OUT_INFO", info);
+                sql = ClockServiceSQL.punchOutClock(map);
+                //clockTips = "下班打卡" + DateUtil.formDate(now, "HH:mm");
+                clockTips = DateUtil.formDate(now, "yyyy-MM-dd HH:mm");
+            } else {//上班打卡
+                String endTime = MapUtil.stringValue(map, "END_TIME");
+                    //    DateUtil.parseDate(transactionId.substring(0,8),"yyyy-MM-dd ") + endTime + ":00";
+                String startTimeStr = MapUtil.stringValue(map, "START_TIME");
+
+                Date startTime = DateUtil.parse2Date(startTimeStr, "yyyy-MM-dd HH:mm");
+                String state = AttendConstant.CHECK_IN_STATE_NORMAL;
+                String info = state;
+                if (startTime.getTime() < now.getTime() && DateUtil.getMinBetweenTwoDate(startTime, now) > 1) {
+                    state = AttendConstant.CHECK_IN_STATE_LATE;
+                    info = "迟到" + DateUtil.getMinBetweenTwoDate(startTime, now) + "分钟";
+                }
+                map.put("TRANSACTION_ID", transactionId);
+                map.put("PERSON_ID", userid);
+                map.put("PLAN_START_TIME", startTimeStr);
+                map.put("PLAN_END_TIME", endTime);
+                map.put("ACTUAL_START_TIME", DateUtil.formDate(now, "yyyy-MM-dd HH:mm:ss"));
+                map.put("IN_BLUETOOTH_NO", BaiyinUtils.getSnWithoutColon(MapUtil.stringValue(map, "SN")));
+                map.put("CHECK_IN_ADDR", MapUtil.stringValue(map, "ADDR"));
+                map.put("CHECK_IN_INFO", info);
+                map.put("CHECK_IN_STATE", state);
+                map.put("DEPT", MapUtil.stringValue(userProfile.getOrgInfo(), Constant.DEPT_NO));
+                if (insert) {
+                    sql = ClockServiceSQL.punchInClock(map);
+                } else {
+                    sql = ClockServiceSQL.punchInClockUpdate(map);
+                }
+                //clockTips = "上班打卡" + DateUtil.formDate(now, "HH:mm");
+                clockTips = DateUtil.formDate(now, "yyyy-MM-dd HH:mm");
+            }
+            logger.info("sql==" + sql);
+            new IbatisDBUtil().executeSql(sql);
+            json.put("clockTips", clockTips);
+            json.put("transactionId", transactionId);
+        } catch (Throwable e) {
+            logger.error("7006", e);
+            e.printStackTrace();
+            throw new ServiceException("7006", "打卡时出错！");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 获取部门列表
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String deptList(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+            String sql = ClockServiceSQL.deptList(userProfile.getUserId());
+            List<Map> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "未获取到任何部门，可能您没有权限！";
+            }
+            json.put("tList", tList);
+        } catch (Throwable e) {
+            logger.error("7007", e);
+            e.printStackTrace();
+            throw new ServiceException("7007", "获取部门数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 查看人员列表
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String personList(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+            map.put("DEPT", MapUtil.stringValue(userProfile.getOrgInfo(), Constant.DEPT_NO));
+            String sql = ClockServiceSQL.personList(map);
+            List<Map> tList = new JdbcDBUtil().query(userProfile.getUserId(), userProfile.getPassWord(), sql);
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "未获取到任何人员，可能您没有权限！";
+            }
+            json.put("tList", tList);
+        } catch (Throwable e) {
+            logger.error("7007", e);
+            e.printStackTrace();
+            throw new ServiceException("7007", "获取人员数据出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+    
+    /**
+     * 系统内蓝牙
+     */
+	public <K, V> String bluetoothInSystem(Map<K, V> map) throws ServiceException {
+    	JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String sql = "SELECT * FROM ifsapp.bluetooth_control_info WHERE sn_code = '" + map.get("SN").toString() + "'";
+            List<?> tList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(tList)) {
+                code = "1";
+                msg = "此蓝牙未对应数据！";
+            } else {
+                json.put("detail", tList);
+            }
+        } catch (Throwable e) {
+            logger.error("7002", e);
+            e.printStackTrace();
+            throw new ServiceException("7008", "获取系统内蓝牙出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+    
+    /**
+     * 录入蓝牙信息
+     */
+    @SuppressWarnings("unchecked")
+	public <K, V> String entryBluetooth(Map<K, V> map) throws ServiceException {
+    	JSONObject json = new JSONObject();
+        try {
+        	int serial_no = Integer.parseInt(((Map<String, Object>) new IbatisDBUtil().executeSql("SELECT max(to_number(SERIAL_NO)) + 1 SERIAL_NO FROM ifsapp.bluetooth_control_info").get(0)).get("SERIAL_NO").toString());
+        	map.put((K) "serial_no", (V) (serial_no + ""));
+        	
+        	CallableStatement proc = null;
+    	    String sql = "";
+        	DataSource dataSource = (DataSource) ServiceManager.getService("dataSource");
+        	Connection conn = dataSource.getConnection();
+        	sql = "CALL ifsapp.BLUETOOTH_CONTROL_INFO_API.New__ (?, ?, ?, ?, ?)";
+            proc = conn.prepareCall("{ " + sql + " }");
+            proc.registerOutParameter(1, Types.VARCHAR);
+            proc.registerOutParameter(2, Types.VARCHAR);
+            proc.registerOutParameter(3, Types.VARCHAR);
+            proc.registerOutParameter(4, Types.VARCHAR);
+            proc.setString(4, ClockServiceSQL.entryBluetooth(map, ".serial_no.address.sn_code.bluetooth_desc."));
+            proc.setString(5, "DO");
+            proc.execute();
+        } catch (Throwable e) {
+            logger.error("7008", e);
+            e.printStackTrace();
+            throw new ServiceException("7009", "录入蓝牙信息出错");
+        }
+        return json.toString();
+    }
+}

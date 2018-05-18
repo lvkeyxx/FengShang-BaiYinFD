@@ -1,0 +1,44 @@
+<ion-view class="mineCSS">
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="banner">
+            <p class="head"></p>
+            <p class="info">{{userName}}</p>
+        </div>
+        <div class="list card menuList">
+            <!--    <ion-toggle class="item-icon-left" ng-model="checkedNum"  ng-change="onAgentsNumber(checkedNum)"> <i class="icon ion-data"></i> 应用程序图标标记
+            </ion-toggle> -->
+            <a href="/mine/netWork" nav-direction="forward" class="item item-icon-left">
+                <i class="icon ion-data"></i><span class="handText">网络设置</span>
+            </a>
+            <a href="/userConfig" nav-direction="forward" class="item item-icon-left">
+                <i class="icon ion-myMsg"></i><span class="handText">个人资料</span>
+            </a>
+            <a ng-click="cleaHistory()" nav-direction="forward" class="item item-icon-left">
+                <i class="icon ion-deleMsg"></i><span class="handText">清除缓存</span>
+            </a>
+            <a href="/APPfeedback" ng-click="changeNumber()" nav-direction="forward" class="item item-icon-left">
+                <i class="icon ion-commend"></i><span class="handText">APP反馈</span>
+            </a>
+            <!-- Android -->
+            <div nav-direction="forward" class="item item-icon-left" ng-click="checkVersion()" ng-if="DeviceType == 'Android'">
+                <i class="icon ion-version"></i><span class="handText">版本检测</span>
+                <div class="versionTwo">
+                    <span class="handText" class="remindTwo">
+                </span>V {{appVersion}}
+                    <!-- </span>测试版 V {{appVersion}} -->
+                </div>
+            </div>
+            <!-- iOS -->
+            <div nav-direction="forward" class="item item-icon-left" ng-if="DeviceType != 'Android'">
+                <i class="icon ion-version"></i><span class="handText">当前版本</span>
+                <div class="versionTwo">
+                    <span class="handText" class="remindTwo">
+                </span>V {{appVersion}}
+                </div>
+            </div>
+        </div>
+        <div class="outList" ng-click="logout()">
+            <div class="quit"><span class="handText">退出登录</span></div>
+        </div>
+    </ion-content>
+</ion-view>

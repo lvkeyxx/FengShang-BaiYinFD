@@ -1,0 +1,100 @@
+<ion-view class="OSIArearCSS">
+    <ion-nav-title>巡查区域</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIArear">
+            <div class="OSITitle">{{user.PERSON_NAME}}  责任巡查区域(合格区域{{user.qualified}}个   不合格区域{{user.unqualified}}个)</div>
+            <div class="OSIList">
+                <table>
+                    <tr>
+                        <th>序号</th>
+                        <th>责任区域</th>
+                        <th>巡查时间</th>
+                    </tr>
+                    <tr ng-repeat="item in data.iList track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            <span>{{item.AREA}}</span>
+                        </td>
+                        <td>
+                            <div class="timeList">
+                                <ul>
+                                    <li ng-repeat="time in item.TIME track by $index">{{time.RECORD_TIME}}</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="fzrArear" ng-if="data.oList && data.oList.length > 0">
+                    <table>
+                        <tr>
+                            <th>序号</th>
+                            <th>非责任区域</th>
+                            <th>巡查时间</th>
+                        </tr>
+                        <tr ng-repeat="item in data.oList track by $index">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <span>{{item.AREA}}</span>
+                            </td>
+                            <td>
+                                <div class="timeList">
+                                    <ul>
+                                        <li ng-repeat="time in item.TIME track by $index">{{time.RECORD_TIME}}</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<ul class="list">
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+
+                </ul>-->
+            </div>
+        </div>
+    </ion-content>
+    <!--<ion-footer-bar align-title="left" class="bar-assertive">
+        <div class="searchBlooth">
+            <button class="searchBloothBtn">搜索蓝牙</button>
+        </div>
+    </ion-footer-bar>-->
+</ion-view>

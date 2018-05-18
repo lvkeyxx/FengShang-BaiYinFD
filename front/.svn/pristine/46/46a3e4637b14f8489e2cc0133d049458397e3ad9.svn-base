@@ -1,0 +1,40 @@
+<ion-view class="erpMyCSS erpCSS">
+    <ion-nav-title>{{titles[index]}}</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="slideToggle();">
+            <i class="icon ion-loop"></i>
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="padding" has-header="true">
+        <div class="query">
+            <ul>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="业务类型：" id="_label-0">业务类型：</span>
+                        <input ng-model="queryData.type" type="text" class="rightselect" readonly="readonly" placeholder="业务类型" ng-click="toSelectType()">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="关键字：" id="_label-1">关键字：</span>
+                        <input ng-model="queryData.record_key" type="text" placeholder="关键字">
+                    </label>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <span class="input-label" aria-label="提交时间：" id="_label-2">提交时间：</span>
+                        <input ng-model="queryData.record_time" type="text" class="rightselect" readonly="readonly" placeholder="提交时间" ng-click="toSelectTime()">
+                    </label>
+                </li>
+            </ul>
+            <button class="inquiryBtn" ng-click="select();">查询</button>
+        </div>
+        <div class="dataList">
+            <div ng-repeat="item in list track by $index" class="card" ng-click="toDetailsPage(item);">
+                <div>{{item.LU_DESCRIPTION}}</div>
+                <div ng-bind-html="item.MSG_INFO"></div>
+            </div>
+            <ion-infinite-scroll ng-if="hasMore" on-infinite="toInquiry(false);" distance="10%" immediate-check="false"></ion-infinite-scroll>
+        </div>
+    </ion-content>
+</ion-view>

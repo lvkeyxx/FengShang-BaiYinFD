@@ -1,0 +1,23 @@
+.InspectionRecordCSS {
+    @rem: 144rem;
+    background-color: #fff;
+    .item-icon-left .icon,
+    .item-icon-right .icon {
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -moz-align-items: center;
+        align-items: center;
+        top: 0;
+        height: 100%;
+        font-size: 14px;
+        color: #ddd;
+    }
+    .item-icon-right {
+        padding-right: 34px;
+    }
+    .item-icon-right .icon {
+        right: 0px;
+    }
+}

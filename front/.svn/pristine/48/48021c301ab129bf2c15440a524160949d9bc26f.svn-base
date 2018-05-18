@@ -1,0 +1,22 @@
+angular.module('BaiYin.OSI.OSIDetail', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI/OSIDetail', {
+            url: '/OSI/OSIDetail',
+            controller: 'OSIDetailController',
+            templateUrl: 'OSI/OSIDetail/OSIDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSIDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+            });
+        }
+    ])

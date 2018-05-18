@@ -1,0 +1,47 @@
+.inputPopCSS {
+    text-align: -webkit-left;
+    .item-stacked-label {
+        display: block;
+        background-color: white;
+        box-shadow: none;
+    }
+    .input-label {
+        float: left;
+        padding: 0px;
+        width: .1rem;
+    }
+    .remarks {
+        font-size: .28rem;
+        color: #696969;
+    }
+    .button-block {
+        clear: inherit;
+    }
+    .addressBook {
+        width: 48%;
+        float: left;
+        margin-right: 2%;
+    }
+    .add {
+        width: 50%;
+    }
+    .close {
+        text-align: -webkit-center;
+        border-top: 1px dashed #bbb;
+        margin-top: 5px;
+        .closeImg {
+            margin: 0px;
+            display: inline-block;
+            background: url(../images/close.png) no-repeat center;
+            background-size: 100%;
+            width: 30px;
+            height: 30px;
+            margin-top: 5px;
+            margin-bottom: -10px;
+        }
+    }
+    .buttonStyle {
+        width: 100%;
+        display: -webkit-inline-box;
+    }
+}

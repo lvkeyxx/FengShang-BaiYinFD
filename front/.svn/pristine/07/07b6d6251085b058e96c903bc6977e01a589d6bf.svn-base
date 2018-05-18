@@ -1,0 +1,578 @@
+angular.module('BaiYin.power', [
+    'ionic',
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('power', {
+        url: '/power',
+        controller: 'powerController',
+        templateUrl: 'power/power.tpl.html',
+        cache: 'true',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('powerController', ['$scope','showAlert' ,'pageInitService', '$http', '$state','$ionicTabsDelegate','$interval','$timeout',
+        function($scope,showAlert,pageInitService,$http,$state,$ionicTabsDelegate,$interval,$timeout) {
+            $scope.$on('$ionicView.afterEnter', function() {
+                $ionicTabsDelegate.select(0);
+                getKPI();
+                startInterval();
+            });
+            $scope.$on('$ionicView.leave',function () {
+                stopInterval();
+            });
+            //全场请求数据
+            $scope.toQcData = function () {
+                $ionicTabsDelegate.select(0);
+                getKPI();
+                startInterval();
+            }
+            //甘肃数据请求
+            $scope.toGsData = function (){
+                $ionicTabsDelegate.select(1);
+                stopInterval();
+                selectGsData();
+            }
+            //青海数据请求
+            $scope.toQhData = function () {
+                $ionicTabsDelegate.select(2);
+                stopInterval();
+                selectQhData();
+            }
+            //宁夏数据请求
+            $scope.toNxData = function () {
+                $ionicTabsDelegate.select(3);
+                stopInterval();
+                selectNxData();
+            }
+            //新疆数据请求
+            $scope.toXjData = function () {
+                $ionicTabsDelegate.select(4);
+                stopInterval();
+                selectXjData();
+            }
+            /**
+             * 开启定时器,五分钟执行一次
+             */
+            function startInterval() {
+                $scope.timer = $interval(function(){
+                    getKPI();
+                },5*60*1000);
+            }
+            //关闭定时器
+            function stopInterval(){
+                $interval.cancel($scope.timer);
+            }
+            //获取KPI指标
+            function getKPI(){
+                // 获取全公司总负荷
+                // 获取全公司日发电量
+                // 获取集控中心负荷.......
+                $http.get('ServiceName=TargetService&TransName=getTargetIndex')
+                    .then(function(res){
+                        console.log(res);
+                        $scope.companyPower = res.data;
+                    },function(error) {
+                        showAlert.showMsg(error,'','网络异常','确认')
+                    })
+                //获取日电量、月电量中的其他数据
+                $http.get('ServiceName=TargetService&TransName=getTotalPower')
+                    .then(function(res){
+                        console.log(res);
+                        $scope.companyPowerOther = res.data;
+                    },function(error) {
+                        showAlert.showMsg(error,'','网络异常','确认')
+                    })
+            }
+            //获取甘肃子发电厂发电量
+            function selectGsData(){
+                $http.post('ServiceName=TargetService&TransName=gsPower')
+                    .then(function (res) {
+                        $scope.gsCompanyPower = res.data;
+                        if (res.code == '0') {
+                            draw(res.data.gsHourPower,res.data.dateStr);
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+
+            //获取青海子发电厂发电量
+            function selectQhData() {
+                /*$http.get('ServiceName=TargetService&TransName=qhPower')
+                    .then(function (res) {
+                        console.log(res);
+                        $scope.qhCompanyPower = res.data;
+                    },function (error) {
+                        showAlert.showMsg(error,'','网络异常','确认');
+                    });*/
+                $timeout(function(){
+                    draw2();
+                },500);
+
+            }
+            //获取宁夏子发电厂发电量
+            function selectNxData() {
+                /*$http.get('ServiceName=TargetService&TransName=nxPower')
+                    .then(function (res) {
+                        console.log(res);
+                        $scope.nxCompanyPower = res.data;
+                    },function (error) {
+                        showAlert.showMsg(error,'','网络异常','确认');
+                    });*/
+                $timeout(function(){
+                    draw3();
+                },500);
+            }
+            //获取新疆子发电厂发电量
+            function selectXjData() {
+                $http.get('ServiceName=TargetService&TransName=xjPower')
+                    .then(function (res) {
+                        console.log(res);
+                        $scope.xjCompanyPower = res.data;
+                        if (res.code == '0') {
+                            draw1(res.data.xjHourPower,res.data.dateStr);
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    },function (error) {
+                        showAlert.showMsg(error,'','网络异常','确认');
+                    });
+            }
+
+            /**
+             * 绘制图
+             * @param dayPower
+             */
+            //甘肃
+            function draw(dayPower,dateStr) {
+                dateStr=dateStr.replace(/\-/g,'/');
+                var option = {
+                    title: {
+                        subtext: 'MWH'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            var date = new Date(params.value[0]);
+                            data = date.getHours()+":"
+                                +date.getMinutes();
+                            return data + '<br/>'
+                                + params.value[1];
+                        }
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['捡财塘','酒一','酒二','敦煌光伏']
+                    },
+                    grid: {
+                        y2: 80
+                    },
+                    xAxis: [
+                        {
+                            type: 'time',
+                            splitNumber: 12,
+                            axisLabel: {
+                                formatter: function (params) {
+                                    var date = new Date(params);
+                                    var data = date.getHours();
+                                    if (data == '23') {
+                                        data = '24';
+                                    }
+                                    return data;
+                                }
+                            }
+
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '捡财塘',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+                                for (var v in dayPower) {
+                                    d.push([
+                                        new Date(dateStr+' '+dayPower[v].OCCUR_TIME),
+                                        (dayPower[v].JCT_DAYPOWER - 0) < 0 ? 0 : (((dayPower[v].JCT_DAYPOWER - 0) > 999) ? 999 : dayPower[v].JCT_DAYPOWER)
+                                    ]);
+                                }
+                                return d;
+                            })()
+                        },
+                        {
+                            name: '酒一',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+                                for (var v in dayPower) {
+                                    d.push([
+                                        new Date(dateStr+' '+dayPower[v].OCCUR_TIME),
+                                        (dayPower[v].BDQD_DAYPOWER - 0) < 0 ? 0 : (((dayPower[v].BDQD_DAYPOWER - 0) > 999) ? 999 : dayPower[v].BDQD_DAYPOWER)
+                                    ]);
+                                }
+                                return d;
+                            })()
+                        },
+                        {
+                            name: '酒二',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+                                for (var v in dayPower) {
+                                    d.push([
+                                        new Date(dateStr+' '+dayPower[v].OCCUR_TIME),
+                                        (dayPower[v].QDDE_DAYPOWER - 0) < 0 ? 0 : (((dayPower[v].QDDE_DAYPOWER - 0) > 999) ? 999 : dayPower[v].QDDE_DAYPOWER)
+                                    ]);
+                                }
+                                return d;
+                            })()
+                        },
+                        {
+                            name: '敦煌光伏',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+                                for (var v in dayPower) {
+                                    d.push([
+                                        new Date(dateStr+' '+dayPower[v].OCCUR_TIME),
+                                        (dayPower[v].DH_DAYPOWER - 0) < 0 ? 0 : (((dayPower[v].DH_DAYPOWER - 0) > 999) ? 999 : dayPower[v].DH_DAYPOWER)
+                                    ]);
+                                }
+                                return d;
+                            })()
+                        }
+                    ]
+                };
+                // console.log("$scope.id=="+$scope.id);
+                var myChart = echarts.init(document.getElementById('gszst'), 'macarons');
+                myChart.setOption(option);
+            }
+            //新疆
+            function draw1(dayPower,dateStr) {
+                dateStr=dateStr.replace(/\-/g,'/');
+                var option = {
+                    title: {
+                        subtext: 'MW'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            var date = new Date(params.value[0]);
+                            data = date.getHours()+":"+date.getMinutes();
+                            return data + '<br/>'
+                                + params.value[1];
+                        }
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['三塘湖','淖毛湖','小草湖','烟墩','景峡']
+                    },
+                    grid: {
+                        y2: 80
+                    },
+                    xAxis: [
+                        {
+                            type: 'time',
+                            splitNumber: 12,
+                            axisLabel: {
+                                formatter: function (params) {
+                                    var date = new Date(params);
+                                    var data = date.getHours();
+                                    if (data == '23') {
+                                        data = '24';
+                                    }
+                                    return data;
+                                }
+                            }
+
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '淖毛湖',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+                                for (var v in dayPower) {
+                                    d.push([
+                                        new Date(dateStr+' '+dayPower[v].OCCUR_TIME),
+                                        (dayPower[v].NMHN_DAYPOWER - 0) < 0 ? 0 : (((dayPower[v].NMHN_DAYPOWER - 0) > 999) ? 999 : dayPower[v].NMHN_DAYPOWER)
+                                    ]);
+                                }
+                                return d;
+                            })()
+                        },
+                        {
+                            name: '小草湖',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+                                for (var v in dayPower) {
+                                    d.push([
+                                        new Date(dateStr+' '+dayPower[v].OCCUR_TIME),
+                                        (dayPower[v].XCHB_DAYPOWER - 0) < 0 ? 0 : (((dayPower[v].XCHB_DAYPOWER - 0) > 999) ? 999 : dayPower[v].XCHB_DAYPOWER)
+                                    ]);
+                                }
+                                return d;
+                            })()
+                        }
+                    ]
+                };
+                // console.log("$scope.id=="+$scope.id);
+                var myChart = echarts.init(document.getElementById('xjzst'), 'macarons');
+                myChart.setOption(option);
+            }
+            //青海
+            function draw2() {
+                //dateStr=dateStr.replace(/\-/g,'/');
+                var option = {
+                    title: {
+                        subtext: 'MW'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            var date = new Date(params.value[0]);
+                            data = date.getHours()+":"+date.getMinutes();
+                            return data + '<br/>'
+                                + params.value[1];
+                        }
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['贝壳梁','格尔木']
+                    },
+                    grid: {
+                        y2: 80
+                    },
+                    xAxis: [
+                        {
+                            type: 'time',
+                            splitNumber: 10,
+                            axisLabel: {
+                                formatter: function (params) {
+                                    var date = new Date(params);
+                                    var data = date.getHours();
+                                    return data;
+                                }
+                            }
+
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '贝壳梁',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+
+                                return d;
+                            })()
+                        },
+                        {
+                            name: '格尔木',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            },
+                            data: (function () {
+                                var d = [];
+
+                                return d;
+                            })()
+                        }
+                    ]
+                };
+                // console.log("$scope.id=="+$scope.id);
+                var myChart = echarts.init(document.getElementById('qhzst'), 'macarons');
+                myChart.setOption(option);
+            }
+            //宁夏
+            function draw3() {
+                //dateStr=dateStr.replace(/\-/g,'/');
+                var option = {
+                    title: {
+                        subtext: 'MW'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function (params) {
+                            var date = new Date(params.value[0]);
+                            data = date.getHours()+":"+date.getMinutes();
+                            return data + '<br/>'
+                                + params.value[1];
+                        }
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ['石嘴山']
+                    },
+                    grid: {
+                        y2: 80
+                    },
+                    xAxis: [
+                        {
+                            type: 'time',
+                            splitNumber: 10,
+                            axisLabel: {
+                                formatter: function (params) {
+                                    var date = new Date(params);
+                                    var data = date.getHours();
+                                    return data;
+                                }
+                            }
+
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '石嘴山',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            symbolSize: function (value) {
+                                return Math.round(value[2] / 10) + 2;
+                            }
+                        }
+                    ]
+                };
+                // console.log("$scope.id=="+$scope.id);
+                var myChart = echarts.init(document.getElementById('nxzst'), 'macarons');
+                myChart.setOption(option);
+            }
+        }])
+    .directive('powerline', function () {
+        return {
+            scope: {
+                id: "@",
+                legend: "=",
+                item: "=",
+                data: "="
+            },
+            restrict: 'E',
+            template: '<div style="height:350px;"></div>',
+            replace: true,
+            link: function ($scope, element, attr, ctr) {
+                // $scope.$parent.initChart($scope);
+            }
+        };
+    });

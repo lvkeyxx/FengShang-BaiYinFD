@@ -1,0 +1,248 @@
+<ion-view class="loadCSS">
+    <ion-nav-title>负荷</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-fhfx" ng-click="goHistoryInfo()">
+        </button>
+    </ion-nav-buttons>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="全厂" ng-click="toQcData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="timeDes"><i id="tdes"></i><em ng-click="toNearHour()">查看近一小时数据</em></div>
+                    <div class="graphImg">
+                        <line id="main" legend="legend" item="item" data="data"></line>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>日平均负荷率</th>
+                            <th>负荷率日环比</th>
+                            <th>实时负荷(MW)</th>
+                        </tr>
+                        <tr>
+                            <td>全厂</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{((totalLoad.TOTAL_POWER - 0) < 0 ? 0 : ((totalLoad.TOTAL_POWER - 0) > 999) ? 999 : totalLoad.TOTAL_POWER|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>甘</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{((fcLoad.GS_POWER - 0) < 0 ? 0 : ((fcLoad.GS_POWER - 0) > 999) ? 999 :fcLoad.GS_POWER|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>青</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{((fcLoad.QH_POWER - 0) < 0 ? 0 : ((fcLoad.QH_POWER - 0) > 999) ? 999 :fcLoad.QH_POWER|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>宁</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{((fcLoad.NX_POWER - 0) < 0 ? 0 : ((fcLoad.NX_POWER - 0) > 999) ? 999 :fcLoad.NX_POWER|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>新</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{((fcLoad.XJ_POWER - 0) < 0 ? 0 : ((fcLoad.XJ_POWER - 0) > 999) ? 999 :fcLoad.XJ_POWER|number:2)}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="甘" ng-click="toGsData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="timeDes">{{timeDes}}<em ng-click="toNearHour()">查看近一小时数据</em></div>
+                    <div class="graphImg">
+                        <line id="GSmain" legend="legend" item="item" data="data"></line>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>风速/光照强度(m/s w/m2)</th>
+                            <th>日平均负荷率</th>
+                            <th>负荷率日环比</th>
+                            <th>AGC值</th>
+                            <th>实时负荷(MW)</th>
+                        </tr>
+                        <tr>
+                            <td>捡&nbsp;&nbsp;财&nbsp;&nbsp;塘</td>
+                            <td>{{gsLoad.JCT_FSGZQD|number:2}}</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{gsLoad.JCT_AGCZ|number:2}}</td>
+                            <td>{{((gsLoad.JCT_SSFH - 0) < 0 ? 0 : ((gsLoad.JCT_SSFH - 0) > 999) ? 999 :gsLoad.JCT_SSFH|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>酒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一</td>
+                            <td>{{gsLoad.BDQD_FSGZQD|number:2}}</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{gsLoad.BDQD_AGCZ|number:2}}</td>
+                            <td>{{((gsLoad.BDQD_SSFH - 0) < 0 ? 0 : ((gsLoad.BDQD_SSFH - 0) > 999) ? 999 :gsLoad.BDQD_SSFH|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>酒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二</td>
+                            <td>{{gsLoad.QDDE_FSGZQD|number:2}}</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{gsLoad.QDDE_AGCZ|number:2}}</td>
+                            <td>{{((gsLoad.QDDE_SSFH - 0) < 0 ? 0 : ((gsLoad.QDDE_SSFH - 0) > 999) ? 999 :gsLoad.QDDE_SSFH|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>敦煌光伏</td>
+                            <td>{{gsLoad.DH_FSGZQD|number:2}}</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{((gsLoad.DH_SSFH - 0) < 0 ? 0 : ((gsLoad.DH_SSFH - 0) > 999) ? 999 :gsLoad.DH_SSFH|number:2)}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="青" ng-click="toQhData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="timeDes">{{timeDes}}<em ng-click="toNearHour()">查看近一小时数据</em></div>
+                    <div class="graphImg">
+                        <line id="QHmain" legend="legend" item="item" data="data"></line>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>风速/光照强度(m/s w/m2)</th>
+                            <th>日平均负荷率</th>
+                            <th>负荷率日环比</th>
+                            <th>AGC值</th>
+                            <th>实时负荷(MW)</th>
+                        </tr>
+                        <tr>
+                            <td>贝&nbsp;&nbsp;壳&nbsp;&nbsp;梁</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td>格&nbsp;&nbsp;尔&nbsp;&nbsp;木</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="宁" ng-click="toNxData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="timeDes">{{timeDes}}<em ng-click="toNearHour()">查看近一小时数据</em></div>
+                    <div class="graphImg">
+                        <line id="NXmain" legend="legend" item="item" data="data"></line>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>风速/光照强度(m/s w/m2)</th>
+                            <th>日平均负荷率</th>
+                            <th>负荷率日环比</th>
+                            <th>AGC值</th>
+                            <th>实时负荷(MW)</th>
+                        </tr>
+                        <tr>
+                            <td>石&nbsp;&nbsp;嘴&nbsp;&nbsp;山</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="新" ng-click="toXjData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="graph">
+                    <div class="timeDes">{{timeDes}}<em ng-click="toNearHour()">查看近一小时数据</em></div>
+                    <div class="graphImg">
+                        <line id="XJmain" legend="legend" item="item" data="data"></line>
+                    </div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>风速/光照强度(m/s w/m2)</th>
+                            <th>日平均负荷率</th>
+                            <th>负荷率日环比</th>
+                            <th>AGC值</th>
+                            <th>实时负荷(MW)</th>
+                        </tr>
+                        <tr>
+                            <td>三&nbsp;&nbsp;塘&nbsp;&nbsp;湖</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td>淖&nbsp;&nbsp;毛&nbsp;&nbsp;湖</td>
+                            <td>{{xjLoad.NMHN_FSGZQD|number:2}}</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{xjLoad.NMHN_AGCZ|number:2}}</td>
+                            <td>{{((xjLoad.NMHN_SSFH - 0) < 0 ? 0 : ((xjLoad.NMHN_SSFH - 0) > 999) ? 999 :xjLoad.NMHN_SSFH|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>小&nbsp;&nbsp;草&nbsp;&nbsp;湖</td>
+                            <td>{{xjLoad.XCHB_FSGZQD|number:2}}</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>{{xjLoad.XCHB_AGCZ|number:2}}</td>
+                            <td>{{((xjLoad.XCHB_SSFH - 0) < 0 ? 0 : ((xjLoad.XCHB_SSFH - 0) > 999) ? 999 :xjLoad.XCHB_SSFH|number:2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>烟&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;墩</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td>景&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;峡</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+</ion-view>

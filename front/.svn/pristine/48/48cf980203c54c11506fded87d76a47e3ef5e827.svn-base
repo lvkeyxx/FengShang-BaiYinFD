@@ -1,0 +1,20 @@
+<ion-view class="taskManageCSS">
+    <ion-nav-title>任务管理</ion-nav-title>
+        <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+            <ion-tab title="全部" ng-click="toAllData()">
+                <ion-content has-bouncing="false" scrollbar-y="false">
+                    全部任务
+                </ion-content>
+            </ion-tab>
+            <ion-tab title="处理中" ng-click="toClzData()">
+                <ion-content has-bouncing="false" scrollbar-y="false">
+                    处理中任务
+                </ion-content>
+            </ion-tab>
+            <ion-tab title="已完成" ng-click="toYwcData()">
+                <ion-content has-bouncing="false" scrollbar-y="false">
+                    已完成任务
+                </ion-content>
+            </ion-tab>
+        </ion-tabs>
+</ion-view>

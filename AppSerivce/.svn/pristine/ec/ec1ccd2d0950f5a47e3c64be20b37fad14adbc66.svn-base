@@ -1,0 +1,89 @@
+package com.service.equipment.sql;
+
+import com.utility.MapUtil;
+
+import java.util.Map;
+
+/**设备信息查询
+ * Created by Administrator on 2018/5/15.
+ */
+public class EquipServiceSQL {
+
+    public static String equipmentInfo(Map map) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select t.mch_code," +
+                "       t.mch_name," +
+                "       t.contract," +
+                "       t.contract_name," +
+                "       t.operational_status," +
+                "       t.type," +
+                "       t.serial_no," +
+                "       t.manufacturer_no," +
+                "       t.manufacturer_name," +
+                "       t.equipment_general," +
+                "       t.equipment_check_info," +
+                "       t.equipment_infor," +
+                "       t.process_mode," +
+                "       t.risk_factors_preven " +
+                "  from ifsapp.EQUIPMENT_FUNCTIONAL_APP t " +
+                " where t.mch_code = '");
+        sb.append(MapUtil.stringValue(map,"MCH_CODE"));
+        sb.append("'");
+
+        return sb.toString();
+    }
+
+    /**
+     * 获取设备缺陷履历
+     * @param map
+     * @return
+     */
+    public static String equipmentDefect(Map map){
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("select t.mch_code," +
+                "       t.mch_name," +
+                "       t.fact_mch_code," +
+                "       t.fact_mch_name," +
+                "       t.fault_rep_id," +
+                "       t.err_descr," +
+                "       t.err_descr_lo," +
+                "       t.reg_date," +
+                "       t.fault_state " +
+                "from ifsapp.EQUIPMENT_FUNCTIONAL_FAULT t " +
+                "where mch_code = '");
+        sb.append(MapUtil.stringValue(map,"MCH_CODE"));
+        sb.append("'");
+        return sb.toString();
+    }
+
+    /**
+     * 检修工单履历
+     * @param map
+     * @return
+     */
+    public static String repairInspection(Map map){
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select t.mch_code," +
+                "       t.mch_name," +
+                "       t.fact_mch_code," +
+                "       t.fact_mch_name," +
+                "       t.wo_no," +
+                "       t.err_descr," +
+                "       t.work_order_type," +
+                "       t.plan_f_date," +
+                "       t.work_leader_sign," +
+                "       t.work_leader_name," +
+                "       t.work_master_sign," +
+                "       t.work_master_name," +
+                "       t.performed_action_lo," +
+                "       t.work_type," +
+                "       t.wo_state" +
+                "  from ifsapp.EQUIPMENT_FUNCTIONAL_WO t " +
+                " where t.mch_code = '");
+        sb.append(MapUtil.stringValue(map,"MCH_CODE"));
+        sb.append("'");
+
+        return sb.toString();
+    }
+}

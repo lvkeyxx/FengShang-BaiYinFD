@@ -1,0 +1,177 @@
+.loginCSS {
+    @rem: 144rem;
+    background: url(../images/login/loginBagImg.png) no-repeat;
+    /*background-size: 100%;*/
+    //background-size: 100% 100%;
+    background-size: cover;
+    .isauto{
+        display: inline-block;
+        margin-right: .3rem;
+        float:right;
+        .item,
+        .item.item-light {
+            border-color: transparent;
+            background-color: transparent;
+        }
+        .item {
+            padding: 5px;
+            padding-left: .9rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.3rem;
+        }
+    }
+    .remPwd {
+        display: inline-block;
+        margin-right: .1rem;
+        float:right;
+        .item,
+        .item.item-light {
+            border-color: transparent;
+            background-color: transparent;
+        }
+        .item {
+            padding: 5px;
+            padding-left: .9rem;
+            margin-top: 0.2rem;
+            margin-bottom:0.3rem;
+        }
+    }
+    .empetDiv {
+        height: 3.4rem;
+    }
+    .list {
+        /*margin-bottom: -8px;*/
+        padding: 0px;
+    }
+    .goBack {
+        font-size: 0.32rem;
+        color: #fff;
+        margin-top: .1rem;
+        margin-left: .1rem;
+        padding: .1rem;
+    }
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #ccc;
+        text-indent: 0;
+    }
+    .item-input {
+        width: 85%;
+        border: none;
+        margin: auto;
+        padding: 0;
+        margin-bottom: .06rem;
+        margin-top: 1.3em;
+        border-bottom: 1px solid #ff9900;
+        background-color: rgba(0, 0, 0, 0.0);
+        input {
+            color: #fff;
+            padding-left: .2rem;
+            font-size: .35rem;
+        }
+        .inputName {
+            margin-left: .2rem;
+            text-align: center;
+            color: #fff;
+        }
+        .inputPwd {
+            margin-left: .2rem;
+            text-align: center;
+            color: #fff;
+        }
+    }
+    .button {
+        background-color: #ff9900;
+        width: 85%;
+        margin: auto;
+        color: #fff;
+        display: block;
+        border-radius: .1rem;
+        border: 0;
+        margin-top: .3rem;
+        height: 140/@rem;
+        float: none;
+    }
+}
+
+.boxCss {
+    width: .3rem;
+    height: .3rem;
+    background-color: blue;
+}
+
+.boxValCss {
+    font-size: .3rem;
+}
+
+.checkbox-icon {
+    width: .37rem;
+    height: .37rem;
+}
+
+.item-checkbox .checkbox {
+    position: absolute;
+    top: 58%;
+    right: 8px;
+    left: 8px;
+    z-index: 3;
+    margin-top: -21px;
+}
+
+.checkbox input:checked:before,
+.checkbox input:checked+.checkbox-icon:before {
+    background: #0099ff;
+    background-color: #0099ff;
+}
+
+.checkbox input:checked:before,
+.checkbox input:checked+.checkbox-icon:before {
+    background: #0099ff;
+    background-color: #0099ff;
+}
+
+.checkbox-icon:before {
+    border-radius: 0.06rem;
+    background: #0099ff;
+    border-style: none;
+}
+
+.checkbox input:checked+.checkbox-icon:before,
+.checkbox input:checked:before {
+    background: #0099ff;
+    background-color: #0099ff;
+}
+
+.checkbox-icon:before {
+    position: absolute;
+    left: 10%;
+}
+
+.disable-pointer-events {
+    pointer-events: none;
+    color: black;
+    font-size: .3rem;
+}
+
+.checkbox-icon:after {
+    width: 14px;
+    height: 6px;
+    border: 2px solid #fff;
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 33%;
+    left: 25%;
+    display: table;
+    border-top: 0;
+    border-right: 0;
+    content: ' ';
+    opacity: 0;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: #fff !important;
+    background-image: none !important;
+    color: #000000 !important;
+}

@@ -1,0 +1,9 @@
+<div class="card">
+    <div ng-repeat="item in MainTable track by $index">{{item.fieldName}}：{{item.fieldText}}</div>
+</div>
+<div class="applyForLineHead">详情</div>
+<div class="applyForLine">
+    <div ng-repeat="item in ChildTable track by $index" class="card text">
+        <div ng-repeat="field in item track by $index">{{field.fieldName}}：{{field.fieldText}}</div>
+    </div>
+</div>

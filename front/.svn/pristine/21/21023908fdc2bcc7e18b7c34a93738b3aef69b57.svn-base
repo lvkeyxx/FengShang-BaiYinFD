@@ -1,0 +1,226 @@
+.fillCauseCSS {
+  @rem: 144rem;
+  background-color: #fff;
+  //tab样式
+  .tabs-positive > .tabs, .tabs.tabs-positive {
+    border-bottom: 2px solid #f4f4f4;
+    background-color: #fff;
+    background-image: linear-gradient(0deg, #0c60ee, #0c60ee 50%, transparent 50%);
+    color: #000;
+  }
+  .tab-item.activated, .tab-item.active, .tab-item.tab-item-active {
+    color: #1296db;
+    border-bottom: 2px solid #1296db;
+
+  }
+  .popup-container .popup .popup-head {
+    display: block;
+  }
+  .selectMounth {
+    background: #f4f4f4;
+    text-align: center;
+    margin-top: 95px;
+    display: block;
+    text-align: left;
+    color: #1296db;
+    button{
+      border:none;
+      background: transparent;
+      outline: none;
+    }
+    .selectDateBtn {
+      border: none;
+      text-align: left;
+      width: 100px;
+      margin: 0 auto;
+      display: block;
+      background: transparent;
+      color: #1296db;
+      background: url(../images/PM/selectDowm_blueicon.png)no-repeat right;
+    }
+    .leftSelect{
+      background: url("../images/attence/leftIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .rightSelect{
+      background: url("../images/attence/rightIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+  }
+  .chidaoList {
+    /*margin-top: 95px;*/
+    padding: 10px;
+    .abnormalAttence{
+      color:#ff0000;
+    }
+    .abnormalgreen{
+      color:#09FF09;
+    }
+    table {
+      width: 100%;
+    }
+    table th {
+      padding: 10px 5px;
+      background: #e1effc;
+      vertical-align: middle;
+      color: #3492e9;
+    }
+    table th:first-child {
+      border-top-left-radius: 15px;
+      border-right: 1px solid #d7e2ec;
+      width: 100px;
+    }
+    table th:nth-child(2) {
+      width: 100px;
+    }
+    table th:last-child {
+      border-top-right-radius: 15px;
+    }
+    table tr td:first-child {
+      border-left: 1px solid #e1effc;
+      border-right: 1px solid #e1effc;
+      color: #3492e9;
+    }
+    table tr td:last-child {
+      border-right: 1px solid #e1effc;
+    }
+    table td {
+      border: 1px solid #fefefe;
+      border-collapse: collapse;
+      padding: 10px 5px;
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: 1px solid #e1effc;
+      span {
+        display: block;
+        text-align: center;
+      }
+    }
+    .abnormalAttence {
+      color: #ff0000;
+    }
+  }
+
+  .myAttencelist {
+    padding: 10px;
+    table {
+      width: 100%;
+    }
+    table th {
+      padding: 10px 5px;
+      background: #e1effc;
+      vertical-align: middle;
+      color: #1296db;
+    }
+    table th:first-child {
+      border-top-left-radius: 15px;
+      border-right: 1px solid #d7e2ec;
+      width: 60px;
+    }
+    table th:nth-child(2) {
+      width: 150px;
+    }
+    table th:last-child {
+      border-top-right-radius: 15px;
+    }
+    table tr td:first-child {
+      border-left: 1px solid #e1effc;
+      border-right: 1px solid #e1effc;
+      color: #1296db;
+    }
+    table tr td:last-child {
+      border-right: 1px solid #e1effc;
+    }
+    table td {
+      border: 1px solid #fefefe;
+      border-collapse: collapse;
+      padding: 10px 5px;
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: 1px solid #e1effc;
+      span {
+        display: block;
+        text-align: center;
+      }
+    }
+    .abnormalAttence {
+      color: #ff0000;
+    }
+  }
+  .tips {
+    padding: 10px 10px 0px 15px;
+    color: #ff0000;
+  }
+  //填写事由
+  .bg {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+  .fillCause {
+    position: fixed ! important;
+    z-index: 22;
+    margin: 0 auto;
+    background: #fff;
+    h3 {
+      line-height: 35px;
+      height: 35px;
+      text-align: center;
+      border-bottom: 1px solid #1296db;
+    }
+    textarea {
+      border: 1px solid #f4f4f4;
+      margin: 0 auto;
+    }
+    .fillBtn {
+      text-align: center;
+      margin-top: 10px;
+
+    }
+  }
+  button {
+    height: 100/@rem;
+    line-height: 100/@rem;
+    outline: none;
+    border: none;
+    width: 48%;
+    display: inline-block;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .fillCancelBtn {
+    background: #999;
+  }
+  .fillEnsureBtn {
+    background: #1296db;
+  }
+  .selectGlass {
+    display: inline-block;
+    float: right;
+    transform: translateY(-20/@rem);
+    input {
+      border: none;
+      width: 100px;
+      border: none;
+      background: url(../images/PM/selectDowm_blackicon.png) no-repeat right;
+      display: inline-block;
+    }
+  }
+  .dkposition ul li {
+    height: 80/@rem;
+    line-height: 80/@rem;
+    font-size: 12px;
+  }
+}

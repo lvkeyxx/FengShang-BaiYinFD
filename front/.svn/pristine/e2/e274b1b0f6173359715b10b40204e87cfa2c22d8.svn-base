@@ -1,0 +1,18 @@
+<div class="inputPopCSS list">
+    <form name="createGroupForm">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">群组名</span>
+            <input type="text" ng-model="groupName" placeholder="请输入群组名" required>
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">群组描述</span>
+            <input type="text" ng-model="groupDesc" placeholder="请输入群组描述">
+        </label>
+        <button class="button button-block button-positive" ng-click="createGroup(groupName,groupDesc)" ng-disabled="!createGroupForm.$valid || createGroupForm.$submitted">
+            创建
+        </button>
+    </form>
+    <div class="close" ng-click="closePop()">
+        <p class="closeImg"></p>
+    </div>
+</div>

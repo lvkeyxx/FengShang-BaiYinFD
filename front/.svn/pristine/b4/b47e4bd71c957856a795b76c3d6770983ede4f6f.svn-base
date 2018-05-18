@@ -1,0 +1,39 @@
+<ion-view class="erpCSS">
+    <ion-nav-title>ERP审批</ion-nav-title>
+    <ion-content class="padding" has-header="true">
+        <div class="list card">
+            <input class="act-cell-title" type="text" placeholder="活动标题">
+            <div class="item act-cell-padding">
+                <span>开始时间</span>
+                <input type="date" class="act-cell-input">
+            </div>
+            <div class="item act-cell-padding">
+                <span>结束时间</span>
+                <input type="date" class="act-cell-input">
+            </div>
+            <div class="item act-cell-padding">
+                <span>人数</span>
+                <input type="text" class="act-cell-input" placeholder="输入活动预计人数">
+            </div>
+            <div class="item act-cell-padding">
+                <span>费用</span>
+                <input type="text" class="act-cell-input" placeholder="输入活动预计费用">
+            </div>
+            <div class="item act-cell-padding">
+                <span>地点</span>
+                <input type="text" class="act-cell-input" placeholder="输入活动地址">
+            </div>
+            <textarea style="width: 100%;background-color: whitesmoke" placeholder="这里输入活动介绍内容" cols="30" rows="10"></textarea>
+            <img class="full-image" src="img/ben.png">
+            <h5>&nbsp;&nbsp;插入信息：</h5>
+            <div class="item"style="padding: 4px;">
+                <div class="row" >
+                    <div class="col group-cell-select">符号</div>
+                    <div class="col group-cell-select">图片</div>
+                    <div class="col group-cell-select">表情</div>
+                    <div class="col group-cell-select">字体</div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

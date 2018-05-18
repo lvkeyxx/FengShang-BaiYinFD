@@ -1,0 +1,44 @@
+<ion-view class="tracking">
+ <ion-nav-title>跟踪详情</ion-nav-title>
+ <ion-content class="trackingCss">
+  <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+    <div class="listCss">
+      <div class="">提交人：</div>
+     <div>{{}}</div>
+    </div>
+    <div class="listCss">
+      <div class="">提交时间：</div>
+     <div>{{}}</div>
+    </div>
+    <div class="listCss">
+      <div class="">描述：</div>
+     <div>{{}}</div>
+    </div>
+    <div class="line1"></div>
+   
+        <div class="listCss">
+      <div class="">处理人：</div>
+     <div>{{}}</div>
+    </div>
+       <div class="listCss">
+          <div class="">处理时间：</div>
+          <div>{{}}</div>
+       </div>
+       <div class="listCss">
+         <div class="">意见：</div>
+         <div>{{}}</div>
+       </div>
+       <div class="listCss">
+         <div class="">处理顺序：</div>
+         <div>{{}}</div>
+       </div>
+
+        <div class="line1"></div>
+
+    
+    
+      <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%"
+       immediate-check="false">
+      </ion-infinite-scroll>
+ </ion-content>
+</ion-view>

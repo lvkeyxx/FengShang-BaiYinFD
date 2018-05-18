@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BaiYin.app" mr-rem>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" charset="UTF-8" type="text/css" href="/css/vendor.css" />
+    <link rel="stylesheet" charset="UTF-8" type="text/css" href="/css/mr-demo.css" />
+    <link rel="stylesheet" charset="UTF-8" type="text/css" href="/css/LCalendar.css" />
+    <script>
+    var isApp = false;
+    var token = null;
+    var appVersion = '0.6.0';
+    </script>
+    <script type="text/javascript" charset="UTF-8" src="/js/angular.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/angular-animate.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/angular-base64.min.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/ionic-toast.bundle.min.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/ionic-datepicker.bundle.min.js"></script>
+    <script src="/js/ng-cordova.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/LCalendar.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/BaiYin.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/BaiYin.templates.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/echarts.min.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="/js/jquery.mobile-1.4.5.js"></script>
+</head>
+
+<body ng-controller="AppController">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear backBtn" nav-direction="back">
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view>
+        <!-- 防止启动时黑屏 -->
+        <ion-view></ion-view>
+    </ion-nav-view>
+</body>
+
+</html>

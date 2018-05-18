@@ -1,0 +1,89 @@
+<ion-view class="journalDetailListCSS">
+    <ion-nav-title>{{objCenter.CONTRACT}}</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="运行日志" ng-click="toYxrzData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="yxrzList" ng-hide="myDiv">
+                    <ul>
+                        <li>
+                            <div class="jlxx">
+                                <span>记录人：{{objCenter.RECORD_PERSON}}<em>班次：{{objCenter.WORK_SEQ}}</em></span>
+                                <!--<span class="bcxx">班次：{{objCenter.WORK_SEQ}}</span>-->
+                            </div>
+                            <div class="jlcontent">
+                                <ul ng-repeat="x in listcenter1">
+                                    <li>
+                                        记录时间：{{x.RECORD_DATE | limitTo:10}}
+                                    </li>
+                                    <li>
+                                        记录内容：{{x.CONTENT}}
+                                    </li>
+                                    <li>
+                                        备注：{{x.REMARK}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="运行方式" ng-click="toYxfsData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="yxfsList">
+                    <ul ng-repeat="x in listcenter2">
+                        <li>
+                            <div class="xtname">系统名称：{{x.SYSTEM_NAME}}</div>
+                            <div class="dzfs">
+                                <ul>
+                                    <li ng-show="x.PROJECT_SITE1">捡财塘风电:{{x.PROJECT_SITE1}}</li>
+                                    <li ng-show="x.PROJECT_SITE2">酒一:{{x.PROJECT_SITE2}}</li>
+                                    <li ng-show="x.PROJECT_SITE3">酒二:{{x.PROJECT_SITE3}}</li>
+                                    <li ng-show="x.PROJECT_SITE4">敦煌光伏:{{x.PROJECT_SITE4}}</li>
+                                    <li ng-show="x.PROJECT_SITE5">石嘴山光伏:{{x.PROJECT_SITE5}}</li>
+                                    <li ng-show="x.PROJECT_SITE6">格尔木光伏:{{x.PROJECT_SITE6}}</li>
+                                    <li ng-show="x.PROJECT_SITE7">贝克梁诺木洪风电:{{x.PROJECT_SITE7}}</li>
+                                    <li ng-show="x.PROJECT_SITE8">三塘湖:{{x.PROJECT_SITE8}}</li>
+                                    <li ng-show="x.PROJECT_SITE9">淖毛湖:{{x.PROJECT_SITE9}}</li>
+                                    <li ng-show="x.PROJECT_SITE10">景峡风电:{{x.PROJECT_SITE10}}</li>
+                                    <li ng-show="x.PROJECT_SITE11">烟墩风电:{{x.PROJECT_SITE11}}</li>
+                                    <li ng-show="x.PROJECT_SITE12">景峡光伏:{{x.PROJECT_SITE12}}</li>
+                                    <li ng-show="x.PROJECT_SITE13">小草湖:{{x.PROJECT_SITE13}}</li>
+                                    <li ng-show="x.PROJECT_SITE14">宁夏风电:{{x.PROJECT_SITE14}}</li>
+                                </ul>
+                            </div>
+                            <div class="bzcontent">备注：{{x.REMARK}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="交接班" ng-click="toJjbData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="jjbList">
+                    <ul ng-repeat="x in listcenter3">
+                        <li>
+                            <div class="jiaobanxx">
+                                <span class="bzcontent">备注:{{x.REMARK}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="接地线" ng-click="toJdxData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="jdxList">
+                    <ul ng-repeat="x in listcenter4">
+                        <li>
+                            <div class="yuname">编号：{{x.GROUND_LINE_NO}}</div>
+                            <div class="zsxxShow">装设地点：{{x.RECORD_AREA}}<em>装设时间：{{x.RECORD_DATE}}</em></div>
+                        </li>
+                    </ul>
+                </div>
+            </ion-content>
+        </ion-tab>
+
+    </ion-tabs>
+</ion-view>

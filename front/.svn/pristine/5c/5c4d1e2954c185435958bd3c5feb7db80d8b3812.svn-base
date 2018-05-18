@@ -1,0 +1,46 @@
+<ion-view class="OSIHistoryDetailCSS">
+    <ion-nav-title>巡查记录详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIDetail">
+            <div class="OSITitle">
+                <div class="osiLeft">
+                    <span>巡查路线1(周)</span>
+                    <span class="osiTime">2018-12-12 -  2018-12-12</span>
+                </div>
+            </div>
+            <div class="OSIList">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">#1风机</span>
+                            <span class="glassname">2018-01-12 12:12:12</span>
+                        </div>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="wqdShow">未签到</i>
+                            <span class="name">#2风机</span>
+                            <!--<span class="glassname">2018-01-12 12:12:12</span>-->
+                        </div>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">#3风机</span>
+                            <span class="glassname">2018-01-12 12:12:12</span>
+                        </div>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="wqdShow">未签到</i>
+                            <span class="name">#4风机</span>
+                            <!--<span class="glassname">2018-01-12 12:12:12</span>-->
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

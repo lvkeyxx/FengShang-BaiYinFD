@@ -1,0 +1,34 @@
+<ion-view class="OSICSS">
+    <ion-nav-title>现场巡查</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-timedimension" ng-click="toOsiHistory()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="osiList" ng-hide="osiListHide">
+            <div class="scanQRcode">
+                <input type="text" ng-hide="inputHide" placeholder="请扫描设备二维码" class="scanCode" ng-click="toScanCode()"
+                           readonly>
+            </div>
+            <div class="scanSearch" ng-hide="searchsBlueHide">
+                <button class="searchBlootBtn" ng-click="searchsBlueTooth()">搜索蓝牙</button>
+            </div>
+            <div class="content">
+                <ul class="list">
+                    <li ng-repeat="patrolRoteData in patrolRoteListData" class="item item-icon-right" ng-click="toOsiLine(patrolRoteData)">
+                        {{patrolRoteData.DESCRIPTION}}({{patrolRoteData.INSPECT_TYPE}})
+                        <span class="item-note ng-binding">{{patrolRoteData.INSPECTED}}/{{patrolRoteData.INSPECT}}</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="position" ng-hide="positionHide">
+            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}
+            <span style="display: block;">
+                设备名称：{{patrolHomeData.MCH_NAME}}
+            </span>
+            <button class="qdBtn" ng-click="patrolSign()">签到</button>
+        </div>
+    </ion-content>
+</ion-view>

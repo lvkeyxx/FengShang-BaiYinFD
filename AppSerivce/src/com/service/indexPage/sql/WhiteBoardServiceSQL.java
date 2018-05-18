@@ -1,0 +1,65 @@
+package com.service.indexPage.sql;
+
+import com.utility.DateUtil;
+import com.utility.MapUtil;
+import com.utility.StringUtil;
+
+import java.util.Date;
+import java.util.Map;
+
+/**
+ * @Author:wangyg
+ * @Description:白板公告的相关SQL
+ * @Date:Created in 2018-03-7 16:15
+ * @Modied By:
+ **/
+public class WhiteBoardServiceSQL {
+
+    /**
+     * 获取白板公告信息
+     * @param map
+     * @return
+     */
+    public static String whiteBoardNewspaper(Map map){
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT line_no LINE_NO,");
+        sb.append(" sort SORT,");
+        sb.append(" update_person UPDATE_PERSON,");
+        sb.append(" news_title    NEWS_TITLE,");
+        sb.append(" news_content  NEWS_CONTENT,");
+        sb.append(" update_time   UPDATE_TIME");
+        sb.append(" FROM IFSAPP.white_board_newspaper t ");
+        sb.append(" where 1=1 ");
+        if(StringUtil.isNotBlank(MapUtil.stringValue(map,"LINE_NO"))){
+            sb.append(" and line_no='");
+            sb.append(MapUtil.stringValue(map,"LINE_NO"));
+            sb.append("'");
+        }
+        sb.append(" order by t.sort");
+        return sb.toString();
+    }
+
+    /**
+     * 更改保存公告白板
+     * @param map
+     * @return
+     */
+    public static String UpdateWhiteBoardNewspaper(Map map){
+        StringBuffer sb = new StringBuffer();
+        sb.append("{");
+        sb.append(" call IFSAPP.WHITE_BOARD_NEWSPAPER_API.Update_White_Board_Newspaper(");
+        sb.append("");
+        sb.append(MapUtil.stringValue(map,"LINE_NO"));
+        sb.append(",");
+        sb.append(MapUtil.stringValue(map,"SORT"));
+        sb.append(",'");
+        sb.append(MapUtil.stringValue(map,"UPDATE_PERSON"));
+        sb.append("','");
+        sb.append(MapUtil.stringValue(map,"NEWS_TITLE"));
+        sb.append("','");
+        sb.append(MapUtil.stringValue(map,"NEWS_CONTENT"));
+        sb.append("')");
+        sb.append("}");
+        return sb.toString();
+    }
+}

@@ -1,0 +1,18 @@
+<ion-view  class="flowCss">
+    <ion-nav-title>流程详情</ion-nav-title>
+    <ion-content class="padding">
+      <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+         <div class="everyFlow" ng-repeat="item in items">
+            <div class="allFlowCss">
+               <div>已审批人：<span class="flowCont">{{item.APP_SIGN==""?"无":item.APP_SIGN}}</span></div>
+               <div>审批时间：<span class="flowCont">{{item.APP_DATE | date : "MM月dd日HH时mm分"}}</span></div>
+             </div>
+               <div class="personsCss">可审批人：<span class="flowCont">{{item.PERSON_ID}}</span></div>
+              <div class="allFlowCss">
+               <div>审批状态：<span class="flowCont">{{item.APPROVAL_STATUS}}</span></div>
+                <div>审批顺序：<span class="flowCont flowNum">{{item.STEP_NO}}</span></div>
+             </div>
+              <div class="approvalCss">审批意见：<div class="flowCont">{{item.APP_INFO=="null"?"无":item.APP_INFO}}</div ></div>
+         </div>
+    </ion-content>
+</ion-view>

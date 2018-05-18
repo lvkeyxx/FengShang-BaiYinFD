@@ -1,0 +1,148 @@
+.myAttenceCSS {
+  @rem: 144rem;
+  background-color: #fff;
+  .popup-container .popup .popup-head {
+    display: block;
+  }
+  .selectMounth {
+    border-top: 10px solid #f4f4f4;
+    padding: 10px 5px 10px 5px;
+    border-bottom: 1px solid #f4f4f4;
+    text-align: center;
+    .myleftSelect{
+      background: url("../images/attence/leftIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .leftSelect{
+      margin-left: 70px;
+      background: url("../images/attence/leftIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .rightSelect{
+      background: url("../images/attence/rightIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+  }
+
+  .myAttencelist{
+    padding: 10px;
+    table{
+      width: 100%;
+    }
+    table th {
+      padding: 10px 5px;
+      background: #e1effc;
+      vertical-align: middle;
+      color: #3492e9;
+    }
+    table th:first-child {
+      border-top-left-radius: 15px;
+      border-right: 1px solid #d7e2ec;
+      width: 40px;
+    }
+    table th:nth-child(2) {
+      width: 150px;
+    }
+    table th:last-child {
+      border-top-right-radius: 15px;
+    }
+    table tr td:first-child {
+      border-left: 1px solid #e1effc;
+      border-right: 1px solid #e1effc;
+      color: #3492e9;
+    }
+    table tr td:last-child {
+      border-right: 1px solid #e1effc;
+    }
+    table td {
+      border: 1px solid #fefefe;
+      border-collapse: collapse;
+      padding: 10px 5px;
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: 1px solid #e1effc;
+      span{
+        display: block;
+        text-align: center;
+      }
+    }
+    .abnormalAttence{
+      color: #ff0000;
+    }
+  }
+  .tips{
+    padding: 10px 10px 0px 15px;
+    color: #ff0000;
+  }
+  //填写事由
+  .bg{
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    top:0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+  .fillCause{
+    position: fixed ! important;
+    z-index: 22;
+    margin: 0 auto;
+    background: #fff;
+    h3{
+      line-height: 35px;
+      height: 35px;
+      text-align: center;
+      border-bottom: 1px solid #3492e9;
+    }
+    textarea{
+      border:1px solid #f4f4f4;
+      margin: 0 auto;
+    }
+    .fillBtn{
+      text-align: center;
+      margin-top: 10px;
+
+    }
+  }
+  button{
+    height: 100/@rem;
+    line-height: 100/@rem;
+    outline: none;
+    border:none;
+    width: 48%;
+    display: inline-block;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .fillCancelBtn{
+    background: #999;
+  }
+  .fillEnsureBtn{
+    background: #3492e9;
+  }
+  .selectGlass{
+    display: inline-block;
+    float: right;
+    transform: translateY(-20/@rem);
+    input{
+      border:none;
+      width: 100px;
+      border: none;
+      background: url(../images/PM/selectDowm_blackicon.png) no-repeat right;
+      display: inline-block;
+    }
+  }
+}

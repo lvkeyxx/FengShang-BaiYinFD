@@ -1,0 +1,156 @@
+<ion-view class="OSIArearCSS">
+    <ion-nav-title>巡查区域</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="OSIArear">
+            <div class="OSITitle">王大钊  责任巡查区域(合格区域2个   不合格区域1个)</div>
+            <div class="OSIList">
+                <table>
+                    <tr>
+                        <th>序号</th>
+                        <th>责任区域</th>
+                        <th>巡查时间</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <span>1号锅炉</span>
+                            <span>不合格（4/5)</span>
+                        </td>
+                        <td>
+                            <div class="timeList">
+                                <ul>
+                                    <li>2015.09.24 14:24</li>
+                                    <li>2015.09.25 15:30</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <span>2号锅炉</span>
+                            <span>不合格（4/5)</span>
+                        </td>
+                        <td>
+                            <div class="timeList">
+                                <ul>
+                                    <li>2015.09.24 14:24</li>
+                                    <li>2015.09.25 15:30</li>
+                                    <li>2016.03.12 09:08</li>
+                                    <li>2016.12.18 08:56</li>
+                                    <li>2017.06.08 22:18</li>
+                                    <li>2017.09.14 21:00</li>
+                                    <li>2017.12.22 15:35</li>
+                                    <li>2018.01.03 06:48</li>
+                                    <li>2015.03.21 09:56</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <span>3号锅炉</span>
+                            <span>不合格（4/5)</span>
+                        </td>
+                        <td>
+                            <div class="timeList">
+                                <ul>
+                                    <li>2015.09.24 14:24</li>
+                                    <li>2015.09.25 15:30</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="fzrArear">
+                    <table>
+                        <tr>
+                            <th>序号</th>
+                            <th>非责任区域</th>
+                            <th>巡查时间</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <span>1号锅炉</span>
+                                <span>不合格（4/5)</span>
+                            </td>
+                            <td>
+                                <div class="timeList">
+                                    <ul>
+                                        <li>2015.09.24 14:24</li>
+                                        <li>2015.09.25 15:30</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                <span>2号锅炉</span>
+                                <span>不合格（4/5)</span>
+                            </td>
+                            <td>
+                                <div class="timeList">
+                                    <ul>
+                                        <li>2015.09.24 14:24</li>
+                                        <li>2015.09.25 15:30</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<ul class="list">
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOSIArear()">
+                        <div class="leftShow">
+                            <i class="yqdShow">已签到</i>
+                            <span class="name">无签到时间限制</span>
+                            <span class="glassname">#1号机组DCS区域</span>
+                        </div>
+                        &lt;!&ndash;<div class="rightShow">
+                            <i class="icon ion-chevron-right"></i>
+                        </div>&ndash;&gt;
+                    </li>
+
+                </ul>-->
+            </div>
+        </div>
+    </ion-content>
+    <!--<ion-footer-bar align-title="left" class="bar-assertive">
+        <div class="searchBlooth">
+            <button class="searchBloothBtn">搜索蓝牙</button>
+        </div>
+    </ion-footer-bar>-->
+</ion-view>

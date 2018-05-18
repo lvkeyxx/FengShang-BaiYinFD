@@ -1,0 +1,27 @@
+angular.module('BaiYin.facilityInfo', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('facilityInfo', {
+            url: '/facilityInfo',
+            controller: 'facilityInfoController',
+            templateUrl: 'facilityInfo/facilityInfo.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('facilityInfoController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.jbxxHide = true;
+            $scope.$on('$ionicView.afterEnter', function () {
+
+
+            });
+            $scope.toScanCode = function () {
+                $scope.jbxxHide = false;
+                $("#facilityInfoScanCodeID").val("52462584123644")
+            }
+        }
+    ])

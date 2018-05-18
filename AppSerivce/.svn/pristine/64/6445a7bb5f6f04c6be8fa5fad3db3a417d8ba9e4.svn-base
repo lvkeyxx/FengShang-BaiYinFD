@@ -1,0 +1,327 @@
+package com.service.ticket.sql;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+
+import com.cache.ConfigCache;
+import com.constant.Constant;
+import com.domain.UserProfile;
+import com.utility.IbatisDBUtil;
+import com.utility.JdbcDBUtil;
+import com.utility.baiyin.BaiyinUtils;
+
+/**
+ * @Author: MengQingNan
+ * @Description: ERP审批的相关SQL
+ * @Date: Created in 2018-04-16 10:30
+ **/
+public class ErpServiceSql{
+	/*查询SQL集合*/
+	@SuppressWarnings("serial")
+	private static final Map<String, String> Select = new HashMap<String, String>(){{
+		//待办数量
+		put("Todo", "SELECT count(1) as count FROM ifsapp.todo_view_list ");
+		//待办列表
+		put("TodoList", "SELECT lu_name, lu_description, msg_info, pre_app_sign, pre_note , note, key_ref, line_no, step_no, description , group_id, person_id, submit_user, objversion FROM ifsapp.todo_view_list ");
+		//业务类型
+		put("LuName", "SELECT t.logic_unit, t.description FROM ifsapp.auto_model_config t ORDER BY objversion DESC");
+		//审批步骤
+		put("Step", "SELECT t.lu_name, t.key_ref, t.line_no, t.step_no, t.description , t.app_sign, t.app_date, t.note, t.submit_user FROM ifsapp.APPROVAL_ROUTING_APP t ");
+		//审批步骤百分比
+		put("StepTotal", "SELECT count(approval_status) as app, count(lu_name) as total , count(key_ref) as key_refs FROM ifsapp.approval_routing_tab ");
+		//审批文档
+		put("Doc", "SELECT doc_class, doc_no, doc_sheet, doc_rev, lu_name , key_ref, location_name, path, file_name, user_file_name , file_type FROM ifsapp.app_doc_info ");
+		//获取主子表，主表字段名
+		put("MainField", "SELECT logic_unit, line_no, col_name, col_text, view_name, view_name AS main_view_name FROM ifsapp.auto_model_contrast_line_app WHERE 1 = 1 ");
+		//获取主子表，子表字段名
+		put("ChildField", "SELECT t.logic_unit, t.menu_no, t.serial_no, t.item_name AS col_name, t.title AS col_text, t.detail_view_name AS view_name, parent_view_name AS main_view_name FROM ifsapp.auto_model_detail_gen_app t WHERE EXISTS ( SELECT 1 FROM ifsapp.auto_model_detail tt WHERE tt.logic_unit = t.logic_unit AND tt.menu_no = t.menu_no AND tt.is_active_db = 'TRUE' ) ");
+		//主子表查询数据限定条件
+		put("MasterTableWhere", "SELECT ifsapp.AUTO_MODEL_CONFIG_API.Get_Key_Ref('main_view_name_') view_where FROM dual");
+		//查询是否可以审批
+		put("CanApprove", "SELECT ifsapp.approval_routing_api.Check_Can_Approve_Step('lu_name_', 'key_ref_', 'line_no_', 'step_no_', 'person_id_', 'group_id_') AS can_approve FROM dual");
+		//获取审批URL
+		put("ApproveUrl", "SELECT ifsapp.APPROVAL_LOG_API.Get_App_Url('lu_name_', 'key_ref_') url FROM dual");
+		//记录
+		put("Record", "SELECT rownum rn, lu_name, lu_description, msg_info, note, key_ref , line_no, step_no, description, group_id, person_id, app_sign, submit_user, objversion FROM ifsapp.todo_view_list_hist ");
+	}};
+	/*排序条件集合*/
+	@SuppressWarnings("serial")
+	private static final Map<String, String> GroupAndOrder = new HashMap<String, String>(){{
+		//待办
+		put("TodoList", " ORDER BY objversion DESC");
+		//审批步骤
+		put("Step", " ORDER BY line_no");
+		//审批文档
+		put("Doc", " ORDER BY doc_no");
+		//获取主子表，主表字段名
+		put("MainField", " ORDER BY col_order ASC, line_no ASC");
+		//获取主子表，子表字段名
+		put("ChildField", " ORDER BY serial_no");
+		//记录
+		put("Record", " ORDER BY objversion DESC");
+	}};
+	/*提交SQL集合*/
+	@SuppressWarnings("serial")
+	private static final Map<String, String> Function = new HashMap<String, String>(){{
+		//审批通过
+		put("StartApprove", "CALL ifsapp.approval_routing_api.Start_Approve('lu_name_', 'key_ref_', 'line_no_', 'step_no_', 'desc_', 'url_', 'APP')");
+		//审批拒绝
+		put("RefuseApprove", "CALL ifsapp.approval_routing_api.Refuse_Approve('lu_name_', 'key_ref_', 'line_no_', 'step_no_', 'desc_', 'url_', 'APP')");
+	}};
+	
+	/*
+	 * 根据查询条件生成where
+	 */
+	private static String getWhere(String select, String where, Map<String, Object> query){
+		for(String key : query.keySet()){
+			if(!"".equals(query.get(key))){
+				if(select.indexOf(key.toString()) != -1){
+					where += " AND " + key.toString() + " = '" + query.get(key).toString() + "'";
+				}else if("record_key".equals(key.toString())){
+					where += " AND msg_info LIKE '%" + query.get(key).toString() + "%'";
+				}else if("record_time".equals(key.toString())){
+					where += " AND objversion LIKE '" + query.get(key).toString().replaceAll("-", "") + "%'";
+				}
+			}
+		}
+		return where;
+	}
+	
+	/*
+	 * 参数替换
+	 */
+	private static String parametersReplace(String select, Map<String, Object> query){
+		for(Object key : query.keySet()){
+			select = select.replaceAll(key + "_", query.get(key).toString());
+		}
+		return select;
+	}
+	
+	/**
+	 * 获取ERP待办数量SQL
+	 */
+	public static String getTodoCountSql(){
+		return Select.get("Todo");
+	}
+	
+	/**
+	 * 获取ERP待办列表SQL
+	 */
+	public static String getTodoListSql(Map<String, Object> query){
+		return BaiyinUtils.genPageSql(Select.get("TodoList") + GroupAndOrder.get("TodoList"), 5, Integer.parseInt(query.get("pageIndex").toString()));
+	}
+
+	/**
+	 * 获取ERP业务类型列表SQL
+	 */
+	public static String getLuNameSql(){
+		return Select.get("LuName");
+	}
+	
+	/**
+	 * 获取ERP审批步骤SQL
+	 */
+	public static String getStepSql(Map<String, Object> query){
+		String	select = Select.get("Step"),
+					where = "WHERE 1 = 1",
+					groupAndOrder = GroupAndOrder.get("Step");
+		return select + getWhere(select, where, query) + groupAndOrder;
+	}
+	
+	/**
+	 * 获取ERP审批总步骤SQL
+	 */
+	public static String getStepTotal(Map<String, Object> query){
+		String	select = Select.get("StepTotal"),
+					where = "WHERE 1 = 1";
+		return select + getWhere(select, where, query);
+	}
+	
+	/**
+	 * 获取ERP审批文档SQL
+	 */
+	public static String getDocSql(Map<String, Object> query){
+		String	select = Select.get("Doc"),
+				where = "WHERE 1 = 1",
+				groupAndOrder = GroupAndOrder.get("Doc");
+	return select + getWhere(select, where, query) + groupAndOrder;
+	}
+	
+	/**
+	 * 获取ERP审批主子表主表字段名SQL
+	 */
+	private static String getMainFieldSql(Map<String, Object> query){
+		String	select = Select.get("MainField"),
+					groupAndOrder = GroupAndOrder.get("MainField");
+		return select + getWhere(select, "", query) + groupAndOrder;
+	}
+	
+	/**
+	 * 获取ERP审批主子表子表字段名SQL
+	 */
+	private static String getChildFieldSql(Map<String, Object> query){
+		String	select = Select.get("ChildField"),
+				groupAndOrder = GroupAndOrder.get("ChildField");
+		return select + getWhere(select, "", query) + groupAndOrder;
+	}
+	/**
+	 * 	主子表查询字段格式化
+	 */
+	@SuppressWarnings("unchecked")
+	private static List<Map<String, String>> getSqlFormat(Map<String, Object> query, String sql){
+		List<Map<String, String>> sqlFormat = new ArrayList<Map<String, String>>();
+		List<Map<String, Object>> list = new IbatisDBUtil().executeSql(sql);
+		
+		for(int i = 0, length = list.size(); i < length; i++){
+			Map<String, Object> item = list.get(i);
+			Map<String, String> field = new HashMap<String, String>();
+			
+			field.put("field", item.get("COL_NAME").toString());
+			field.put("fieldName", item.get("COL_TEXT").toString());
+			field.put("viewName", item.get("VIEW_NAME").toString());
+			field.put("mainViewName", item.get("MAIN_VIEW_NAME").toString());
+			
+			sqlFormat.add(field);
+		}
+		
+		return sqlFormat;
+	}
+	
+	/**
+	 * 生成主子表查询数据查询SQL
+	 */
+	@SuppressWarnings("unchecked")
+	private static String listMapToSql(List<Map<String, String>> getSqlFormat, Map<String, Object> query, String orderBy){
+		String	sql = "SELECT ",
+					viewName = "",
+					mainViewName = "";
+	
+		for(int i = 0, length = getSqlFormat.size(); i < length; i++){
+			Map<String, String> field = getSqlFormat.get(i);
+			if(i == 0) {
+				viewName += field.get("viewName");
+				mainViewName += field.get("mainViewName");
+			}
+			sql += field.get("field") + " AS " + field.get("fieldName") + ", ";
+		}
+		
+		return sql.substring(0, sql.length() - 2)
+				+ " FROM ifsapp." + viewName
+				+ " WHERE "
+				+ ((Map<String, Object>)new IbatisDBUtil().executeSql(Select.get("MasterTableWhere").replace("main_view_name_", mainViewName)).get(0)).get("VIEW_WHERE").toString() + " = '" + query.get("key_ref").toString() + "' "
+				+ orderBy;
+	}
+	
+	/**
+	 * 获取ERP审批主子表主表数据
+	 */
+	@SuppressWarnings("unchecked")
+	public static JSONArray getMainField(Map<String, Object> query) throws SQLException{
+		JSONArray data = new JSONArray();
+		JdbcDBUtil jdbc = new JdbcDBUtil();
+		UserProfile uProfile = ConfigCache.getInstance().getUserProfile(query.get(Constant.USER_ID).toString());
+		List<Map<String, String>> SqlFormat = getSqlFormat(query, ErpServiceSql.getMainFieldSql(query));
+		
+		List<?> tuples = jdbc.query(uProfile.getUserId(), uProfile.getPassWord(), listMapToSql(SqlFormat, query, ""));
+		for(int i = 0, length = tuples.size(); i < length; i++){
+			Map<String, Object> tuple = (Map<String, Object>) tuples.get(i);
+			for(int s = 0, sLength = SqlFormat.size(); s < sLength; s++){
+				Map<String, String> field = SqlFormat.get(s);
+				if(tuple.get(field.get("fieldName")) != null) {
+					field.put("fieldText", tuple.get(field.get("fieldName")).toString());
+				}else {
+					field.put("fieldText", "");
+				}
+				data.put(field);
+			}
+		}
+		
+		return data;
+	}
+	
+	/**
+	 * 获取ERP审批主子表子表数据
+	 */
+	@SuppressWarnings("unchecked")
+	public static JSONArray getChildField(Map<String, Object> query) throws SQLException{
+		JSONArray data = new JSONArray();
+		JdbcDBUtil jdbc = new JdbcDBUtil();
+		UserProfile uProfile = ConfigCache.getInstance().getUserProfile(query.get(Constant.USER_ID).toString());
+		List<Map<String, String>> SqlFormat = getSqlFormat(query, ErpServiceSql.getChildFieldSql(query));
+		if(SqlFormat.size() == 0){
+			return data;
+		}
+		
+		List<?> tuples = jdbc.query(uProfile.getUserId(), uProfile.getPassWord(), listMapToSql(SqlFormat, query, "ORDER BY line_no"));
+		for(int i = 0, length = tuples.size(); i < length; i++){
+			List<Map<String, String>> item = new ArrayList<Map<String, String>>();
+			Map<String, Object> tuple = (Map<String, Object>) tuples.get(i);
+			for(int s = 0, sLength = SqlFormat.size(); s < sLength; s++){
+				Map<String, String> field = SqlFormat.get(s);
+				if(tuple.get(field.get("fieldName")) != null) {
+					field.put("fieldText", tuple.get(field.get("fieldName")).toString());
+				}else {
+					field.put("fieldText", "");
+				}
+				item.add(field);
+			}
+			data.put(item);
+		}
+		
+		return data;
+	}
+	
+	/**
+	 * 查询是否可以审批
+	 */
+	@SuppressWarnings("unchecked")
+	public static boolean getCanApprove(Map<String, Object> query) throws SQLException{
+		JdbcDBUtil jdbc = new JdbcDBUtil();
+		UserProfile uProfile = ConfigCache.getInstance().getUserProfile(query.get(Constant.USER_ID).toString());
+		
+		String sql = parametersReplace(Select.get("CanApprove"), query);
+		String CanApprove = ((Map<String, Object>)((List<?>)jdbc.query(uProfile.getUserId(), uProfile.getPassWord(), sql)).get(0)).get("CAN_APPROVE").toString();
+		
+		return ("TRUE".equals(CanApprove) ? true : false);
+	}
+	
+	/**
+	 * 获取审批URL
+	 */
+	@SuppressWarnings("unchecked")
+	private static String getApproveUrl(Map<String, Object> query) throws SQLException{
+		String sql = parametersReplace(Select.get("ApproveUrl"), query);
+		return ((Map<String, Object>)new IbatisDBUtil().executeSql(sql).get(0)).get("URL").toString();
+	}
+	
+	/**
+	 * 获取审批同意SQL
+	 */
+	public static String getStartApproveSql(Map<String, Object> query) throws SQLException{
+		query.put("url", getApproveUrl(query));
+		return parametersReplace(Function.get("StartApprove"), query);
+	}
+	
+	/**
+	 * 获取审批拒绝SQL
+	 */
+	public static String getRefuseApproveSql(Map<String, Object> query) throws SQLException{
+		query.put("url", getApproveUrl(query));
+		return parametersReplace(Function.get("RefuseApprove"), query);
+	}
+	
+	/**
+	 * 获取ERP记录SQL
+	 */
+	public static String getRecordListSql(Map<String, Object> query){
+		String	select = Select.get("Record"),
+					where = "WHERE 1 = 1",
+					groupAndOrder = GroupAndOrder.get("Record");
+		return BaiyinUtils.genPageSql(select + getWhere(select, where, query) + groupAndOrder, 5, Integer.parseInt(query.get("pageIndex").toString()));
+	}
+}

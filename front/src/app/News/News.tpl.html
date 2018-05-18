@@ -1,0 +1,13 @@
+<ion-view class="NewsCSS">
+    <ion-nav-title>{{title}}</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="newsList">
+            <ul ng-repeat="cont in newslist track by $index" ng-click="toDetail(cont,$index)">
+                <li class="msg_colo" ng-model="gsxw" ng-style="newslistLi">{{cont.FILETITLE}}</li>
+                <li class="date_m" ng-model="gsxw"><i class="date_m_icon"></i>{{cont.PUBDATE | date : "MM月dd日" }}</li>
+            </ul>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

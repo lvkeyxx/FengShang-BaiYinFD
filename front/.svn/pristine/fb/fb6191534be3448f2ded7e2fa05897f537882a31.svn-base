@@ -1,0 +1,42 @@
+<ion-view class="OffLineCSS">
+    <ion-nav-title>离线巡查</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="osiList" ng-hide="osiListHide">
+            <div class="query">
+                <div class="scanQRcode">
+                    <input type="text" ng-hide="inputHide" placeholder="请扫描设备二维码" class="scanCode" ng-click="toScanCode()"
+                            readonly>
+                </div>
+                <div class="scanSearch" ng-hide="searchsBlueHide">
+                    <button class="searchBlootBtn" ng-click="searchsBlueTooth()">搜索</button>
+                </div>
+            </div>
+            <ion-list>
+                <ion-item ng-repeat="item in patrolRoteListData" item="item" class="item-remove-animate" ng-click="toOsiLine(item)">
+                    <i ng-style="identify" style="background: #83ecad">已上传</i>
+                    {{item.DESCRIPTION}}({{item.INSPECT_TYPE}})
+                    <span class="item-note ng-binding">{{notUp}}/{{item.INSPECTED}}/{{item.INSPECT}}</span>
+                    <ion-option-button class="button-assertive"
+                                       ng-click="dealOffLine(item)">
+                        点击删除
+                    </ion-option-button>
+                </ion-item>
+            </ion-list>
+        </div>
+        <div class="position" ng-hide="positionHide">
+            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}
+            <span style="display: block;">
+                描述：{{patrolHomeData.DESCRIPTION}}
+            </span>
+            <span style="display: block;">
+                设备名称：{{patrolHomeData.MCH_NAME}}
+            </span>
+            <button class="qdBtn" ng-click="patrolSign()">签到</button>
+            <button class="qdBtn" ng-click="goBack()">返回</button>
+        </div>
+        <div class="position" ng-hide="uanddHide">
+            <button class="qdBtn" ng-click="OffLineDownload()">下载</button>
+            <button class="qdBtn" ng-click="OffLineUpload()">上传</button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,113 @@
+<ion-view class="facilityInfoCSS">
+    <ion-nav-title>设备台账</ion-nav-title>
+    <!--<div class="loadLists" id="scanFaclidyHide">
+        <div class="facilityList">
+            <div class="scanQRcode">
+                <input type="text" placeholder="请扫描设备二维码" class="scanCode"
+                       ng-click="toScanCode()" readonly>
+            </div>
+        </div>
+    </div>-->
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab" id="faciltyHide" ng-hide="faciltyHide">
+        <ion-tab title="设备信息" ng-click="goObtain()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="loadList">
+                    <div class="facilityList">
+                        <div class="scanQRcodeNumber">
+                            设备编码 : <span style="margin-left:10px"></span> {{equipmentDetail.MCH_CODE}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            所在域 : <span style="margin-left:10px"></span>{{equipmentDetail.CONTRACT_NAME}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            设备名称 : <span style="margin-left:10px"></span>{{equipmentDetail.MCH_NAME}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            巡检信息 : <span style="margin-left:10px"></span>{{equipmentDetail.EQUIPMENT_CHECK_INFO}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            工序状态&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.OPERATIONAL_STATUS}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            规格型号&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.TYPE}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            序列号&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.SERIAL_NO}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            制造商名称&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.MANUFACTURER_NAME}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            维护信息&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.EQUIPMENT_INFOR}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            设备概况&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.EQUIPMENT_GENERAL}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            常见问题及处理方法&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.PROCESS_MODE}}
+                        </div>
+                        <div class="scanQRcodeNumber">
+                            危险因素及预防&nbsp;:&nbsp;<span style="margin-left:10px"></span>{{equipmentDetail.RISK_FACTORSS_PREVEN}}
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="缺陷履历" ng-click="goDefect()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="loadList">
+                    <div class="facilityList">
+                        <div class="list" ng-repeat="DefectList in equipmentDefectList">
+                            <a class="item" href="#" ng-click="toDefectDetail(DefectList)">
+                                <div class="titleDes">设备编码 : {{DefectList.FACT_MCH_CODE}}</div>
+                                <div class="titleDes">设备名称 : {{DefectList.FACT_MCH_NAME}}</div>
+                                <div class="titleDes">缺陷编号 : {{DefectList.FAULT_REP_ID}}</div>
+                                <div class="titleDes">缺陷描述 : {{DefectList.ERR_DESCR_LO}}</div>
+                                <div class="titleDes">缺陷状态 : {{DefectList.FAULT_STATE}}</div>
+                                <div class="titleDes">缺陷日期 : {{DefectList.REG_DATE}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="工单履历" ng-click="goWork()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="loadList">
+                    <div class="facilityList">
+                        <div class="list" ng-repeat="WorkList in equipmentWorkList">
+                            <a class="item" href="#" ng-click="">
+                                <div class="titleDes">设备编码 : {{WorkList.FACT_MCH_CODE}}</div>
+                                <div class="titleDes">设备名称 : {{WorkList.FACT_MCH_NAME}}</div>
+                                <div class="titleDes">工单编号 : {{WorkList.WO_NO}}</div>
+                                <div class="titleDes">工单类型 : {{WorkList.WORK_ORDER_TYPE}}</div>
+                                <div class="titleDes">工单内容 : {{WorkList.ERR_DESCR}}</div>
+                                <div class="titleDes">工作状态 : {{WorkList.WO_STATE}}</div>
+                                <div class="titleDes">工作负责人姓名 : {{WorkList.WORK_MASTER_NAME}}</div>
+                                <div class="titleDes">工作票签发人姓名 : {{WorkList.WORK_LEADER_NAME}}</div>
+                                <div class="titleDes">工作详情 : {{WorkList.PERFORMED_ACTION_LO}}</div>
+                                <div class="titleDes">工作类型 : {{WorkList.WORK_TYPE}}</div>
+                                <div class="titleDes">计划结束时间 : {{WorkList.PLAN_F_DATE}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="巡查记录" ng-click="goInspection()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="loadList">
+                    <div class="facilityList">
+                        <div class="list">
+                            <div class="card" ng-repeat="PatrolList in equipmentPatrolList" ng-click="goInspectionRecord(PatrolList)">
+                                <span>{{PatrolList.PERSON_NAME}}</span>
+                                <span >{{PatrolList.PLAN_INSPECTED}}/{{PatrolList.PLAN_INSPECT}}/{{PatrolList.OUT_PLAN_INSPECTED}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

@@ -1,0 +1,23 @@
+angular.module('BaiYin.erp', [
+
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('erp', {
+            url: '/erp',
+            controller: 'erpController',
+            templateUrl: 'erp/erp.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('erpController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup,  ionicDatePicker) {
+            $timeout(function () {
+                $scope.stooges = [{name: 'Moe'}, {name: 'Larry'}, {name: 'Curly'}];
+            }, 2000);
+            $scope
+
+        }
+    ])

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+	            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+	            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+    <!-- 加入Aspectj配置 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean id="logAspect" class="com.log.LogAspect"/>
+
+    <bean
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>${jdbc.driver}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+
+        <!-- <property name="minPoolSize">
+          <value>${jdbc.minPoolSize}</value>
+        </property>
+        <property name="acquireIncrement">
+          <value>${jdbc.acquireIncrement}</value>
+        </property>
+        <property name="maxPoolSize">
+          <value>${jdbc.maxPoolSize}</value>
+        </property>
+        <property name="maxIdleTime">
+          <value>${jdbc.maxIdleTime}</value>
+        </property>
+        <property name="maxStatements">
+          <value>${jdbc.maxStatements}</value>
+        </property>
+        <property name="idleConnectionTestPeriod">
+          <value>${jdbc.idleConnectionTestPeriod}</value>
+        </property> -->
+    </bean>
+
+    <!-- ibatis sqlMapClient config -->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>classpath:sql-map-config.xml</value>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <!-- Transactions -->
+    <bean id="TransactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <bean id="CommonDAO" class="com.dao.CommonDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="CommonDomain">
+        </property>
+    </bean>
+    <bean id="UserDAO" class="com.dao.UserDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="UserDomain">
+        </property>
+    </bean>
+
+    <bean id="LogDAO" class="com.dao.LogDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="LogDomain">
+        </property>
+    </bean>
+
+
+    <bean id="CommonService" class="com.service.CommonService">
+        <property name="commonDAO">
+            <ref bean="CommonDAO"/>
+        </property>
+    </bean>
+    <bean id="UserService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref local="TransactionManager"></ref>
+        </property>
+        <property name="target">
+            <bean class="com.service.UserService">
+                <property name="userDAO">
+                    <ref bean="UserDAO"/>
+                </property>
+            </bean>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="getSerialNo*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- sdicIndexDataDAO-->
+    <bean id="sdicIndexDataDAO" class="com.dao.SdicIndexDataDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="SdicIndexData">
+        </property>
+    </bean>
+    <bean id="sdicIndexDimensionDAO" class="com.dao.SdicIndexDimensionDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="SdicIndexDimension">
+        </property>
+    </bean>
+    <bean id="sdicSisDataDAO" class="com.dao.SdicSisDataDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="SdicSisData">
+        </property>
+    </bean>
+    <bean id="sdicSisIndexMappingDAO" class="com.dao.SdicSisIndexMappingDAOImpl">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient"/>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="daoObjectName" value="SdicSisIndexMapping">
+        </property>
+    </bean>
+    <bean id="HiddenPerilsService" class="com.service.HiddenPerilsService"></bean>
+    <bean id="SuggestionService" class="com.service.SuggestionService"></bean>
+    <bean id="SysManageService" class="com.service.SysManageService"></bean>
+    <bean id="ApproveService" class="com.service.ApproveService"></bean>
+    <bean id="CMSService" class="com.service.CMSService"></bean>
+    <bean id="TargetService" class="com.service.target.TargetService"></bean>
+    <bean id="WeatherService" class="com.service.target.WeatherService"></bean>
+    <bean id="JournalService" class="com.service.target.JournalService"></bean>
+    <bean id="HiddenDangerService" class="com.service.target.HiddenDangerService">
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+    </bean>
+    <bean id="DefectManageService" class="com.service.target.DefectManageService">
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+    </bean>
+    <bean id="TaskService" class="com.service.indexPage.TaskService"></bean>
+    <bean id="ErpService" class="com.service.ticket.ErpService"></bean>
+</beans>

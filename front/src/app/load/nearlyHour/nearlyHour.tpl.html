@@ -1,0 +1,18 @@
+<ion-view class="nearlyHourCSS">
+    <ion-nav-title>最近一小时数据({{name}})</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="nearHourList">
+            <table>
+                <tr>
+                    <th>时间</th>
+                    <th>实时负荷(MW)</th>
+                </tr>
+                <tr ng-repeat="power in hList track by $index">
+                    <td>{{power.OCCUR_TIME}}</td>
+                    <td>{{((power[type+'_POWER'] - 0) < 0 ? 0 : ((power[type+'_POWER'] - 0) > 999) ? 999 :power[type+'_POWER'])|number:2}}</td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+
+</ion-view>

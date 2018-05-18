@@ -1,0 +1,36 @@
+<ion-view class="editingUserInfoCSS">
+    <ion-nav-title>修改个人资料</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <form class="editContent">
+            <div class="items">
+                <span class="head">真实姓名：</span>
+                <input type="text" class="items" placeholder="请输入您的真实姓名" value="{{userInfo.realname}}" ng-model="userInfo.realname">
+            </div>
+            <div class="brithday" ng-click="openBrithday()">
+                <span>出生年月：</span>
+                <span class="items">{{userInfo.brithday}}</span>
+            </div>
+            <div class="hiredate" ng-click="openHiredate()">
+                <span>入职时间：</span>
+                <span class="items">{{userInfo.hiredate}}</span>
+            </div>
+            <div class="items">
+                <span class="head">邮箱：</span>
+                <input type="email" class="items" placeholder="请输入您的邮箱" value="{{userInfo.email}}" ng-model="userInfo.email">
+            </div>
+            <div class="items">
+                <span class="head">手机号：</span>
+                <input type="tel" class="items" placeholder="请输入您的邮箱" value="{{userInfo.phone}}" ng-model="userInfo.phone">
+            </div>
+            <div class="items">
+                <span class="head">身份证号：</span>
+                <input type="text" class="items" placeholder="请输入您的身份证号" value="{{userInfo.idcard}}" ng-model="userInfo.idcard">
+            </div>
+            <div class="items">
+                <span class="head">住址：</span>
+                <input type="text" class="items" placeholder="请输入您的住址" value="{{userInfo.address}}" ng-model="userInfo.address">
+            </div>
+            <div class="button appSbmtBtn" ng-click="updateUserInfor();">完成</div>
+        </form>
+    </ion-content>
+</ion-view>

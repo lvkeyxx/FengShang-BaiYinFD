@@ -1,0 +1,58 @@
+<ion-view class="wdkDetailCSS">
+    <ion-nav-title>未打卡详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="content">
+            <h3><span>2018年3月</span>李孝利<span>未打卡</span><span>共22次</span></h3>
+            <ul class="list">
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-05 09:00</span>
+                       <!-- <span class="glassname">国投白银风电</span>-->
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">上班未打卡</span>
+                        <!--<i class="icon ion-chevron-right"></i>-->
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-05 18:00</span>
+                        <!--<span class="glassname">国投白银风电</span>-->
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">下班未打卡</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-08 18:00</span>
+                        <!--<span class="glassname">国投白银风电</span>-->
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">下班未打卡</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-07 09:00</span>
+                        <!--<span class="glassname">国投白银风电</span>-->
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">上班未打卡</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-07 18:00</span>
+                        <!--<span class="glassname">国投白银风电</span>-->
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">下班未打卡</span>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </ion-content>
+
+</ion-view>

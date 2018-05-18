@@ -1,0 +1,592 @@
+package com.service.inspection;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.alibaba.druid.support.json.JSONUtils;
+import com.google.gson.JsonParser;
+import com.utility.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.cache.ConfigCache;
+import com.constant.Constant;
+import com.domain.UserProfile;
+import com.exception.ServiceException;
+import com.service.AJsonService;
+import com.service.IJsonService;
+import com.service.inspection.sql.InspectionServiceSQL;
+import com.utility.baiyin.BaiyinUtils;
+
+/**
+ * @Author:wangyg
+ * @Description:现场巡查服务实现
+ * @Date:Created in 2018-03-22 9:35
+ * @Modied By:
+ **/
+public class InspectionService extends AJsonService implements IJsonService {
+	
+	
+	static SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    /**
+     * 通过扫描二维码里面的设备编号查询设备名称及基本信息
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String formCBluetoothEquip(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+//            UserProfile userProfile = ConfigCache.getInstance().getUserProfile();
+//            map.put("CONTRACT",userProfile.getOrgInfo().get(Constant.CONTRACT)+"");
+            String sql = InspectionServiceSQL.cBluetoothEquip(map);
+            logger.info("formCBluetoothEquip.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+            	String outSql = InspectionServiceSQL.outBluetoothEquip(map);
+                logger.info("formCBluetoothEquip.outSql==" + outSql);
+                List<Map> outList = new IbatisDBUtil().executeSql(outSql);
+                if(ListUtil.isEmpty(outList)) {
+                	code = "1";
+                	msg = "未查询到设备数据！";
+                } else {
+                	Map outdetail = outList.get(0);
+                	if(!MapUtil.stringValue(outdetail,"IS_MATCH").equals("TRUE")){
+                        map.put("BLUETOOTH_SERIAL_NO", outdetail.get("BLUETOOTH_SERIAL_NO") + "");
+                        sql = InspectionServiceSQL.getPlanId(map);
+                        logger.info("formCBluetoothEquip.getPlanId.sql==" + sql);
+                        List<Map> list = new IbatisDBUtil().executeSql(sql);
+                        String plan_id = "";
+                        if (ListUtil.isNotEmpty(list)) {
+                            plan_id = list.get(0).get("PLAN_ID") + "";
+                            logger.info("plan_id==" + plan_id);
+                        }
+//                        outdetail.put("PLAN_ID", plan_id);
+                        if (MapUtil.valueIsNotNull(outdetail, "SN_CODE")) {
+                        	outdetail.put("SN_ADDRESS", BaiyinUtils.getSnHasColon(outdetail.get("SN_CODE") + ""));
+                        }
+                    }
+                	json.put("detail", outdetail);
+                }
+            } else {
+                Map detail = dList.get(0);
+                if(!MapUtil.stringValue(detail,"IS_MATCH").equals("TRUE")){
+                    map.put("BLUETOOTH_SERIAL_NO", detail.get("BLUETOOTH_SERIAL_NO") + "");
+                    sql = InspectionServiceSQL.getPlanId(map);
+                    logger.info("formCBluetoothEquip.getPlanId.sql==" + sql);
+                    List<Map> list = new IbatisDBUtil().executeSql(sql);
+                    String plan_id = "";
+                    if (ListUtil.isNotEmpty(list)) {
+                        plan_id = list.get(0).get("PLAN_ID") + "";
+                        logger.info("plan_id==" + plan_id);
+                    }
+//                    detail.put("PLAN_ID", plan_id);
+                    if (MapUtil.valueIsNotNull(detail, "SN_CODE")) {
+                        detail.put("SN_ADDRESS", BaiyinUtils.getSnHasColon(detail.get("SN_CODE") + ""));
+                    }
+                }
+                json.put("detail", detail);
+            }
+
+        } catch (Throwable e) {
+            logger.error("1502", e);
+            e.printStackTrace();
+            throw new ServiceException("1502", "获取蓝牙设备数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+    /**
+     * 通过搜索蓝牙查询设备名称及基本信息
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String formSBluetoothEquip(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+//            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+//            map.put("CONTRACT",userProfile.getOrgInfo().get(Constant.CONTRACT)+"");
+            String sql = InspectionServiceSQL.sBluetoothEquip(map);
+            logger.info("formSBluetoothEquip.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "未查询到蓝牙设备数据！";
+            } else {
+                json.put("dList",dList);
+            }
+        } catch (Throwable e) {
+            logger.error("1502", e);
+            e.printStackTrace();
+            throw new ServiceException("1502", "获取蓝牙设备数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 查询路线
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String listCInspectRoute(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+//            map.put("CONTRACT",userProfile.getOrgInfo().get(Constant.CONTRACT)+"");
+            String sql = InspectionServiceSQL.cInspectRoute(userProfile.getUserId());
+            logger.info("listCInspectRoute.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "未查询到巡查路线！";
+            }
+            json.put("dList", dList);
+        } catch (Throwable e) {
+            logger.error("1503", e);
+            e.printStackTrace();
+            throw new ServiceException("1503", "获取巡查路线数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 根据时间和人员代码查询历史记录
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String listCInspectRouteHistory(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+//            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+//            map.put("CONTRACT",userProfile.getOrgInfo().get(Constant.CONTRACT)+"");
+            String sql = InspectionServiceSQL.cInspectRouteHistory(map);
+            logger.info("下面有一条SQL即将打印，请让一下------");
+            logger.info("listCInspectRouteHistory.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "未查询到巡查路线！";
+            }
+            json.put("dList", dList);
+        } catch (Throwable e) {
+            logger.error("1504", e);
+            e.printStackTrace();
+            throw new ServiceException("1504", "获取巡查路线数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 通过路线主键获取路线详情
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String cInspectRouteDetailH(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+//            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+//            map.put("CONTRACT",userProfile.getOrgInfo().get(Constant.CONTRACT)+"");
+            String sql = InspectionServiceSQL.cInspectRouteDetailH(map);
+            logger.info("下面有一条SQL即将打印，请让一下------");
+            logger.info("listCInspectRouteDetail.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "未查询到巡查路线明细！";
+            }
+            json.put("dList", dList);
+        } catch (Throwable e) {
+            logger.error("1505", e);
+            e.printStackTrace();
+            throw new ServiceException("1505", "获取巡查路线明细数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 下载巡查数据
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String downLoadXcData(Map map) throws ServiceException{
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+            String sql = InspectionServiceSQL.cInspectRoute(userProfile.getUserId());
+            List<Map> deList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(deList)) {
+                code = "1";
+                msg = "未查询到数据！";
+            }
+            List<Map> newList = new ArrayList<Map>();
+            for(Map tempMap : deList) {
+                map.put("TEMP_ID", tempMap.get("TEMP_ID"));
+                sql = InspectionServiceSQL.downLoadXcDataSql(map);
+                List<Map> dList = new IbatisDBUtil().executeSql(sql);
+                tempMap.put("childList", dList);
+                newList.add(tempMap);
+            }
+
+//            json.put("dList", dList);
+            json.put("deList", newList);
+        }catch (Throwable e){
+            logger.error("1505", e);
+            e.printStackTrace();
+            throw new ServiceException("1505", "获取巡查路线明细数据时出错");
+        }try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+    /**
+     * 上传巡查数据
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String upLoadXcData(Map map) throws ServiceException{
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            List<Map> mapList = new ArrayList<Map>();
+            String arrayStr = MapUtil.stringValue(map,"OffLineUpList");
+            JSONArray jsonArray= new JSONArray(arrayStr);
+
+            for(int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonString  = jsonArray.getJSONObject(i);
+                map.put("BLUETOOTH_SERIAL_NO",jsonString.get("BLUETOOTH_SERIAL_NO"));
+                map.put("LOCATION_DESCRIPTION",jsonString.get("LOCATION_DESCRIPTION"));
+                map.put("IS_MATCH",jsonString.get("IS_MATCH"));
+                map.put("EQUIP_NO",jsonString.get("EQUIP_NO"));
+                map.put("RECORD_TIME",jsonString.getString("RECORD_TIME"));
+                map.put("PLAN_ID",jsonString.get("PLAN_ID"));
+                map.put("CONTRACT",jsonString.get("CONTRACT"));
+                String sql = InspectionServiceSQL.upLoadXcDataSql(map);
+                logger.info("sql============="+sql);
+                new IbatisDBUtil().executeSql(sql);
+            }
+        }catch (Throwable e){
+            logger.error("1505", e);
+            e.printStackTrace();
+            throw new ServiceException("1505", "上传巡查记录时出错");
+        }try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+    /**
+     * 首页数据
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String cInspectRouteDetailPage(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+//            UserProfile userProfile = ConfigCache.getInstance().getUserProfile(MapUtil.stringValue(map, Constant.USER_ID));
+//            map.put("CONTRACT",userProfile.getOrgInfo().get(Constant.CONTRACT)+"");
+            String sql = InspectionServiceSQL.cInspectRouteDetailPage(map);
+            logger.info("下面有一条SQL即将打印，请让一下------");
+            logger.info("listCInspectRouteDetail.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "未查询到巡查路线明细！";
+            }
+            json.put("dList", dList);
+        } catch (Throwable e) {
+            logger.error("1505", e);
+            e.printStackTrace();
+            throw new ServiceException("1505", "获取巡查路线明细数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 签到,如果PLAN_ID为空，则视为首页巡查
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @SuppressWarnings({ "deprecation", "unchecked" })
+	public String inspectRecord(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String plan_id = "";
+//            if (MapUtil.valueIsNull(map, "PLAN_ID")) {
+//                //获取plan_id
+//                String sql = InspectionServiceSQL.getPlanId(map);
+//                List<Map> mList = new IbatisDBUtil().executeSql(sql);
+//                if (ListUtil.isNotEmpty(mList)) {
+//                    plan_id = mList.get(0).get("PLAN_ID") + "";
+//                }
+//            } else {
+                plan_id = MapUtil.stringValue(map, "PLAN_ID");
+//            }
+            map.put("REMARKS", "");
+            /* 获取巡查记录 天巡查计划签到时间间隔不能在俩小时内， 周天计划不能在一天内 */
+            // 获取插入记录的模板的所有记录
+            String planSql = InspectionServiceSQL.selectUnRecordPlan(map);
+            List<Map> templist = new IbatisDBUtil().executeSql(planSql);
+            if(!templist.isEmpty()) {
+            	StringBuffer sb= new StringBuffer();
+            	String DESCRIPTION = templist.get(0).get("DESCRIPTION").toString();
+            	sb.append("'" + templist.get(0).get("PLAN_ID").toString() + "'");
+            	for(int i = 1; i <= templist.size() - 1; i ++) {
+            		sb.append(", '" + templist.get(i).get("PLAN_ID").toString() + "'");
+            	}
+            	// 查看是否在巡查记录有签到，然后判断时间
+            	String recorddSql = InspectionServiceSQL.selectRecordPlan(map, sb.toString());
+            	List<Map> recordlist = new IbatisDBUtil().executeSql(recorddSql);
+            	Date date = new Date();
+            	Long zeroHour = (Long) (date.getTime() / 1000) / 86400 * 86400 - 3600 * 8 ;
+            	for(Map recordMap : recordlist) {
+            		String RECORD_TIME = recordMap.get("RECORD_TIME").toString();
+            		Date date1 = DateUtil.parse2Date(RECORD_TIME, "yyyy-MM-dd HH:mm");
+            		long interval =  (Long) (date.getTime() - date1.getTime()) / 1000;
+            		if(DESCRIPTION.contains("日") && interval < 3600 * 2) {
+            			throw new ServiceException("8080", "执行日巡查计划时间间隔不能小于两小时");
+            		} else if ((DESCRIPTION.contains("周") || DESCRIPTION.contains("月") 
+            				|| DESCRIPTION.contains("季")) 
+            				&& zeroHour <= (date.getTime() / 1000) 
+            				&& zeroHour <= (date1.getTime() / 1000) 
+            				&& interval <= 3600 * 24) {
+            			throw new ServiceException("8888", "执行周或者天巡查计划时间间隔不能小于一天");
+            		}
+            	}
+            }
+        	String sql = InspectionServiceSQL.inspectRecord(map, plan_id);
+        	logger.info("下面有一条SQL即将打印，请让一下------");
+        	logger.info("inspectRecord.sql==" + sql);
+        	new IbatisDBUtil().executeSql(sql);
+        	json.put("RECORD_TIME", DateUtil.getNow("yyyy-MM-dd HH:mm:ss"));
+        } catch (ServiceException e) {
+            logger.error("8888", e);
+            e.printStackTrace();
+            throw new ServiceException(e.getCode(), e.getMsg());
+        }catch (Throwable e) {
+            logger.error("1506", e);
+            e.printStackTrace();
+            throw new ServiceException("1506", "执行打卡时数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 分人显示列表
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String inspectStatisticsPerson(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try {
+            String sql = InspectionServiceSQL.inspectStatisticsPerson(map);
+            logger.info("inspectStatisticsPerson.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "没有查询到结果！";
+            }
+            json.put("dList", dList);
+        } catch (Throwable e) {
+            logger.error("1507", e);
+            e.printStackTrace();
+            throw new ServiceException("1507", "获取巡查统计数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 显示设备信息
+     *
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String inspectStatisticsRoute(Map map) throws ServiceException {
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        List<Map> iList = new ArrayList<Map>();
+        List<Map> oList = new ArrayList<Map>();
+        try {
+            String sql = InspectionServiceSQL.inspectStatisticsRoute(map);
+            logger.info("inspectStatisticsRoute.sql==" + sql);
+            List<Map> dList = new IbatisDBUtil().executeSql(sql);
+            if (ListUtil.isEmpty(dList)) {
+                code = "1";
+                msg = "没有查询到结果！";
+            } else {
+                for (Map m : dList) {
+                    if (MapUtil.valueIsNull(m, "PLAN_ID")) {
+                        oList.add(m);
+                    } else {
+                        iList.add(m);
+                    }
+                }
+            }
+            oList = handleData(oList);
+            iList = handleData(iList);
+            json.put("iList", iList);
+            json.put("oList", oList);
+        } catch (Throwable e) {
+            logger.error("1508", e);
+            e.printStackTrace();
+            throw new ServiceException("1508", "获取巡查统计数据时出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 处理数据
+     *
+     * @param oList
+     * @return
+     */
+    private List<Map> handleData(List<Map> oList) {
+        List<Map> list = new ArrayList<Map>();
+        Map<String,List<Map>> m = new HashMap<String,List<Map>>();
+        for(Map t:oList){
+            int inspected = Integer.parseInt(t.get("INSPECTED")+"");
+            int inspect = Integer.parseInt(t.get("INSPECT")+"");
+            String hg = inspected<inspect?"不合格":"合格";
+            String key=t.get("DESCRIPTION")+hg+"("+inspected+"/"+inspect+")";
+            if(m.containsKey(key)){
+                list = m.get(key);
+                list.add(t);
+                m.put(key,list);
+            }else{
+                list =new ArrayList<Map>();
+                list.add(t);
+                m.put(key,list);
+            }
+        }
+
+        //将map载入到list中
+        list = new ArrayList<Map>();
+        if(m!=null&&m.size()>0){
+            for (Map.Entry<String,List<Map>> entry : m.entrySet()) {
+                Map nm = new HashMap();
+                nm.put("AREA",entry.getKey());
+                nm.put("TIME",entry.getValue());
+                list.add(nm);
+            }
+        }
+
+        return list;
+    }
+    
+    /**
+     * 巡查统计页面数据
+     */
+    public <K, V> String getInspectStatisticalData(Map<K, V> map) throws ServiceException {
+    	JSONObject result = new JSONObject();
+    	try {
+    		String sql = BaiyinUtils.genPageSql(InspectionServiceSQL.getInspectStatisticalSql(map), 10, Integer.parseInt(map.get("pageIndex").toString()));
+    		List<?> list = new IbatisDBUtil().executeSql(sql);
+    		result.put("list", list);
+    	} catch (Throwable e) {
+            logger.error("1509", e);
+            e.printStackTrace();
+            throw new ServiceException("1509", "获取巡查统计数据时出错");
+        }
+    	
+    	return result.toString();
+    }
+}

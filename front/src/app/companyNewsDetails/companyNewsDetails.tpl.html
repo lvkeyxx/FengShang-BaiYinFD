@@ -1,0 +1,42 @@
+<ion-view class="companyNewsDetailsCSS">
+    <ion-nav-title>{{gsxw}}</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="title ">{{title.FILETITLE}}</div>
+        <div class="timePublic">{{data.SOURCEADDR}}&nbsp;&nbsp;{{data.PUBDATE | date : "yyyy年MM月dd日"+"发布"}}</div>
+        <div class="contentText" ng-bind-html="data.content"></div>
+      <!--   <div ng-if="reviewShow">
+            <div class="clearfix companyNewReview">
+                <button ng-click="likeM(data.ID)" class="reviewBtn1">点赞</button>
+                <button ng-click="reviewM()" class="reviewBtn2">评论</button>
+            </div>
+            <div style="margin-top: 50px;">
+                <span class="reviewCont"></span>
+                <span ng-repeat="pinName in contMsg track by $index">{{pinName.USERNAME}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div ng-show="pingLunMsg">
+                <textarea placeholder="评论：" class="pingLun" ng-model="pingNews"></textarea>
+                <div class="clearfix" style="display: flex;justify-content: space-between;">
+                    <button ng-click="cancleBtn1()" class="button " style="width: 30%;background-color: #ff6e6e;color: white;">取消</button>
+                    <button ng-click="publishBtn(pingNews)" class="button button-calm" style="width: 30%;">发表</button>
+                </div>
+            </div>
+            <div class="clearfix pingLunCont" ng-repeat="comment in comments">
+                <button class="replyCss" ng-click="replyMsg(comment)" style="color: green;">回复</button>
+                <div style="color:blue;padding-left: 10px;">
+                    <span style="margin-right: 6px;">{{comment.userName}}</span><span>{{comment.createTime}}</span>
+                </div>
+                <div style="padding-left: 10px;margin-top: 6px;">{{comment.comment}}</div>
+                <div style="margin-left: 25px;margin-top: 8px;margin-bottom: 6px;" ng-repeat="com in comment.pinglun">
+                    <span style="color: blue;">{{com.USERNAME}}: </span><span>{{com.COMMENTS}}</span>
+                </div>
+            </div>
+            <div id="borrom" ng-if="replyContMsg">
+                <textarea class="replyMsgCss" ng-model="huiNews" placeholder="回复 {{backName.userName}}："></textarea>
+                <div class="clearfix" style="display: flex;justify-content: space-between;">
+                    <button ng-click="cancleBtn2()" class="button " style="width: 30%;background-color: #ff6e6e;color: white;">取消</button>
+                    <button ng-click="replyBtn2(backName,huiNews)" class="button button-calm" style="width: 30%;">回复</button>
+                </div>
+            </div>
+        </div> -->
+    </ion-content>
+</ion-view>

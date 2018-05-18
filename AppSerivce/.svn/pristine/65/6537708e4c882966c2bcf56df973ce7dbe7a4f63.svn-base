@@ -1,0 +1,53 @@
+package com.service.equipment.sql;
+
+import com.utility.MapUtil;
+
+import java.util.Map;
+
+/**设备信息查询
+ * Created by Administrator on 2018/5/15.
+ */
+public class EquipServiceSQL {
+
+    public static String equipmentInfo(Map map) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select t.mch_code," +
+                "       t.mch_name," +
+                "       t.contract," +
+                "       ifsapp.Company_Site_API.Get_Description(t.contract) contract_name," +
+                "       t.operational_status," +
+                "       t.type," +
+                "       t.serial_no," +
+                "       t.manufacturer_no," +
+                "       ifsapp.Equipment_Manufacturer_API.Get_Description(t.manufacturer_no) manufacturer_name," +
+                "       t.equipment_general," +
+                "       t.equipment_check_info," +
+                "       t.equipment_infor," +
+                "       t.process_mode," +
+                "       t.risk_factors_preven" +
+                "  from ifsapp.EQUIPMENT_FUNCTIONAL_UIV t" +
+                " where t.mch_code = '");
+        sb.append(MapUtil.stringValue(map,"MCH_CODE"));
+        sb.append("'");
+
+        return sb.toString();
+    }
+
+    public static String equipmentDefect(Map map){
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select t.mch_code," +
+                "       t.fact_mch_code," +
+                "       ifsapp.EQUIPMENT_FUNCTIONAL_API.Get_Mch_Name_App(t.fact_mch_code)," +
+                "       t.fault_rep_id," +
+                "       t.err_descr," +
+                "       t.err_descr_lo," +
+                "       t.reg_date," +
+                "       ifsapp.FAULT_REP_MAIN_API.Finite_State_Decode__(ifsapp.FAULT_REP_MAIN_API.Get_Current_State(t.fault_rep_id))" +
+                "from ifsapp.EQUIPMENT_FUNCTIONAL_FAULT t" +
+                "where mch_code = '");
+        sb.append(MapUtil.stringValue(map,"MCH_CODE"));
+        sb.append("'");
+        return sb.toString();
+    }
+}

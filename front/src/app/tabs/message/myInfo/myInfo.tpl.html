@@ -1,0 +1,27 @@
+<ion-view class="userConfigCSS">
+    <ion-nav-title>我的资料</ion-nav-title>
+    <ion-content class="userConfigContent" has-bouncing="false" scrollbar-y="false">
+        <div class="userItemContent">
+            <div class="items clearfix">
+                <div class="lft">真实姓名</div>
+                <div class="rgt" ng-if="myInfo.userName != '' ">{{myInfo.userName?myInfo.userName:myInfo.username}}</div>
+                <div class="rgt" ng-if="myInfo.userName == '' ">无</div>
+            </div>
+            <div class="items clearfix">
+                <div class="lft">昵称</div>
+                <div class="rgt" ng-if="myInfo.nickname != '' ">{{myInfo.nickname}}</div>
+                <div class="rgt" ng-if="myInfo.nickname == '' ">无</div>
+            </div>
+        </div>
+        <div>
+            <button class="button button-block button-positive" ng-click="showAddFriends()">
+                添加好友
+            </button>
+        </div>
+        <div ng-if="DeviceType == 'Android'">
+            <button class="button button-block button-positive" ng-click="showCreateGroupPop()">
+                创建群组
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

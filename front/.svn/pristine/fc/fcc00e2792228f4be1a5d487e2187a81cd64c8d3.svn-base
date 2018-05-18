@@ -1,0 +1,48 @@
+angular
+	.module('BaiYin.erp.details', [
+		'ionic'
+	])
+	.config(['$stateProvider', function($stateProvider) {
+		$stateProvider.state('erpDetails', {
+			url: '/erp/details',
+			controller: 'erpDetailsController',
+			templateUrl: 'erp/details/details.tpl.html',
+			cache: 'true',
+			authorizedRuleType: ['1'],
+			params: {
+				item: null
+			}
+		})
+	}])
+    .controller('erpDetailsController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', 'ionicDatePicker', '$ionicActionSheet', '$ionicScrollDelegate',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, ionicDatePicker, $ionicActionSheet, $ionicScrollDelegate) {
+			//进入页面
+			$scope.$on('$ionicView.enter', function() {
+                console.log("进入详情页面");
+			});
+			//标题
+			$scope.title = "物料申请";
+			$scope.typeIndex = 0;
+			$scope.types = ["物流申请单", "物流申请行", "审批流程", "文档"];
+
+			//选择类型
+			$scope.selectType = function() {
+                var types = $scope.types.map((v, i) => { return { text: v, index: i }; });
+                types.splice($scope.typeIndex, 1);
+
+				var hideSheet = $ionicActionSheet.show({
+                    buttons: types,
+					buttonClicked: function(index) {
+                        $scope.typeIndex = types[index].index;
+                        $ionicScrollDelegate.scrollTop();
+						return true;
+					}
+				});
+            };
+            //切换typeIndex
+            $scope.changeTypeIndex = function(index){
+                $scope.typeIndex = index;
+                $ionicScrollDelegate.scrollTop();
+            };
+		}
+	]);

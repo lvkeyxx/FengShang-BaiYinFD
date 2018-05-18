@@ -1,0 +1,193 @@
+.countAttenceCSS {
+  @rem: 144rem;
+  background-color: #fff;
+
+  .item-icon-right .icon{
+    right: 0;
+  }
+  .item-icon-right {
+    padding-right: 34px;
+  }
+  .item-icon-left .icon, .item-icon-right .icon {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    top: 0;
+    height: 100%;
+    font-size: 14px;
+    color: #ddd;
+  }
+  //tab样式
+  .tabs-positive>.tabs, .tabs.tabs-positive {
+    border-bottom: 2px solid #f4f4f4;
+    background-color: #fff;
+    background-image: linear-gradient(0deg,#0c60ee,#0c60ee 50%,transparent 50%);
+    color: #000;
+  }
+  .tab-item.activated, .tab-item.active, .tab-item.tab-item-active{
+    color: #1296db;
+    border-bottom: 2px solid #1296db;
+
+  }
+  .ydNum {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    margin: 0 auto;
+    ul li{
+      text-align: center;
+    }
+  }
+  .selectMounth {
+    border-top: 10px solid #f4f4f4;
+    padding: 10px 5px 10px 5px;
+    border-bottom: 1px solid #f4f4f4;
+    background: #f4f4f4;
+    text-align: center;
+    margin-top: 90px;
+    display: block;
+    text-align: left;
+    color: #1296db;
+    button{
+      border:none;
+      background: transparent;
+      outline: none;
+    }
+    .selectDateBtn {
+      border: none;
+      text-align: left;
+      width: 100px;
+      display: block;
+      background: transparent;
+      color: #1296db;
+      background: url(../images/PM/selectDowm_blueicon.png)no-repeat right;
+    }
+    .leftSelect{
+      background: url("../images/attence/leftIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .rightSelect{
+      background: url("../images/attence/rightIcon.png");
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+  }
+  .selectGlassMounth{
+    display: inline-block;
+    float: right;
+    transform: translateY(-15/@rem);
+    input {
+      border: none;
+      width: 130px;
+      border: none;
+      background: url(../images/PM/selectDowm_blackicon.png) no-repeat right;
+      display: inline-block;
+    }
+  }
+  .selectGlass {
+    display: inline-block;
+    float: right;
+    transform: translateY(-80/@rem);
+    input {
+      border: none;
+      width: 130px;
+      border: none;
+      background: url(../images/PM/selectDowm_blackicon.png) no-repeat right;
+      display: inline-block;
+    }
+  }
+  //饼图
+  .countResult {
+    /*margin-top: 20px;*/
+    text-align: center;
+    /*padding-bottom: 20px;*/
+    .pieShow {
+      text-align: center;
+      display: inline-block;
+      margin-left: 70px;
+      img {
+        width: 300/@rem;
+        height: 300/@rem;
+      }
+    }
+    .pieColor {
+      transform: translateY(50/@rem);
+      display: inline-block;
+      float: right;
+      ul li {
+        padding: 10px;
+        .sdColor {
+          width: 100/@rem;
+          height: 50/@rem;
+          background: #07a70b;
+          display: inline-block;
+          vertical-align: sub;
+          margin-left: 10px;
+        }
+        .wdColor {
+          width: 100/@rem;
+          height: 50/@rem;
+          background: #ff0000;
+          display: inline-block;
+          vertical-align: sub;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  //统计数据
+  .countNum {
+    /*margin-top: -100px;*/
+    ul {
+      font-size: 0;
+    }
+    ul li {
+      font-size: 14px;
+      display: inline-block;
+      padding: 10px 10px;
+      height: 100/@rem;
+      line-height: 100/@rem;
+      text-align: center;
+      color: #3492e9;
+      span{
+        display: block;
+      }
+      i {
+        width: 80px;
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 50/@rem;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .ydIcon {
+        background: #3492e9;
+      }
+      .sdIcon {
+        background: #1BBB37;
+      }
+      .cdIcon {
+        background: #ffee00;
+      }
+      .wdIcon {
+        background: #ff0000;
+      }
+    }
+  }
+  .tips {
+    padding: 10px 10px 0px 15px;
+    color: #ff0000;
+    margin-top: 10px;
+    border-top: 1px solid #f4f4f4;
+  }
+}

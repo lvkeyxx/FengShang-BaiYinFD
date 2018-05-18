@@ -1,0 +1,87 @@
+angular.module('BaiYin.pdYear', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('power/pdYear', {
+            url: '/power/pdYear',
+            controller: 'pdYearController',
+            templateUrl: 'power/pdYear/pdYear.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('pdYearController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                drawBarGraph();
+            });
+
+            //画柱状图
+            function drawBarGraph() {
+                var labelTop = {
+                    normal: {
+                        color: '#ff9900',
+                        label: {
+                            position: 'center',
+                            textStyle: {
+                                baseline: 'bottom'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                };
+                var option = {
+                    title: {
+                        text: '2005 ~ 2018',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: ['2005年', '2006年', '2007年', '2008年', '2009年', '2010年', '2011年', '2012年', '2013年', '2014年', '2015年', '2016年', '2017年', '2018年']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '电量',
+                            type: 'bar',
+                            data: [
+                                {value: 2.0, itemStyle: labelTop},
+                                {value: 4.9, itemStyle: labelTop},
+                                {value: 7.0, itemStyle: labelTop},
+                                {value: 23.2, itemStyle: labelTop},
+                                {value: 25.6, itemStyle: labelTop},
+                                {value: 76.7, itemStyle: labelTop},
+                                {value: 135.6, itemStyle: labelTop},
+                                {value: 162.2, itemStyle: labelTop},
+                                {value: 32.6, itemStyle: labelTop},
+                                {value: 20.0, itemStyle: labelTop},
+                                {value: 6.4, itemStyle: labelTop},
+                                {value: 3.3, itemStyle: labelTop}
+                            ],
+                        }
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('mainYear'), 'macarons');
+                myChart.setOption(option);
+            }
+
+        }
+    ])
+

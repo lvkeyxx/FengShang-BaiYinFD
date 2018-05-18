@@ -1,0 +1,82 @@
+<ion-view class="wdkDetailCSS">
+    <ion-nav-title>打卡详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="content">
+            <h3><span>{{dateTimeShow}}</span><em>{{personName}}</em><!--<span>未打卡</span><span>共{{count}}次</span>--></h3>
+            <div class="myAttencelist">
+                <table>
+                    <tr>
+                        <th>日期</th>
+                        <th>打卡时间</th>
+                        <th>备注</th>
+                    </tr>
+                    <tr ng-repeat="x in wdkPersonList track by $index">
+                        <td>
+                            <span>{{x.year}}-{{x.month}}-{{x.date}}</span>
+                            <span>{{x.week}}</span>
+                        </td>
+                        <td ng-click="toPosition(x)">
+                            <i ng-if="x.checkInState=='正常'">{{x.actualStartTime | limitTo:-8}}</i>
+                            <i ng-if="x.checkInState!='正常'" style="color: red">{{x.actualStartTime | limitTo:-8}}</i>
+                            -
+                            <i ng-if="x.checkOutState=='正常'">{{x.actualEndTime | limitTo:-8 }}</i>
+                            <i ng-if="x.checkOutState!='正常'" style="color: red">{{x.actualEndTime | limitTo:-8 }}</i>
+                        </td>
+                        <td ng-bind-html="x.remarks">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--<ul class="list">-->
+                <!--<li class="item" ng-repeat="x in wdkPersonList">
+                    <div class="leftShow">
+                        <span class="dateShow">{{x.year}}-{{x.month}}-{{x.date}} {{x.week}}</span>
+                       &lt;!&ndash; <span class="glassname">国投白银风电</span>&ndash;&gt;
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">上班未打卡</span>
+                        &lt;!&ndash;<i class="icon ion-chevron-right"></i>&ndash;&gt;
+                    </div>
+                </li>-->
+               <!-- <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-05 18:00</span>
+                        &lt;!&ndash;<span class="glassname">国投白银风电</span>&ndash;&gt;
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">下班未打卡</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-08 18:00</span>
+                        &lt;!&ndash;<span class="glassname">国投白银风电</span>&ndash;&gt;
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">下班未打卡</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-07 09:00</span>
+                        &lt;!&ndash;<span class="glassname">国投白银风电</span>&ndash;&gt;
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">上班未打卡</span>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="leftShow">
+                        <span class="dateShow">2018-03-07 18:00</span>
+                        &lt;!&ndash;<span class="glassname">国投白银风电</span>&ndash;&gt;
+                    </div>
+                    <div class="rightShow">
+                        <span class="item-note">下班未打卡</span>
+                    </div>
+                </li>-->
+            <!--</ul>-->
+
+        </div>
+    </ion-content>
+
+</ion-view>

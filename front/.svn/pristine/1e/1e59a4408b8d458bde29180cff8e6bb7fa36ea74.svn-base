@@ -1,0 +1,44 @@
+<ion-view class="OSICSS">
+    <ion-nav-title>现场巡查</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-timedimension" ng-click="toOsiHistory()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="osiList">
+            <div class="scanQRcode">
+                <input type="text" ng-hide="inputHide" placeholder="请扫描设备二维码" class="scanCode" ng-click="toScanCode()">
+                <div class="position" ng-hide="positionHide">
+                    <i class="position_icon"></i>位置：青海风电3#风机XX
+                    <button class="qdBtn">签到</button>
+                </div>
+                <!--<button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM-dd"}}</button>-->
+                <!--<i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy-MM-dd"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>-->
+            </div>
+            <div class="content">
+                <ul class="list">
+                    <li class="item item-icon-right" ng-click="toOsiLine()">
+                        巡查路线1(月)
+                        <span class="item-note ng-binding">21/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOsiLine()">
+                        巡查路线2(周)
+                        <span class="item-note ng-binding">2/25</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                    <li class="item item-icon-right" ng-click="toOsiLine()">
+                        范围外任务
+                        <span class="item-note ng-binding">50</span>
+                        <i class="icon ion-chevron-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+    <!--<ion-footer-bar align-title="left" class="bar-assertive">
+        <div class="searchBlooth">
+            <button class="searchBloothBtn">搜索蓝牙</button>
+        </div>
+    </ion-footer-bar>-->
+</ion-view>

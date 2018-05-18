@@ -1,0 +1,28 @@
+<ion-view class="companyAddressBookCSS">
+    <ion-content has-bouncing="false" scrollbar-y="false" class="itm">
+    <div class="list searchVal ">
+	  <label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" ng-change="toChange(search.$)" ng-model="search.$" placeholder="搜索">
+	  </label>
+    </div>
+    <div ng-if="listMsgShow" class="list listDetail " ng-repeat="item in items " >
+        <a class="item item-icon-left" href="#" ng-click="addressList(item)">
+          <i class="icon ion-ios-people-outline"></i>
+          {{item.ORG_NAME}}
+         <span class="bagImg"></span>
+        </a>
+      </div>
+    <div ng-if="userMsgShow" class="list listDetail" ng-repeat="user in users | filter:search">
+       <a class="item item-icon-left" href="#" ng-click="userMsg(user)">
+          <i class="icon ion-ios-person-outline"></i>
+          <div class="listShow">
+              <span class="userLength">{{user.INTERNAL_DISPLAY_NAME}}</span>
+              <span class="belongTo">{{"("+user.ORG_NAME+")"}}</span>
+          </div>
+        
+         <span class="bagImg"></span>
+        </a>
+        
+      </div>
+</ion-view>

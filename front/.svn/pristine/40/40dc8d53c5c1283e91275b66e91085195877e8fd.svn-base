@@ -1,0 +1,87 @@
+angular.module('BaiYin.pdMounth', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('power/pdMounth', {
+            url: '/power/pdMounth',
+            controller: 'pdMounthController',
+            templateUrl: 'power/pdMounth/pdMounth.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('pdMounthController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                drawBarGraph();
+            });
+
+            //画柱状图
+            function drawBarGraph() {
+                var labelTop = {
+                    normal: {
+                        color: '#ff9900',
+                        label: {
+                            position: 'center',
+                            textStyle: {
+                                baseline: 'bottom'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                };
+                var option = {
+                    title: {
+                        text: '2018-01 ~ 2018-12',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '电量',
+                            type: 'bar',
+                            data: [
+                                {value: 2.0, itemStyle: labelTop},
+                                {value: 4.9, itemStyle: labelTop},
+                                {value: 7.0, itemStyle: labelTop},
+                                {value: 23.2, itemStyle: labelTop},
+                                {value: 25.6, itemStyle: labelTop},
+                                {value: 76.7, itemStyle: labelTop},
+                                {value: 135.6, itemStyle: labelTop},
+                                {value: 162.2, itemStyle: labelTop},
+                                {value: 32.6, itemStyle: labelTop},
+                                {value: 20.0, itemStyle: labelTop},
+                                {value: 6.4, itemStyle: labelTop},
+                                {value: 3.3, itemStyle: labelTop}
+                            ],
+                        }
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('mainMounth'), 'macarons');
+                myChart.setOption(option);
+            }
+
+        }
+    ])
+

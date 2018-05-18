@@ -1,0 +1,113 @@
+<ion-view hide-nav-bar="true" class="PMCSS" hide-back-button="true">
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="kpiheader">
+            <div class="electricSelect">
+                <!--<select id="cityid" ng-change="selectPlantPower()" ng-model="dianchang">
+                    <option value="{{$index}}" class="blue"
+                            ng-repeat="plantpower in powerPlantList track by $index"
+                            ng-selected="$index==0">{{plantpower.DESCRIPTION}}
+                    </option>
+                </select>-->
+                    <input type="text" class="rightselect" id="fieldID" readonly ng-click="selectPlantPower()">
+            </div>
+            <div class="headmiddle">
+                <div class="weatherShow col col-50">
+                    <div class="weatherImg col col-50">
+                        <img src="{{Weather.dayPictureUrl}}">
+                        <p>{{Weather.date.split(' (实时：')[0].substring(2,Weather.date.split(' (实时：')[0].length)}}</p>
+                    </div>
+                    <div class="weatherDes col col-50">
+                        <ul>
+                            <li class="wendu">{{Weather.date.split(' (实时：')[1].split(')')[0]}}<em></em></li>
+                            <li class="dqwd">{{Weather.temperature}}<em></em></li>
+                            <li class="tqType">{{Weather.weather}}</li>
+                            <li class="wind">{{Weather.wind.indexOf('微风')>=0?'微风':Weather.wind}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="power col col-50">
+                    <div class="comLoad col col-50">
+                        <span>全公司总</br>负荷(MW)</span>
+                        <span>{{(((companyPower.TOTAL_POWER - 0) < 0 ? 0 : ((companyPower.TOTAL_POWER - 0) > 999) ? 999 : companyPower.TOTAL_POWER))|number:2}}</span>
+                        <!--<span>MW</span>-->
+                    </div>
+                    <div class="comPower col col-50">
+                        <span>全公司日发</br>电量(MWh)</span>
+                        <span>{{(companyPower.DAY_POWER-0).toFixed(2)}}</span>
+                        <!--<span>MWH</span>-->
+                    </div>
+                </div>
+            </div>
+            <div class="headerFoot" ng-hide="footHide">
+                <ul>
+                    <li class="col col-20 rightBorder">全厂<p>{{(((companyPower.TOTAL_POWER - 0) < 0 ? 0 :
+                        ((companyPower.TOTAL_POWER - 0) > 999) ? 999 : companyPower.TOTAL_POWER))|number:2}}</p></li>
+                    <li class="col col-20 rightBorder">甘<p>{{(((companyPower1.load.GS_POWER - 0) < 0 ? 0 :
+                        ((companyPower1.load.GS_POWER - 0) > 999) ? 999 : companyPower1.load.GS_POWER))|number:2}}</p>
+                    </li>
+                    <li class="col col-20 rightBorder">青<p>{{(companyPower1.load.QH_POWER)|number:2}}</p></li>
+                    <li class="col col-20 rightBorder">宁<p>{{(companyPower1.load.NX_POWER)|number:2}}</p></li>
+                    <li class="col col-20">新<p>{{(((companyPower1.load.XJ_POWER - 0) < 0 ? 0 :
+                        ((companyPower1.load.XJ_POWER - 0) > 999) ? 999 : companyPower1.load.XJ_POWER))|number:2}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="btnnav">
+            <ul>
+                <li class="goFuhe col col-50" ng-click="goLoad();"><i class="fhicon_img"></i>负荷</li>
+                <li class="goDl col col-50" ng-click="goPower();"><i class="dlicon_img"></i>电量</li>
+            </ul>
+        </div>
+        <div class="navlist">
+            <ul>
+                <li class="col col-20 rowLation" ng-click="tosczb()">
+                    <div class="sczb_img">
+                    </div>
+                    <p>生产指标</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toFhyc()">
+                    <div class="fhyc_img">
+                    </div>
+                    <p>负荷预测</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toJournal()">
+                    <div class="yxri_img">
+                    </div>
+                    <p id="yxrzShow">运行日志</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toYhpc()">
+                    <div class="yhpc_img">
+                    </div>
+                    <p>隐患排查</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toqxtb()">
+                    <div class="qxtb_img">
+                    </div>
+                    <p>缺陷填报</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toSbxx()">
+                    <div class="sbxx_img">
+                    </div>
+                    <p>设备信息</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toXcxc()">
+                    <div class="xcxc_img">
+                    </div>
+                    <p>现场巡查</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toXctj()">
+                    <div class="xctj_img">
+                    </div>
+                    <p>巡查统计</p>
+                </li>
+                <li class="col col-20 rowLation" ng-click="toRwgl()">
+                    <div class="rwgl_img">
+                    </div>
+                    <p>任务管理</p>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

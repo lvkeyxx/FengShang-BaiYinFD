@@ -1,0 +1,203 @@
+angular.module('BaiYin.facilityInfo', [
+    'ionic',
+])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('facilityInfo', {
+            url: '/facilityInfo',
+            controller: 'facilityInfoController',
+            templateUrl: 'facilityInfo/facilityInfo.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('facilityInfoController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker','$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker,$cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function() {
+                $('#scanFaclidyHide').css('display','block');
+                $('#faciltyHide').css('display','none');
+                /*$scope.scanfaclityHide=false;
+                $scope.faciltyHide=false;*/
+            });
+            /*$scope.$on('$ionicView.leave', function() {
+                $('#scanFaclidyHide').css('display','block');
+                $('#faciltyHide').css('display','none');
+            });*/
+            $scope.toScanCode = function () {
+                $cordovaBarcodeScanner.scan()
+                    .then(function (barcodeData) {
+                        $scope.barcodeDataText = barcodeData.text;
+                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
+                        $('#scanFaclidyHide').css('display','none');
+                        $('#faciltyHide').css('display','block');
+                        $ionicTabsDelegate.select(0);
+                        $scope.facilityObtain($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+                    }, function (error) {
+
+                    });
+            }
+            /**
+             * @author:Grant
+             * @remark:根据二维码扫描到的信息获取设备信息
+             * parameter:MCH_CODE,CONTRACT
+             * request:POST{ServiceName:EquipService,TransName:equipmentInfo}
+             * field:$scope.equipmentDetail
+             */
+            $scope.goObtain=function () {
+                console.log('jineu');
+                $ionicTabsDelegate.select(0);
+                $scope.facilityObtain($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+            }
+            $scope.facilityObtain=function(MCH_CODE,CONTRACT) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                var params = {
+                    MCH_CODE:MCH_CODE,
+                    CONTRACT:CONTRACT
+                }
+                $http.post('ServiceName=EquipService&TransName=equipmentInfo',params)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.code == 0) {
+                            $scope.jbxxHide = false;
+                            $scope.equipmentDetail=res.data.detail;
+                        } else {
+                            showAlert.showMsg('', '', res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            /**
+             * @author:Grant
+             * @remark:根据二维码扫描到的信息获取缺陷履历
+             * @parameter:扫描到的二维码信息(MCH_CODE,CONTRACT)
+             * request:POST{ServiceName:EquipService,TransName:equipmentDefect}
+             * field:$scope.equipmentDefectList
+             */
+            $scope.goDefect=function () {
+                $ionicTabsDelegate.select(1);
+                facilityDefectList($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+
+            }
+            function facilityDefectList(MCH_CODE,CONTRACT) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                var params = {
+                    MCH_CODE:MCH_CODE,
+                    CONTRACT:CONTRACT
+                }
+                $http.post('ServiceName=EquipService&TransName=equipmentDefect',params)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.code == 0) {
+                            $scope.equipmentDefectList=res.data.tList;
+                        } else {
+                            showAlert.showMsg('', '', res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            /**
+             * @author:Grant
+             * @remark:根据缺陷履历跳转到缺陷详情
+             * @parameter:
+             * request:POST{ServiceName:EquipService,TransName:repairInspection}
+             * field:
+             */
+            $scope.toDefectDetail=function (DefectList) {
+                console.log(DefectList);
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                var params={
+                    FAULT_REP_ID:DefectList.FAULT_REP_ID,
+                    MCH_CODE:DefectList.FACT_MCH_CODE
+                }
+                $http.post('ServiceName=DefectManageService&TransName=listFaultRepMain',params)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.code == 0) {
+                            console.log(res);
+                            var item=res.data.hList[0];
+                            console.log(item);
+                            $state.go('pm/defectFill/defectFillDetail', {item: item});
+                        } else {
+                            showAlert.showMsg('', '', res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+
+
+            }
+            /**
+             * @author:Grant
+             * @remark:根据二维码扫描到的信息获取工单履历
+             * @parameter:扫描到的二维码信息(MCH_CODE,CONTRACT)
+             * request:POST{ServiceName:EquipService,TransName:repairInspection}
+             * field:$scope.equipmentWorkList
+             */
+            $scope.goWork=function () {
+                $ionicTabsDelegate.select(2);
+                facilityWorkList($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+            }
+            function facilityWorkList(MCH_CODE,CONTRACT) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                var params = {
+                    MCH_CODE:MCH_CODE,
+                    CONTRACT:CONTRACT
+                }
+                $http.post('ServiceName=EquipService&TransName=repairInspection',params)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.code == 0) {
+                            $scope.equipmentWorkList=res.data.rList;
+                        } else {
+                            showAlert.showMsg('', '', res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            /**
+             * @author:Grant
+             * @remark:根据二维码扫描到的信息获取巡查记录
+             * @parameter:扫描到的二维码信息(MCH_CODE,CONTRACT)
+             * request:POST{ServiceName:EquipService,TransName:inspectionRecordAsE}
+             * field:$scope.equipmentPatrolList
+             */
+            $scope.goInspection=function () {
+                $ionicTabsDelegate.select(3);
+                facilityInspectionList($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+            }
+
+            function facilityInspectionList(MCH_CODE,CONTRACT) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                var params = {
+                    MCH_CODE:MCH_CODE,
+                    CONTRACT:CONTRACT
+                }
+                $http.post('ServiceName=EquipService&TransName=inspectionRecordAsE',params)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.code == 0) {
+                            console.log(res);
+                            $scope.equipmentPatrolList=res.data.rList;
+                        } else {
+                            showAlert.showMsg('', '', res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            $scope.goInspectionRecord=function (PatrolList) {
+                console.log(PatrolList)
+                var params = {
+                    MCH_CODE: PatrolList.MCH_CODE,
+                    PERSON_ID:PatrolList.PERSON_ID
+                }
+                var obj = {"MCH_CODE":PatrolList.MCH_CODE,"PERSON_ID":PatrolList.PERSON_ID}
+                localStorage.setItem("PatrolList",JSON.stringify(obj));
+                $state.go('InspectionRecord', params);
+            }
+
+        }
+    ])

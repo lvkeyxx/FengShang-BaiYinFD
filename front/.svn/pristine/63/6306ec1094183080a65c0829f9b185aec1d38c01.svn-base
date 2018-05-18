@@ -1,0 +1,80 @@
+.tmDetailCSS {
+  background-color: #f4f4f4;
+  .specialList {
+    background: #fff;
+    h3 {
+      font-weight: bold;
+      line-height: 35px;
+      border-bottom: 1px solid #f4f4f4;
+      margin: 5px 10px;
+    }
+    ul li {
+      padding: 10px;
+      line-height: 35px;
+      span {
+        display: block;
+        em {
+          float: right;
+        }
+      }
+    }
+  }
+  //项目内容
+  .xmContent {
+    background: #fff;
+    padding: 5px 10px;
+    margin-top: 10px;
+    h3 {
+      font-weight: bold;
+      line-height: 35px;
+      border-bottom: 1px solid #f4f4f4;
+      padding: 5px 0px;
+    }
+  }
+  //项目里程碑
+  .xmMarker {
+    background: #fff;
+    padding: 5px 10px;
+    margin-top: 10px;
+    h3 {
+      font-weight: bold;
+      line-height: 35px;
+      border-bottom: 1px solid #f4f4f4;
+      padding: 5px 10px;
+    }
+    ul li:last-child {
+      border: none;
+    }
+    ul li {
+      height: 100px;
+      border-left: 1px solid #3492e9;
+      margin-left: 25px;
+      h3 {
+        font-weight: bold;
+        line-height: 20px;
+        padding: 0;
+        border: none;
+        margin-top: -50px;
+        margin-left: 35px;
+      }
+      i {
+        background: #3492e9;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        font-size: 16px;
+        margin-right: 10px;
+        display: inline-block;
+        margin-left: -25px;
+      }
+      span {
+        display: block;
+        margin-left: 35px;
+      }
+    }
+  }
+
+}

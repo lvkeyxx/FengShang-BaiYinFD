@@ -1,0 +1,41 @@
+<ion-view class="attenceDetailCSS">
+    <ion-nav-title>未到详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounth">
+            <i class="leftSelect" ng-click="getPreMonth(now)"></i> {{now | date : "yyyy年MM月"}}<i class="rightSelect" ng-click="getNextMonth(now)"></i>
+            <div class="selectGlass">
+                <input type="text" id="detailGalssId" placeholder="请选择部门" ng-click="selectGlass()" readonly>
+            </div>
+        </div>
+        <div class="attencelist">
+            <table>
+                <tr>
+                    <th>员工/部门</th>
+                    <th>出勤比例</th>
+                    <th>缺勤天数</th>
+                </tr>
+                <tr ng-click="toCause()">
+                    <td>张云/人资部</td>
+                    <td>22/21</td>
+                    <td>1</td>
+                </tr>
+                <tr ng-click="toCause()">
+                    <td>张云/人资部</td>
+                    <td>22/20</td>
+                    <td>2</td>
+                </tr>
+            </table>
+        </div>
+        <div class="tips">
+            <span>提示：点击上面栏目可查看缺勤事由</span>
+        </div>
+        <div class="qqCause" ng-hide="qqCause">
+            <ul>
+                <li>
+                    <label>缺勤事由：</label>
+                    <span>去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会去新区开会</span>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

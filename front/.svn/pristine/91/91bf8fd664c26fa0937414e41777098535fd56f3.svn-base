@@ -1,0 +1,225 @@
+angular.module('BaiYin.app', [
+    'ionic',
+    'maxrocky.framework',
+    'BaiYin.common',
+    'BaiYin.app.config',
+    'BaiYin.templates',
+    'BaiYin.home',
+    'BaiYin.login',
+    'BaiYin.app.mock',
+    'BaiYin.userServers',
+    'BaiYin.KPIs',
+    'BaiYin.pm.troubleA',
+    'BaiYin.pm.defectFillA',
+    'BaiYin.pm.journalA',
+    'BaiYin.power',
+    'BaiYin.loadA',
+    'BaiYin.AgentsA',
+    'BaiYin.userConfig',
+    'BaiYin.companyNewsDetails',
+    'BaiYin.ProblemsA',
+    'BaiYin.LeavesA'
+])
+    .run(['$rootScope', 'CurrentUserService', '$ionicPlatform', '$ionicPopup', '$location', '$ionicHistory', '$ionicLoading', 'Session', '$http', 'SavePopShowFristService',
+        function ($rootScope, CurrentUserService, $ionicPlatform, $ionicPopup, $location, $ionicHistory, $ionicLoading, Session, $http, SavePopShowFristService) {
+            $rootScope.$on('$stateChangeStart', function (evt, toState, toParams, fromState, fromParams) {
+                CurrentUserService.usrAuth(evt, toState, toParams, fromState, fromParams);
+            });
+            $rootScope.$on('tokenBug', function (event, mass) {
+                CurrentUserService.tokenBug(event, mass);
+            });
+
+            $rootScope.$on('noData', function (event, msg) {
+                CurrentUserService.noDataInfo(event, msg);
+            })
+
+            //主页面显示退出提示框  
+            $ionicPlatform.registerBackButtonAction(function (e) {
+                e.preventDefault();
+
+                function showConfirm() {
+                    $ionicLoading.hide();
+                    var confirmPopup = $ionicPopup.confirm({
+                        title: '<strong>退出应用?</strong>',
+                        template: '你确定要退出应用吗?',
+                        okText: '退出',
+                        cancelText: '取消'
+                    });
+
+                    confirmPopup.then(function (res) {
+                        if (res) {
+                            if (Session.userInfoData && Session.userInfoData.LoginStatus == '1') {
+                                $http.get('ServiceName=UserService&TransName=logout').then(function (res) {
+                                    $ionicHistory.clearHistory();
+                                    $ionicHistory.clearCache().then(function () {
+                                        $ionicHistory.nextViewOptions({
+                                            disableAnimate: true,
+                                            disableBack: true,
+                                            historyRoot: true
+                                        });
+                                        token = null;
+                                        var user = null;
+                                        CurrentUserService.updateSession(res.data, user);
+                                        SavePopShowFristService.setPopShowBlr(false);
+                                        if (isApp) {
+                                            window.JMessage.logout(function (response) {
+                                                console.log("退出成功");
+                                                ionic.Platform.exitApp();
+                                            }, function (response) {
+                                                console.log(response);
+                                                ionic.Platform.exitApp();
+                                            });
+                                        }
+                                    });
+                                }, function (err) {
+                                    showAlertOut('', '退出失败,请检查网络后重试', '确认');
+                                });
+                            } else {
+                                CurrentUserService.destroyUserSession();
+                                token = null;
+                                ionic.Platform.exitApp();
+                            }
+                        } else {
+                            // Don't close  
+                        }
+                    });
+                }
+
+                // Is there a page to go back to?
+                if ($location.path() == '/blankPage' || $location.path() == '/tabs/homePage' || $location.path() == '/tabs/companyAddressBook' || $location.path() == '/tabs/message' || $location.path() == '/tabs/mine'|| $location.path() == '/tabs/porductManage') {
+                    showConfirm();
+                } else {
+                    $ionicHistory.goBack();
+                }
+                return false;
+            }, 400);
+
+            var showAlertOut = function (title, template, okText) {
+                var alertPopup = $ionicPopup.alert({
+                    title: title,
+                    okText: okText,
+                    template: template
+                });
+                alertPopup.then(function (res) {
+                });
+            };
+        }
+    ])
+
+    .controller('AppController', ['$scope', '$ionicPopup', '$ionicHistory', '$http', '$ionicPopup', '$state',
+        function ($scope, $ionicPopup, $ionicHistory, $http, $ionicPopup, $state) {
+            $scope.myGoBack = function () {
+                $ionicHistory.goBack();
+            }
+
+            var onOpenNotification = function (event) {
+                try {
+                    var alertContent;
+                    if (device.platform == "Android") {
+                        alertContent = event.alert;
+                    } else {
+                        alertContent = event.aps.alert;
+                        window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+                    }
+                    showAlert('', alertContent, '确认');
+                } catch (exception) {
+                    console.log("JPushPlugin:onOpenNotification" + exception);
+                }
+            };
+
+            //iOS处于前台收到消息
+            var onReceiveNotification = function (event) {
+                if (device.platform != "Android") {
+                    var alertContent
+                    alertContent = event.aps.alert
+                    showAlert('', alertContent, '确认');
+                    window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+                }
+            }
+
+            var initiateUI = function () {
+                try {
+                    window.JPush.init();
+                    //未登录停止推送
+                    window.plugins.jPushPlugin.stopPush();
+                    if (device.platform != "Android") {
+                        window.plugins.jPushPlugin.setDebugModeFromIos();
+                        window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+                    } else {
+                        window.plugins.jPushPlugin.setDebugMode(true);
+                        window.plugins.jPushPlugin.setStatisticsOpen(true);
+                    }
+                } catch (exception) {
+                    console.log(exception);
+                }
+            };
+
+            document.addEventListener('jmessage.onOpenMessage', function (msg) {
+                $state.go('tabs/message');
+            }, false);
+
+            //初始化监听
+            document.addEventListener("deviceready", initiateUI, false);
+
+            //通知监听
+            document.addEventListener("jpush.openNotification", onOpenNotification, false);
+
+            //应用程序处于前台时收到推送会触发该事件
+            document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+
+            //监听收到好友请求
+            document.addEventListener('jmessage.onInviteReceived', function (msg) {
+                if (!msg.reason || msg.reason == 'null') {
+                    showConfirm(msg.fromUsername + ' 请求加您为好友,描述信息为: 空', '同意', '拒绝', msg.fromUsername);
+                } else {
+                    showConfirm(msg.fromUsername + ' 请求加您为好友,描述信息为: ' + msg.reason, '同意', '拒绝', msg.fromUsername);
+                }
+            }, false);
+
+            //当前用户发送的好友请求被接受
+            document.addEventListener('jmessage.onInviteAccepted', function (msg) {
+                showAlert('', msg.fromUsername + ' 已接受您的请求', '确认');
+            }, false);
+
+            //当前用户发送的好友请求被拒绝
+            document.addEventListener('jmessage.onInviteDeclined', function (msg) {
+                showAlert('', msg.fromUsername + ' 已拒绝您的请求', '确认');
+            }, false);
+
+
+            var showAlert = function (title, template, okText) {
+                var alertPopup = $ionicPopup.alert({
+                    title: title,
+                    okText: okText,
+                    template: template
+                });
+                alertPopup.then(function (res) {
+                });
+            };
+            var showConfirm = function (template, leftText, rightText, targetUsername) {
+                var messagePopup = $ionicPopup.confirm({
+                    template: template,
+                    okText: leftText,
+                    cancelText: rightText
+                });
+                messagePopup.then(function (res) {
+                    if (res) {
+                        window.JMessage.acceptInvitation(targetUsername, null,
+                            function (response) {
+                            },
+                            function (errorStr) {
+                                console.log(errorStr);
+                            })
+                    } else {
+                        window.JMessage.declineInvitation(targetUsername, null, '',
+                            function (response) {
+                                console.log('ju success');
+                            },
+                            function (errorStr) {
+                                console.log(errorStr);
+                            })
+                    }
+                });
+            }
+        }
+    ])

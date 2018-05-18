@@ -1,0 +1,121 @@
+.journalListCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .journalForm {
+    background: #fff;
+    /*margin: 20/@rem;
+    border-radius: 40/@rem;*/
+    padding: 20/@rem;
+  }
+  .journalForm ul li {
+    height: 120/@rem;
+    line-height: 120/@rem;
+    label {
+      width: 60px;
+      text-align: center;
+      margin-right: 15px;
+    }
+    input {
+      background: transparent;
+      border: none;
+    }
+  }
+  .journalForm ul li:first-child {
+    border-bottom: 1px dotted #ddd;
+  }
+  .journalForm ul li input {
+    height: 120/@rem;
+    line-height: 120/@rem;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 30px;
+    float: right;
+    border: none;
+    color: #999;
+    text-align: right;
+    padding-right: 35px;
+  }
+
+  .journalForm ul li .selectdate {
+    background: url(../images/selectDateIcon.png) no-repeat right;
+  }
+  .journalForm ul li .selectclass {
+    background: url(../images/selectDateIcon.png) no-repeat right;
+  }
+  .journalForm ul li .selectSpan .selectDateicon {
+    background: url(../images/selectDateIcon.png);
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: text-top;;
+  }
+  .journalForm ul li .selectSpan .selectClassicon {
+    background: url(../images/selectClassIcon.png);
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+  .journalList {
+    margin-top: 20/@rem;
+    /* margin: 20/@rem;*/
+  }
+  .journalList ul {
+    background: #fff;
+    border-radius: 40/@rem;
+   /* padding: 20/@rem;*/
+    margin: 20/@rem;
+  }
+  .journalList ul li:first-child {
+    .dateTimeshow {
+      line-height: 120/@rem;
+      background: url("../images/PM/roundimg_icon.png") left no-repeat;
+      margin-left: -15px;
+      padding-left: 15px;
+    }
+  }
+  .journalList ul li {
+    display: block;
+    line-height: 80/@rem;
+    .journalDes {
+      background: #fff;
+      border-radius: 40/@rem;
+      padding: 20/@rem;
+      margin-bottom: 20/@rem;
+      .journalxx {
+        border-bottom: 1px solid #3492e9;
+        line-height: 30px;
+        font-size: 40/@rem;
+        padding-bottom: 20/@rem;
+        color: #3492e9;
+        span {
+          display: block;
+        }
+        span em {
+          float: right;
+        }
+        .rightShow {
+          float: right;
+        }
+      }
+      .journalcontent {
+        color: #999;
+        line-height: 80/@rem;
+        /*border-bottom: 1px dotted #ddd;*/
+        padding: 0px 15px;
+      }
+      .journalcontent ul {
+        padding: 0;
+        margin: 0;
+        padding-top: 20/@rem;
+      }
+      .journalcontent ul li {
+        line-height: 100/@rem;
+      }
+      .rightShow {
+        float: right;
+      }
+    }
+  }
+}

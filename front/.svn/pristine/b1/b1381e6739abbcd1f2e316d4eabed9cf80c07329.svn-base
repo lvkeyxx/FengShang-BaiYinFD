@@ -1,0 +1,45 @@
+.taskManageCSS {
+  @rem: 144rem;
+  background-color: #f4f4f4;
+  .tabs-positive > .tabs, .tabs.tabs-positive {
+    border-color: #fff;
+    background-color: #fff;
+    background-image: linear-gradient(0deg, #0c60ee, #0c60ee 50%, transparent 50%);
+    color: #000;
+  }
+  .pane, .view {
+    position: absolute;
+    top: 100px;
+    height: 100%;
+    background-color: #f4f4f4;
+  }
+  .tab-item.tab-item-active {
+    opacity: 1;
+    color: #3492e9;
+    border-bottom: 3px solid #3492e9;
+  }
+  .tab-item.tab-item-active span {
+    color: #3492e9;
+  }
+  .allTask{
+    margin-bottom: 110px;
+    ul li{
+      background: #fff;
+      margin-bottom: 10px;
+      padding: 10px;
+      line-height: 120/@rem;
+      span{
+        display: block;
+      }
+      h3{
+        line-height: 45px;
+        border-bottom: 1px solid #f4f4f4;
+        em{
+          float: right;
+          font-style: normal;
+          color:#3492e9;
+        }
+      }
+    }
+  }
+}

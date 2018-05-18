@@ -1,0 +1,34 @@
+<ion-view class="powerDetailCSS">
+    <ion-nav-title>日电量</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="barGraph">
+            <bar id="mainDay" legend="legend" data="data"></bar>
+        </div>
+        <div class="dayPowerList">
+            <table>
+                <tr >
+                    <th>
+                        <span>日期</span>
+                        <span>(日)</span>
+                    </th>
+                    <th>
+                        <span>发电量</span>
+                        <span class="unitShow">(万KW.h)</span>
+                    </th>
+                    <th>
+                        <span>日限负荷损失电量</span>
+                        <span class="unitShow">(万KW.h)</span>
+                    </th>
+                </tr>
+                <tr ng-repeat="pdvalue in pdDayPower">
+                    <td>
+                        <span class="yearShow">{{pdvalue.REPORT_ID | date : "yyyy"}}</span>
+                        <span class="mdayShow">{{pdvalue.REPORT_ID | date : "MM月dd"}}</span>
+                    </td>
+                    <td>{{pdvalue.DAY_ELE_AMOUNT | number:2}}</td>
+                    <td>{{pdvalue.DAY_LOSS_AMOUNT | number:2}}</td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

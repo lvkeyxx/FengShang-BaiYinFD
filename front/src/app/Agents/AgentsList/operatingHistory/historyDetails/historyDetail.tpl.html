@@ -1,0 +1,82 @@
+<ion-view  class="agentsView">
+    <ion-nav-title>已审批详情</ion-nav-title>
+    <ion-content class="padding">
+      <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+          <div class="beizhu">
+            <div class="riseCss">标题:</div>
+            <div class="explainCss">{{item.TITLE}}</div>
+           </div>
+           <div class="allCss lastDate">
+            <div class=myCss >流程最终处理时间:</div>
+            <div  class=myCss>{{item.CREATED_DATE | date : "MM月dd日HH时mm分"}}</div>
+           </div>
+           <div class="allCss" ng-if="item.FORM_INFO==''?false:true">
+              <div class="riseCss"  >附加信息:</div>
+              <div class="addInformation explainCss">
+                <div class="addMessage" ng-repeat="MSG in item.FORM_INFO">
+                  <div class="fromIn">
+                        <!-- <div>{{key+'':''}}</div> -->
+                        <div>{{MSG}}</div>
+                  </div>
+                </div>
+              </div>
+           </div>
+           <div class="accessoryCss" ng-show="disFile" ng-click="accessoryCont()">附件</div>
+           <div ng-show="displayFile" class="explainCss" ng-repeat="i in item.ATTACHMENT">
+             <a  ng-click="openUrl(i.URL)">{{i.TITLE}}</a>
+           </div>
+           <!-- <div class="lineCss"></div> -->
+           <div  class="beizhu">
+              <div class="riseCss">备注:</div>
+              <div class="explainCss">{{item.ITEM_MESSAGE}}</div>
+           </div>
+           <div class="allCssDate">
+             <div class=myCss>
+              <div class="riseCss">提交人姓名:</div>
+              <div class="explainCss">{{item.SUBMIT_PERSON_NAME==""?item.SUBMIT_PERSON:item.SUBMIT_PERSON_NAME}}</div>
+           </div>
+           <div class=myCss>
+              <div class="riseCss">完成这条代码的人：</div>
+              <div class="explainCss">{{item.COMPLETED_BY}}</div>
+           </div>
+           </div>
+           
+            <div class="allCssDate">
+             <div class=myCss>
+              <div class="riseCss">当前审批人姓名:</div>
+              <div class="explainCss">{{item.PERSON_NAME==""?item.IDENTITY:item.PERSON_NAME}}</div>
+            </div>
+             <div class=myCss>
+              <div class="riseCss">完成人名字：</div>
+              <div class="explainCss">{{item.COMPLETE_NAME}}</div>
+            </div>
+            </div>
+          
+
+            <div  class="allCssDate">
+            <div class=myCss>
+              <div class="riseCss">流程发起时间:</div>
+              <div class="explainCss">{{item.SUBMIT_DATE | date : "MM月dd日HH时mm分"}}</div>
+            </div>
+            <div class=myCss>
+               <div class="riseCss">完成时间:</div>
+              <div class="explainCss">{{item.COMPLETED_DATE | date : "MM月dd日HH时mm分"}}</div>
+            </div>
+            </div>
+             <div class="accessoryCss" ng-show="disFile" ng-click="accessoryCont()">附件</div>
+           <div ng-show="displayFile" class="explainCss" ng-repeat="i in item.ATTACHMENT">
+             <a  ng-click="openUrl(i.URL)">{{i.TITLE}}</a>
+           </div>
+            
+            <div class="allCss">
+              <div class="riseCss">对应表单现在状态:</div>
+              <div class="explainCss">{{item.APPROVAL_STATE}}</div>
+            </div>
+           <div class="allCss">
+              <div class="riseCss">审批意见：</div>
+              <div class="explainCss">{{item.APP_INFO}}</div>
+            </div>
+           
+           
+    </ion-content>
+</ion-view>

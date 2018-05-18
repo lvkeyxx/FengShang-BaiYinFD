@@ -1,0 +1,31 @@
+angular.module('BaiYin.home', [
+    'BaiYin.tabs.homePage',
+    'BaiYin.tabs.mine',
+    'BaiYin.tabs.message',
+    'BaiYin.tabs.porductManage'
+])
+
+.controller('tabController', ['$scope', '$http', '$state', '$ionicViewSwitcher', '$ionicHistory','showAlert',
+    function($scope, $http, $state, $ionicViewSwitcher, $ionicHistory,showAlert) {
+
+        $scope.getContentTpl = function() {
+            return $scope.currentTab + '/content.tpl.html';
+        }
+        $scope.isActived = function(tabName) {
+            return tabName == $scope.currentTab;
+        }
+        $scope.goTab = function(tabName) {
+            if (tabName != $scope.currentTab) {
+                $ionicViewSwitcher.nextDirection('none');
+                $ionicHistory.nextViewOptions({ historyRoot: true });
+                $ionicHistory.clearHistory();
+                $state.go(tabName, {}, {
+                    location: 'replace'
+                });
+            }
+        }
+        $scope.goTabJygl = function () {
+            showAlert.showMsg('','','程序员正在玩命开发中……')
+        }
+    }
+])
