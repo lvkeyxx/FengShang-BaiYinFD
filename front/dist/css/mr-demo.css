@@ -2501,11 +2501,8 @@ ion-tabs.tabs-color-active-positive .tab-item.activated {
 .facilityInfoCSS .tab-item.tab-item-active span {
   color: #3492e9;
 }
-.facilityInfoCSS .loadLists {
-  margin-top: 45px;
-}
 .facilityInfoCSS .loadList {
-  margin-top: 110px;
+  margin-top: 0.83333333rem;
 }
 .facilityInfoCSS .facilityList {
   background: #fff;
@@ -4623,6 +4620,9 @@ ion-tabs.tabs-color-active-positive .tab-item.activated {
     transform: rotate(359deg);
   }
 }
+.ListOfBluetoothCSS .list {
+  padding-bottom: 0.6rem;
+}
 .ListOfBluetoothCSS .list .card {
   margin: 20px 10px;
   font-size: 1.2em;
@@ -5126,7 +5126,7 @@ ion-tabs.tabs-color-active-positive .tab-item.activated {
 }
 
 .loginCSS {
-  background: url(../images/login/loginBagImg.png) no-repeat;
+  background: url(../images/login/loginBagImg3.png) no-repeat;
   /*background-size: 100%;*/
   background-size: cover;
 }
@@ -5747,6 +5747,9 @@ select:-webkit-autofill {
 }
 .mineCSS .menuList .ion-data {
   background: url(../images/mine/icon_01.png) no-repeat center center;
+}
+.mineCSS .menuList .ion-board {
+  background: url(../images/mine/icon_05.png) no-repeat center center;
 }
 .mineCSS .menuList .ion-myMsg {
   background: url(../images/mine/icon_02.png) no-repeat center center;
@@ -6562,6 +6565,12 @@ select:-webkit-autofill {
 .OSIcountCSS .list .card:first-child {
   margin-top: 0rem;
 }
+.OSIcountCSS .tips {
+  padding: 10px 10px 0px 15px;
+  color: #ff0000;
+  margin-top: 10px;
+  border-top: 1px solid #f4f4f4;
+}
 
 .OSICSS {
   background-color: #fff;
@@ -6789,6 +6798,12 @@ select:-webkit-autofill {
 .OSIHistoryCSS .list.autoOperation > .time > span {
   margin: 0rem 0.24rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.OSIHistoryCSS .tips {
+  padding: 10px 10px 0px 15px;
+  color: #ff0000;
+  margin-top: 10px;
+  border-top: 1px solid #f4f4f4;
 }
 
 .OSIHistoryDetailCSS {
@@ -7885,6 +7900,9 @@ select:-webkit-autofill {
 }
 .powerCSS .loadList .monthList .litop .relativeRatio {
   line-height: 0.55555556rem;
+}
+.powerCSS .loadList .monthList .litop .powertime {
+  line-height: 333%;
 }
 .powerCSS .loadList .monthList .litop .powerright {
   float: right;

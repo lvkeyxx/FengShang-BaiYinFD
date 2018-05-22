@@ -15,10 +15,11 @@
 			<div></div>
 			<span>{{data.ORG_NAME}}</span>
 		</div>
+		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>
 		<div class="list">
 			<div class="card" ng-repeat="item in list" ng-click="openDepartmentEquipmentPersonnel(item);">
 				<span class="flex3">{{item.MCH_NAME}}</span>
-				<span>{{item.PLAN_INSPECTED}}/{{item.PLAN_INSPECT}}/{{item.OUT_PLAN_INSPECTED}}</span>
+				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>
 				<span>{{item.percentage}}%</span>
 			</div>
 			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>

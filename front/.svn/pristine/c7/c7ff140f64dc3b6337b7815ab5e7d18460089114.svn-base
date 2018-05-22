@@ -1,0 +1,18 @@
+<ion-view class="ListOfBluetoothCSS">
+	<ion-nav-title>蓝牙列表</ion-nav-title>
+	<ion-content class="ListOfBluetoothController" has-bouncing="false" scrollbar-y="false">
+        <div class="operation">
+            <div class="button" ng-click="bluetooth();" ng-bind-html="bottonText"></div>
+        </div>
+        <div class="list">
+            <div class="card" ng-repeat="item in known">
+                <div>{{item.ADDRESS}}</div>
+                <div>({{item.device.id}}) - ({{item.device.distance}}米)</div>
+            </div>
+            <div class="card" ng-repeat="item in unknown" ng-click="toEdit({device: item});">
+                <div>{{item.id}}</div>
+                <div>({{item.distance}}米)</div>
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

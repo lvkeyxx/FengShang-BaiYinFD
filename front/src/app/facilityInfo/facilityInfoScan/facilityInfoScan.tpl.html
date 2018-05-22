@@ -1,18 +1,10 @@
 <ion-view class="facilityInfoCSS">
     <ion-nav-title>设备台账</ion-nav-title>
-    <!--<div class="loadLists" id="scanFaclidyHide">
-        <div class="facilityList">
-            <div class="scanQRcode">
-                <input type="text" placeholder="请扫描设备二维码" class="scanCode"
-                       ng-click="toScanCode()" readonly>
-            </div>
-        </div>
-    </div>-->
     <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab" id="faciltyHide" ng-hide="faciltyHide">
         <ion-tab title="设备信息" ng-click="goObtain()">
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="loadList">
-                    <div class="facilityList">
+                    <div class="facilityList" style="padding-top:60px;">
                         <div class="scanQRcodeNumber">
                             设备编码 : <span style="margin-left:10px"></span> {{equipmentDetail.MCH_CODE}}
                         </div>
@@ -56,7 +48,7 @@
         <ion-tab title="缺陷履历" ng-click="goDefect()">
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="loadList">
-                    <div class="facilityList">
+                    <div class="facilityList" style="padding-top:40px;">
                         <div class="list" ng-repeat="DefectList in equipmentDefectList">
                             <a class="item" href="#" ng-click="toDefectDetail(DefectList)">
                                 <div class="titleDes">设备编码 : {{DefectList.FACT_MCH_CODE}}</div>
@@ -74,7 +66,7 @@
         <ion-tab title="工单履历" ng-click="goWork()">
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="loadList">
-                    <div class="facilityList">
+                    <div class="facilityList" style="padding-top:40px;">
                         <div class="list" ng-repeat="WorkList in equipmentWorkList">
                             <a class="item" href="#" ng-click="">
                                 <div class="titleDes">设备编码 : {{WorkList.FACT_MCH_CODE}}</div>
@@ -97,7 +89,7 @@
         <ion-tab title="巡查记录" ng-click="goInspection()">
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="loadList">
-                    <div class="facilityList">
+                    <div class="facilityList" style="padding-top:40px;">
                         <div class="list">
                             <div class="card" ng-repeat="PatrolList in equipmentPatrolList" ng-click="goInspectionRecord(PatrolList)">
                                 <span>{{PatrolList.PERSON_NAME}}</span>

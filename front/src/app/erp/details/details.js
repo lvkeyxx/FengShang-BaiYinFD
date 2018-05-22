@@ -69,7 +69,7 @@ angular
 				var data = null;
 				try{
                     if(!$scope.data.opinion){
-                        $scope.data.opinion =  "同意.";
+                        $scope.data.opinion =  "批准";
                     }
 					data = getSendData();
 				}catch(e){

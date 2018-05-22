@@ -1,0 +1,78 @@
+.OSIcountCSS {
+    @rem: 144rem;
+    background-color: #fff;
+    ion-tabs {
+        display: block;
+    }
+    .tabs-positive>.tabs {
+        background-color: #FFF;
+        color: #000;
+    }
+    .tab-item {
+        max-width: none;
+        &.tab-item-active {
+            color: #1296db;
+            border-bottom: 2px solid #1296db;
+        }
+    }
+    ion-content.has-tabs-top {
+        top: 93px;
+	}
+	.title{
+        padding: 0.18rem;
+        display: flex;
+        white-space: nowrap;
+		&>div{
+			flex: 1;
+        }
+        &>span:first-child{
+            &>button:first-child{
+                margin-left: 0rem;
+            }
+        }
+		&>span{
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			.leftSelect, .rightSelect {
+				margin: 0rem 0.08rem;
+				width: 25px;
+				height: 25px;
+				border: none;
+			}
+			.leftSelect,.rightSelect {
+				background: url(../images/attence/leftIcon.png);
+			}
+			.rightSelect {
+				background: url(../images/attence/rightIcon.png);
+			}
+        }
+        &>span:nth-of-type(3){
+            padding: 0.12rem 0.16rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.3);
+        }
+	}
+	.list{
+		.card{
+            padding: 0rem 0.24rem;
+			display: flex;
+			margin: 0.18rem;
+			span{
+                padding: 0.24rem 0rem;
+				flex: 1;
+            }
+            span.flex3{
+				flex: 3;
+			}
+		}
+		.card:first-child{
+			margin-top: 0rem;
+		}
+	}
+  .tips {
+    padding: 10px 10px 0px 15px;
+    color: #ff0000;
+    margin-top: 10px;
+    border-top: 1px solid #f4f4f4;
+  }
+}

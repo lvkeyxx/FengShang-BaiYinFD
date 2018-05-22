@@ -7,10 +7,11 @@
         <div class="list">
             <div class="card" ng-repeat="item in known">
                 <div>{{item.ADDRESS}}</div>
-                <div>({{item.device.id}})</div>
+                <div>({{item.device.id}}) - ({{item.device.distance}}米)</div>
             </div>
             <div class="card" ng-repeat="item in unknown" ng-click="toEdit({device: item});">
                 <div>{{item.id}}</div>
+                <div>({{item.distance}}米)</div>
             </div>
         </div>
 	</ion-content>

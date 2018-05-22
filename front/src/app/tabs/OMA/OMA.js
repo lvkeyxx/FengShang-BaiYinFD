@@ -24,6 +24,6 @@ angular
                 // getPowerPlantList();
             });
             $scope.totask=function () {
-                showAlert.showMsg('','','程序员正在玩命开发中……')
+                showAlert.showMsg('','','开发中……')
             }
         }]);

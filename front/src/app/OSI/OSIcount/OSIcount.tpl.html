@@ -15,10 +15,11 @@
 						<button class="rightSelect" ng-click="changeDateTime('personalEnd', 1, date.personalStart, date.now);"></button>
 					</span>
 				</div>
+				<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>
 				<div class="list">
 					<div class="card" ng-repeat="item in tabs['personal'].list">
 						<span>{{item.PERSON_NAME}}</span>
-						<span ng-click="openPersonnelEquipment(item);">{{item.PLAN_INSPECTED}}/{{item.PLAN_INSPECT}}/{{item.OUT_PLAN_INSPECTED}}</span>
+						<span ng-click="openPersonnelEquipment(item);">{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>
 						<span ng-click="openRecord(item);">{{item.percentage}}%</span>
 					</div>
 				</div>
@@ -39,10 +40,11 @@
 						<button class="rightSelect" ng-click="changeDateTime('departmentEnd', 1, date.departmentStart, date.now);"></button>
 					</span>
 				</div>
+				<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>
 				<div class="list">
 					<div class="card" ng-repeat="item in tabs['department'].list">
 						<span ng-click="openDepartmentPersonnel(item);">{{item.ORG_NAME}}</span>
-						<span ng-click="openDepartmentEquipment(item);">{{item.PLAN_INSPECTED}}/{{item.PLAN_INSPECT}}/{{item.OUT_PLAN_INSPECTED}}</span>
+						<span ng-click="openDepartmentEquipment(item);">{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>
 						<span>{{item.percentage}}%</span>
 					</div>
 					<ion-infinite-scroll ng-if="tabs['department'].hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>

@@ -13,6 +13,9 @@
             <a href="/ListOfBluetooth" nav-direction="forward" class="item item-icon-left">
                 <i class="icon ion-bluetooth"></i><span class="handText">蓝牙列表</span>
             </a>
+            <a ng-click="tobBoard()" nav-direction="forward" class="item item-icon-left">
+                <i class="icon ion-board"></i><span class="handText">白板管理</span>
+            </a>
             <a href="/userConfig" nav-direction="forward" class="item item-icon-left">
                 <i class="icon ion-myMsg"></i><span class="handText">个人资料</span>
             </a>
@@ -23,8 +26,8 @@
                 <i class="icon ion-commend"></i><span class="handText">APP反馈</span>
             </a>
             <!-- Android -->
-            <div nav-direction="forward" class="item item-icon-left" ng-click="checkVersion()" ng-if="DeviceType == 'Android'">
-                <i class="icon ion-version"></i><span class="handText">版本检测</span>
+            <div nav-direction="forward" class="item item-icon-left" close-popup-back-drop ng-click="checkVersion()" ng-if="DeviceType == 'Android'">
+                <i class="icon ion-version"></i><span class="handText">版本信息</span>
                 <div class="versionTwo">
                     <span class="handText" class="remindTwo">
                 </span>V {{appVersion}}
@@ -32,8 +35,8 @@
                 </div>
             </div>
             <!-- iOS -->
-            <div nav-direction="forward" class="item item-icon-left" ng-if="DeviceType != 'Android'">
-                <i class="icon ion-version"></i><span class="handText">当前版本</span>
+            <div nav-direction="forward" class="item item-icon-left" close-popup-back-drop ng-click="checkVersion()" ng-if="DeviceType != 'Android'">
+                <i class="icon ion-version"></i><span class="handText">版本信息</span>
                 <div class="versionTwo">
                     <span class="handText" class="remindTwo">
                 </span>V {{appVersion}}

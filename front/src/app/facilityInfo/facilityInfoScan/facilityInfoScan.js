@@ -29,6 +29,7 @@ angular.module('BaiYin.facilityInfoScan', [
             $scope.goObtain=function () {
                 $ionicTabsDelegate.select(0);
                 $scope.facilityObtain($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+
             }
             $scope.facilityObtain=function(MCH_CODE,CONTRACT) {
                 loadingAnimation.showLoading('数据载入中', 'loding', 0);
@@ -46,6 +47,7 @@ angular.module('BaiYin.facilityInfoScan', [
                             showAlert.showMsg('', '', res.msg);
                         }
                     }, function (error) {
+                        loadingAnimation.hideLoading();
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
                     });
             }
@@ -67,6 +69,7 @@ angular.module('BaiYin.facilityInfoScan', [
                     MCH_CODE:MCH_CODE,
                     CONTRACT:CONTRACT
                 }
+
                 $http.post('ServiceName=EquipService&TransName=equipmentDefect',params)
                     .then(function (res) {
                         loadingAnimation.hideLoading();
@@ -136,6 +139,7 @@ angular.module('BaiYin.facilityInfoScan', [
                             showAlert.showMsg('', '', res.msg);
                         }
                     }, function (error) {
+                        loadingAnimation.hideLoading();
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
                     });
             }

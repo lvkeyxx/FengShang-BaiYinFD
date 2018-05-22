@@ -18,14 +18,11 @@ angular.module('BaiYin.ListOfBluetooth', [
 			$scope.known = new Array();
 			//未知蓝牙列表
 			$scope.unknown = new Array();
-			//蓝牙搜索记录
-			var bluetoothRecord = new Object();
 			//初始化数据
 			var initPage = function(){
 				$scope.bottonText = "搜索";
 				$scope.known = new Array();
 				$scope.unknown = new Array();
-				var bluetoothRecord = new Object();
 			};
 
 			$scope.$on('$ionicView.enter', function () {
@@ -62,7 +59,8 @@ angular.module('BaiYin.ListOfBluetooth', [
 				}, 5000);
 
 				ble.scan([], 5,function(device){
-					bluetoothRecord[device.id] ? "" : bluetoothRecord[device.id] = 1, matching(device);
+					device.distance = Math.round(device.distance * 10) / 10;
+					matching(device);
 				}, function(){
 					endScan();
 					showAlert.showMsg("", "", "扫描蓝牙出错");

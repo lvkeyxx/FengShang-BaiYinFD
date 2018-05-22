@@ -8,7 +8,7 @@ angular.module('BaiYin.app.config', [
 //外网
 /*.constant('outerNetUri', 'http://61.178.91.96:57001/AppSerivce/json?')
 
-//内网s
+//内网
 .constant('intranetUri', 'http://10.0.12.80:57001/AppSerivce/json?')*/
 
 /*
@@ -16,11 +16,11 @@ angular.module('BaiYin.app.config', [
  */
 //外网
 //.constant('outerNetUri', 'http://124.152.7.69:57001/AppSerivce/json?')
-.constant('outerNetUri', 'http://192.168.1.117:81/AppSerivce/json?')
+.constant('outerNetUri', 'http://192.168.1.112:81/AppSerivce/json?')
 //
 //内网
 //.constant('intranetUri', 'http://10.0.12.73:57001/AppSerivce/json?')
-.constant('intranetUri', 'http://192.168.1.117:81/AppSerivce/json?')
+.constant('intranetUri', 'http://192.168.1.112:81/AppSerivce/json?')
 
 .constant('AppDefaultRootUrl', '/blankPage')
 

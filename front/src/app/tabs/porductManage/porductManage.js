@@ -46,6 +46,7 @@ angular.module('BaiYin.tabs.porductManage', [
             //点击任务管理
             $scope.toRwgl = function () {
                 $state.go('taskManage');
+                // showAlert.showMsg('', '', '开发中……')
             }
             //点击设备台账
             $scope.toSbxx = function () {
