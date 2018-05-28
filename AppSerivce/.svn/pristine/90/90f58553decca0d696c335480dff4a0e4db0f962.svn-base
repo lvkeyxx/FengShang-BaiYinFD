@@ -1,0 +1,93 @@
+package com.service.electric.sql;
+
+import com.utility.MapUtil;
+
+import java.util.Map;
+
+/**设备信息查询
+ * Created by Administrator on 2018/5/15.
+ */
+public class ElecSettlementSQL {
+
+	/**
+     * 获取结算电量年数据
+     * @param map
+     * @return
+     */
+    public static String getElecSettlementYearInfo(Map map) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select to_char(to_date(TRADE_MONTH, 'yyyyMM'), 'yyyy') TRADE_MONTH, ");
+        sb.append(" (sum(BASE_CHARGE_VALUE)+"
+        		+ " sum(MARKET_CHARGE_VALUE)+"
+        		+ " sum(DELIVERY_CHARGE_VALUE)+"
+        		+ " sum(DIRECT_CHARGE_VALUE)+"
+        		+ " sum(RIGHTS_CHARGE_VALUE)) TOTAL_CHARGE_VALUE, ");
+        sb.append(" sum(BASE_CHARGE_VALUE) BASE_CHARGE_VALUE, " +
+    			  " sum(MARKET_CHARGE_VALUE) MARKET_CHARGE_VALUE, " +
+    			  " sum(DELIVERY_CHARGE_VALUE) DELIVERY_CHARGE_VALUE, " +
+    			  " sum(DIRECT_CHARGE_VALUE) DIRECT_CHARGE_VALUE, " +
+    			  " sum(RIGHTS_CHARGE_VALUE) RIGHTS_CHARGE_VALUE " +
+    		 " from ifsapp.C_ELEC_BILLING ");
+	    sb.append(" where TRADE_MONTH>='" + "201801" + "' and TRADE_MONTH<='" + "201805" + "'");
+	    /*分厂电量数据*/
+	    if(MapUtil.valueIsNotNull(map, "CONTRACT")) {
+	    	sb.append(" and CONTRACT='" + "1101" + "' group by TRADE_MONTH");
+	    } else {
+	    	sb.append(" and CONTRACT<>'" + "10" + "' group by TRADE_MONTH");
+	    }
+        return sb.toString();
+    }
+
+    /**
+     * 获取结算电量、电价月份数据
+     * @param map
+     * @return
+     */
+    public static String getElecSettlementMonInfo(Map map){
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select TRADE_MONTH, ");
+        sb.append(" ("
+        		+ " sum(BASE_CHARGE_VALUE)+"
+        		+ " sum(MARKET_CHARGE_VALUE)+"
+        		+ " sum(DELIVERY_CHARGE_VALUE)+"
+        		+ " sum(DIRECT_CHARGE_VALUE)+"
+        		+ " sum(RIGHTS_CHARGE_VALUE)"
+        		+ " ) TOTAL_CHARGE_VALUE, ");
+        sb.append(" ("
+        		+ " sum(BASE_CHARGE_VALUE*BASE_CHARGE_PRICE)+"
+        		+ " sum(MARKET_CHARGE_VALUE*MARKET_CHARGE_PRICE)+"
+        		+ " sum(DELIVERY_CHARGE_VALUE*DELIVERY_CHARGE_PRICE)+"
+        		+ " sum(DIRECT_CHARGE_VALUE*DIRECT_CHARGE_PRICE)+"
+        		+ " sum(RIGHTS_CHARGE_VALUE*RIGHTS_CHARGE_PRICE)"
+        		+ " ) "
+        		+ " / "
+        		+ " ("
+        		+ " sum(BASE_CHARGE_VALUE)+"
+        		+ " sum(MARKET_CHARGE_VALUE)+"
+        		+ " sum(DELIVERY_CHARGE_VALUE)+"
+        		+ " sum(DIRECT_CHARGE_VALUE)+"
+        		+ " sum(RIGHTS_CHARGE_VALUE)"
+        		+ " ) AVG_CHARGE_VALUE, ");
+        sb.append(" sum(BASE_CHARGE_VALUE) BASE_CHARGE_VALUE, " +
+    			  " sum(BASE_CHARGE_VALUE*BASE_CHARGE_PRICE)/sum(BASE_CHARGE_VALUE) BASE_CHARGE_PRICE, " +
+    			  " sum(MARKET_CHARGE_VALUE) MARKET_CHARGE_VALUE, " +
+    			  " sum(MARKET_CHARGE_VALUE*MARKET_CHARGE_PRICE)/sum(MARKET_CHARGE_VALUE) MARKET_CHARGE_VALUE , " +
+    			  " sum(DELIVERY_CHARGE_VALUE) DELIVERY_CHARGE_VALUE, " +
+    			  " sum(DELIVERY_CHARGE_VALUE*DELIVERY_CHARGE_PRICE)/sum(DELIVERY_CHARGE_VALUE) DELIVERY_CHARGE_PRICE , " +
+    			  " sum(DIRECT_CHARGE_VALUE) DIRECT_CHARGE_VALUE, " +
+    			  " sum(DIRECT_CHARGE_VALUE*DIRECT_CHARGE_PRICE)/sum(DIRECT_CHARGE_VALUE) DIRECT_CHARGE_PRICE , " +
+    			  " sum(RIGHTS_CHARGE_VALUE) RIGHTS_CHARGE_VALUE, " +
+    			  " sum(RIGHTS_CHARGE_VALUE*RIGHTS_CHARGE_PRICE)/sum(RIGHTS_CHARGE_VALUE) RIGHTS_CHARGE_PRICE " +
+    		      " from ifsapp.C_ELEC_BILLING ");
+	    sb.append(" where TRADE_MONTH>='" + "201801" + "' and TRADE_MONTH<='" + "201812" + "'");
+	    if(MapUtil.valueIsNotNull(map, "CONTRACT")) {
+	    	sb.append(" and CONTRACT='" + "1101" + "' group by TRADE_MONTH");
+	    } else {
+	    	sb.append(" and CONTRACT<>'" + "10" + "' group by TRADE_MONTH");
+	    }
+        return sb.toString();
+    }
+
+    
+}

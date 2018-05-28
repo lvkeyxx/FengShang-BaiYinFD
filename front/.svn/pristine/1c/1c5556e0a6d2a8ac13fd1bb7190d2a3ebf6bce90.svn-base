@@ -1,0 +1,27 @@
+<ion-view class="MarketbasedTradIndexCSS">
+    <ion-nav-title>交易公告</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button-icon icon ion-timedimension" ng-click="toMarketbasedSearch()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="marketbased clearfix" ng-repeat="NoticeList in marketNoticeList" ng-click="goMarketbasedTradDetail(NoticeList)">
+            <div class="lft">{{NoticeList.TITLE}}</div>
+        </div>
+        <div class="bg" ng-click="hideSearch()"></div>
+        <div class="MarketbasedShow" style="display: none; width: 95%; max-height: 100%;">
+            <label class="item item-input">
+                <span class="input-label">交易名称：</span>
+                <input type="text" id="Noticenameid" placeholder="请输入交易名称">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">交易内容：</span>
+                <input type="text" id="Noticecontentid" placeholder="请输入交易内容">
+            </label>
+            <div class="padding">
+                <button class="searchSbBtn button button-block button-positive" ng-click="noticeSearchSblist()">查询</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+

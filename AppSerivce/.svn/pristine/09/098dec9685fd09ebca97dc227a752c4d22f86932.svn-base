@@ -1,0 +1,55 @@
+package com.service.electric;
+
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.exception.ServiceException;
+import com.service.AJsonService;
+import com.service.IJsonService;
+import com.service.electric.sql.ElecSettlementSQL;
+import com.utility.IbatisDBUtil;
+import com.utility.ListUtil;
+
+public class ElecSettlementService extends AJsonService implements IJsonService{
+	
+	/**
+     * 结算电量首页\各分电厂饼图数据、表格数据
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String getElecSettlementAll(Map map) throws ServiceException{
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try{
+        	// 饼图sql
+            String psql = ElecSettlementSQL.getElecSettlementYearInfo(map);
+            logger.info("sql====="+psql);
+            List<Map> pList = new IbatisDBUtil().executeSql(psql);
+            String tsql = ElecSettlementSQL.getElecSettlementMonInfo(map);
+            logger.info("sql====="+tsql);
+            List<Map> tList = new IbatisDBUtil().executeSql(tsql);
+            if(ListUtil.isEmpty(tList)){
+            	code = "1";
+            	msg = "未查询到结算电量信息";
+            }
+            json.put("pList",pList);
+            json.put("tList",tList);
+        }catch (Throwable e){
+            e.printStackTrace();
+            throw new ServiceException("7003","获取结算电量信息出错");
+        }
+        try {
+            json.put("code", code);
+            json.put("msg", msg);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+}
+
+	

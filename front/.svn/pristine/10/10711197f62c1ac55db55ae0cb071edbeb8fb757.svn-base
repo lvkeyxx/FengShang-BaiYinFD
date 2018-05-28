@@ -1,0 +1,44 @@
+<ion-view class="MarketbasedTradCSS">
+    <ion-nav-title>市场化交易</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="selectMounths">
+            <button class="leftSelect" ng-click="getPrebasedMonth(nowMounth)" id="countMouthShowID"></button>
+            {{nowMounth | date : "yyyy-MM"}}
+            <button class="markbasedSelect" ng-click="getNextbasedMonth(nowMounth)"></button>
+            <div class="selectGlassMounth" ng-click="goMarketbasedTradindex()">
+                <!--<div class="commitBtn" ></div>-->
+            </div>
+        </div>
+        <div class="marketList">
+            <table>
+                <div class="marketright">单位：(万千瓦时)</div>
+                <tr>
+                    <th>
+                        <span>域名称</span>
+                    </th>
+                    <th>
+                        <span>交易年月</span>
+                    </th>
+                    <th>
+                        <span>申报电量</span>
+                    </th>
+                    <th>出清电量</th>
+                </tr>
+                <tr ng-repeat="ketList in elemarketList">
+                    <td>{{ketList.CONTRANCT_NAME}}</td>
+                    <td>{{ketList.TRADE_MONTH}}</td>
+                    <td>{{ketList.APPLY_CHARGE_VALUE}}</td>
+                    <td>{{ketList.CLEARING_CHARGE_VALUE}}</td>
+                </tr>
+                <tr>
+                    <td colspan=2>合计</td>
+                    <td>{{APPLY_CHARGE_VALUE_SUM}}</td>
+                    <td>{{CLEARING_CHARGE_VALUE_SUM}}</td>
+                </tr>
+            </table>
+        </div>
+
+
+    </ion-content>
+</ion-view>
+

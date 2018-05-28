@@ -1,0 +1,50 @@
+package com.service.electric.sql;
+
+import com.utility.MapUtil;
+
+import java.util.Map;
+
+/**现货交易
+ * Created by yangxx on 2018/5/25.
+ */
+public class ElecSpotSQL {
+
+    /**
+     * 现货交易列表
+     * @param map
+     * @return
+     */
+    public static String elecSpotList(Map map){
+        StringBuffer sb = new StringBuffer();
+        sb.append(" SELECT trade_day TRADE_DAY," +
+                "       contract CONTRACT," +
+                "       IFSAPP.Company_Site_API.Get_Description(contract) CONTRACT_NAME," +
+                "       apply_charge_value APPLY_CHARGE_VALUE," +
+                "       apply_charge_price APPLY_CHARGE_PRICE," +
+                "       clearing_charge_value CLEARING_CHARGE_VALUE," +
+                "       clearing_charge_price CLEARING_CHARGE_PRICE," +
+                "       remark REMARK," +
+                "       state STATE" +
+                "  FROM IFSAPP.C_ELEC_SPOT_TRADE");
+        sb.append(" WHERE 1=1 ");
+        if(MapUtil.valueIsNotNull(map,"TRADE_YEAR")){
+            sb.append(" and to_char(to_date(TRADE_DAY,'yyyy'),'yyyy') = '");
+            sb.append(MapUtil.stringValue(map,"TRADE_YEAR"));
+            sb.append("'");
+        }
+        if(MapUtil.valueIsNotNull(map,"TRADE_MONTH")){
+            sb.append(" and to_char(to_date(TRADE_DAY,'yyyyMM'),'yyyymm') = '");
+            sb.append(MapUtil.stringValue(map,"TRADE_MONTH"));
+            sb.append("'");
+        }
+        if(MapUtil.valueIsNotNull(map,"TRADE_DAY")){
+            sb.append(" and to_char(to_date(TRADE_DAY,'yyyyMMdd'),'yyyymmdd') = '");
+            sb.append(MapUtil.stringValue(map,"TRADE_DAY"));
+            sb.append("'");
+        }
+        sb.append(" order by TRADE_DAY desc");
+
+
+        return sb.toString();
+    }
+}

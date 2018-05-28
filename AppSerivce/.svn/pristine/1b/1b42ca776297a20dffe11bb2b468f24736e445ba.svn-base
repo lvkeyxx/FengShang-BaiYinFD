@@ -1,0 +1,33 @@
+package com.service.electric;
+
+import com.exception.ServiceException;
+import com.service.AJsonService;
+import com.service.IJsonService;
+import org.json.JSONObject;
+
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2018/5/24.
+ */
+public class ElecMarketService extends AJsonService implements IJsonService {
+
+    /**
+     * 市场化交易列表
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String elecMarketList(Map map) throws ServiceException{
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try{
+
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+
+        return json.toString();
+    }
+}

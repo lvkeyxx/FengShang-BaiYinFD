@@ -61,37 +61,6 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('bulletinBoard/bulletinBoard.tpl.html',
-    '<ion-view class="bulletinBoardCSS">\n' +
-    '    <ion-nav-title>公告</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="tips">\n' +
-    '            <span>提示：点击标题进入编辑页</span>\n' +
-    '        </div>\n' +
-    '        <div class="bulletinBoardList">\n' +
-    '            <table>\n' +
-    '                <tr>\n' +
-    '                    <th>排序号</th>\n' +
-    '                    <th>标题</th>\n' +
-    '                </tr>\n' +
-    '                <tr ng-repeat=" board in tList track by $index">\n' +
-    '                    <td>{{board.SORT}}</td>\n' +
-    '                    <td ng-click="toEdit(board.LINE_NO)">{{board.NEWS_TITLE}}</td>\n' +
-    '                </tr>\n' +
-    '            </table>\n' +
-    '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('attence/attence.tpl.html',
     '<ion-view class="attenceCSS">\n' +
     '    <ion-nav-title>{{DeptName}}</ion-nav-title>\n' +
@@ -117,7 +86,7 @@ module.run(['$templateCache', function($templateCache) {
     '                    </div>\n' +
     '                    <div class="clockinShow">\n' +
     '                        <span ng-hide="sbdktimeShow" id="clockInid">{{punckClockOn.clockTips}}</span>\n' +
-    '                        <button id="sbPunchClock" class="clockingreyBtn" ng-click="toClockIn()" ng-hide="clockinBtn" disabled="true">打卡</button>\n' +
+    '                        <button id="sbPunchClock" class="clockingreyBtn" ng-click="!canClickInBtn || toClockIn();" ng-hide="clockinBtn">打卡</button>\n' +
     '                    </div>\n' +
     '                </div>\n' +
     '                <div class="clockout">\n' +
@@ -131,7 +100,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <span ng-hide="xbdktimeShow">\n' +
     '                            <a href="" class="upClockoutBtn" ng-click="toClockupdate()">更新打卡></a>\n' +
     '                        </span>\n' +
-    '                        <button id="xbPunchClock" class="clockoutgreyBtn" ng-click="toClockout()" ng-hide="clockoutBtn" disabled="true">打卡</button>\n' +
+    '                        <button id="xbPunchClock" class="clockoutgreyBtn" ng-click="!canClickOutBtn || toClockout();" ng-hide="clockoutBtn">打卡</button>\n' +
     '                    </div>\n' +
     '                </div>\n' +
     '            </div>\n' +
@@ -155,6 +124,66 @@ module.run(['$templateCache', function($templateCache) {
     '                    </li>\n' +
     '                </ul>\n' +
     '            </div>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('bulletinBoard/bulletinBoard.tpl.html',
+    '<ion-view class="bulletinBoardCSS" on-tap="data.showReorder = false">\n' +
+    '    <ion-nav-title>公告</ion-nav-title>\n' +
+    '    <!-- <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="bulletinBoardList">\n' +
+    '            <table>\n' +
+    '                <tr>\n' +
+    '                    <th>排序号</th>\n' +
+    '                    <th>标题</th>\n' +
+    '                </tr>\n' +
+    '                <tr show-reorder="data.showReorder" on-hold="data.showReorder = !data.showReorder" \n' +
+    '                	ng-repeat=" board in tList track by $index">\n' +
+    '                    <td>{{board.SORT}}</td>\n' +
+    '                    <td ng-click="toEdit(board.LINE_NO)">{{board.NEWS_TITLE}}</td>\n' +
+    '                    <td class="button-assertive" ng-click="onItemDelete(board)">\n' +
+    '			            delete\n' +
+    '			        </td>\n' +
+    '			        <td class="ion-navicon" on-reorder="moveItem(board, $fromIndex, $toIndex)"></td>\n' +
+    '                </tr>\n' +
+    '            </table>\n' +
+    '        </div>\n' +
+    '    </ion-content> -->\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '    	<div class="tips">\n' +
+    '            <span>提示：点击公告标题编辑公告</span>\n' +
+    '        </div>\n' +
+    '        <div class="bulletinBoardList">\n' +
+    '            <table>\n' +
+    '                <tr>\n' +
+    '                    <th>序号</th>\n' +
+    '                    <th>标题</th>\n' +
+    '                </tr>\n' +
+    '             </table>\n' +
+    '			<ion-list class="ionList" show-reorder="data.showReorder" on-hold="data.showReorder = !data.showReorder">\n' +
+    '		        <ion-item class="item-remove-animate item-text-wrap" \n' +
+    '		        	ng-repeat="board in tList track by $index"  board="board"\n' +
+    '		                  ng-click="toEdit(board.LINE_NO)">\n' +
+    '		                  <!-- on-drag-up="moveItem(board, $fromIndex, $toIndex)"\n' +
+    '		                  on-drag-down="moveItem(board, $fromIndex, $toIndex)" -->\n' +
+    '          			<span class="titleSpan">{{board.SORT }}</span>\n' +
+    '          			<span class="textSpan">{{board.NEWS_TITLE}}</span>\n' +
+    '          			<!-- <ion-option-button class="button-assertive" ng-click="onItemDelete(board)">\n' +
+    '            			delete\n' +
+    '          			</ion-option-button> -->\n' +
+    '          			<ion-reorder-button class="ion-navicon" on-reorder="moveItem(board, $fromIndex, $toIndex)"></ion-reorder-button>\n' +
+    '		        </ion-item>\n' +
+    '		      </ion-list>\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
@@ -221,6 +250,56 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('EleTrad/EleTrad.tpl.html',
+    '<ion-view class="EleTradCSS">\n' +
+    '    <ion-nav-title>现货交易</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="Eletradbody">\n' +
+    '            <div class="electricSelect">\n' +
+    '                <input type="text" class="rightselect" contenteditable="true" id="EleTradID" readonly ng-click="selectEletrad()">\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="graph">\n' +
+    '            <div class="graphImg">\n' +
+    '                <powerline id="EleTradst" legend="legend" item="item" data="data">\n' +
+    '                </powerline>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="marketrbased clearfix">\n' +
+    '            <div class="rft">单位：万千瓦时、元/兆瓦时</div>\n' +
+    '        </div>\n' +
+    '        <div class="graphList">\n' +
+    '            <table>\n' +
+    '                <tr>\n' +
+    '                    <th>日期</th>\n' +
+    '                    <th>交易电量</th>\n' +
+    '                    <th>交易电价</th>\n' +
+    '                    <th>出清电量</th>\n' +
+    '                    <th>出清电价</th>\n' +
+    '                </tr>\n' +
+    '                <tr >\n' +
+    '                    <td>2018-05-22</td>\n' +
+    '                    <td>41.62<!--{{gsvalue.DAY_ELE_AMOUNT | number:2}} ng-repeat="gsvalue in gsCompanyPower track by $index"--></td>\n' +
+    '                    <td>140</td>\n' +
+    '                    <td>32.99</td>\n' +
+    '                    <td>163</td>\n' +
+    '                </tr>\n' +
+    '            </table>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>\n' +
+    '\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('erp/erp.tpl.html',
     '<ion-view class="erpCSS">\n' +
     '    <ion-nav-title>ERP审批</ion-nav-title>\n' +
@@ -246,6 +325,30 @@ module.run(['$templateCache', function($templateCache) {
     '        <span ng-click="toMyApplyPage();">我申请的</span>\n' +
     '        <span ng-click="toMyJudgePage();">我审批的</span>\n' +
     '    </ion-footer-bar>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('facilityInfo/facilityInfo.tpl.html',
+    '<ion-view class="facilityInfoCSS">\n' +
+    '    <ion-nav-title>设备台账</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="loadLists">\n' +
+    '            <div class="facilityList">\n' +
+    '                <div class="scanQRcode">\n' +
+    '                    <input type="text" placeholder="请扫描设备二维码" class="scanCode"\n' +
+    '                           ng-click="toScanCode()" readonly>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
     '</ion-view>');
 }]);
 })();
@@ -326,54 +429,6 @@ module.run(['$templateCache', function($templateCache) {
     '                </div>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('facilityInfo/facilityInfo.tpl.html',
-    '<ion-view class="facilityInfoCSS">\n' +
-    '    <ion-nav-title>设备台账</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="loadLists">\n' +
-    '            <div class="facilityList">\n' +
-    '                <div class="scanQRcode">\n' +
-    '                    <input type="text" placeholder="请扫描设备二维码" class="scanCode"\n' +
-    '                           ng-click="toScanCode()" readonly>\n' +
-    '                </div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('News/News.tpl.html',
-    '<ion-view class="NewsCSS">\n' +
-    '    <ion-nav-title>{{title}}</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="newsList">\n' +
-    '            <ul ng-repeat="cont in newslist track by $index" ng-click="toDetail(cont,$index)">\n' +
-    '                <li class="msg_colo" ng-model="gsxw" ng-style="newslistLi">{{cont.FILETITLE}}</li>\n' +
-    '                <li class="date_m" ng-model="gsxw"><i class="date_m_icon"></i>{{cont.PUBDATE | date : "MM月dd日" }}</li>\n' +
-    '            </ul>\n' +
-    '        </div>\n' +
-    '        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">\n' +
-    '        </ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
 }]);
@@ -601,42 +656,74 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OffLine/OffLine.tpl.html',
-    '<ion-view class="OffLineCSS">\n' +
-    '    <ion-nav-title>离线巡查</ion-nav-title>\n' +
+  $templateCache.put('MarketbasedTrad/MarketbasedTrad.tpl.html',
+    '<ion-view class="MarketbasedTradCSS">\n' +
+    '    <ion-nav-title>市场化交易</ion-nav-title>\n' +
     '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="osiList" ng-hide="osiListHide">\n' +
-    '            <div class="query">\n' +
-    '                <div class="scanQRcode">\n' +
-    '                    <input type="text" ng-hide="inputHide" placeholder="请扫描设备二维码" class="scanCode" ng-click="toScanCode()"\n' +
-    '                            readonly>\n' +
-    '                </div>\n' +
-    '                <div class="scanSearch" ng-hide="searchsBlueHide">\n' +
-    '                    <button class="searchBlootBtn" ng-click="searchsBlueTooth()">搜索</button>\n' +
-    '                </div>\n' +
+    '        <div class="selectMounths">\n' +
+    '            <button class="leftSelect" ng-click="getPrebasedMonth(nowMounth)" id="countMouthShowID"></button>\n' +
+    '            {{nowMounth | date : "yyyy-MM"}}\n' +
+    '            <button class="markbasedSelect" ng-click="getNextbasedMonth(nowMounth)"></button>\n' +
+    '            <div class="selectGlassMounth" ng-click="goMarketbasedTradindex()">\n' +
+    '                <!--<div class="commitBtn" ></div>-->\n' +
     '            </div>\n' +
-    '            <ion-list>\n' +
-    '                <ion-item ng-repeat="item in patrolRoteListData" item="item" class="item-remove-animate" ng-click="toOsiLine(item)">\n' +
-    '                    {{item.DESCRIPTION}}({{item.INSPECT_TYPE}})\n' +
-    '                    <span class="item-note ng-binding">{{item.INSPECTED}}/{{item.INSPECT}}</span>\n' +
-    '                </ion-item>\n' +
-    '            </ion-list>\n' +
     '        </div>\n' +
-    '        <div class="position" ng-hide="positionHide">\n' +
-    '            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}\n' +
-    '            <span style="display: block;">\n' +
-    '                描述：{{patrolHomeData.DESCRIPTION}}\n' +
-    '            </span>\n' +
-    '            <span style="display: block;">\n' +
-    '                设备名称：{{patrolHomeData.MCH_NAME}}\n' +
-    '            </span>\n' +
-    '            <button class="qdBtn" ng-click="OffLineSign()">签到</button>\n' +
-    '            <button class="qdBtn" ng-click="goBack()">返回</button>\n' +
+    '        <div class="marketList">\n' +
+    '            <table>\n' +
+    '                <div class="marketright">单位：(万千瓦时)</div>\n' +
+    '                <tr>\n' +
+    '                    <th>\n' +
+    '                        <span>域名称</span>\n' +
+    '                    </th>\n' +
+    '                    <th>\n' +
+    '                        <span>交易年月</span>\n' +
+    '                    </th>\n' +
+    '                    <th>\n' +
+    '                        <span>申报电量</span>\n' +
+    '                    </th>\n' +
+    '                    <th>出清电量</th>\n' +
+    '                </tr>\n' +
+    '                <tr ng-repeat="ketList in elemarketList">\n' +
+    '                    <td>{{ketList.CONTRANCT_NAME}}</td>\n' +
+    '                    <td>{{ketList.TRADE_MONTH}}</td>\n' +
+    '                    <td>{{ketList.APPLY_CHARGE_VALUE}}</td>\n' +
+    '                    <td>{{ketList.CLEARING_CHARGE_VALUE}}</td>\n' +
+    '                </tr>\n' +
+    '                <tr>\n' +
+    '                    <td colspan=2>合计(全厂)</td>\n' +
+    '                    <td>{{APPLY_CHARGE_VALUE_SUM}}</td>\n' +
+    '                    <td>{{CLEARING_CHARGE_VALUE_SUM}}</td>\n' +
+    '                </tr>\n' +
+    '            </table>\n' +
     '        </div>\n' +
-    '        <div class="position" ng-hide="uanddHide">\n' +
-    '            <button class="qdBtn" ng-click="OffLineDownload()">下载</button>\n' +
-    '            <button class="qdBtn" ng-click="OffLineLook()">查看我的巡查记录</button>\n' +
+    '\n' +
+    '\n' +
+    '    </ion-content>\n' +
+    '</ion-view>\n' +
+    '\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('News/News.tpl.html',
+    '<ion-view class="NewsCSS">\n' +
+    '    <ion-nav-title>{{title}}</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="newsList">\n' +
+    '            <ul ng-repeat="cont in newslist track by $index" ng-click="toDetail(cont,$index)">\n' +
+    '                <li class="msg_colo" ng-model="gsxw" ng-style="newslistLi">{{cont.FILETITLE}}</li>\n' +
+    '                <li class="date_m" ng-model="gsxw"><i class="date_m_icon"></i>{{cont.PUBDATE | date : "MM月dd日" }}</li>\n' +
+    '            </ul>\n' +
     '        </div>\n' +
+    '        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%" immediate-check="false">\n' +
+    '        </ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
 }]);
@@ -687,6 +774,54 @@ module.run(['$templateCache', function($templateCache) {
     '            </span>\n' +
     '            <button class="qdBtn" ng-click="patrolSign()">签到</button>\n' +
     '            <button class="qdBtn" ng-click="goBack()">返回</button>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OffLine/OffLine.tpl.html',
+    '<ion-view class="OffLineCSS">\n' +
+    '    <ion-nav-title>离线巡查</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="osiList" ng-hide="osiListHide">\n' +
+    '            <div class="query">\n' +
+    '                <div class="scanQRcode">\n' +
+    '                    <input type="text" ng-hide="inputHide" placeholder="请扫描设备二维码" class="scanCode" ng-click="toScanCode()"\n' +
+    '                            readonly>\n' +
+    '                </div>\n' +
+    '                <div class="scanSearch" ng-hide="searchsBlueHide">\n' +
+    '                    <button class="searchBlootBtn" ng-click="searchsBlueTooth()">搜索</button>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <ion-list>\n' +
+    '                <ion-item ng-repeat="item in patrolRoteListData" item="item" class="item-remove-animate" ng-click="toOsiLine(item)">\n' +
+    '                    {{item.DESCRIPTION}}({{item.INSPECT_TYPE}})\n' +
+    '                    <span class="item-note ng-binding">{{item.INSPECTED}}/{{item.INSPECT}}</span>\n' +
+    '                </ion-item>\n' +
+    '            </ion-list>\n' +
+    '        </div>\n' +
+    '        <div class="position" ng-hide="positionHide">\n' +
+    '            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}\n' +
+    '            <span style="display: block;">\n' +
+    '                描述：{{patrolHomeData.DESCRIPTION}}\n' +
+    '            </span>\n' +
+    '            <span style="display: block;">\n' +
+    '                设备名称：{{patrolHomeData.MCH_NAME}}\n' +
+    '            </span>\n' +
+    '            <button class="qdBtn" ng-click="OffLineSign()">签到</button>\n' +
+    '            <button class="qdBtn" ng-click="goBack()">返回</button>\n' +
+    '        </div>\n' +
+    '        <div class="position" ng-hide="uanddHide">\n' +
+    '            <button class="qdBtn" ng-click="OffLineDownload()">下载</button>\n' +
+    '            <button class="qdBtn" ng-click="OffLineLook()">查看我的巡查记录</button>\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
@@ -971,6 +1106,434 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('SettlementTrad/SettlementTrad.tpl.html',
+    '<ion-view class="SettlementTradCSS">\n' +
+    '    <ion-nav-title>结算电量</ion-nav-title>\n' +
+    '    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">\n' +
+    '        <ion-tab title="全厂" ng-click="setTlementQc()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="setElementSelectMounth">\n' +
+    '                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)" id="setTlementYearShowID"></button>\n' +
+    '                    {{nowElementYear}}年\n' +
+    '                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>\n' +
+    '                </div>\n' +
+    '                <div class="countResult">\n' +
+    '                    <div class="ydNum">\n' +
+    '                        <line id="SettlementmainQC" legend="legend"  data="data"></line>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="marketrbased clearfix">\n' +
+    '                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                </div>\n' +
+    '                <div class="graphList">\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>月份</th>\n' +
+    '                            <th>结算电量</th>\n' +
+    '                            <th>结算电价</th>\n' +
+    '                            <th>市场化电量</th>\n' +
+    '                            <th>市场化电价</th>\n' +
+    '                            <th>基础电量</th>\n' +
+    '                            <th>基础电价</th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementList in getElementTradList track by $index">\n' +
+    '                            <td>{{elementList.TRADE_MONTH}}</td>\n' +
+    '                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">\n' +
+    '                            <td>合计</td>\n' +
+    '                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '                <div style="height: 110px"></div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '        <ion-tab title="甘" ng-click="setTlementGs()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="setElementSelectMounth">\n' +
+    '                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>\n' +
+    '                    {{nowElementYear}}年\n' +
+    '                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>\n' +
+    '                    <div class="setElementGlassMounth">\n' +
+    '                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="countResult">\n' +
+    '                    <div class="ydNum">\n' +
+    '                        <line id="SettlementmainGS" legend="legend"  data="data"></line>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="marketrbased clearfix">\n' +
+    '                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                </div>\n' +
+    '                <div class="graphList">\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>月份</th>\n' +
+    '                            <th>结算电量</th>\n' +
+    '                            <th>结算电价</th>\n' +
+    '                            <th>市场化电量</th>\n' +
+    '                            <th>市场化电价</th>\n' +
+    '                            <th>基础电量</th>\n' +
+    '                            <th>基础电价</th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementList in getElementTradList track by $index">\n' +
+    '                            <td>{{elementList.TRADE_MONTH}}</td>\n' +
+    '                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">\n' +
+    '                            <td>合计</td>\n' +
+    '                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '\n' +
+    '                <div style="height: 110px"></div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '        <ion-tab title="青" ng-click="setTlementQh()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="setElementSelectMounth">\n' +
+    '                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>\n' +
+    '                    {{nowElementYear}}年\n' +
+    '                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>\n' +
+    '                    <div class="setElementGlassMounth">\n' +
+    '                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()"  readonly>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="countResult">\n' +
+    '                    <div class="ydNum">\n' +
+    '                        <line id="SettlementmainQH" legend="legend"  data="data"></line>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="marketrbased clearfix">\n' +
+    '                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                </div>\n' +
+    '                <div class="graphList">\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>月份</th>\n' +
+    '                            <th>结算电量</th>\n' +
+    '                            <th>结算电价</th>\n' +
+    '                            <th>市场化电量</th>\n' +
+    '                            <th>市场化电价</th>\n' +
+    '                            <th>基础电量</th>\n' +
+    '                            <th>基础电价</th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementList in getElementTradList track by $index">\n' +
+    '                            <td>{{elementList.TRADE_MONTH}}</td>\n' +
+    '                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">\n' +
+    '                            <td>合计</td>\n' +
+    '                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '\n' +
+    '                <div style="height: 110px"></div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '        <ion-tab title="宁" ng-click="setTlementNx()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="setElementSelectMounth">\n' +
+    '                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>\n' +
+    '                    {{nowElementYear}}年\n' +
+    '                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>\n' +
+    '                    <div class="setElementGlassMounth">\n' +
+    '                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="countResult">\n' +
+    '                    <div class="ydNum">\n' +
+    '                        <line id="SettlementmainNX" legend="legend"  data="data"></line>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="marketrbased clearfix">\n' +
+    '                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                </div>\n' +
+    '                <div class="graphList">\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>月份</th>\n' +
+    '                            <th>结算电量</th>\n' +
+    '                            <th>结算电价</th>\n' +
+    '                            <th>市场化电量</th>\n' +
+    '                            <th>市场化电价</th>\n' +
+    '                            <th>基础电量</th>\n' +
+    '                            <th>基础电价</th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementList in getElementTradList track by $index">\n' +
+    '                            <td>{{elementList.TRADE_MONTH}}</td>\n' +
+    '                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">\n' +
+    '                            <td>合计</td>\n' +
+    '                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '                <div style="height: 110px"></div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '        <ion-tab title="新" ng-click="setTlementXj()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="setElementSelectMounth">\n' +
+    '                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>\n' +
+    '                    {{nowElementYear}}年\n' +
+    '                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>\n' +
+    '                    <div class="setElementGlassMounth">\n' +
+    '                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="countResult">\n' +
+    '                    <div class="ydNum">\n' +
+    '                        <line id="SettlementmainXJ" legend="legend"  data="data"></line>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '                <div class="marketrbased clearfix">\n' +
+    '                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                </div>\n' +
+    '                <div class="graphList">\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>月份</th>\n' +
+    '                            <th>结算电量</th>\n' +
+    '                            <th>结算电价</th>\n' +
+    '                            <th>市场化电量</th>\n' +
+    '                            <th>市场化电价</th>\n' +
+    '                            <th>基础电量</th>\n' +
+    '                            <th>基础电价</th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementList in getElementTradList track by $index">\n' +
+    '                            <td>{{elementList.TRADE_MONTH}}</td>\n' +
+    '                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">\n' +
+    '                            <td>合计</td>\n' +
+    '                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>\n' +
+    '                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '\n' +
+    '                <div style="height: 110px"></div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '    </ion-tabs>\n' +
+    '\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('spotTransaction/spotTransaction.tpl.html',
+    '<ion-view class="spotTransactionCSS">\n' +
+    '    <ion-nav-title>现货交易</ion-nav-title>\n' +
+    '    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">\n' +
+    '        <ion-tab title="日统计" ng-click="toSpotDay()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="selectMounth">\n' +
+    '                    <button class="selectDateBtn" ng-click="openDatePicker()" id="countDayId">{{now | date : "yyyy-MM-dd"}}</button>\n' +
+    '                </div>\n' +
+    '                <div class="spotmarketList">\n' +
+    '                    <div class="spottransatright">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>\n' +
+    '                                <span>域名称</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>申报电量</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>申报电价</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>出清电量</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>出清电价</span>\n' +
+    '                            </th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="spotList in spotTradList">\n' +
+    '                            <td>{{spotList.CONTRACT_NAME}}</td>\n' +
+    '                            <td>{{spotList.APPLY_CHARGE_VALUE |number:2}}</td>\n' +
+    '                            <td>{{spotList.APPLY_CHARGE_PRICE |number:2}}</td>\n' +
+    '                            <td>{{spotList.CLEARING_CHARGE_VALUE |number:2}}</td>\n' +
+    '                            <td>{{spotList.CLEARING_CHARGE_PRICE |number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr>\n' +
+    '                            <td>合计(全厂)</td>\n' +
+    '                            <td>{{APPLY_CHARGE_VALUE_SUM |number:2}}</td>\n' +
+    '                            <td>{{APPLY_CHARGE_PRICE_SUM |number:2}}</td>\n' +
+    '                            <td>{{CLEARING_CHARGE_VALUE_SUM |number:2}}</td>\n' +
+    '                            <td>{{CLEARING_CHARGE_PRICE_SUM |number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '        <ion-tab title="月统计" ng-click="tospotCountMounth()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="selectMounth">\n' +
+    '                    <button class="leftSelect" ng-click="getPreMonth(nowMounth)" id="countMouthShowID"></button>\n' +
+    '                    {{nowMounth | date : "yyyy-MM"}}\n' +
+    '                    <button id="monthSelect" class="monthSelect" ng-click="getNextMonth(nowMounth)" style="display: none"></button>\n' +
+    '                </div>\n' +
+    '                <div class="spotmarketList">\n' +
+    '                    <div class="spottransatright">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>\n' +
+    '                                <span>域名称</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>申报电量</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>申报电价</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>出清电量</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>出清电价</span>\n' +
+    '                            </th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="spotList in spotTradList">\n' +
+    '                            <td>{{spotList.CONTRACT_NAME}}</td>\n' +
+    '                            <td>{{spotList.APPLY_CHARGE_VALUE |number:2}}</td>\n' +
+    '                            <td>{{spotList.APPLY_CHARGE_PRICE |number:2}}</td>\n' +
+    '                            <td>{{spotList.CLEARING_CHARGE_VALUE |number:2}}</td>\n' +
+    '                            <td>{{spotList.CLEARING_CHARGE_PRICE |number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr>\n' +
+    '                            <td>合计(全厂)</td>\n' +
+    '                            <td>{{APPLY_CHARGE_VALUE_SUM |number:2}}</td>\n' +
+    '                            <td>{{APPLY_CHARGE_PRICE_SUM |number:2}}</td>\n' +
+    '                            <td>{{CLEARING_CHARGE_VALUE_SUM |number:2}}</td>\n' +
+    '                            <td>{{CLEARING_CHARGE_PRICE_SUM |number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '        <ion-tab title="年统计" ng-click="tospotCountYear()">\n' +
+    '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '                <div class="selectMounth">\n' +
+    '                    <button class="leftSelect" ng-click="getPreYear(nowYear)" id="countYearShowID"></button>\n' +
+    '                    {{nowYear}}年\n' +
+    '                    <button id="yearSelect" class="yearSelect" ng-click="getNextYear(nowYear)" style="display: none"></button>\n' +
+    '                </div>\n' +
+    '                <div class="spotmarketList">\n' +
+    '                    <div class="spottransatright">单位：(万千瓦时)(元/兆瓦时)</div>\n' +
+    '                    <table>\n' +
+    '                        <tr>\n' +
+    '                            <th>\n' +
+    '                                <span>域名称</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>申报电量</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>申报电价</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>出清电量</span>\n' +
+    '                            </th>\n' +
+    '                            <th>\n' +
+    '                                <span>出清电价</span>\n' +
+    '                            </th>\n' +
+    '                        </tr>\n' +
+    '                        <tr ng-repeat="spotList in spotTradList">\n' +
+    '                            <td>{{spotList.CONTRACT_NAME}}</td>\n' +
+    '                            <td>{{spotList.APPLY_CHARGE_VALUE |number:2}}</td>\n' +
+    '                            <td>{{spotList.APPLY_CHARGE_PRICE |number:2}}</td>\n' +
+    '                            <td>{{spotList.CLEARING_CHARGE_VALUE |number:2}}</td>\n' +
+    '                            <td>{{spotList.CLEARING_CHARGE_PRICE |number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                        <tr>\n' +
+    '                            <td>合计(全厂)</td>\n' +
+    '                            <td>{{APPLY_CHARGE_VALUE_SUM |number:2}}</td>\n' +
+    '                            <td>{{APPLY_CHARGE_PRICE_SUM |number:2}}</td>\n' +
+    '                            <td>{{CLEARING_CHARGE_VALUE_SUM |number:2}}</td>\n' +
+    '                            <td>{{CLEARING_CHARGE_PRICE_SUM |number:2}}</td>\n' +
+    '                        </tr>\n' +
+    '                    </table>\n' +
+    '                </div>\n' +
+    '            </ion-content>\n' +
+    '        </ion-tab>\n' +
+    '    </ion-tabs>\n' +
+    '\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('taskManage/taskManage.tpl.html',
     '<ion-view class="taskManageCSS">\n' +
     '    <ion-nav-title>\n' +
@@ -1154,67 +1717,6 @@ module.run(['$templateCache', function($templateCache) {
     '       immediate-check="false">\n' +
     '      </ion-infinite-scroll>\n' +
     ' </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('bulletinBoard/edit/edit.tpl.html',
-    '<ion-view class="bulletinBoardCSS">\n' +
-    '    <ion-nav-title>公告编辑</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="editForm">\n' +
-    '            <ul>\n' +
-    '                <li>\n' +
-    '                    <label class="item item-input">\n' +
-    '                        <span class="input-label" id="_label-0">排序号：</span>\n' +
-    '                        <input type="text" id="sortid" placeholder="排序号">\n' +
-    '                        <span class="tips">序号能够改变显示顺序</span>\n' +
-    '                    </label>\n' +
-    '                </li>\n' +
-    '                <li>\n' +
-    '                    <label class="item item-input">\n' +
-    '                        <span class="input-label" id="_label-1">标题：</span>\n' +
-    '                        <input type="text" id="news_title_id" placeholder="请输入标题">\n' +
-    '                    </label>\n' +
-    '                </li>\n' +
-    '                <li>\n' +
-    '                    <label class="item item-input">\n' +
-    '                        <!--<span class="input-label" id="_label-2">内容：</span>-->\n' +
-    '                        <textarea class="ggbbcontent" id="news_content_id" ng-style="textareaHeight"></textarea>\n' +
-    '                    </label>\n' +
-    '                </li>\n' +
-    '            </ul>\n' +
-    '        </div>\n' +
-    '        <div class="button1">\n' +
-    '            <button class="goback" ng-click="toBack()">返回</button>\n' +
-    '            <button class="toedit" ng-click="toEdit()">修改</button>\n' +
-    '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('bulletinBoard/view/boardView.tpl.html',
-    '<ion-view class="companyNewsDetailsCSS">\n' +
-    '    <ion-nav-title>公告</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="title ">{{detail.NEWS_TITLE}}</div>\n' +
-    '        <div class="contentText">{{detail.NEWS_CONTENT}}</div>\n' +
-    '    </ion-content>\n' +
     '</ion-view>');
 }]);
 })();
@@ -1771,6 +2273,67 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('bulletinBoard/edit/edit.tpl.html',
+    '<ion-view class="bulletinBoardCSS">\n' +
+    '    <ion-nav-title>公告编辑</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="editForm">\n' +
+    '            <ul>\n' +
+    '                <li>\n' +
+    '                    <label class="item item-input">\n' +
+    '                        <span class="input-label" id="_label-0">排序号：{{detail.SORT }}</span>\n' +
+    '                        <!-- <input type="text" id="sortid" placeholder="排序号"> -->\n' +
+    '                        <!-- <span class="tips">序号能够改变显示顺序</span> -->\n' +
+    '                    </label>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <label class="item item-input">\n' +
+    '                        <span class="input-label" id="_label-1">标题：</span>\n' +
+    '                        <input type="text" id="news_title_id" placeholder="请输入标题">\n' +
+    '                    </label>\n' +
+    '                </li>\n' +
+    '                <li>\n' +
+    '                    <label class="item item-input">\n' +
+    '                        <!--<span class="input-label" id="_label-2">内容：</span>-->\n' +
+    '                        <textarea class="ggbbcontent" id="news_content_id" ng-style="textareaHeight"></textarea>\n' +
+    '                    </label>\n' +
+    '                </li>\n' +
+    '            </ul>\n' +
+    '        </div>\n' +
+    '        <div class="button1">\n' +
+    '            <button class="goback" ng-click="toBack()">返回</button>\n' +
+    '            <button class="toedit" ng-click="toEdit()">修改</button>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('bulletinBoard/view/boardView.tpl.html',
+    '<ion-view class="companyNewsDetailsCSS">\n' +
+    '    <ion-nav-title>公告</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="title ">{{detail.NEWS_TITLE}}</div>\n' +
+    '        <div class="contentText">{{detail.NEWS_CONTENT}}</div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('erp/details/details.tpl.html',
     '<ion-view class="erpDetailsCSS erpCSS">\n' +
     '    <ion-nav-title>{{title}}-{{types[typeIndex]}}</ion-nav-title>\n' +
@@ -1873,40 +2436,14 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('KPI/KPIdetail/KPIdetail.tpl.html',
-    '<ion-view class="KPIdetailCSS">\n' +
-    '    <ion-nav-title>{{title}}</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>\n' +
-    '        <div class="btnView">\n' +
-    '            <div ng-repeat="val in data">\n' +
-    '                <div class="btnCss"   ng-click="seleteItem(val)">\n' +
-    '                    {{val==\'0#\'?\'全厂\':val}}\n' +
-    '                    <!-- <div  class="decLine"></div> -->\n' +
-    '                </div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div id="main" style="width: 8rem;height:6rem;"></div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('facilityInfo/facilityInfoScan/facilityInfoScan.tpl.html',
     '<ion-view class="facilityInfoCSS">\n' +
     '    <ion-nav-title>设备台账</ion-nav-title>\n' +
-    '    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab" id="faciltyHide" ng-hide="faciltyHide">\n' +
+    '    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">\n' +
     '        <ion-tab title="设备信息" ng-click="goObtain()">\n' +
     '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
     '                <div class="loadList">\n' +
-    '                    <div class="facilityList" style="padding-top:60px;">\n' +
+    '                    <div class="facilityList">\n' +
     '                        <div class="scanQRcodeNumber">\n' +
     '                            设备编码 : <span style="margin-left:10px"></span> {{equipmentDetail.MCH_CODE}}\n' +
     '                        </div>\n' +
@@ -1950,7 +2487,7 @@ module.run(['$templateCache', function($templateCache) {
     '        <ion-tab title="缺陷履历" ng-click="goDefect()">\n' +
     '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
     '                <div class="loadList">\n' +
-    '                    <div class="facilityList" style="padding-top:40px;">\n' +
+    '                    <div class="facilityList">\n' +
     '                        <div class="list" ng-repeat="DefectList in equipmentDefectList">\n' +
     '                            <a class="item" href="#" ng-click="toDefectDetail(DefectList)">\n' +
     '                                <div class="titleDes">设备编码 : {{DefectList.FACT_MCH_CODE}}</div>\n' +
@@ -1963,12 +2500,13 @@ module.run(['$templateCache', function($templateCache) {
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
+    '                <div class="clearboth"></div>\n' +
     '            </ion-content>\n' +
     '        </ion-tab>\n' +
     '        <ion-tab title="工单履历" ng-click="goWork()">\n' +
     '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
     '                <div class="loadList">\n' +
-    '                    <div class="facilityList" style="padding-top:40px;">\n' +
+    '                    <div class="facilityList">\n' +
     '                        <div class="list" ng-repeat="WorkList in equipmentWorkList">\n' +
     '                            <a class="item" href="#" ng-click="">\n' +
     '                                <div class="titleDes">设备编码 : {{WorkList.FACT_MCH_CODE}}</div>\n' +
@@ -1986,12 +2524,13 @@ module.run(['$templateCache', function($templateCache) {
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
+    '                <div class="clearboth"></div>\n' +
     '            </ion-content>\n' +
     '        </ion-tab>\n' +
     '        <ion-tab title="巡查记录" ng-click="goInspection()">\n' +
     '            <ion-content has-bouncing="false" scrollbar-y="false">\n' +
     '                <div class="loadList">\n' +
-    '                    <div class="facilityList" style="padding-top:40px;">\n' +
+    '                    <div class="facilityList">\n' +
     '                        <div class="list">\n' +
     '                            <div class="card" ng-repeat="PatrolList in equipmentPatrolList" ng-click="goInspectionRecord(PatrolList)">\n' +
     '                                <span>{{PatrolList.PERSON_NAME}}</span>\n' +
@@ -2000,6 +2539,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
+    '                <div class="clearboth"></div>\n' +
     '            </ion-content>\n' +
     '        </ion-tab>\n' +
     '    </ion-tabs>\n' +
@@ -2089,6 +2629,32 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('KPI/KPIdetail/KPIdetail.tpl.html',
+    '<ion-view class="KPIdetailCSS">\n' +
+    '    <ion-nav-title>{{title}}</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>\n' +
+    '        <div class="btnView">\n' +
+    '            <div ng-repeat="val in data">\n' +
+    '                <div class="btnCss"   ng-click="seleteItem(val)">\n' +
+    '                    {{val==\'0#\'?\'全厂\':val}}\n' +
+    '                    <!-- <div  class="decLine"></div> -->\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div id="main" style="width: 8rem;height:6rem;"></div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('load/historyInfo/historyInfo.tpl.html',
     '<ion-view class="historyInfoCSS">\n' +
     '    <ion-nav-title>历史日负荷({{name}})</ion-nav-title>\n' +
@@ -2147,53 +2713,35 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OffLine/OffLineDetail/OffLineDetail.tpl.html',
-    '<ion-view class="OSILineCSS" >\n' +
-    '    <ion-nav-title>巡查路线</ion-nav-title>\n' +
+  $templateCache.put('MarketbasedTrad/MarketbasedTradIndex/MarketbasedTradIndex.tpl.html',
+    '<ion-view class="MarketbasedTradIndexCSS">\n' +
+    '    <ion-nav-title>交易公告</ion-nav-title>\n' +
+    '    <ion-nav-buttons side="right">\n' +
+    '        <button class="button-icon icon ion-timedimension" ng-click="toMarketbasedSearch()">\n' +
+    '        </button>\n' +
+    '    </ion-nav-buttons>\n' +
     '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="OSIDetail" ng-hide="OSIDetailHide">\n' +
-    '            <div class="OSITitle">\n' +
-    '                <div class="osiLeft">\n' +
-    '                    <span>{{description}}({{inspectType}})</span>\n' +
-    '                    <span class="osiTime">{{startTime | limitTo:10}} ~  {{endTime | limitTo:10}}</span>\n' +
-    '                </div>\n' +
-    '                <!--<div class="osiRight">\n' +
-    '                    <button ng-click="searchsBlueTooth()">搜索蓝牙</button>\n' +
-    '                </div>-->\n' +
-    '            </div>\n' +
-    '            <div class="scanQRcode" ng-hide="inputHide">\n' +
-    '                <input type="text" placeholder="请扫描设备二维码" class="scanCode"\n' +
-    '                       ng-click="toScanCode()" readonly>\n' +
-    '            </div>\n' +
-    '            <div class="OSIList">\n' +
-    '                <ul class="list">\n' +
-    '                    <li class="item item-icon-right" ng-repeat="h in hDetail track by $index">\n' +
-    '                        <div class="leftShow">\n' +
-    '                            <!--<i ng-style="identify" id="qdIconColorid{{$index}}">{{identifyShow}}</i>-->\n' +
-    '                            <i ng-style="identify" ng-if="h.RECORD_TIME!=\'\' && h.RECORD_TIME!=null"  style="background: #83ecad">签到</i>\n' +
-    '                            <i ng-style="identify" ng-if="h.RECORD_TIME==\'\' || h.RECORD_TIME==null" style="background: #ccc" id="qdIconColorid{{$index}}">未签到</i>\n' +
-    '                            <span class="name">{{h.ADDRESS}}</span>\n' +
-    '                            <span class="name">{{h.MCH_NAME}}</span>\n' +
-    '                            <span class="glassname" id="recordTimeid{{$index}}">{{h.RECORD_TIME}}</span>\n' +
-    '                            <span class="glassname" id="newRecordTimeid{{$index}}"\n' +
-    '                                  style="display: none">{{recordTime}}</span>\n' +
-    '                            <button id="recordID" class="itemQdBtn{{$index}}" style="display: none"\n' +
-    '                                    ng-click="toSigned(h,$index)" ng-hide="itemQdBtnHide">签到\n' +
-    '                            </button>\n' +
-    '                        </div>\n' +
-    '                    </li>\n' +
-    '                </ul>\n' +
-    '            </div>\n' +
+    '        <div class="marketbased clearfix" ng-repeat="NoticeList in marketNoticeList" ng-click="goMarketbasedTradDetail(NoticeList)">\n' +
+    '            <div class="lft">{{NoticeList.TITLE}}</div>\n' +
     '        </div>\n' +
-    '        <div class="position" ng-hide="positionHide">\n' +
-    '            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}\n' +
-    '            <span style="display: block;">\n' +
-    '                设备名称：{{patrolHomeData.MCH_NAME}}\n' +
-    '            </span>\n' +
-    '            <button class="qdBtn" ng-click="patrolSign()">签到</button>\n' +
+    '        <div class="bg" ng-click="hideSearch()"></div>\n' +
+    '        <div class="MarketbasedShow" style="display: none; width: 95%; max-height: 100%;">\n' +
+    '            <label class="item item-input">\n' +
+    '                <span class="input-label">交易名称：</span>\n' +
+    '                <input type="text" id="Noticenameid" placeholder="请输入交易名称">\n' +
+    '            </label>\n' +
+    '            <label class="item item-input">\n' +
+    '                <span class="input-label">交易内容：</span>\n' +
+    '                <input type="text" id="Noticecontentid" placeholder="请输入交易内容">\n' +
+    '            </label>\n' +
+    '            <div class="padding">\n' +
+    '                <button class="searchSbBtn button button-block button-positive" ng-click="noticeSearchSblist()">查询</button>\n' +
+    '            </div>\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
-    '</ion-view>');
+    '</ion-view>\n' +
+    '\n' +
+    '');
 }]);
 })();
 
@@ -2204,34 +2752,20 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OffLine/OffLineLook/OffLineLook.tpl.html',
-    '<ion-view class="OSILineLookCSS" >\n' +
-    '    <ion-nav-title>我的巡查记录</ion-nav-title>\n' +
+  $templateCache.put('MarketbasedTrad/MarketbasedTradDetail/MarketbasedTradDetail.tpl.html',
+    '<ion-view class="MarketbasedTradIndexCSS">\n' +
+    '    <ion-nav-title>交易公告详情</ion-nav-title>\n' +
     '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="OSIDetail">\n' +
-    '            <div class="OSIList">\n' +
-    '                <ion-list class="list">\n' +
-    '                    <ion-item ng-repeat="detailList in hDetail track by $index" item="item" class="item-remove-animate" ng-click="toOsiLine(detailList)">\n' +
-    '                        <!--<i ng-style="identify" ng-if="detailList.RECORD_TIME!=\'\' && detailList.RECORD_TIME!=null"  style="background: #83ecad">已上传</i>-->\n' +
-    '                        <!--<i ng-style="identify" ng-if="detailList.RECORD_TIME==\'\' || detailList.RECORD_TIME==null" style="background: #ccc">未上传</i>-->\n' +
-    '                        <i ng-style="identify" style="background: #ccc">未上传</i>\n' +
-    '                        <span class="name" style="font-size: 12px">{{detailList.LOCATION_DESCRIPTION}}</span></br>\n' +
-    '                        <span class="name" style="font-size: 12px">{{detailList.MCH_NAME}}</span></br>\n' +
-    '                        <span class="name" style="font-size: 12px">{{detailList.RECORD_TIME}}</span></br>\n' +
-    '                        <span class="name" style="font-size: 12px">{{detailList.DESCRIPTION}}</span>\n' +
-    '                        <ion-option-button class="button-assertive"\n' +
-    '                                           ng-click="dealOffLine(detailList,$index)">\n' +
-    '                            点击删除\n' +
-    '                        </ion-option-button>\n' +
-    '                    </ion-item>\n' +
-    '                </ion-list>\n' +
-    '            </div>\n' +
+    '        <div class="marketbasedbg clearfix">\n' +
+    '            <div class="lft">{{detailTitle}}</div>\n' +
     '        </div>\n' +
-    '        <div class="position">\n' +
-    '            <button class="qdBtn" ng-click="OffLineUpload()">上传</button>\n' +
+    '        <div class="marketList">\n' +
+    '            {{detailCONTENT}}\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
-    '</ion-view>');
+    '</ion-view>\n' +
+    '\n' +
+    '');
 }]);
 })();
 
@@ -2353,6 +2887,72 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OSI/OSIcount/OSIcount.tpl.html',
+    '<ion-view class="OSIcountCSS">\n' +
+    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
+    '	<ion-tabs class="tabs-positive tabs-icon-only tabs-top mortgagetab">\n' +
+    '		<ion-tab title="个人" on-select="changeTabType(\'personal\');">\n' +
+    '			<ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '				<div class="title">\n' +
+    '					<span>\n' +
+    '						<button class="leftSelect" ng-click="changeDateTime(\'personalStart\', -1, null, date.personalEnd);"></button>\n' +
+    '						{{date.personalStart}}\n' +
+    '						<button class="rightSelect" ng-click="changeDateTime(\'personalStart\', 1, null, date.personalEnd);"></button>\n' +
+    '					</span>\n' +
+    '					<span>\n' +
+    '						<button class="leftSelect" ng-click="changeDateTime(\'personalEnd\', -1, date.personalStart, date.now);"></button>\n' +
+    '						{{date.personalEnd}}\n' +
+    '						<button class="rightSelect" ng-click="changeDateTime(\'personalEnd\', 1, date.personalStart, date.now);"></button>\n' +
+    '					</span>\n' +
+    '				</div>\n' +
+    '				<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
+    '				<div class="list">\n' +
+    '					<div class="card" ng-repeat="item in tabs[\'personal\'].list">\n' +
+    '						<span>{{item.PERSON_NAME}}</span>\n' +
+    '						<span ng-click="openPersonnelEquipment(item);">{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
+    '						<span ng-click="openRecord(item);">{{item.percentage}}%</span>\n' +
+    '					</div>\n' +
+    '				</div>\n' +
+    '				<ion-infinite-scroll ng-if="tabs[\'personal\'].hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
+    '			</ion-content>\n' +
+    '		</ion-tab>\n' +
+    '		<ion-tab title="部门" on-select="changeTabType(\'department\');">\n' +
+    '			<ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '				<div class="title">\n' +
+    '					<span>\n' +
+    '						<button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
+    '						{{date.departmentStart}}\n' +
+    '						<button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
+    '					</span>\n' +
+    '					<span>\n' +
+    '						<button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
+    '						{{date.departmentEnd}}\n' +
+    '						<button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
+    '					</span>\n' +
+    '				</div>\n' +
+    '				<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
+    '				<div class="list">\n' +
+    '					<div class="card" ng-repeat="item in tabs[\'department\'].list">\n' +
+    '						<span ng-click="openDepartmentPersonnel(item);">{{item.ORG_NAME}}</span>\n' +
+    '						<span ng-click="openDepartmentEquipment(item);">{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
+    '						<span>{{item.percentage}}%</span>\n' +
+    '					</div>\n' +
+    '					<ion-infinite-scroll ng-if="tabs[\'department\'].hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
+    '				</div>\n' +
+    '			</ion-content>\n' +
+    '		</ion-tab>\n' +
+    '	</ion-tabs>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('OSI/OSIHistory/OSIHistory.tpl.html',
     '<ion-view class="OSIHistoryCSS">\n' +
     '    <ion-nav-title>巡查记录</ion-nav-title>\n' +
@@ -2413,72 +3013,6 @@ module.run(['$templateCache', function($templateCache) {
     '            </div>\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OSI/OSIcount/OSIcount.tpl.html',
-    '<ion-view class="OSIcountCSS">\n' +
-    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
-    '	<ion-tabs class="tabs-positive tabs-icon-only tabs-top mortgagetab">\n' +
-    '		<ion-tab title="个人" on-select="changeTabType(\'personal\');">\n' +
-    '			<ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '				<div class="title">\n' +
-    '					<span>\n' +
-    '						<button class="leftSelect" ng-click="changeDateTime(\'personalStart\', -1, null, date.personalEnd);"></button>\n' +
-    '						{{date.personalStart}}\n' +
-    '						<button class="rightSelect" ng-click="changeDateTime(\'personalStart\', 1, null, date.personalEnd);"></button>\n' +
-    '					</span>\n' +
-    '					<span>\n' +
-    '						<button class="leftSelect" ng-click="changeDateTime(\'personalEnd\', -1, date.personalStart, date.now);"></button>\n' +
-    '						{{date.personalEnd}}\n' +
-    '						<button class="rightSelect" ng-click="changeDateTime(\'personalEnd\', 1, date.personalStart, date.now);"></button>\n' +
-    '					</span>\n' +
-    '				</div>\n' +
-    '				<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
-    '				<div class="list">\n' +
-    '					<div class="card" ng-repeat="item in tabs[\'personal\'].list">\n' +
-    '						<span>{{item.PERSON_NAME}}</span>\n' +
-    '						<span ng-click="openPersonnelEquipment(item);">{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
-    '						<span ng-click="openRecord(item);">{{item.percentage}}%</span>\n' +
-    '					</div>\n' +
-    '				</div>\n' +
-    '				<ion-infinite-scroll ng-if="tabs[\'personal\'].hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
-    '			</ion-content>\n' +
-    '		</ion-tab>\n' +
-    '		<ion-tab title="部门" on-select="changeTabType(\'department\');">\n' +
-    '			<ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '				<div class="title">\n' +
-    '					<span>\n' +
-    '						<button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
-    '						{{date.departmentStart}}\n' +
-    '						<button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
-    '					</span>\n' +
-    '					<span>\n' +
-    '						<button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
-    '						{{date.departmentEnd}}\n' +
-    '						<button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
-    '					</span>\n' +
-    '				</div>\n' +
-    '				<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
-    '				<div class="list">\n' +
-    '					<div class="card" ng-repeat="item in tabs[\'department\'].list">\n' +
-    '						<span ng-click="openDepartmentPersonnel(item);">{{item.ORG_NAME}}</span>\n' +
-    '						<span ng-click="openDepartmentEquipment(item);">{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
-    '						<span>{{item.percentage}}%</span>\n' +
-    '					</div>\n' +
-    '					<ion-infinite-scroll ng-if="tabs[\'department\'].hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
-    '				</div>\n' +
-    '			</ion-content>\n' +
-    '		</ion-tab>\n' +
-    '	</ion-tabs>\n' +
     '</ion-view>');
 }]);
 })();
@@ -2620,6 +3154,101 @@ module.run(['$templateCache', function($templateCache) {
     '                设备名称：{{patrolHomeData.MCH_NAME}}\n' +
     '            </span>\n' +
     '            <button class="qdBtn" ng-click="patrolSign()">签到</button>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OffLine/OffLineDetail/OffLineDetail.tpl.html',
+    '<ion-view class="OSILineCSS" >\n' +
+    '    <ion-nav-title>巡查路线</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="OSIDetail" ng-hide="OSIDetailHide">\n' +
+    '            <div class="OSITitle">\n' +
+    '                <div class="osiLeft">\n' +
+    '                    <span>{{description}}({{inspectType}})</span>\n' +
+    '                    <span class="osiTime">{{startTime | limitTo:10}} ~  {{endTime | limitTo:10}}</span>\n' +
+    '                </div>\n' +
+    '                <!--<div class="osiRight">\n' +
+    '                    <button ng-click="searchsBlueTooth()">搜索蓝牙</button>\n' +
+    '                </div>-->\n' +
+    '            </div>\n' +
+    '            <div class="scanQRcode" ng-hide="inputHide">\n' +
+    '                <input type="text" placeholder="请扫描设备二维码" class="scanCode"\n' +
+    '                       ng-click="toScanCode()" readonly>\n' +
+    '            </div>\n' +
+    '            <div class="OSIList">\n' +
+    '                <ul class="list">\n' +
+    '                    <li class="item item-icon-right" ng-repeat="h in hDetail track by $index">\n' +
+    '                        <div class="leftShow">\n' +
+    '                            <!--<i ng-style="identify" id="qdIconColorid{{$index}}">{{identifyShow}}</i>-->\n' +
+    '                            <i ng-style="identify" ng-if="h.RECORD_TIME!=\'\' && h.RECORD_TIME!=null"  style="background: #83ecad">签到</i>\n' +
+    '                            <i ng-style="identify" ng-if="h.RECORD_TIME==\'\' || h.RECORD_TIME==null" style="background: #ccc" id="qdIconColorid{{$index}}">未签到</i>\n' +
+    '                            <span class="name">{{h.ADDRESS}}</span>\n' +
+    '                            <span class="name">{{h.MCH_NAME}}</span>\n' +
+    '                            <span class="glassname" id="recordTimeid{{$index}}">{{h.RECORD_TIME}}</span>\n' +
+    '                            <span class="glassname" id="newRecordTimeid{{$index}}"\n' +
+    '                                  style="display: none">{{recordTime}}</span>\n' +
+    '                            <button id="recordID" class="itemQdBtn{{$index}}" style="display: none"\n' +
+    '                                    ng-click="toSigned(h,$index)" ng-hide="itemQdBtnHide">签到\n' +
+    '                            </button>\n' +
+    '                        </div>\n' +
+    '                    </li>\n' +
+    '                </ul>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="position" ng-hide="positionHide">\n' +
+    '            <i class="position_icon"></i>位置：{{patrolHomeData.ADDRESS}}\n' +
+    '            <span style="display: block;">\n' +
+    '                设备名称：{{patrolHomeData.MCH_NAME}}\n' +
+    '            </span>\n' +
+    '            <button class="qdBtn" ng-click="patrolSign()">签到</button>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OffLine/OffLineLook/OffLineLook.tpl.html',
+    '<ion-view class="OSILineLookCSS" >\n' +
+    '    <ion-nav-title>我的巡查记录</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="OSIDetail">\n' +
+    '            <div class="OSIList">\n' +
+    '                <ion-list class="list">\n' +
+    '                    <ion-item ng-repeat="detailList in hDetail track by $index" item="item" class="item-remove-animate" ng-click="toOsiLine(detailList)">\n' +
+    '                        <!--<i ng-style="identify" ng-if="detailList.RECORD_TIME!=\'\' && detailList.RECORD_TIME!=null"  style="background: #83ecad">已上传</i>-->\n' +
+    '                        <!--<i ng-style="identify" ng-if="detailList.RECORD_TIME==\'\' || detailList.RECORD_TIME==null" style="background: #ccc">未上传</i>-->\n' +
+    '                        <i ng-style="identify" style="background: #ccc">未上传</i>\n' +
+    '                        <span class="name" style="font-size: 12px">{{detailList.LOCATION_DESCRIPTION}}</span></br>\n' +
+    '                        <span class="name" style="font-size: 12px">{{detailList.MCH_NAME}}</span></br>\n' +
+    '                        <span class="name" style="font-size: 12px">{{detailList.RECORD_TIME}}</span></br>\n' +
+    '                        <span class="name" style="font-size: 12px">{{detailList.DESCRIPTION}}</span>\n' +
+    '                        <ion-option-button class="button-assertive"\n' +
+    '                                           ng-click="dealOffLine(detailList,$index)">\n' +
+    '                            点击删除\n' +
+    '                        </ion-option-button>\n' +
+    '                    </ion-item>\n' +
+    '                </ion-list>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="position">\n' +
+    '            <button class="qdBtn" ng-click="OffLineUpload()">上传</button>\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
@@ -2781,6 +3410,113 @@ module.run(['$templateCache', function($templateCache) {
     '            </table>\n' +
     '        </div>\n' +
     '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('Problems/NewProblems/newProblems.tpl.html',
+    '<ion-view>\n' +
+    '    <ion-nav-title>上传隐患</ion-nav-title>\n' +
+    '    <ion-content class="newProblems">\n' +
+    '        <button class="tackPhotos">拍照</button>\n' +
+    '        <!--   <div class="photosNum"></div> -->\n' +
+    '        <div class="upTime">\n' +
+    '            <div>发现时间：</div>\n' +
+    '            <div>{{nowDate |date : "MM月dd日HH时mm分"}}</div>\n' +
+    '        </div>\n' +
+    '        <div ng-click="selectWhich()" class="upTime">\n' +
+    '            <div>隐患类型：</div>\n' +
+    '            <div class="positionCss">\n' +
+    '                <div ng-model="valueCont">{{valueCont}}</div>\n' +
+    '                <div ng-if="selectShow" class="posCss">\n' +
+    '                    <div ng-repeat="cont in conts" class="bagCol">\n' +
+    '                        <div ng-click="selectCont(cont.val)" ng-model="valueCont2">{{cont.val}}</div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="upTime">\n' +
+    '            <div>上传人：</div>\n' +
+    '            <div>{{}}</div>\n' +
+    '        </div>\n' +
+    '        <div class="upTime">\n' +
+    '            <div>上报部门:</div>\n' +
+    '            <div ng-repeat="num in nums">\n' +
+    '                <div>{{}}</div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="describeCss">描述：</div>\n' +
+    '        <textarea class="textSize"></textarea>\n' +
+    '        <button class="button">上传</button>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('Problems/ProblemSolving/ProblemsSolving.tpl.html',
+    '<ion-view class="problemsSolving">\n' +
+    ' <ion-nav-title>隐患详情</ion-nav-title>\n' +
+    '  <ion-nav-buttons side="right">\n' +
+    '      <button class="button" ng-click="tracking()">\n' +
+    '        跟踪\n' +
+    '      </button>\n' +
+    '    </ion-nav-buttons>\n' +
+    ' <ion-content class="contentCss">\n' +
+    ' <div class="listCss">\n' +
+    '    <div>隐患类型：</div>\n' +
+    '    <div>{{}}</div>\n' +
+    ' </div>\n' +
+    ' <div class="describeAllCss">\n' +
+    ' 	<div class="descCss">描述:</div>\n' +
+    ' <div>{{}}</div>\n' +
+    ' </div>\n' +
+    ' \n' +
+    ' <div class="listCss">\n' +
+    '   	<div class="">提交部门：</div>\n' +
+    '   	<div class="">{{}}</div>\n' +
+    ' </div>\n' +
+    ' <div class="listCss">\n' +
+    '	<div class="">上传人：</div>\n' +
+    '   	<div class="">{{}}</div>\n' +
+    ' </div>\n' +
+    '  <div class="listCss">\n' +
+    ' 	<div class="">上传时间：</div>\n' +
+    '   	<div class="">{{}}</div>\n' +
+    '  </div>\n' +
+    '  <div class="listCss">\n' +
+    '  	<div class="">图片：</div>\n' +
+    '   	<div class="">{{}}</div>\n' +
+    '  </div>\n' +
+    '  <div class="listCss">\n' +
+    '	<div class="">当前处理人：</div>\n' +
+    '   	<div class="">{{}}</div>\n' +
+    '  </div>\n' +
+    '  <div class="listCss">\n' +
+    '  	<div>处理时间：</div>\n' +
+    '  	<div>{{}}</div>\n' +
+    '  </div>\n' +
+    '  <div class="ideaCss">意见:</div>\n' +
+    '  <textarea class="textareaCss"></textarea>\n' +
+    '  <div class="buttonCss">\n' +
+    '  	<div class="okCss">确定</div>\n' +
+    '  	<div class="noCss">取消</div>\n' +
+    '  </div>\n' +
+    '\n' +
+    ' </ion-content>\n' +
     '</ion-view>');
 }]);
 })();
@@ -3145,6 +3881,71 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('tabs/OMA/content.tpl.html',
+    '<ion-view hide-nav-bar="true" class="OMACSS" hide-back-button="true">\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="kpiheader">\n' +
+    '            <div class="omaheader"></div>\n' +
+    '        </div>\n' +
+    '        <div class="navlist">\n' +
+    '            <ul>\n' +
+    '                <li class="col col-20 rowLation" ng-click="totask()">\n' +
+    '                    <div class="rwgl_img">\n' +
+    '                    </div>\n' +
+    '                    <p>任务管理</p>\n' +
+    '                </li>\n' +
+    '                <!--<li class="col col-20 rowLation" ng-click="toEleTrad()">\n' +
+    '                    <div class="jydl_img">\n' +
+    '                    </div>\n' +
+    '                    <p>交易电量</p>\n' +
+    '                </li>-->\n' +
+    '                <li class="col col-20 rowLation" ng-click="tospotTransaction()">\n' +
+    '                    <div class="jydl_img">\n' +
+    '                    </div>\n' +
+    '                    <p>现货交易</p>\n' +
+    '                </li>\n' +
+    '                <li class="col col-20 rowLation" ng-click="toMarketbasedTrad()">\n' +
+    '                    <div class="schjy_img">\n' +
+    '                    </div>\n' +
+    '                    <p>市场化交易</p>\n' +
+    '                </li>\n' +
+    '                <li class="col col-20 rowLation" ng-click="toSettlementTrad()">\n' +
+    '                    <div class="jsdl_img">\n' +
+    '                    </div>\n' +
+    '                    <p>结算电量</p>\n' +
+    '                </li>\n' +
+    '            </ul>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('tabs/OMA/OMA.tpl.html',
+    '<ion-view hide-nav-bar="true">\n' +
+    '    <ion-nav-title>白银风电</ion-nav-title>\n' +
+    '    <div ng-include="\'tabs/tab/tab.tpl.html\'">\n' +
+    '    </div>\n' +
+    '</ion-view>\n' +
+    '\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('tabs/mine/content.tpl.html',
     '<ion-view class="mineCSS">\n' +
     '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
@@ -3238,51 +4039,6 @@ module.run(['$templateCache', function($templateCache) {
     '        确定\n' +
     '    </button>\n' +
     '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('tabs/OMA/content.tpl.html',
-    '<ion-view hide-nav-bar="true" class="OMACSS" hide-back-button="true">\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="kpiheader">\n' +
-    '            <div class="omaheader"></div>\n' +
-    '        </div>\n' +
-    '        <div class="navlist">\n' +
-    '            <ul>\n' +
-    '                <li class="col col-20 rowLation" ng-click="totask()">\n' +
-    '                    <div class="rwgl_img">\n' +
-    '                    </div>\n' +
-    '                    <p>任务管理</p>\n' +
-    '                </li>\n' +
-    '            </ul>\n' +
-    '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('tabs/OMA/OMA.tpl.html',
-    '<ion-view hide-nav-bar="true">\n' +
-    '    <ion-nav-title>白银风电</ion-nav-title>\n' +
-    '    <div ng-include="\'tabs/tab/tab.tpl.html\'">\n' +
-    '    </div>\n' +
-    '</ion-view>\n' +
-    '\n' +
-    '');
 }]);
 })();
 
@@ -3456,113 +4212,6 @@ module.run(['$templateCache', function($templateCache) {
     '    </ion-tab>\n' +
     '</ion-tabs>\n' +
     '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('Problems/NewProblems/newProblems.tpl.html',
-    '<ion-view>\n' +
-    '    <ion-nav-title>上传隐患</ion-nav-title>\n' +
-    '    <ion-content class="newProblems">\n' +
-    '        <button class="tackPhotos">拍照</button>\n' +
-    '        <!--   <div class="photosNum"></div> -->\n' +
-    '        <div class="upTime">\n' +
-    '            <div>发现时间：</div>\n' +
-    '            <div>{{nowDate |date : "MM月dd日HH时mm分"}}</div>\n' +
-    '        </div>\n' +
-    '        <div ng-click="selectWhich()" class="upTime">\n' +
-    '            <div>隐患类型：</div>\n' +
-    '            <div class="positionCss">\n' +
-    '                <div ng-model="valueCont">{{valueCont}}</div>\n' +
-    '                <div ng-if="selectShow" class="posCss">\n' +
-    '                    <div ng-repeat="cont in conts" class="bagCol">\n' +
-    '                        <div ng-click="selectCont(cont.val)" ng-model="valueCont2">{{cont.val}}</div>\n' +
-    '                    </div>\n' +
-    '                </div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div class="upTime">\n' +
-    '            <div>上传人：</div>\n' +
-    '            <div>{{}}</div>\n' +
-    '        </div>\n' +
-    '        <div class="upTime">\n' +
-    '            <div>上报部门:</div>\n' +
-    '            <div ng-repeat="num in nums">\n' +
-    '                <div>{{}}</div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div class="describeCss">描述：</div>\n' +
-    '        <textarea class="textSize"></textarea>\n' +
-    '        <button class="button">上传</button>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('Problems/ProblemSolving/ProblemsSolving.tpl.html',
-    '<ion-view class="problemsSolving">\n' +
-    ' <ion-nav-title>隐患详情</ion-nav-title>\n' +
-    '  <ion-nav-buttons side="right">\n' +
-    '      <button class="button" ng-click="tracking()">\n' +
-    '        跟踪\n' +
-    '      </button>\n' +
-    '    </ion-nav-buttons>\n' +
-    ' <ion-content class="contentCss">\n' +
-    ' <div class="listCss">\n' +
-    '    <div>隐患类型：</div>\n' +
-    '    <div>{{}}</div>\n' +
-    ' </div>\n' +
-    ' <div class="describeAllCss">\n' +
-    ' 	<div class="descCss">描述:</div>\n' +
-    ' <div>{{}}</div>\n' +
-    ' </div>\n' +
-    ' \n' +
-    ' <div class="listCss">\n' +
-    '   	<div class="">提交部门：</div>\n' +
-    '   	<div class="">{{}}</div>\n' +
-    ' </div>\n' +
-    ' <div class="listCss">\n' +
-    '	<div class="">上传人：</div>\n' +
-    '   	<div class="">{{}}</div>\n' +
-    ' </div>\n' +
-    '  <div class="listCss">\n' +
-    ' 	<div class="">上传时间：</div>\n' +
-    '   	<div class="">{{}}</div>\n' +
-    '  </div>\n' +
-    '  <div class="listCss">\n' +
-    '  	<div class="">图片：</div>\n' +
-    '   	<div class="">{{}}</div>\n' +
-    '  </div>\n' +
-    '  <div class="listCss">\n' +
-    '	<div class="">当前处理人：</div>\n' +
-    '   	<div class="">{{}}</div>\n' +
-    '  </div>\n' +
-    '  <div class="listCss">\n' +
-    '  	<div>处理时间：</div>\n' +
-    '  	<div>{{}}</div>\n' +
-    '  </div>\n' +
-    '  <div class="ideaCss">意见:</div>\n' +
-    '  <textarea class="textareaCss"></textarea>\n' +
-    '  <div class="buttonCss">\n' +
-    '  	<div class="okCss">确定</div>\n' +
-    '  	<div class="noCss">取消</div>\n' +
-    '  </div>\n' +
-    '\n' +
-    ' </ion-content>\n' +
-    '</ion-view>');
 }]);
 })();
 
@@ -3928,78 +4577,6 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('AllLeave/Leave/LeavesList/LeavesList.tpl.html',
-    '<ion-view class="agentsList">\n' +
-    '    <ion-nav-title>休假列表</ion-nav-title>\n' +
-    '    <ion-nav-buttons side="right">\n' +
-    '     <button  class="button buttton-icon ion-ios-plus-outline" style="font-size: 1.6em" ng-click="newLeave()">\n' +
-    '        </button>\n' +
-    '        <button class="button buttton-icon icon ion-ios-search " ng-click="showOrhide()">\n' +
-    '        </button>\n' +
-    '    </ion-nav-buttons>\n' +
-    '    <ion-content>\n' +
-    '        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">\n' +
-    '        </ion-refresher>\n' +
-    '        <div class="fade" ng-show="trueStr">\n' +
-    '        <div class="item item-input item-select" data-tap-disabled="true">\n' +
-    '                <div class="input-label">\n' +
-    '                    休假类型：\n' +
-    '                </div>\n' +
-    '                <select ng-model="type2" >\n' +
-    '                    <option value="">请选择</option>\n' +
-    '                    <option ng-repeat="item4 in item4s" value={{item4.BUSIN_ID}}>{{item4.BUSIN_NAME}}</option>\n' +
-    '                </select>\n' +
-    '            </div>\n' +
-    '            <div class="filterAllList">\n' +
-    '                <span>时间：</span>\n' +
-    '                <span  class="timeInp" ng-click="chooseTime(\'1\')" ng-model="filterDate">{{filterDate | date : "yyyy-MM-dd"}}</span>\n' +
-    '                <span>~</span>\n' +
-    '                <span  class="timeInp" ng-click="chooseTime(\'2\')" ng-model="filterDate2">{{filterDate2 | date : "yyyy-MM-dd"}}</span>\n' +
-    '            </div>\n' +
-    '            <div class="item item-input item-select" data-tap-disabled="true">\n' +
-    '                <div class="input-label">\n' +
-    '                    状态：\n' +
-    '                </div>\n' +
-    '                <select ng-model="type" >\n' +
-    '                    <option value="">请选择</option>\n' +
-    '                    <option ng-repeat="item3 in item3s" value={{item3.BUSIN_ID}}>{{item3.BUSIN_NAME}}</option>\n' +
-    '                </select>\n' +
-    '            </div>\n' +
-    '            <div class="butAll">\n' +
-    '                <button class="makeSur" ng-click="listAll()">清空</button>\n' +
-    '                <button class="makeSur" ng-click="allChoose(type,type2)">确定</button>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div class="agentList">\n' +
-    '            <div style="width: 20%;">请假类型</div>\n' +
-    '            <div class="handleTime" style="width: 20%;">提交时间</div>\n' +
-    '            <div class="handleTime" style="width: 30%;">状态</div>\n' +
-    '        </div>\n' +
-    '        <div class="agentsDetail" ng-repeat="item in items" ng-click="leavesDetail(item)">\n' +
-    '            <div class="agentsTitle" style="width: 30%;text-align: left;">\n' +
-    '                <span class="bagDian"></span> {{item.FURLOUGH_TYPE_NEW}}\n' +
-    '            </div>\n' +
-    '            <div class="agentsData" style="width: 30%;text-align: left;">{{item.BEGIN_TIME | date : "yyyy年MM月dd日"}}\n' +
-    '            </div>\n' +
-    '            <div style="width: 30%;">\n' +
-    '                {{item.APPLYFORLEAVESTATE}}\n' +
-    '                <span class="bagImg" style="float: right;    transform: translateY(0.3em);"></span>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" immediate-check="false">\n' +
-    '        </ion-infinite-scroll>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('AllLeave/Leave/leavesDetail/LeavesDetail.tpl.html',
     '<ion-view class="agentsView">\n' +
     '    <ion-nav-title>休假详情</ion-nav-title>\n' +
@@ -4061,6 +4638,78 @@ module.run(['$templateCache', function($templateCache) {
     '            <!-- <button ng-if="backLeaveL" class=" button back1" ng-click="backLeave()">销假</button> -->\n' +
     '          <!--   <button ng-if="deleL" class=" button back2" ng-click="dele()">删除</button> -->\n' +
     '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('AllLeave/Leave/LeavesList/LeavesList.tpl.html',
+    '<ion-view class="agentsList">\n' +
+    '    <ion-nav-title>休假列表</ion-nav-title>\n' +
+    '    <ion-nav-buttons side="right">\n' +
+    '     <button  class="button buttton-icon ion-ios-plus-outline" style="font-size: 1.6em" ng-click="newLeave()">\n' +
+    '        </button>\n' +
+    '        <button class="button buttton-icon icon ion-ios-search " ng-click="showOrhide()">\n' +
+    '        </button>\n' +
+    '    </ion-nav-buttons>\n' +
+    '    <ion-content>\n' +
+    '        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">\n' +
+    '        </ion-refresher>\n' +
+    '        <div class="fade" ng-show="trueStr">\n' +
+    '        <div class="item item-input item-select" data-tap-disabled="true">\n' +
+    '                <div class="input-label">\n' +
+    '                    休假类型：\n' +
+    '                </div>\n' +
+    '                <select ng-model="type2" >\n' +
+    '                    <option value="">请选择</option>\n' +
+    '                    <option ng-repeat="item4 in item4s" value={{item4.BUSIN_ID}}>{{item4.BUSIN_NAME}}</option>\n' +
+    '                </select>\n' +
+    '            </div>\n' +
+    '            <div class="filterAllList">\n' +
+    '                <span>时间：</span>\n' +
+    '                <span  class="timeInp" ng-click="chooseTime(\'1\')" ng-model="filterDate">{{filterDate | date : "yyyy-MM-dd"}}</span>\n' +
+    '                <span>~</span>\n' +
+    '                <span  class="timeInp" ng-click="chooseTime(\'2\')" ng-model="filterDate2">{{filterDate2 | date : "yyyy-MM-dd"}}</span>\n' +
+    '            </div>\n' +
+    '            <div class="item item-input item-select" data-tap-disabled="true">\n' +
+    '                <div class="input-label">\n' +
+    '                    状态：\n' +
+    '                </div>\n' +
+    '                <select ng-model="type" >\n' +
+    '                    <option value="">请选择</option>\n' +
+    '                    <option ng-repeat="item3 in item3s" value={{item3.BUSIN_ID}}>{{item3.BUSIN_NAME}}</option>\n' +
+    '                </select>\n' +
+    '            </div>\n' +
+    '            <div class="butAll">\n' +
+    '                <button class="makeSur" ng-click="listAll()">清空</button>\n' +
+    '                <button class="makeSur" ng-click="allChoose(type,type2)">确定</button>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="agentList">\n' +
+    '            <div style="width: 20%;">请假类型</div>\n' +
+    '            <div class="handleTime" style="width: 20%;">提交时间</div>\n' +
+    '            <div class="handleTime" style="width: 30%;">状态</div>\n' +
+    '        </div>\n' +
+    '        <div class="agentsDetail" ng-repeat="item in items" ng-click="leavesDetail(item)">\n' +
+    '            <div class="agentsTitle" style="width: 30%;text-align: left;">\n' +
+    '                <span class="bagDian"></span> {{item.FURLOUGH_TYPE_NEW}}\n' +
+    '            </div>\n' +
+    '            <div class="agentsData" style="width: 30%;text-align: left;">{{item.BEGIN_TIME | date : "yyyy年MM月dd日"}}\n' +
+    '            </div>\n' +
+    '            <div style="width: 30%;">\n' +
+    '                {{item.APPLYFORLEAVESTATE}}\n' +
+    '                <span class="bagImg" style="float: right;    transform: translateY(0.3em);"></span>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" immediate-check="false">\n' +
+    '        </ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
 }]);
@@ -4261,6 +4910,73 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('AllLeave/Vacation/VacationList/VacationList.tpl.html',
+    '<ion-view class="agentsList">\n' +
+    '    <ion-nav-title>出差列表</ion-nav-title>\n' +
+    '    <ion-nav-buttons side="right">\n' +
+    '     <button  class="button buttton-icon ion-ios-plus-outline" style="font-size: 1.6em" ng-click="newVacation()">\n' +
+    '        </button>\n' +
+    '        <button class="button buttton-icon icon ion-ios-search " ng-click="showOrhide()">\n' +
+    '        </button>\n' +
+    '    </ion-nav-buttons>\n' +
+    '    <ion-content>\n' +
+    '        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">\n' +
+    '        </ion-refresher>\n' +
+    '        <div class="fade" ng-show="trueStr">\n' +
+    '            <div class="filterAllList">\n' +
+    '                <span>标题：</span>\n' +
+    '                <textarea ng-model="vom" class="filterTitleCss" style="resize: none;"></textarea>\n' +
+    '            </div>\n' +
+    '            <div class="filterAllList">\n' +
+    '                <span>时间：</span>\n' +
+    '                <span class="timeInp" ng-click="chooseTime(\'1\')" ng-model="filterDate">{{filterDate | date : "yyyy-MM-dd"}}</span>\n' +
+    '                <span>~</span>\n' +
+    '                <span class="timeInp" ng-click="chooseTime(\'2\')" ng-model="filterDate2">{{filterDate2 | date : "yyyy-MM-dd"}}</span>\n' +
+    '            </div>\n' +
+    '            <div class="item item-input item-select">\n' +
+    '                <div class="input-label">\n' +
+    '                    状态：\n' +
+    '                </div>\n' +
+    '                <select ng-model="type" data-tap-disabled="true">\n' +
+    '                    <option value="">请选择</option>\n' +
+    '                    <option ng-repeat="item3 in item3s" value={{item3.BUSIN_NAME}}>{{item3.BUSIN_NAME}}</option>\n' +
+    '                </select>\n' +
+    '            </div>\n' +
+    '            <div class="butAll">\n' +
+    '                <button class="makeSur" ng-click="listAll()">清空</button>\n' +
+    '                <button class="makeSur" ng-click="allChoose(type,vom)">确定</button>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="agentList">\n' +
+    '            <div style="width: 20%;">出差原因</div>\n' +
+    '            <div class="handleTime" style="width: 20%;">提交时间</div>\n' +
+    '            <div class="handleTime" style="width: 30%;">状态</div>\n' +
+    '        </div>\n' +
+    '        <div class="agentsDetail" ng-repeat="item in items" ng-click="leavesDetail(item)">\n' +
+    '            <div class="agentsTitle" style="width: 30%;text-align: left;">\n' +
+    '                <span class="bagDian"></span> {{item.APPLY_DESC}}\n' +
+    '            </div>\n' +
+    '            <div class="agentsData" style="width: 30%;text-align: left;">{{item.BEGIN_TIME | date : "yyyy年MM月dd日"}}\n' +
+    '            </div>\n' +
+    '            <div style="width: 30%;">\n' +
+    '                {{item.APPROVE_STATUS}}\n' +
+    '                <span class="bagImg" style="float: right;    transform: translateY(0.3em);"></span>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" immediate-check="false">\n' +
+    '        </ion-infinite-scroll>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('AllLeave/Vacation/VacationDetail/VacationDetail.tpl.html',
     '<ion-view class="agentsView">\n' +
     '    <ion-nav-title>出差详情</ion-nav-title>\n' +
@@ -4326,73 +5042,6 @@ module.run(['$templateCache', function($templateCache) {
     '           <!--  <button ng-if="backLeaveL" class=" button back1" ng-click="backLeave()">销假</button> -->\n' +
     '         <!--    <button ng-if="deleL" class=" button back2" ng-click="dele()">删除</button> -->\n' +
     '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('AllLeave/Vacation/VacationList/VacationList.tpl.html',
-    '<ion-view class="agentsList">\n' +
-    '    <ion-nav-title>出差列表</ion-nav-title>\n' +
-    '    <ion-nav-buttons side="right">\n' +
-    '     <button  class="button buttton-icon ion-ios-plus-outline" style="font-size: 1.6em" ng-click="newVacation()">\n' +
-    '        </button>\n' +
-    '        <button class="button buttton-icon icon ion-ios-search " ng-click="showOrhide()">\n' +
-    '        </button>\n' +
-    '    </ion-nav-buttons>\n' +
-    '    <ion-content>\n' +
-    '        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">\n' +
-    '        </ion-refresher>\n' +
-    '        <div class="fade" ng-show="trueStr">\n' +
-    '            <div class="filterAllList">\n' +
-    '                <span>标题：</span>\n' +
-    '                <textarea ng-model="vom" class="filterTitleCss" style="resize: none;"></textarea>\n' +
-    '            </div>\n' +
-    '            <div class="filterAllList">\n' +
-    '                <span>时间：</span>\n' +
-    '                <span class="timeInp" ng-click="chooseTime(\'1\')" ng-model="filterDate">{{filterDate | date : "yyyy-MM-dd"}}</span>\n' +
-    '                <span>~</span>\n' +
-    '                <span class="timeInp" ng-click="chooseTime(\'2\')" ng-model="filterDate2">{{filterDate2 | date : "yyyy-MM-dd"}}</span>\n' +
-    '            </div>\n' +
-    '            <div class="item item-input item-select">\n' +
-    '                <div class="input-label">\n' +
-    '                    状态：\n' +
-    '                </div>\n' +
-    '                <select ng-model="type" data-tap-disabled="true">\n' +
-    '                    <option value="">请选择</option>\n' +
-    '                    <option ng-repeat="item3 in item3s" value={{item3.BUSIN_NAME}}>{{item3.BUSIN_NAME}}</option>\n' +
-    '                </select>\n' +
-    '            </div>\n' +
-    '            <div class="butAll">\n' +
-    '                <button class="makeSur" ng-click="listAll()">清空</button>\n' +
-    '                <button class="makeSur" ng-click="allChoose(type,vom)">确定</button>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div class="agentList">\n' +
-    '            <div style="width: 20%;">出差原因</div>\n' +
-    '            <div class="handleTime" style="width: 20%;">提交时间</div>\n' +
-    '            <div class="handleTime" style="width: 30%;">状态</div>\n' +
-    '        </div>\n' +
-    '        <div class="agentsDetail" ng-repeat="item in items" ng-click="leavesDetail(item)">\n' +
-    '            <div class="agentsTitle" style="width: 30%;text-align: left;">\n' +
-    '                <span class="bagDian"></span> {{item.APPLY_DESC}}\n' +
-    '            </div>\n' +
-    '            <div class="agentsData" style="width: 30%;text-align: left;">{{item.BEGIN_TIME | date : "yyyy年MM月dd日"}}\n' +
-    '            </div>\n' +
-    '            <div style="width: 30%;">\n' +
-    '                {{item.APPROVE_STATUS}}\n' +
-    '                <span class="bagImg" style="float: right;    transform: translateY(0.3em);"></span>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" immediate-check="false">\n' +
-    '        </ion-infinite-scroll>\n' +
     '    </ion-content>\n' +
     '</ion-view>');
 }]);
@@ -4644,37 +5293,6 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('attence/countAttence/zcList/zcList.tpl.html',
-    '<ion-view class="cdListCSS">\n' +
-    '    <ion-nav-title>正常</ion-nav-title>\n' +
-    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="content">\n' +
-    '            <h3><span>{{dateTimeShow}}</span>正常<span>共{{personNum}}人</span></h3>\n' +
-    '            <ul class="list">\n' +
-    '                <li class="item item-icon-right" ng-click="towdDetail(x)" ng-repeat="x in zcList">\n' +
-    '                    <div class="leftShow">\n' +
-    '                        <span class="name">{{x.PERSON_NAME}}</span>\n' +
-    '                        <span class="glassname">{{partName}}</span>\n' +
-    '                    </div>\n' +
-    '                    <div class="rightShow">\n' +
-    '                        <span class="item-note">{{x.COUNT}}次</span>\n' +
-    '                        <i class="icon ion-chevron-right"></i>\n' +
-    '                    </div>\n' +
-    '                </li>\n' +
-    '            </ul>\n' +
-    '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('attence/countAttence/wdkList/wdkList.tpl.html',
     '<ion-view class="wdkListCSS">\n' +
     '    <ion-nav-title>未打卡</ion-nav-title>\n' +
@@ -4718,6 +5336,37 @@ module.run(['$templateCache', function($templateCache) {
     '        </div>\n' +
     '    </ion-content>\n' +
     '\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('attence/countAttence/zcList/zcList.tpl.html',
+    '<ion-view class="cdListCSS">\n' +
+    '    <ion-nav-title>正常</ion-nav-title>\n' +
+    '    <ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="content">\n' +
+    '            <h3><span>{{dateTimeShow}}</span>正常<span>共{{personNum}}人</span></h3>\n' +
+    '            <ul class="list">\n' +
+    '                <li class="item item-icon-right" ng-click="towdDetail(x)" ng-repeat="x in zcList">\n' +
+    '                    <div class="leftShow">\n' +
+    '                        <span class="name">{{x.PERSON_NAME}}</span>\n' +
+    '                        <span class="glassname">{{partName}}</span>\n' +
+    '                    </div>\n' +
+    '                    <div class="rightShow">\n' +
+    '                        <span class="item-note">{{x.COUNT}}次</span>\n' +
+    '                        <i class="icon ion-chevron-right"></i>\n' +
+    '                    </div>\n' +
+    '                </li>\n' +
+    '            </ul>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
     '</ion-view>');
 }]);
 })();
@@ -4857,7 +5506,7 @@ module.run(['$templateCache', function($templateCache) {
     '</div>\n' +
     '<div>\n' +
     '    <div ng-repeat="item in docList track by $index" class="card text">\n' +
-    '        <a href="{{item.FILE_URL}}">{{item.USER_FILE_NAME}}</a>\n' +
+    '        <a ng-click="downloadFile(item.FILE_URL);">{{item.USER_FILE_NAME}}</a>\n' +
     '    </div>\n' +
     '</div>');
 }]);
@@ -4993,6 +5642,166 @@ module.run(['$templateCache', function($templateCache) {
     '		</div>\n' +
     '		<div class="card" ng-click="selectUser();">\n' +
     '			王**\n' +
+    '		</div>\n' +
+    '	</ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OSI/OSIcount/OSIDepartmentEquipment/OSIDepartmentEquipment.tpl.html',
+    '<ion-view class="OSIcountCSS">\n' +
+    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
+    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '		<div class="title">\n' +
+    '			<span>\n' +
+    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
+    '                {{date.departmentStart}}\n' +
+    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
+    '            </span>\n' +
+    '			<span>\n' +
+    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
+    '                {{date.departmentEnd}}\n' +
+    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
+    '            </span>\n' +
+    '			<div></div>\n' +
+    '			<span>{{data.ORG_NAME}}</span>\n' +
+    '		</div>\n' +
+    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
+    '		<div class="list">\n' +
+    '			<div class="card" ng-repeat="item in list" ng-click="openDepartmentEquipmentPersonnel(item);">\n' +
+    '				<span class="flex3">{{item.MCH_NAME}}</span>\n' +
+    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
+    '				<span>{{item.percentage}}%</span>\n' +
+    '			</div>\n' +
+    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
+    '		</div>\n' +
+    '	</ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OSI/OSIcount/OSIDepartmentEquipmentPersonnel/OSIDepartmentEquipmentPersonnel.tpl.html',
+    '<ion-view class="OSIcountCSS">\n' +
+    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
+    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '		<div class="title">\n' +
+    '			<span>\n' +
+    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
+    '                {{date.departmentStart}}\n' +
+    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
+    '            </span>\n' +
+    '			<span>\n' +
+    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
+    '                {{date.departmentEnd}}\n' +
+    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
+    '            </span>\n' +
+    '			<div></div>\n' +
+    '			<span>{{data.ORG_NAME}}</span>\n' +
+    '		</div>\n' +
+    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
+    '		<div class="list">\n' +
+    '			<div class="card">\n' +
+    '				<span>{{data.MCH_CODE}}</span>\n' +
+    '				<span>{{data.MCH_NAME}}</span>\n' +
+    '			</div>\n' +
+    '			<div class="card" ng-repeat="item in list" ng-click="openRecord(item);">\n' +
+    '				<span>{{item.PERSON_NAME}}</span>\n' +
+    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
+    '				<span>{{item.percentage}}%</span>\n' +
+    '			</div>\n' +
+    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
+    '		</div>\n' +
+    '	</ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OSI/OSIcount/OSIPersonnelEquipment/OSIPersonnelEquipment.tpl.html',
+    '<ion-view class="OSIcountCSS">\n' +
+    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
+    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '		<div class="title">\n' +
+    '			<span>\n' +
+    '				<button class="leftSelect" ng-click="changeDateTime(\'personalStart\', -1, null, date.personalEnd);"></button>\n' +
+    '				{{date.personalStart}}\n' +
+    '				<button class="rightSelect" ng-click="changeDateTime(\'personalStart\', 1, null, date.personalEnd);"></button>\n' +
+    '			</span>\n' +
+    '			<span>\n' +
+    '				<button class="leftSelect" ng-click="changeDateTime(\'personalEnd\', -1, date.personalStart, date.now);"></button>\n' +
+    '				{{date.personalEnd}}\n' +
+    '				<button class="rightSelect" ng-click="changeDateTime(\'personalEnd\', 1, date.personalStart, date.now);"></button>\n' +
+    '			</span>\n' +
+    '			<div></div>\n' +
+    '			<span>{{data.PERSON_NAME}}<br/>{{data.ORG_NAME}}</span>\n' +
+    '		</div>\n' +
+    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
+    '		<div class="list">\n' +
+    '			<div class="card" ng-repeat="item in list" ng-click="openRecord(item);">\n' +
+    '				<span class="flex3">{{item.MCH_NAME}}</span>\n' +
+    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
+    '				<span>{{item.percentage}}%</span>\n' +
+    '			</div>\n' +
+    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
+    '		</div>\n' +
+    '	</ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('OSI/OSIcount/OSIDepartmentPersonnel/OSIDepartmentPersonnel.tpl.html',
+    '<ion-view class="OSIcountCSS">\n' +
+    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
+    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
+    '		<div class="title">\n' +
+    '			<span>\n' +
+    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
+    '                {{date.departmentStart}}\n' +
+    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
+    '            </span>\n' +
+    '			<span>\n' +
+    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
+    '                {{date.departmentEnd}}\n' +
+    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
+    '            </span>\n' +
+    '			<div></div>\n' +
+    '			<span>{{data.ORG_NAME}}</span>\n' +
+    '		</div>\n' +
+    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
+    '		<div class="list">\n' +
+    '			<div class="card" ng-repeat="item in list" ng-click="openRecord(item);">\n' +
+    '				<span>{{item.PERSON_NAME}}</span>\n' +
+    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
+    '				<span>{{item.percentage}}%</span>\n' +
+    '			</div>\n' +
+    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
     '		</div>\n' +
     '	</ion-content>\n' +
     '</ion-view>');
@@ -5682,155 +6491,50 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OSI/OSIcount/OSIDepartmentEquipment/OSIDepartmentEquipment.tpl.html',
-    '<ion-view class="OSIcountCSS">\n' +
-    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
-    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '		<div class="title">\n' +
-    '			<span>\n' +
-    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
-    '                {{date.departmentStart}}\n' +
-    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
-    '            </span>\n' +
-    '			<span>\n' +
-    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
-    '                {{date.departmentEnd}}\n' +
-    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
-    '            </span>\n' +
-    '			<div></div>\n' +
-    '			<span>{{data.ORG_NAME}}</span>\n' +
-    '		</div>\n' +
-    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
-    '		<div class="list">\n' +
-    '			<div class="card" ng-repeat="item in list" ng-click="openDepartmentEquipmentPersonnel(item);">\n' +
-    '				<span class="flex3">{{item.MCH_NAME}}</span>\n' +
-    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
-    '				<span>{{item.percentage}}%</span>\n' +
-    '			</div>\n' +
-    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
-    '		</div>\n' +
-    '	</ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OSI/OSIcount/OSIDepartmentEquipmentPersonnel/OSIDepartmentEquipmentPersonnel.tpl.html',
-    '<ion-view class="OSIcountCSS">\n' +
-    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
-    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '		<div class="title">\n' +
-    '			<span>\n' +
-    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
-    '                {{date.departmentStart}}\n' +
-    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
-    '            </span>\n' +
-    '			<span>\n' +
-    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
-    '                {{date.departmentEnd}}\n' +
-    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
-    '            </span>\n' +
-    '			<div></div>\n' +
-    '			<span>{{data.ORG_NAME}}</span>\n' +
-    '		</div>\n' +
-    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
-    '		<div class="list">\n' +
-    '			<div class="card">\n' +
-    '				<span>{{data.MCH_CODE}}</span>\n' +
-    '				<span>{{data.MCH_NAME}}</span>\n' +
-    '			</div>\n' +
-    '			<div class="card" ng-repeat="item in list" ng-click="openRecord(item);">\n' +
-    '				<span>{{item.PERSON_NAME}}</span>\n' +
-    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
-    '				<span>{{item.percentage}}%</span>\n' +
-    '			</div>\n' +
-    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
-    '		</div>\n' +
-    '	</ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OSI/OSIcount/OSIDepartmentPersonnel/OSIDepartmentPersonnel.tpl.html',
-    '<ion-view class="OSIcountCSS">\n' +
-    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
-    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '		<div class="title">\n' +
-    '			<span>\n' +
-    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentStart\', -1, null, date.departmentEnd);"></button>\n' +
-    '                {{date.departmentStart}}\n' +
-    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentStart\', 1, null, date.departmentEnd);"></button>\n' +
-    '            </span>\n' +
-    '			<span>\n' +
-    '                <button class="leftSelect" ng-click="changeDateTime(\'departmentEnd\', -1, date.departmentStart, date.now);"></button>\n' +
-    '                {{date.departmentEnd}}\n' +
-    '                <button class="rightSelect" ng-click="changeDateTime(\'departmentEnd\', 1, date.departmentStart, date.now);"></button>\n' +
-    '            </span>\n' +
-    '			<div></div>\n' +
-    '			<span>{{data.ORG_NAME}}</span>\n' +
-    '		</div>\n' +
-    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
-    '		<div class="list">\n' +
-    '			<div class="card" ng-repeat="item in list" ng-click="openRecord(item);">\n' +
-    '				<span>{{item.PERSON_NAME}}</span>\n' +
-    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
-    '				<span>{{item.percentage}}%</span>\n' +
-    '			</div>\n' +
-    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
-    '		</div>\n' +
-    '	</ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('OSI/OSIcount/OSIPersonnelEquipment/OSIPersonnelEquipment.tpl.html',
-    '<ion-view class="OSIcountCSS">\n' +
-    '	<ion-nav-title>巡查统计</ion-nav-title>\n' +
-    '	<ion-content has-bouncing="false" scrollbar-y="false">\n' +
-    '		<div class="title">\n' +
-    '			<span>\n' +
-    '				<button class="leftSelect" ng-click="changeDateTime(\'personalStart\', -1, null, date.personalEnd);"></button>\n' +
-    '				{{date.personalStart}}\n' +
-    '				<button class="rightSelect" ng-click="changeDateTime(\'personalStart\', 1, null, date.personalEnd);"></button>\n' +
-    '			</span>\n' +
-    '			<span>\n' +
-    '				<button class="leftSelect" ng-click="changeDateTime(\'personalEnd\', -1, date.personalStart, date.now);"></button>\n' +
-    '				{{date.personalEnd}}\n' +
-    '				<button class="rightSelect" ng-click="changeDateTime(\'personalEnd\', 1, date.personalStart, date.now);"></button>\n' +
-    '			</span>\n' +
-    '			<div></div>\n' +
-    '			<span>{{data.PERSON_NAME}}<br/>{{data.ORG_NAME}}</span>\n' +
-    '		</div>\n' +
-    '		<div class="tips"><span>说明: 当前区间「计划/实际/计划外」巡查次数，「计划/实际」百分比。</span></div>\n' +
-    '		<div class="list">\n' +
-    '			<div class="card" ng-repeat="item in list" ng-click="openRecord(item);">\n' +
-    '				<span class="flex3">{{item.MCH_NAME}}</span>\n' +
-    '				<span>{{item.PLAN_INSPECT}}/{{item.PLAN_INSPECTED}}/{{item.OUT_PLAN_INSPECTED}}</span>\n' +
-    '				<span>{{item.percentage}}%</span>\n' +
-    '			</div>\n' +
-    '			<ion-infinite-scroll ng-if="hasMore" on-infinite="getInspectStatisticalData();" distance="10%" immediate-check="false"></ion-infinite-scroll>\n' +
-    '		</div>\n' +
-    '	</ion-content>\n' +
+  $templateCache.put('Problems/ProblemSolving/Tracking/Tracking.tpl.html',
+    '<ion-view class="tracking">\n' +
+    ' <ion-nav-title>跟踪详情</ion-nav-title>\n' +
+    ' <ion-content class="trackingCss">\n' +
+    '  <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>\n' +
+    '    <div class="listCss">\n' +
+    '      <div class="">提交人：</div>\n' +
+    '     <div>{{}}</div>\n' +
+    '    </div>\n' +
+    '    <div class="listCss">\n' +
+    '      <div class="">提交时间：</div>\n' +
+    '     <div>{{}}</div>\n' +
+    '    </div>\n' +
+    '    <div class="listCss">\n' +
+    '      <div class="">描述：</div>\n' +
+    '     <div>{{}}</div>\n' +
+    '    </div>\n' +
+    '    <div class="line1"></div>\n' +
+    '   \n' +
+    '        <div class="listCss">\n' +
+    '      <div class="">处理人：</div>\n' +
+    '     <div>{{}}</div>\n' +
+    '    </div>\n' +
+    '       <div class="listCss">\n' +
+    '          <div class="">处理时间：</div>\n' +
+    '          <div>{{}}</div>\n' +
+    '       </div>\n' +
+    '       <div class="listCss">\n' +
+    '         <div class="">意见：</div>\n' +
+    '         <div>{{}}</div>\n' +
+    '       </div>\n' +
+    '       <div class="listCss">\n' +
+    '         <div class="">处理顺序：</div>\n' +
+    '         <div>{{}}</div>\n' +
+    '       </div>\n' +
+    '\n' +
+    '        <div class="line1"></div>\n' +
+    '\n' +
+    '    \n' +
+    '    \n' +
+    '      <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%"\n' +
+    '       immediate-check="false">\n' +
+    '      </ion-infinite-scroll>\n' +
+    ' </ion-content>\n' +
     '</ion-view>');
 }]);
 })();
@@ -6016,108 +6720,6 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('tabs/message/myInfo/addFriend.tpl.html',
-    '<div class="inputPopCSS list">\n' +
-    '    <form name="addFriendsFormForm">\n' +
-    '        <label class="item item-input item-stacked-label">\n' +
-    '            <span class="input-label">对方帐号</span>\n' +
-    '            <input type="text" ng-model="friendsName" placeholder="对方用户名" required>\n' +
-    '        </label>\n' +
-    '        <label class="item item-input item-stacked-label">\n' +
-    '            <span class="input-label">申请描述</span>\n' +
-    '            <input type="text" ng-model="applyDesc" placeholder="申请描述">\n' +
-    '        </label>\n' +
-    '        <span class="remarks">注：可以直接添加对方为好友，也可以在通讯录发起临时会话</span>\n' +
-    '        <div class="buttonStyle">\n' +
-    '            <button class="button button-block button-positive addressBook" ng-click="goAddressBook()">\n' +
-    '                去通讯录\n' +
-    '            </button>\n' +
-    '            <button class="button button-block button-positive add " ng-click="addFriends(friendsName,applyDesc)" ng-disabled="!addFriendsFormForm.$valid || addFriendsFormForm.$submitted">\n' +
-    '                添加\n' +
-    '            </button>\n' +
-    '        </div>\n' +
-    '    </form>\n' +
-    '    <div class="close" ng-click="closePop()">\n' +
-    '        <p class="closeImg"></p>\n' +
-    '    </div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('tabs/message/myInfo/inputCreatGroup.tpl.html',
-    '<div class="inputPopCSS list">\n' +
-    '    <form name="createGroupForm">\n' +
-    '        <label class="item item-input item-stacked-label">\n' +
-    '            <span class="input-label">群组名</span>\n' +
-    '            <input type="text" ng-model="groupName" placeholder="请输入群组名" required>\n' +
-    '        </label>\n' +
-    '        <label class="item item-input item-stacked-label">\n' +
-    '            <span class="input-label">群组描述</span>\n' +
-    '            <input type="text" ng-model="groupDesc" placeholder="请输入群组描述">\n' +
-    '        </label>\n' +
-    '        <button class="button button-block button-positive" ng-click="createGroup(groupName,groupDesc)" ng-disabled="!createGroupForm.$valid || createGroupForm.$submitted">\n' +
-    '            创建\n' +
-    '        </button>\n' +
-    '    </form>\n' +
-    '    <div class="close" ng-click="closePop()">\n' +
-    '        <p class="closeImg"></p>\n' +
-    '    </div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('tabs/message/myInfo/myInfo.tpl.html',
-    '<ion-view class="userConfigCSS">\n' +
-    '    <ion-nav-title>我的资料</ion-nav-title>\n' +
-    '    <ion-content class="userConfigContent" has-bouncing="false" scrollbar-y="false">\n' +
-    '        <div class="userItemContent">\n' +
-    '            <div class="items clearfix">\n' +
-    '                <div class="lft">真实姓名</div>\n' +
-    '                <div class="rgt" ng-if="myInfo.userName != \'\' ">{{myInfo.userName?myInfo.userName:myInfo.username}}</div>\n' +
-    '                <div class="rgt" ng-if="myInfo.userName == \'\' ">无</div>\n' +
-    '            </div>\n' +
-    '            <div class="items clearfix">\n' +
-    '                <div class="lft">昵称</div>\n' +
-    '                <div class="rgt" ng-if="myInfo.nickname != \'\' ">{{myInfo.nickname}}</div>\n' +
-    '                <div class="rgt" ng-if="myInfo.nickname == \'\' ">无</div>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div>\n' +
-    '            <button class="button button-block button-positive" ng-click="showAddFriends()">\n' +
-    '                添加好友\n' +
-    '            </button>\n' +
-    '        </div>\n' +
-    '        <div ng-if="DeviceType == \'Android\'">\n' +
-    '            <button class="button button-block button-positive" ng-click="showCreateGroupPop()">\n' +
-    '                创建群组\n' +
-    '            </button>\n' +
-    '        </div>\n' +
-    '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('tabs/message/messageDetail/messageDetail.tpl.html',
     '<ion-view class="messageDetailCSS">\n' +
     '    <ion-nav-title>\n' +
@@ -6229,6 +6831,108 @@ try {
   module = angular.module('BaiYin.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('tabs/message/myInfo/addFriend.tpl.html',
+    '<div class="inputPopCSS list">\n' +
+    '    <form name="addFriendsFormForm">\n' +
+    '        <label class="item item-input item-stacked-label">\n' +
+    '            <span class="input-label">对方帐号</span>\n' +
+    '            <input type="text" ng-model="friendsName" placeholder="对方用户名" required>\n' +
+    '        </label>\n' +
+    '        <label class="item item-input item-stacked-label">\n' +
+    '            <span class="input-label">申请描述</span>\n' +
+    '            <input type="text" ng-model="applyDesc" placeholder="申请描述">\n' +
+    '        </label>\n' +
+    '        <span class="remarks">注：可以直接添加对方为好友，也可以在通讯录发起临时会话</span>\n' +
+    '        <div class="buttonStyle">\n' +
+    '            <button class="button button-block button-positive addressBook" ng-click="goAddressBook()">\n' +
+    '                去通讯录\n' +
+    '            </button>\n' +
+    '            <button class="button button-block button-positive add " ng-click="addFriends(friendsName,applyDesc)" ng-disabled="!addFriendsFormForm.$valid || addFriendsFormForm.$submitted">\n' +
+    '                添加\n' +
+    '            </button>\n' +
+    '        </div>\n' +
+    '    </form>\n' +
+    '    <div class="close" ng-click="closePop()">\n' +
+    '        <p class="closeImg"></p>\n' +
+    '    </div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('tabs/message/myInfo/inputCreatGroup.tpl.html',
+    '<div class="inputPopCSS list">\n' +
+    '    <form name="createGroupForm">\n' +
+    '        <label class="item item-input item-stacked-label">\n' +
+    '            <span class="input-label">群组名</span>\n' +
+    '            <input type="text" ng-model="groupName" placeholder="请输入群组名" required>\n' +
+    '        </label>\n' +
+    '        <label class="item item-input item-stacked-label">\n' +
+    '            <span class="input-label">群组描述</span>\n' +
+    '            <input type="text" ng-model="groupDesc" placeholder="请输入群组描述">\n' +
+    '        </label>\n' +
+    '        <button class="button button-block button-positive" ng-click="createGroup(groupName,groupDesc)" ng-disabled="!createGroupForm.$valid || createGroupForm.$submitted">\n' +
+    '            创建\n' +
+    '        </button>\n' +
+    '    </form>\n' +
+    '    <div class="close" ng-click="closePop()">\n' +
+    '        <p class="closeImg"></p>\n' +
+    '    </div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('tabs/message/myInfo/myInfo.tpl.html',
+    '<ion-view class="userConfigCSS">\n' +
+    '    <ion-nav-title>我的资料</ion-nav-title>\n' +
+    '    <ion-content class="userConfigContent" has-bouncing="false" scrollbar-y="false">\n' +
+    '        <div class="userItemContent">\n' +
+    '            <div class="items clearfix">\n' +
+    '                <div class="lft">真实姓名</div>\n' +
+    '                <div class="rgt" ng-if="myInfo.userName != \'\' ">{{myInfo.userName?myInfo.userName:myInfo.username}}</div>\n' +
+    '                <div class="rgt" ng-if="myInfo.userName == \'\' ">无</div>\n' +
+    '            </div>\n' +
+    '            <div class="items clearfix">\n' +
+    '                <div class="lft">昵称</div>\n' +
+    '                <div class="rgt" ng-if="myInfo.nickname != \'\' ">{{myInfo.nickname}}</div>\n' +
+    '                <div class="rgt" ng-if="myInfo.nickname == \'\' ">无</div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div>\n' +
+    '            <button class="button button-block button-positive" ng-click="showAddFriends()">\n' +
+    '                添加好友\n' +
+    '            </button>\n' +
+    '        </div>\n' +
+    '        <div ng-if="DeviceType == \'Android\'">\n' +
+    '            <button class="button button-block button-positive" ng-click="showCreateGroupPop()">\n' +
+    '                创建群组\n' +
+    '            </button>\n' +
+    '        </div>\n' +
+    '    </ion-content>\n' +
+    '</ion-view>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('BaiYin.templates');
+} catch (e) {
+  module = angular.module('BaiYin.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('tabs/mine/APPfeedback/APPfeedback.tpl.html',
     '<ion-view class="APPfeedbackCSS">\n' +
     '    <ion-nav-title>APP反馈</ion-nav-title>\n' +
@@ -6290,61 +6994,6 @@ module.run(['$templateCache', function($templateCache) {
     '            <ion-radio ng-model="choice" ng-value="\'B\'" ng-click="seleteNet(choice)">外网</ion-radio>\n' +
     '        </ion-list>\n' +
     '    </ion-content>\n' +
-    '</ion-view>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('BaiYin.templates');
-} catch (e) {
-  module = angular.module('BaiYin.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('Problems/ProblemSolving/Tracking/Tracking.tpl.html',
-    '<ion-view class="tracking">\n' +
-    ' <ion-nav-title>跟踪详情</ion-nav-title>\n' +
-    ' <ion-content class="trackingCss">\n' +
-    '  <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>\n' +
-    '    <div class="listCss">\n' +
-    '      <div class="">提交人：</div>\n' +
-    '     <div>{{}}</div>\n' +
-    '    </div>\n' +
-    '    <div class="listCss">\n' +
-    '      <div class="">提交时间：</div>\n' +
-    '     <div>{{}}</div>\n' +
-    '    </div>\n' +
-    '    <div class="listCss">\n' +
-    '      <div class="">描述：</div>\n' +
-    '     <div>{{}}</div>\n' +
-    '    </div>\n' +
-    '    <div class="line1"></div>\n' +
-    '   \n' +
-    '        <div class="listCss">\n' +
-    '      <div class="">处理人：</div>\n' +
-    '     <div>{{}}</div>\n' +
-    '    </div>\n' +
-    '       <div class="listCss">\n' +
-    '          <div class="">处理时间：</div>\n' +
-    '          <div>{{}}</div>\n' +
-    '       </div>\n' +
-    '       <div class="listCss">\n' +
-    '         <div class="">意见：</div>\n' +
-    '         <div>{{}}</div>\n' +
-    '       </div>\n' +
-    '       <div class="listCss">\n' +
-    '         <div class="">处理顺序：</div>\n' +
-    '         <div>{{}}</div>\n' +
-    '       </div>\n' +
-    '\n' +
-    '        <div class="line1"></div>\n' +
-    '\n' +
-    '    \n' +
-    '    \n' +
-    '      <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%"\n' +
-    '       immediate-check="false">\n' +
-    '      </ion-infinite-scroll>\n' +
-    ' </ion-content>\n' +
     '</ion-view>');
 }]);
 })();

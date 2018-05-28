@@ -1,0 +1,30 @@
+package com.service.electric.sql;
+
+import com.utility.MapUtil;
+
+import java.util.Map;
+
+/**市场化交易
+ * Created by Administrator on 2018/5/24.
+ */
+public class ElecMarketSQL {
+
+    public static String elecMarketList(Map map){
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select TRADE_NO," +
+                "       TRADE_MONTH," +
+                "       APPLY_CHARGE_VALUE," +
+                "       CLEARING_CHARGE_VALUE," +
+                "       ifsapp.Company_Site_API.Get_Description(CONTRACT) CONTRANCT_NAME," +
+                "       sum(APPLY_CHARGE_VALUE) APPLY_CHARGE_VALUE_SUM," +
+                "       sum(CLEARING_CHARGE_VALUE) CLEARING_CHARGE_VALUE_SUM" +
+                "  from ifsapp.C_ELEC_MARKET_TRADE_DETAIL" );
+        sb.append(" where TRADE_MONTH = '");
+        sb.append(MapUtil.stringValue(map,"TRADE_MONTH"));
+        sb.append("'");
+        sb.append(" group by TRADE_NO,TRADE_MONTH,APPLY_CHARGE_VALUE,CLEARING_CHARGE_VALUE,CONTRACT");
+        sb.append(" order by TRADE_MONTH");
+
+        return sb.toString();
+    }
+}

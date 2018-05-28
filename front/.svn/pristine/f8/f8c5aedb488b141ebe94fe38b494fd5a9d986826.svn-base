@@ -1,0 +1,135 @@
+angular.module('BaiYin.MarketbasedTrad', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider','ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('MarketbasedTrad', {
+            url: '/MarketbasedTrad',
+            controller: 'MarketbasedTradController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTrad.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+    }])
+    .controller('MarketbasedTradController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet','ionicDatePicker','$filter','loadingAnimation',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet, ionicDatePicker,$filter,loadingAnimation) {
+            var date = new Date();
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.nowMounth = $filter("date")(date, "yyyy-MM");
+                $scope.newDate = $filter("date")(date, "yyyy-MM");
+                console.log($scope.nowMounth);
+                $scope.getElecMarketList($scope.nowMounth);
+            });
+            //点击向前一个月
+            $scope.getPreMonth = function (date) {
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) - 1;
+                if (month2 == 0) {
+                    year2 = parseInt(year2) - 1;
+                    month2 = 12;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+                var t2 = year2 + '-' + month2;
+                $scope.nowMounth = t2;
+                marketMounth(t2);
+                //点击当前月的后一个月
+                $(".rightSelect").attr("disabled", false);
+            }
+            //点击向后一个月
+            $scope.getNextMonth = function (date) {
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+
+                var t2 = year2 + '-' + month2;
+                if ($scope.newDate <= t2) {
+                    $(".rightSelect").attr("disabled", true);
+                    $scope.nowMounth = t2;
+                    marketMounth(t2);
+                }
+                else {
+                    $scope.nowMounth = t2;
+                    marketMounth(t2);
+                    $(".rightSelect").attr("disabled", false);
+                }
+            }
+            /*点击日期*/
+            function marketMounth(mounth) {
+                console.log(mounth);
+                var nowmounth= mounth.split('-');
+                console.log(nowmounth)
+            }
+            /*根据日期获取列表*/
+            $scope.getElecMarketList=function (nowmounth) {
+                var oldmounth= nowmounth.split('-');
+                var nowyear = oldmounth[0]; //获取当前日期的年份
+                var nowmonth = oldmounth[1]; //获取当前日期的月份
+                var nowmounth =nowyear+nowmonth;
+                var parmas = {
+                    TRADE_MONTH: nowmounth,
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecMarketService&&TransName=elecMarketList', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res);
+                            $scope.elemarketList=res.data.eList;
+                            $scope.APPLY_CHARGE_VALUE_SUM=res.data.eList[0].APPLY_CHARGE_VALUE_SUM;
+                            $scope.CLEARING_CHARGE_VALUE_SUM=res.data.eList[0].CLEARING_CHARGE_VALUE_SUM;
+
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+            /*点击跳转页面*/
+            $scope.goMarketbasedTradindex=function () {
+                $state.go('MarketbasedTradIndex');
+            }
+
+
+
+
+
+
+        }]);
+

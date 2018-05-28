@@ -1,0 +1,48 @@
+angular.module('BaiYin.SettlementTrad', [
+    'ionic',
+    'BaiYin.load'
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('SettlementTrad', {
+        url: '/SettlementTrad',
+        controller: 'SettlementTradController',
+        templateUrl: 'SettlementTrad/SettlementTrad.tpl.html',
+        cache: 'true',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('SettlementTradController', ['$scope','showAlert' ,'pageInitService', '$http', '$state','$ionicTabsDelegate','$interval','$timeout','loadingAnimation',
+        function($scope,showAlert,pageInitService,$http,$state,$ionicTabsDelegate,$interval,$timeout,loadingAnimation) {
+            $scope.$on('$ionicView.afterEnter', function() {
+                $ionicTabsDelegate.select(0);
+
+            });
+            $scope.$on('$ionicView.leave',function () {
+
+            });
+            //全场请求数据
+            $scope.toQcData = function () {
+                $ionicTabsDelegate.select(0);
+
+            }
+            //甘肃数据请求
+            $scope.toGsData = function (){
+                $ionicTabsDelegate.select(1);
+            }
+            //青海数据请求
+            $scope.toQhData = function () {
+                $ionicTabsDelegate.select(2);
+            }
+            //宁夏数据请求
+            $scope.toNxData = function () {
+                $ionicTabsDelegate.select(3);
+            }
+            //新疆数据请求
+            $scope.toXjData = function () {
+                $ionicTabsDelegate.select(4);
+
+            }
+
+        }])

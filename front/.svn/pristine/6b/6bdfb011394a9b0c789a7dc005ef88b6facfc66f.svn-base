@@ -1,0 +1,33 @@
+angular.module('BaiYin.MarketbasedTradDetail', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('MarketbasedTradDetail', {
+            url: '/MarketbasedTrad/MarketbasedTradDetail',
+            controller: 'MarketbasedTradDetailController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTradDetail/MarketbasedTradDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('MarketbasedTradDetailController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+
+            });
+
+            
+
+
+
+
+
+
+        }]);
+

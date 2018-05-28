@@ -9,9 +9,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/UserService.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/UserService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/indexPage/TaskService.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/indexPage/TaskService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/indexPage/sql/TaskServiceSQL.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/indexPage/sql/TaskServiceSQL.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/TargetService.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/TargetService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/TargetServiceParam.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/TargetServiceParam.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/TargetServiceSQL.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/TargetServiceSQL.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/utility/DateUtil.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/utility/DateUtil.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/utility/MapUtil.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/utility/MapUtil.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/utility/ServletUtil.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/utility/ServletUtil.class" />
@@ -24,7 +22,14 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/log4j.properties" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/log4j.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resource/log4j.properties" afterPath="$PROJECT_DIR$/resource/log4j.properties" />
     </list>
-    <list default="true" readonly="true" id="98098e57-8fce-429d-b144-f228c70a653e" name="Default" comment="" />
+    <list default="true" readonly="true" id="98098e57-8fce-429d-b144-f228c70a653e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/DefectManageService.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/DefectManageService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/TargetService.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/TargetService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/DefectManageServiceSQL.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/DefectManageServiceSQL.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/TargetServiceSQL.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/com/service/target/sql/TargetServiceSQL.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/jdbc.properties" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/jdbc.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resource/jdbc.properties" afterPath="$PROJECT_DIR$/resource/jdbc.properties" />
+    </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
@@ -40,52 +45,50 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EquipService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/service/equipment/EquipService.java">
+      <file leaf-file-name="ElecMarketService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/service/electric/ElecMarketService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5300">
-              <caret line="225" column="0" lean-forward="false" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="500">
+              <caret line="30" column="47" lean-forward="false" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DefectManageService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/service/target/DefectManageService.java">
+      <file leaf-file-name="ElecMarketSQL.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/service/electric/sql/ElecMarketSQL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="58" column="38" lean-forward="true" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
-              <folding />
+            <state relative-caret-position="625">
+              <caret line="27" column="8" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TaskService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/service/indexPage/TaskService.java">
+      <file leaf-file-name="ElecSpotService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/service/electric/ElecSpotService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="30" column="121" lean-forward="false" selection-start-line="30" selection-start-column="121" selection-end-line="30" selection-end-column="121" />
-              <folding />
+            <state relative-caret-position="1000">
+              <caret line="50" column="31" lean-forward="false" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TaskServiceSQL.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/service/indexPage/sql/TaskServiceSQL.java">
+      <file leaf-file-name="ElecSpotSQL.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/service/electric/sql/ElecSpotSQL.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="20" column="487" lean-forward="true" selection-start-line="20" selection-start-column="464" selection-end-line="20" selection-end-column="491" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaiyinUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/utility/baiyin/BaiyinUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="136" column="45" lean-forward="false" selection-start-line="136" selection-start-column="45" selection-end-line="136" selection-end-column="45" />
-              <folding />
+            <state relative-caret-position="475">
+              <caret line="46" column="52" lean-forward="false" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,7 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getIndexData</find>
       <find>SysManageService</find>
       <find>weatherList</find>
       <find>writeDoc</find>
@@ -127,10 +129,11 @@
       <find>down</find>
       <find>ch</find>
       <find>user</find>
-      <find>\n</find>
       <find>list</find>
-      <find>Daily</find>
       <find>getSpecialList</find>
+      <find>Daily</find>
+      <find>listeq</find>
+      <find>\n</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -149,17 +152,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/utility/DateUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/service/target/sql/TargetServiceParam.java" />
-        <option value="$PROJECT_DIR$/src/com/service/WeatherService.java" />
-        <option value="$PROJECT_DIR$/src/com/service/indexPage/TaskService.java" />
-        <option value="$PROJECT_DIR$/src/com/service/indexPage/sql/TaskServiceSQL.java" />
-        <option value="$PROJECT_DIR$/src/com/domain/UserProfile.java" />
-        <option value="$PROJECT_DIR$/src/com/constant/Global.java" />
-        <option value="$PROJECT_DIR$/resource/baiyin.properties" />
-        <option value="$PROJECT_DIR$/src/com/controller/JsonController.java" />
-        <option value="$PROJECT_DIR$/src/com/exception/ServiceException.java" />
-        <option value="$PROJECT_DIR$/src/com/utility/ServletUtil.java" />
         <option value="$PROJECT_DIR$/src/com/service/target/sql/JournalServiceSQL.java" />
         <option value="$PROJECT_DIR$/src/com/utility/FTPUtil.java" />
         <option value="$PROJECT_DIR$/src/com/service/UserService.java" />
@@ -172,8 +164,6 @@
         <option value="$PROJECT_DIR$/src/com/service/AJsonService.java" />
         <option value="$PROJECT_DIR$/src/com/service/SysManageService.java" />
         <option value="$PROJECT_DIR$/WebContent/appDownload.html" />
-        <option value="$PROJECT_DIR$/resource/jdbc.properties" />
-        <option value="$PROJECT_DIR$/src/com/service/target/DefectManageService.java" />
         <option value="$PROJECT_DIR$/src/com/service/target/HiddenDangerService.java" />
         <option value="$PROJECT_DIR$/src/com/service/target/JournalService.java" />
         <option value="$PROJECT_DIR$/src/com/service/target/sql/HiddenDangerServiceSQL.java" />
@@ -185,21 +175,34 @@
         <option value="$PROJECT_DIR$/src/com/service/target/sql/TargetServiceSQL.java" />
         <option value="$PROJECT_DIR$/src/com/service/target/TargetService.java" />
         <option value="$PROJECT_DIR$/src/com/service/inspection/InspectionService.java" />
-        <option value="$PROJECT_DIR$/resource/applicationContext.xml" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.14.jar!/org/apache/log4j/Category.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-lang.jar!/org/apache/commons/lang/StringUtils.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.14.jar!/org/apache/log4j/Hierarchy.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/dao.jar!/ipacs/dataaccess/service/ServiceManager.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/beans/factory/BeanFactoryUtils.class" />
-        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/cglib-nodep-2.1_3.jar!/net/sf/cglib/proxy/MethodProxy.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/util/Assert.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/core/SimpleAliasRegistry.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-logging.jar!/org/apache/commons/logging/impl/Log4JLogger.class" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.14.jar!/org/apache/log4j/spi/LoggingEvent.class" />
-        <option value="$PROJECT_DIR$/src/com/service/equipment/EquipService.java" />
         <option value="$PROJECT_DIR$/src/com/service/equipment/sql/EquipServiceSQL.java" />
+        <option value="$PROJECT_DIR$/src/com/service/target/DefectManageService.java" />
         <option value="$PROJECT_DIR$/src/com/service/target/sql/DefectManageServiceSQL.java" />
+        <option value="$PROJECT_DIR$/src/com/service/equipment/EquipService.java" />
+        <option value="$PROJECT_DIR$/src/com/service/electric/sql/EleMarketSQL.java" />
+        <option value="$PROJECT_DIR$/resource/jdbc.properties" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/cglib-nodep-2.1_3.jar!/net/sf/cglib/proxy/MethodProxy.class" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/framework/Cglib2AopProxy.class" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/framework/ReflectiveMethodInvocation.class" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/aspectj/MethodInvocationProceedingJoinPoint.class" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/web/context/request/RequestContextHolder.class" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/aspectj/AbstractAspectJAdvice.class" />
+        <option value="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/aspectj/AspectJAroundAdvice.class" />
+        <option value="$PROJECT_DIR$/resource/applicationContext.xml" />
+        <option value="$PROJECT_DIR$/src/com/service/electric/ElecMarketService.java" />
+        <option value="$PROJECT_DIR$/src/com/service/electric/ElecSpotService.java" />
+        <option value="$PROJECT_DIR$/src/com/service/electric/sql/ElecSpotSQL.java" />
+        <option value="$PROJECT_DIR$/src/com/service/electric/sql/ElecMarketSQL.java" />
       </list>
     </option>
   </component>
@@ -238,6 +241,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -344,7 +348,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="target" />
+              <option name="myItemId" value="electric" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -370,7 +374,67 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="indexPage" />
+              <option name="myItemId" value="electric" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BaiYinSerivce" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppSerivce" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attendence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BaiYinSerivce" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppSerivce" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="attendence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sql" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -390,9 +454,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -441,6 +504,119 @@
       <recent name="D:\fengshang\BaiYinService\resource" />
       <recent name="D:\fengshang\BaiYinService\WebContent\WEB-INF\lib" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\AppSerivce\src\com\service\electric\ElecSettlementService.java</PATH>
+          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\AppSerivce\src\com\service\electric\sql\ElecSettlementSQL.java</PATH>
+          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\AppSerivce\src\com\service\inspection\InspectionService.java</PATH>
+          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\AppSerivce\src\com\service\inspection\sql\InspectionServiceSQL.java</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -1012,175 +1188,11 @@
       <workItem from="1526519894794" duration="7651000" />
       <workItem from="1526605931810" duration="4744000" />
       <workItem from="1526866406699" duration="2315000" />
-      <workItem from="1526951548125" duration="2752000" />
-    </task>
-    <task id="LOCAL-00068">
-      <created>1517470374102</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1517470374102</updated>
-    </task>
-    <task id="LOCAL-00069">
-      <created>1517472488102</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1517472488102</updated>
-    </task>
-    <task id="LOCAL-00070">
-      <created>1517473175102</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1517473175102</updated>
-    </task>
-    <task id="LOCAL-00071">
-      <created>1517543727133</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1517543727134</updated>
-    </task>
-    <task id="LOCAL-00072">
-      <created>1517553567109</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1517553567109</updated>
-    </task>
-    <task id="LOCAL-00073">
-      <created>1517555826110</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1517555826110</updated>
-    </task>
-    <task id="LOCAL-00074">
-      <created>1517556919111</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1517556919111</updated>
-    </task>
-    <task id="LOCAL-00075">
-      <created>1517557854109</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1517557854109</updated>
-    </task>
-    <task id="LOCAL-00076">
-      <created>1517559097109</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1517559097109</updated>
-    </task>
-    <task id="LOCAL-00077">
-      <created>1517559991109</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1517559991109</updated>
-    </task>
-    <task id="LOCAL-00078">
-      <created>1517630185120</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1517630185120</updated>
-    </task>
-    <task id="LOCAL-00079">
-      <created>1517646293131</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1517646293137</updated>
-    </task>
-    <task id="LOCAL-00080">
-      <created>1517821106114</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1517821106115</updated>
-    </task>
-    <task id="LOCAL-00081">
-      <created>1517821935111</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1517821935111</updated>
-    </task>
-    <task id="LOCAL-00082">
-      <created>1517827068109</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1517827068110</updated>
-    </task>
-    <task id="LOCAL-00083">
-      <created>1517915015119</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1517915015120</updated>
-    </task>
-    <task id="LOCAL-00084">
-      <created>1517915581111</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1517915581111</updated>
-    </task>
-    <task id="LOCAL-00085">
-      <created>1517916454112</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1517916454112</updated>
-    </task>
-    <task id="LOCAL-00086">
-      <created>1517922894105</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1517922894106</updated>
-    </task>
-    <task id="LOCAL-00087">
-      <created>1517972866102</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1517972866102</updated>
-    </task>
-    <task id="LOCAL-00088">
-      <created>1517981715147</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1517981715147</updated>
-    </task>
-    <task id="LOCAL-00089">
-      <created>1518075897117</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1518075897118</updated>
-    </task>
-    <task id="LOCAL-00090">
-      <created>1518080816102</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1518080816102</updated>
-    </task>
-    <task id="LOCAL-00091">
-      <created>1518081363102</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1518081363102</updated>
+      <workItem from="1526951548125" duration="3970000" />
+      <workItem from="1527037904289" duration="570000" />
+      <workItem from="1527124599937" duration="18554000" />
+      <workItem from="1527210083370" duration="18927000" />
+      <workItem from="1527469906039" duration="1506000" />
     </task>
     <task id="LOCAL-00092">
       <created>1518091000111</created>
@@ -1357,11 +1369,179 @@
       <option name="project" value="LOCAL" />
       <updated>1526554423346</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117">
+      <created>1527132122901</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1527132122902</updated>
+    </task>
+    <task id="LOCAL-00118">
+      <created>1527132300138</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1527132300138</updated>
+    </task>
+    <task id="LOCAL-00119">
+      <created>1527146807249</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1527146807249</updated>
+    </task>
+    <task id="LOCAL-00120">
+      <created>1527147268872</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1527147268873</updated>
+    </task>
+    <task id="LOCAL-00121">
+      <created>1527149558346</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1527149558346</updated>
+    </task>
+    <task id="LOCAL-00122">
+      <created>1527149917322</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1527149917322</updated>
+    </task>
+    <task id="LOCAL-00123">
+      <created>1527152668391</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1527152668392</updated>
+    </task>
+    <task id="LOCAL-00124">
+      <created>1527156264675</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1527156264675</updated>
+    </task>
+    <task id="LOCAL-00125">
+      <created>1527157316314</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1527157316314</updated>
+    </task>
+    <task id="LOCAL-00126">
+      <created>1527159278453</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1527159278454</updated>
+    </task>
+    <task id="LOCAL-00127">
+      <created>1527159776872</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1527159776872</updated>
+    </task>
+    <task id="LOCAL-00128">
+      <created>1527162888366</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1527162888366</updated>
+    </task>
+    <task id="LOCAL-00129">
+      <created>1527217153245</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1527217153245</updated>
+    </task>
+    <task id="LOCAL-00130">
+      <created>1527217530565</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1527217530565</updated>
+    </task>
+    <task id="LOCAL-00131">
+      <created>1527217984929</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1527217984929</updated>
+    </task>
+    <task id="LOCAL-00132">
+      <created>1527218321655</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1527218321655</updated>
+    </task>
+    <task id="LOCAL-00133">
+      <created>1527218421520</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1527218421520</updated>
+    </task>
+    <task id="LOCAL-00134">
+      <created>1527218777362</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1527218777362</updated>
+    </task>
+    <task id="LOCAL-00135">
+      <created>1527219414301</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1527219414301</updated>
+    </task>
+    <task id="LOCAL-00136">
+      <created>1527227935038</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1527227935038</updated>
+    </task>
+    <task id="LOCAL-00137">
+      <created>1527228770851</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1527228770851</updated>
+    </task>
+    <task id="LOCAL-00138">
+      <created>1527229468330</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1527229468330</updated>
+    </task>
+    <task id="LOCAL-00139">
+      <created>1527232842898</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1527232842898</updated>
+    </task>
+    <task id="LOCAL-00140">
+      <created>1527234195720</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1527234195721</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="376666000" />
+    <option name="totallyTimeSpent" value="417441000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1388,24 +1568,24 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42564103" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47008547" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3025641" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2803419" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32136753" sideWeight="0.49707174" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36923078" sideWeight="0.49707174" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34529915" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27231467" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24810892" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3025641" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1421,7 +1601,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1430,132 +1610,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/timer/task/QuartzLoad.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/classes/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BaiYinSerivce.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/sql/AttendStatisticsServiceSQL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35">
-          <caret line="83" column="25" lean-forward="false" selection-start-line="83" selection-start-column="25" selection-end-line="83" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/sql/AttendReasonServiceSQL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-415">
-          <caret line="202" column="25" lean-forward="false" selection-start-line="202" selection-start-column="25" selection-end-line="202" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/constant/AttendConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="13" column="45" lean-forward="true" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/utility/DateUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3375">
-          <caret line="198" column="23" lean-forward="false" selection-start-line="198" selection-start-column="23" selection-end-line="198" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/target/sql/TargetServiceSQL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="74" column="7" lean-forward="true" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/target/TargetService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="92" column="53" lean-forward="false" selection-start-line="92" selection-start-column="53" selection-end-line="92" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/sql/ClockServiceSQL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="54" column="5" lean-forward="true" selection-start-line="25" selection-start-column="4" selection-end-line="54" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/inspection/InspectionService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="30" column="75" lean-forward="false" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resource/applicationContext.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="196" column="71" lean-forward="false" selection-start-line="196" selection-start-column="71" selection-end-line="196" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/AttendReasonService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3200">
-          <caret line="145" column="46" lean-forward="true" selection-start-line="145" selection-start-column="46" selection-end-line="145" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/ClockService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9242">
-          <caret line="104" column="40" lean-forward="true" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/JAVA/jdk1.6.0_45/src.zip!/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="106" column="12" lean-forward="false" selection-start-line="106" selection-start-column="12" selection-end-line="106" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/utility/ListUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
           <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/AttendStatisticsService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="295" column="54" lean-forward="true" selection-start-line="295" selection-start-column="54" selection-end-line="295" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -1594,40 +1652,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/utility/MapUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/exception/ServiceException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="81">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/log/LogAspect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/cglib-nodep-2.1_3.jar!/net/sf/cglib/proxy/MethodProxy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/AJsonService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1722,14 +1750,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/equipment/EquipService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5300">
-          <caret line="225" column="0" lean-forward="false" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/service/equipment/sql/EquipServiceSQL.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
@@ -1737,43 +1757,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/target/sql/DefectManageServiceSQL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="76" column="9" lean-forward="true" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resource/jdbc.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="31" lean-forward="false" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resource/log4j.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/target/DefectManageService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="58" column="38" lean-forward="true" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/utility/baiyin/BaiyinUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="136" column="45" lean-forward="false" selection-start-line="136" selection-start-column="45" selection-end-line="136" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1781,15 +1768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
           <caret line="176" column="6" lean-forward="false" selection-start-line="176" selection-start-column="6" selection-end-line="176" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/service/indexPage/TaskService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="30" column="121" lean-forward="false" selection-start-line="30" selection-start-column="121" selection-end-line="30" selection-end-column="121" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1797,7 +1775,209 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="20" column="487" lean-forward="true" selection-start-line="20" selection-start-column="464" selection-end-line="20" selection-end-column="491" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/utility/baiyin/BaiyinUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="136" column="45" lean-forward="false" selection-start-line="136" selection-start-column="45" selection-end-line="136" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/indexPage/TaskService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-203">
+          <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/target/sql/DefectManageServiceSQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="146" column="9" lean-forward="true" selection-start-line="146" selection-start-column="9" selection-end-line="146" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/target/DefectManageService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="150" column="71" lean-forward="false" selection-start-line="150" selection-start-column="71" selection-end-line="150" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/equipment/EquipService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1806">
+          <caret line="225" column="0" lean-forward="true" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/ApproveService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/AttendStatisticsService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6975">
+          <caret line="295" column="54" lean-forward="true" selection-start-line="295" selection-start-column="54" selection-end-line="295" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/utility/MapUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="75" column="25" lean-forward="false" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resource/jdbc.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="7" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/AJsonService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/JAVA/jdk1.6.0_45/src.zip!/java/lang/ref/Reference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="159" column="0" lean-forward="false" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/JAVA/jdk1.6.0_45/src.zip!/java/lang/ThreadLocal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/aspectj/AspectJAroundAdvice.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/web/context/request/RequestContextHolder.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/aspectj/AbstractAspectJAdvice.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="410" column="0" lean-forward="false" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/log/LogAspect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="149" column="0" lean-forward="false" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/aspectj/MethodInvocationProceedingJoinPoint.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/framework/ReflectiveMethodInvocation.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring.jar!/org/springframework/aop/framework/Cglib2AopProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="405" column="0" lean-forward="false" selection-start-line="405" selection-start-column="0" selection-end-line="405" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/cglib-nodep-2.1_3.jar!/net/sf/cglib/proxy/MethodProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/ClockService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="104" column="42" lean-forward="false" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/attendence/sql/ClockServiceSQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resource/applicationContext.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="195" column="53" lean-forward="false" selection-start-line="195" selection-start-column="53" selection-end-line="195" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/electric/ElecSpotService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1000">
+          <caret line="50" column="31" lean-forward="false" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/electric/ElecMarketService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="30" column="47" lean-forward="false" selection-start-line="30" selection-start-column="47" selection-end-line="30" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/electric/sql/ElecMarketSQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="27" column="8" lean-forward="false" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/service/electric/sql/ElecSpotSQL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="46" column="52" lean-forward="false" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

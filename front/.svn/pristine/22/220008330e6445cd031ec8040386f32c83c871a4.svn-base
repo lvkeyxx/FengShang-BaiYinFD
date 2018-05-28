@@ -1,0 +1,34 @@
+angular.module('BaiYin.MarketbasedTradIndex', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('MarketbasedTradIndex', {
+            url: '/MarketbasedTrad/MarketbasedTradIndex',
+            controller: 'MarketbasedTradIndexController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTradIndex/MarketbasedTradIndex.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('MarketbasedTradIndexController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+
+            });
+            $scope.goMarketbasedTradDetail=function () {
+                $state.go('MarketbasedTradDetail');
+            }
+
+
+
+
+
+
+        }]);
+

@@ -1,0 +1,92 @@
+<ion-view class="spotTransactionCSS">
+    <ion-nav-title>现货交易</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="日统计" ng-click="toSpotDay()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="selectDateBtn" ng-click="openDatePicker()" id="countDayId">{{now | date : "yyyy-MM-dd"}}</button>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <pie id="main" legend="legend"  data="data"></pie>
+                    </div>
+                </div>
+                <div class="countNum">
+                    <ul>
+                        <li class="col col-25" ng-click="towdDetail(countDayList.unclockPerson)">
+                            <span>{{countDayList.unclockPerson}}人</span>
+                            <span>未打卡</span>
+                            <!--<i class="cdIcon"></i>3--></li>
+                        <li class="col col-25" ng-click="tocdDetail(countDayList.latePerson)">
+                            <span>{{countDayList.latePerson}}次</span>
+                            <span>迟到</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                        <li class="col col-25" ng-click="toZtDetail(countDayList.earlyPerson)">
+                            <span>{{countDayList.earlyPerson}}次</span>
+                            <span>早退</span>
+                            <!--<i class="wdIcon"></i>1--></li>
+                        <li class="col col-25" ng-click="tozcDetail(countDayList.normalClockPerson)">
+                            <span>{{countDayList.normalClockPerson}}次</span>
+                            <span>正常</span>
+                            <!--<i class="cdIcon"></i>3--></li>
+                    </ul>
+                </div>
+                <div class="tips">
+                    <span>提示：点击上面栏目可查看考勤统计详情</span>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="月统计" ng-click="tospotCountMounth()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <!--<button class="selectDateBtn" ng-click="openDatePicker()">{{now | date : "yyyy-MM"}}</button>-->
+                    <button class="leftSelect" ng-click="getPreMonth(nowMounth)" id="countMouthShowID"></button>
+                    {{nowMounth | date : "yyyy-MM"}}
+                    <button class="rightSelect monthSelect" ng-click="getNextMonth(nowMounth)" disabled></button>
+                </div>
+                <div class="content">
+                    <ul class="list" >
+                        <li class="item item-icon-right" ng-click="toeveryDetail(everyperson)" ng-repeat="everyperson in personList">
+                            <div class="personShow">
+                                <div class="name">{{everyperson.personName}}</div>
+                                <div class="glassname">
+                                    <span class="personcd">未打卡:{{everyperson.unClockNum}}天</span>
+                                    <span class="personcd">迟到:{{everyperson.beLate}}天</span>
+                                    <span class="personcd">早退:{{everyperson.leaveEarly}}天</span>
+                                    <span class="personcd">正常:{{everyperson.regular}}天</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="bottom"></div>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="年统计" ng-click="tospotCountYear()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="leftSelect" ng-click="getPreYear(nowYear)" id="countYearShowID"></button>
+                    {{nowYear}}年
+                    <button class="rightSelect yearSelect" ng-click="getNextYear(nowYear)"></button>
+                </div>
+                <div class="content">
+                    <ul class="list" >
+                        <li class="item item-icon-right" ng-click="toeveryDetail(everyperson)" ng-repeat="everyperson in personList">
+                            <div class="personShow">
+                                <div class="name">{{everyperson.personName}}</div>
+                                <div class="glassname">
+                                    <span class="personcd">未打卡:{{everyperson.unClockNum}}天</span>
+                                    <span class="personcd">迟到:{{everyperson.beLate}}天</span>
+                                    <span class="personcd">早退:{{everyperson.leaveEarly}}天</span>
+                                    <span class="personcd">正常:{{everyperson.regular}}天</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="bottom"></div>
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

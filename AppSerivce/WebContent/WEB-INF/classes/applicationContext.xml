@@ -195,4 +195,8 @@
     <bean id="InspectionService" class="com.service.inspection.InspectionService"></bean>
     <bean id="ErpService" class="com.service.ticket.ErpService"></bean>
     <bean id="EquipService" class="com.service.equipment.EquipService"></bean>
+    <bean id="ElecMarketService" class="com.service.electric.ElecMarketService"></bean>
+    <bean id="ElecSpotService" class="com.service.electric.ElecSpotService"></bean>
+    <bean id="ElecSettlementService" class="com.service.electric.ElecSettlementService"></bean>
+    
 </beans>

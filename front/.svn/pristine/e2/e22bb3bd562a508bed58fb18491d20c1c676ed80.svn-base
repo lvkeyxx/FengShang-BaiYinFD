@@ -1,0 +1,225 @@
+angular.module('BaiYin.spotTransaction', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('spotTransaction', {
+            url: '/spotTransaction',
+            controller: 'spotTransactionController',
+            templateUrl: 'spotTransaction/spotTransaction.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+
+    }])
+    .controller('spotTransactionController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicActionSheet', 'ionicDatePicker',
+
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicActionSheet, ionicDatePicker) {
+            var date = new Date();
+            console.log(date);
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.now = $filter("date")(date, "yyyy-MM-dd");
+                var spotnowDate=$scope.now.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowData=spotnowDate[2];
+                var spotnowTdate=spotnowYear+spotnowMonth+spotnowData;
+                var parmas = {
+                    TRADE_DAY: spotnowTdate
+                }
+                getSpotList(parmas);
+
+            });
+            //获取日历插件
+            var ipObj1 = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    $scope.now = $filter("date")(val, "yyyy-MM-dd");
+                    var spotnowDate=$scope.now.split('-');
+                    var spotnowYear=spotnowDate[0];
+                    var spotnowMonth=spotnowDate[1];
+                    var spotnowData=spotnowDate[2];
+                    var spotnowTdate=spotnowYear+spotnowMonth+spotnowData;
+                    var parmas = {
+                        TRADE_DAY: spotnowTdate
+                    }
+                    getSpotList(parmas);
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+            //点击日统计数据
+            $scope.toSpotDay = function () {
+                $ionicTabsDelegate.select(0);
+                $scope.now = $filter("date")(date, "yyyy-MM-dd");
+                var spotnowDate=$scope.now.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowData=spotnowDate[2];
+                var spotnowTdate=spotnowYear+spotnowMonth+spotnowData;
+                var parmas = {
+                    TRADE_DAY: spotnowTdate
+                }
+                getSpotList(parmas);
+            }
+            //点击月统计数据
+            $scope.tospotCountMounth = function () {
+                $ionicTabsDelegate.select(1);
+                $(".monthSelect").attr("disabled", true);
+                $scope.nowMounth = $filter("date")(date, "yyyy-MM");
+                $scope.newDate = $filter("date")(date, "yyyy-MM");
+                var spotnowDate=$scope.nowMounth.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowTdate=spotnowYear+spotnowMonth;
+                var parmas = {
+                    TRADE_MONTH: spotnowTdate
+                }
+                getSpotList(parmas);
+            }
+            //点击向前一个月
+            $scope.getPreMonth = function (date) {
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) - 1;
+                if (month2 == 0) {
+                    year2 = parseInt(year2) - 1;
+                    month2 = 12;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+                var t2 = year2 + '-' + month2;
+                $scope.nowMounth = t2;
+                spotCountnMounth(t2);
+                //点击当前月的后一个月
+                $(".monthSelect").attr("disabled", false);
+            }
+            //点击向后一个月
+            $scope.getNextMonth = function (date) {
+                console.log("date==" + date);
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+
+                var t2 = year2 + '-' + month2;
+                if ($scope.newDate <= t2) {
+                    $(".monthSelect").attr("disabled", true);
+                    $scope.nowMounth = t2;
+                    spotCountnMounth(t2);
+                }
+                else {
+                    $scope.nowMounth = t2;
+                    spotCountnMounth(t2);
+                    $(".monthSelect").attr("disabled", false);
+                }
+            }
+            //点击年统计数据
+            $scope.tospotCountYear=function () {
+                $ionicTabsDelegate.select(2);
+                $(".yearSelect").attr("disabled", true);
+                $scope.nowYear=$filter("date")(date, "yyyy");
+                $scope.newYear = $filter("date")(date, "yyyy");
+                var parmas = {
+                    TRADE_YEAR: $scope.nowYear
+                }
+                getSpotList(parmas);
+            }
+            //点击向前一个年
+            $scope.getPreYear = function (date) {
+                console.log(date);
+                $scope.nowYear=parseInt(date)-1;
+                spotCountnYear($scope.nowYear);
+            }
+            //点击向后一个年
+            $scope.getNextYear= function (date) {
+                console.log(date);
+                var year2 = parseInt(date) + 1;
+                if ($scope.newYear <= date) {
+                    $(".yearSelect").attr("disabled", true);
+                    $scope.nowYear= year2;
+                    spotCountnYear(year2);
+                }
+                else {
+                    $scope.nowYear =year2;
+                    spotCountnYear(year2);
+                    $(".yearSelect").attr("disabled", false);
+                }
+            }
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+            function spotCountnMounth(spotmonth) {
+                var spotnowDate=spotmonth.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowTdate=spotnowYear+spotnowMonth;
+                var parmas = {
+                    TRADE_MONTH: spotnowTdate
+                }
+                getSpotList(parmas);
+            }
+            function spotCountnYear(spotyear) {
+                var parmas = {
+                    TRADE_YEAR: spotyear
+                }
+                getSpotList(parmas);
+            }
+
+            //获取统计信息
+            function getSpotList(parmas) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecSpotService&TransName=elecSpotList', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res)
+                            $scope.spotTradList=res.data.sList;
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+        }
+    ])

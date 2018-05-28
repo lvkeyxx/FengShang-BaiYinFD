@@ -1,0 +1,50 @@
+package com.service.electric;
+
+import com.exception.ServiceException;
+import com.service.AJsonService;
+import com.service.IJsonService;
+import com.service.electric.sql.ElecMarketSQL;
+import com.utility.IbatisDBUtil;
+import com.utility.ListUtil;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2018/5/24.
+ */
+public class ElecMarketService extends AJsonService implements IJsonService {
+
+    /**
+     * 市场化交易列表
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    public String elecMarketList(Map map) throws ServiceException{
+        JSONObject json = new JSONObject();
+        String code = "0";
+        String msg = "success";
+        try{
+            String sql = ElecMarketSQL.elecMarketList(map);
+            List<Map> eList = new IbatisDBUtil().executeSql(sql);
+            if(ListUtil.isEmpty(eList)){
+                code = "1";
+                msg = "未查询到市场化交易信息";
+            }else {
+                json.put("eList",eList);
+            }
+        }catch (Throwable e){
+            e.printStackTrace();
+            throw new ServiceException("7003","获取市场化交易信息出错");
+        }try{
+            json.put("code",code);
+            json.put("msg",msg);
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+
+        return json.toString();
+    }
+}

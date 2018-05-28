@@ -1,15 +1,3 @@
-angular.module('maxrocky.framework.directives',[
-	'maxrocky.framework.directives.rem',
-	'maxrocky.framework.directives.navBar',
-	'maxrocky.framework.directives.goback'
-])
-angular.module('maxrocky.framework',[
-	'maxrocky.framework.directives'
-	// 'maxrocky.framework.swiper',
-	// 'maxrocky.framework.iscroll'
-])
-
-
 angular.module('BaiYin.app.config', [
     'ionic'
 ])
@@ -28,11 +16,11 @@ angular.module('BaiYin.app.config', [
  */
 //外网
 //.constant('outerNetUri', 'http://124.152.7.69:57001/AppSerivce/json?')
-.constant('outerNetUri', 'http://192.168.1.112:81/AppSerivce/json?')
+.constant('outerNetUri', 'http://192.168.1.109:81/AppSerivce/json?')
 //
 //内网
 //.constant('intranetUri', 'http://10.0.12.73:57001/AppSerivce/json?')
-.constant('intranetUri', 'http://192.168.1.112:81/AppSerivce/json?')
+.constant('intranetUri', 'http://192.168.1.109:81/AppSerivce/json?')
 
 .constant('AppDefaultRootUrl', '/blankPage')
 
@@ -119,6 +107,10 @@ angular.module('BaiYin.app', [
     'BaiYin.powerA',
     'BaiYin.loadA',
     'BaiYin.AgentsA',
+    'BaiYin.EleTrad',
+    'BaiYin.SettlementTrad',
+    'BaiYin.MarketbasedTradA',
+    'BaiYin.spotTransaction',
     'BaiYin.userConfig',
     'BaiYin.companyNewsDetails',
     'BaiYin.ProblemsA',
@@ -346,54 +338,18 @@ angular.module('BaiYin.app.mock', [
     $httpBackend.whenGET('/workbench/staffVersion/1').passThrough();
     $httpBackend.whenGET('/workbench/staffVersion/2').passThrough();
 }])
-angular.module('maxrocky.framework.directives.goback',[
+angular.module('maxrocky.framework.directives',[
+	'maxrocky.framework.directives.rem',
+	'maxrocky.framework.directives.navBar',
+	'maxrocky.framework.directives.goback'
+])
+angular.module('maxrocky.framework',[
+	'maxrocky.framework.directives'
+	// 'maxrocky.framework.swiper',
+	// 'maxrocky.framework.iscroll'
 ])
 
-.directive('mrGoBack',['$ionicHistory','$parse', '$filter', function($ionicHistory,$parse, $filter){
-	return {
-		restrict:'C',
-		link: function(scope, element, attrs){
-            element.on('click',function(){
-             	$ionicHistory.goBack();
-            });
-		}
-	};
-}])
-angular.module('maxrocky.framework.directives.navBar',[
-])
 
-.directive('mrNavBar',['$parse', '$filter', function($parse, $filter){
-
-	return {
-		restrict:'C',
-		scope:{
-			opacity:"="
-		},
-		link: function(scope, element, attrs){
-			scope.$watch('opacity',function(newValue){
-				newValue=newValue||0;
-				element.css('opacity',newValue);
-			})
-		}
-	};
-}])
-angular.module('maxrocky.framework.directives.rem',[
-])
-
-.directive('mrRem',['$parse', '$filter', function($parse, $filter){
-
-	return {
-		restrict:'A',
-		link: function(scope, element, attrs){
-	    var _size = 50;
-        var p = (document.body && document
-            .body.clientWidth || document.getElementsByTagName("html")[0].offsetWidth) /375
-       _size = p * 50; 
-        document.getElementsByTagName("html")[0].setAttribute("style", "font-size:" + _size + "px!important");
-      
-		}
-	};
-}])
 angular.module('BaiYin.Agents', [
     'BaiYin.Agents.mock'
 ])
@@ -513,6 +469,9 @@ angular.module('BaiYin.attence', [
             $scope.goindex = function () {
                 $state.go('tabs/homePage');
             }
+            //允许打卡
+            $scope.canClickInBtn = false;
+            $scope.canClickOutBtn = false;
             //显示和隐藏上班打卡时间
             $scope.sbdktimeShow = true;
             $scope.clockinBtn = false;
@@ -646,13 +605,9 @@ angular.module('BaiYin.attence', [
                             for(var i=0;i<$scope.blueToothdetail.length;i++){
                                 $scope.blueToothList.push($scope.blueToothdetail[i]);
                             }
-
-
-
                         } else {
                             showAlert.showMsg(res.msg);
                         }
-
                     }, function (error) {
                         loadingAnimation.hideLoading();
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
@@ -685,16 +640,16 @@ angular.module('BaiYin.attence', [
                             if (res.data.detail.ACTUAL_END_TIME == null || res.data.detail.ACTUAL_END_TIME == '') {
                                 $scope.xbdktimeShow = true;
                                 $scope.clockoutBtn = false;
-                                $("#xbPunchClock").attr("disabled", true);
+                                $scope.canClickOutBtn = false;
                                 $("#xbPunchClock").addClass("clockoutgreyBtn");
                                 $("#xbPunchClock").removeClass("clockoutBtn");
                             }
                         }
                         if(res.code == '1'){
-                            $("#sbPunchClock").attr("disabled", true);
+                            $scope.canClickInBtn = false;
                             $("#sbPunchClock").addClass("clockingreyBtn");
                             $("#sbPunchClock").removeClass("clockinBtn");
-                            $("#xbPunchClock").attr("disabled", true);
+                            $scope.canClickOutBtn = false;
                             $("#xbPunchClock").addClass("clockoutgreyBtn");
                             $("#xbPunchClock").removeClass("clockoutBtn");
                         }else {
@@ -917,10 +872,10 @@ angular.module('BaiYin.attence', [
                 $scope.RULE_ID = $scope.blueToothList[index].RULE_ID;
                 $scope.ADDR = $scope.blueToothList[index].DEVICE_LOCATION;
                 getWorkTime($scope.blueToothList[index].SN_CODE, $scope.blueToothList[index].CONTRACT,$scope.RULE_ID);
-                $("#sbPunchClock").attr("disabled", false);
+                $scope.canClickInBtn = true;
                 $("#sbPunchClock").addClass("clockinBtn");
                 $("#sbPunchClock").removeClass("clockingreyBtn");
-                $("#xbPunchClock").attr("disabled", false);
+                $scope.canClickOutBtn = true;
                 $("#xbPunchClock").addClass("clockoutBtn");
                 $("#xbPunchClock").removeClass("clockoutgreyBtn");
 
@@ -953,9 +908,8 @@ angular.module('BaiYin.boardA', [
     'BaiYin.bulletinBoard.view',
 ])
 angular.module('BaiYin.bulletinBoard', [
-    'ionic'
+    'ionic', 'ngTouch'
 ])
-
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider.state('bulletinBoard', {
             url: '/bulletinBoard',
@@ -965,17 +919,95 @@ angular.module('BaiYin.bulletinBoard', [
             authorizedRuleType: ['1']
         })
     }])
+    .directive("ngOnhold", ["$swipe", "$parse", function($swipe, $parse){  
+                //长按触发事件需要的时间  
+                var ON_HOLD_TIMEMS = 500;  
+                  
+                return function(scope, element, attr) {  
+                	var run;  
+                    var onholdHandler = $parse(attr["ngOnhold"]);  
+                    $swipe.bind(element, {  
+                        'start': function(coords, event) {  
+                            run = setTimeout(function(){  
+                                scope.$apply(function() {  
+                                    element.triggerHandler("onhold");  
+                                    onholdHandler(scope, {$event: event});  
+                                });  
+                            }, ON_HOLD_TIMEMS);  
+                        },  
+                        'cancel': function(event) {  
+                            if(run)clearTimeout(run);  
+                        },  
+                        'move' : function(event){  
+                            if(run)clearTimeout(run);  
+                        },  
+                        'end': function(coords, event) {  
+                            if(run)clearTimeout(run);  
+                        }  
+                    }, ['touch', 'mouse']);  
+                }  
+    }])
     .controller('bulletinBoardController', ['$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$ionicTabsDelegate', '$stateParams',
         function ($scope, showAlert, loadingAnimation, $http, $state, $ionicTabsDelegate, $stateParams) {
             $scope.$on('$ionicView.afterEnter', function () {
                 bulletinInit();
             });
+            $scope.data = {
+            	showReorder:false
+            }
 
             //点击标题
             $scope.toEdit = function (line_no) {
                 console.log("toEdit.line_no==="+line_no);
                 $state.go('bulletinBoard/edit', {LINE_NO: line_no})
             };
+            
+            $scope.moveItem = function(board, fromIndex, toIndex) {
+            	$scope.newList = [];
+        	    $scope.tList.splice(fromIndex, 1);
+        	    $scope.tList.splice(toIndex, 0, board);
+        	    board.SORT = parseInt(toIndex) + 1;
+        	    var _fromIndex = parseInt(fromIndex) + 1;
+        	    var _toIndex = parseInt(toIndex) + 1;
+	    		for(var i in $scope.tList) {
+	    			if(parseInt(fromIndex) > parseInt(toIndex)
+	    					&& $scope.tList[i].SORT >= _toIndex
+	    					&& $scope.tList[i].SORT < _fromIndex) {
+	    				$scope.tList[i].SORT = parseInt($scope.tList[i].SORT) + 1;
+	    			} else if(parseInt(fromIndex) < parseInt(toIndex)
+	    					&& $scope.tList[i].SORT > _fromIndex
+	    					&& $scope.tList[i].SORT <= _toIndex){
+	    				$scope.tList[i].SORT = parseInt($scope.tList[i].SORT) - 1;
+	    			}
+	    			$scope.tList[toIndex].SORT = _toIndex;
+	    			var list = {
+    					"SORT": parseInt($scope.tList[i].SORT),
+    					"LINE_NO": parseInt($scope.tList[i].LINE_NO)
+	    			};
+	    			$scope.newList.push(list);
+	    		}
+                loadingAnimation.showLoading('数据上传中', 'loding', 0);
+                var param = {
+                		params:$scope.newList
+                }
+                $http.post('ServiceName=WhiteBoardService&TransName=updateWhiteBoardNewspaper',param)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                        	$state.go('bulletinBoard');
+                            showAlert.showMsg('','','顺序更改成功！');
+                        } else {
+                            showAlert.showMsg('','',res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+        	  };
+        	  $scope.onItemDelete = function(board) {
+        	    $scope.tList.splice($scope.tList.indexOf(board), 1);
+        	  };
 
             //初始化白板公告列表
             function bulletinInit() {
@@ -995,7 +1027,6 @@ angular.module('BaiYin.bulletinBoard', [
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
                     });
             }
-
         }
     ])
 
@@ -2009,6 +2040,148 @@ angular.module('BaiYin.companyNewsDetails', [])
 
         }
     ])
+angular.module('BaiYin.EleTrad', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('EleTrad', {
+            url: '/EleTrad',
+            controller: 'EleTradController',
+            templateUrl: 'EleTrad/EleTrad.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('EleTradController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
+
+            $scope.$on('$ionicView.enter', function () {
+                $scope.EleTradcanvas()
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+
+            });
+            $scope.EleTradGain=function () {
+
+            };
+            $scope.dianchanglist = [
+                {CONTRACT: "1201", DESCRIPTION: "北大桥东风电场", CITY: "酒泉市"},
+                {CONTRACT: "1201", DESCRIPTION: "北大桥东风电场", CITY: "酒泉市"},
+                {CONTRACT: "1201", DESCRIPTION: "北大桥东风电场", CITY: "酒泉市"},
+                {CONTRACT: "1201", DESCRIPTION: "北大桥东风电场", CITY: "酒泉市"},
+                {CONTRACT: "1201", DESCRIPTION: "北大桥东风电场", CITY: "酒泉市"},
+                {CONTRACT: "1201", DESCRIPTION: "北大桥东风电场", CITY: "酒泉市"},
+            ];
+            dianchanglist = [];
+            for (var i = 0; i < $scope.dianchanglist.length; i++) {
+                var dlist = {};
+                dlist.text = $scope.dianchanglist[i].DESCRIPTION;
+                dlist.CONTRACT = $scope.dianchanglist[i].CONTRACT;
+                dlist.CITY = $scope.dianchanglist[i].CITY;
+                dianchanglist.push(dlist);
+            }
+            $scope.selectEletrad=function () {
+                $scope.num++;
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: dianchanglist,
+                    cancel: function () {
+
+                    },
+                    buttonClicked: function (index) {
+                        var dianchanglength=dianchanglist[index].text.length;
+                        var sel =  document.getElementById("EleTradID");
+                        sel.style.width =18*dianchanglength+'px';
+                        commitYu = dianchanglist[index].text;
+                        console.log(commitYu);
+                        yunum = dianchanglist[index].CONTRACT;
+                        city = dianchanglist[index].CITY;
+                        $("#EleTradID").val(commitYu);
+                        return true;
+                    }
+                });
+            }
+            $scope.EleTradcanvas=function () {
+                var dianchanglength=dianchanglist[0].text.length;
+                var sel =  document.getElementById("EleTradID");
+                sel.style.width =18*dianchanglength+'px';
+                $("#EleTradID").val(dianchanglist[0].text);
+                var option = {
+                    title: {
+                        subtext: '万KW·h',
+                        top: '3%',
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    dataZoom: {
+                        show: false,
+                        start: 0
+                    },
+                    legend: {
+                        data: ["结算电量","市场化电量","基础电量"]
+                    },
+                    grid: {
+                        y2:80,
+                        top: '20%',
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['2018-05-01','2018-05-02','2018-05-03','2018-05-04','2018-05-05','2018-05-06','2018-05-07','2018-05-08','2018-05-09','2018-05-10','2018-05-11','2018-05-12','2018-05-13','2018-05-14','2018-05-15','2018-05-16','2018-05-17','2018-05-18','2018-05-19','2018-05-20','2018-05-21','2018-05-22','2018-05-23','2018-05-24','2018-05-25','2018-05-26','2018-05-27','2018-05-28','2018-05-29','2018-05-30','2018-05-30']
+                    },
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '结算电量',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:[1,3,5,4,3,5,14,6,7,9,15,32,1,15,45,25,35,18,14,20,14,22,17,35,42,54,14,28,14,29,24]
+                        },
+                        {
+                            name: '市场化电量',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:[5,6,8,15,47,6,5,3,89,4,5,6,7,5,24,14,35,14,20,31,11,21,17,25,14,25,36,5,20,14]
+                        },
+                        {
+                            name: '基础电量',
+                            type: 'line',
+                            smooth: false,
+                            symbol: 'none',
+                            showAllSymbol: false,
+                            data:[4,6,8,45,37,16,15,13,29,24,15,6,17,35,14,24,25,4,10,21,21,31,27,15,34,15,26,15,10,24]
+                        }
+
+                    ]
+                };
+                $scope.GsChart = echarts.init(document.getElementById('EleTradst'), 'macarons');
+                $scope.GsChart.setOption(option);
+            }
+
+
+
+
+        }]);
+
+
 angular
     .module('BaiYin.erp', [
         'ionic',
@@ -2780,6 +2953,150 @@ angular.module('BaiYin.loadA', [
     'BaiYin.load.nearlyHour',
     'BaiYin.load.historyInfo',
 ])
+angular.module('BaiYin.MarketbasedTrad', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider','ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('MarketbasedTrad', {
+            url: '/MarketbasedTrad',
+            controller: 'MarketbasedTradController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTrad.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+    }])
+    .controller('MarketbasedTradController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet','ionicDatePicker','$filter','loadingAnimation',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet, ionicDatePicker,$filter,loadingAnimation) {
+            var date = new Date();
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.nowMounth = $filter("date")(date, "yyyy-MM");
+                $scope.newDate = $filter("date")(date, "yyyy-MM");
+                console.log($scope.nowMounth);
+                $(".markbasedSelect").hide();
+                $scope.getElecMarketList($scope.nowMounth);
+            });
+            //点击向前一个月
+            $scope.getPrebasedMonth = function (date) {
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) - 1;
+                if (month2 == 0) {
+                    year2 = parseInt(year2) - 1;
+                    month2 = 12;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+                var t2 = year2 + '-' + month2;
+                $scope.nowMounth = t2;
+                marketMounth(t2);
+                //点击当前月的后一个月
+                $(".markbasedSelect").show();
+            }
+            //点击向后一个月
+            $scope.getNextbasedMonth = function (date) {
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+
+                var t2 = year2 + '-' + month2;
+                if ($scope.newDate <= t2) {
+                    $(".markbasedSelect").hide();
+                    $scope.nowMounth = t2;
+                    marketMounth(t2);
+                }
+                else {
+                    $scope.nowMounth = t2;
+                    marketMounth(t2);
+                    $(".markbasedSelect").show();
+                }
+            }
+            /*点击日期*/
+            function marketMounth(mounth) {
+                console.log(mounth);
+                $scope.getElecMarketList(mounth)
+            }
+            /*根据日期获取列表*/
+            $scope.getElecMarketList=function (nowmounth) {
+                var oldmounth= nowmounth.split('-');
+                var nowyear = oldmounth[0]; //获取当前日期的年份
+                var nowmonth = oldmounth[1]; //获取当前日期的月份
+                var nowmounth =nowyear+nowmonth;
+                var parmas = {
+                    TRADE_MONTH: nowmounth,
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecMarketService&&TransName=elecMarketList', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res);
+                            $scope.elemarketList=res.data.eList;
+                            $scope.APPLY_CHARGE_VALUE_SUM=res.data.APPLY_CHARGE_VALUE_SUM;
+                            $scope.CLEARING_CHARGE_VALUE_SUM=res.data.CLEARING_CHARGE_VALUE_SUM;
+
+                        } else {
+                            $scope.elemarketList=[];
+                            $scope.APPLY_CHARGE_VALUE_SUM=0;
+                            $scope.CLEARING_CHARGE_VALUE_SUM=0;
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+            /*点击跳转页面*/
+            $scope.goMarketbasedTradindex=function () {
+                $state.go('MarketbasedTradIndex');
+            }
+
+
+
+
+
+
+        }]);
+
+
+angular.module('BaiYin.MarketbasedTradA', [
+    'BaiYin.MarketbasedTrad',
+    'BaiYin.MarketbasedTradIndex',
+    'BaiYin.MarketbasedTradDetail',
+])
 var app = angular.module('BaiYin.News', [
     'ionic'
 ])
@@ -2883,6 +3200,263 @@ var app = angular.module('BaiYin.News', [
 
     ])
 
+angular.module('BaiYin.OSI', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OSI', {
+            url: '/OSI',
+            controller: 'OSIController',
+            templateUrl: 'OSI/OSI.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+    .controller('OSIController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker', '$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker, $cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.positionHide = true;
+                $scope.inputHide = false;
+                $scope.searchsBlueHide=false;
+                $scope.osiListHide=false;
+                $scope.patrolRoteList();
+            });
+            //巡查路线列表
+            $scope.patrolRoteList = function () {
+                $http.post('ServiceName=InspectionService&TransName=listCInspectRoute')
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolRoteListData = res.data.dList;
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            //跳转到巡检记录
+            $scope.toOsiHistory = function () {
+                $state.go('OSI/OSIHistory');
+            }
+
+            //跳转到巡检线路
+            $scope.toOsiLine = function (obj) {
+                var params = {
+                    DESCRIPTION:obj.DESCRIPTION,
+                    TEMP_ID:obj.TEMP_ID,
+                    START_TIME:obj.START_TIME,
+                    END_TIME:obj.END_TIME,
+                    INSPECT_TYPE:obj.INSPECT_TYPE,
+                    INSPECTED:obj.INSPECTED,
+                    INSPECT:obj.INSPECT
+                }
+                $state.go('OSI/OSILine',params);
+            }
+
+            /*扫描二维码开始阶段*/
+
+            //点击扫二维码
+            $scope.toScanCode = function () {
+                $cordovaBarcodeScanner.scan()
+                    .then(function (barcodeData) {
+                        $scope.barcodeDataText = barcodeData.text;
+                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
+                        $scope.patrolHome($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
+                    }, function (error) {
+
+                    });
+            }
+            //获取设备位置和名称
+            $scope.patrolHome = function (MCH_CODE, CONTRACT) {
+                $http.post('ServiceName=InspectionService&TransName=formCBluetoothEquip&MCH_CODE=' + MCH_CODE + '&CONTRACT=' + CONTRACT)
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolHomeData = res.data.detail;
+                            if ($scope.patrolHomeData.IS_MATCH=='TRUE') {
+                                blueToothEnable($scope.patrolHomeData.SN_CODE);
+                            }else{
+                                    $scope.inputHide = true;
+                                    $scope.osiListHide=true;
+                                    $scope.positionHide = false;
+                            }
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            //开启本机蓝牙
+            function blueToothEnable(SN_ADDRESS) {
+                ble.enable(
+                    function () {
+                        scanBlueTooth(SN_ADDRESS);
+                    },
+                    function () {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg("", "", "打开蓝牙失败！");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scanBlueTooth(SN_ADDRESS) {
+                loadingAnimation.hideLoading();
+                ble.scan([], 5, function (device) {
+                        //成功的回调函数
+                        var SNdeviceID=device.id.replace(new RegExp(/(:)/g),"");
+                        // alert(SNdeviceID);
+                        if (SNdeviceID==SN_ADDRESS) {
+                            $scope.$apply(function(){
+                                $scope.inputHide = true;
+                                $scope.osiListHide=true;
+                                $scope.positionHide = false;
+                            });
+                        }
+                    }, function () {
+                        //失败的回调函数
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg('', '', "未扫描到有效蓝牙！");
+                    }
+                );
+            }
+            /*扫描二维码结束阶段*/
+
+
+            /*搜索蓝牙开始阶段*/
+
+            //点击搜索蓝牙
+            $scope.searchsBlueTooth = function () {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                openblueToothEnable();
+            }
+            //开启本机蓝牙
+            function openblueToothEnable() {
+                ble.enable(
+                    function () {
+                        scansBlueToothnow();
+                    },
+                    function () {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg("","","蓝牙未开启");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scansBlueToothnow() {
+                $scope.OSIToothList = [];
+                $scope.timer = $timeout(function () {
+                    loadingAnimation.hideLoading();
+                    if ($scope.OSIToothList.length > 0) {
+                        upWindows($scope.OSIToothList);
+                    } else {
+                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
+                    }
+                }, 5000);
+                ble.scan([], 5, function (device) {//成功的回调函数
+                     getBluesToothList(device);
+                    }, function () {
+                        //失败的回调函数
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg('', '', "扫描蓝牙失败");
+
+                    }
+                );
+            }
+            //获取蓝牙列表
+            function getBluesToothList(device) {
+                $http.post('ServiceName=InspectionService&TransName=formSBluetoothEquip&SN_CODE=' + device.id)
+                    .then(function (res) {
+                        if (res.data.code == '0') {
+                            $scope.equipToothdetail=res.data.dList;
+                            for(var i=0;i<$scope.equipToothdetail.length;i++){
+                                $scope.OSIToothList.push($scope.equipToothdetail[i]);
+                            }
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //弹出页面，显示扫描到的设备
+            var searchequipPopup;
+            function upWindows(OSIToothList) {
+                searchequipPopup = $ionicPopup.show({
+                    template:'<div>' +
+                    '<ul>' +
+                    '<li id="devices_{{$index}}" ng-click="selectsBlueTooth($index)" ng-repeat="equipTooth in OSIToothList track by $index" ng-style="searchPopupli">' +
+                    '{{equipTooth.ADDRESS}}' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>',
+                    title: '扫描到的蓝牙设备',
+                    scope: $scope,
+                });
+            }
+            $scope.searchPopupli = {
+                "line-height": "35px",
+                "font-size": "12px",
+                "text-align": "center",
+                "border-bottom": "1px dotted #f4f4f4",
+            };
+            //点击选择蓝牙设备
+            $scope.selectsBlueTooth= function (index) {
+                searchequipPopup.close();
+                $scope.patrolHomeData=$scope.OSIToothList[index];
+                $scope.searchsBlueHide=true;
+                $scope.osiListHide=true;
+                $scope.positionHide = false;
+            }
+
+            /*搜索蓝牙结束阶段*/
+
+            //首页签到 点击签到事件
+            $scope.patrolSign = function () {
+                var params = {
+                    BLUETOOTH_SERIAL_NO:$scope.patrolHomeData.BLUETOOTH_SERIAL_NO,
+                    LOCATION_DESCRIPTION:$scope.patrolHomeData.ADDRESS,
+                    IS_MATCH:$scope.patrolHomeData.IS_MATCH,
+                    PLAN_ID:$scope.patrolHomeData.PLAN_ID,
+                    EQUIP_NO:$scope.patrolHomeData.MCH_CODE,
+                    CONTRACT:$scope.patrolHomeData.CONTRACT
+                }
+                $http.post('ServiceName=InspectionService&TransName=inspectRecord',params)
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolSignData = res.data;
+                            showAlert.showMsg('','','签到成功！')
+                            $scope.positionHide = true;
+                            $scope.inputHide = false;
+                            $scope.searchsBlueHide=false;
+                            $scope.osiListHide=false;
+                            $scope.patrolRoteList();
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            //返回事件
+            $scope.goBack = function () {
+                $scope.positionHide = true;
+                $scope.inputHide = false;
+                $scope.searchsBlueHide=false;
+                $scope.osiListHide=false;
+            }
+        }
+    ])
+
+angular.module('BaiYin.OSIA', [
+    'BaiYin.OSI',
+    'BaiYin.OSI.OSIHistoryDetail',
+    'BaiYin.OSI.OSIcount',
+    'BaiYin.OSI.OSILine',
+    'BaiYin.OSI.OSIArear',
+    'BaiYin.OSI.OSIHistory',
+])
 angular.module('BaiYin.OffLine', [
     'ionic',
 ])
@@ -2909,8 +3483,6 @@ angular.module('BaiYin.OffLine', [
                 $scope.OfflineMyHide=true;/*上传列表*/
                 $scope.uanddHide=false;/*下载按钮*/
                 $scope.UploadHide=true;/*上传返回*/
-                localStorage.setItem('notUp',0);
-                $scope.notUp=localStorage.getItem('notUp');
                 if(localStorage.getItem("OffList")){
                     var OffList= JSON.parse(localStorage.getItem("OffList"))
                     $scope.patrolRoteListData = OffList;
@@ -3331,6 +3903,8 @@ angular.module('BaiYin.OffLine', [
                                 }
                                 showAlert.showMsg('', '', "下载巡查路线成功");
                                 var obj =res.data.deList;
+                                var personname=localStorage.getItem("UserID");
+                                localStorage.setItem("personname",personname);
                                 localStorage.setItem("OffList",JSON.stringify(obj));
                                 var OffList= JSON.parse(localStorage.getItem("OffList"))
                                 $scope.patrolRoteListData = OffList;
@@ -3365,263 +3939,6 @@ angular.module('BaiYin.OffLineA', [
     'BaiYin.OffLine',
     'BaiYin.OffLine.OffLineDetail',
     'BaiYin.OffLine.OffLineLook',
-])
-angular.module('BaiYin.OSI', [
-    'ionic',
-])
-
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('OSI', {
-            url: '/OSI',
-            controller: 'OSIController',
-            templateUrl: 'OSI/OSI.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {item: null}
-        })
-    }])
-    .controller('OSIController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', 'ionicDatePicker', '$cordovaBarcodeScanner',
-        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, ionicDatePicker, $cordovaBarcodeScanner) {
-            $scope.$on('$ionicView.afterEnter', function () {
-                $scope.positionHide = true;
-                $scope.inputHide = false;
-                $scope.searchsBlueHide=false;
-                $scope.osiListHide=false;
-                $scope.patrolRoteList();
-            });
-            //巡查路线列表
-            $scope.patrolRoteList = function () {
-                $http.post('ServiceName=InspectionService&TransName=listCInspectRoute')
-                    .then(function (res) {
-                        if (res.data.code == 0) {
-                            $scope.patrolRoteListData = res.data.dList;
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
-                    });
-            }
-            //跳转到巡检记录
-            $scope.toOsiHistory = function () {
-                $state.go('OSI/OSIHistory');
-            }
-
-            //跳转到巡检线路
-            $scope.toOsiLine = function (obj) {
-                var params = {
-                    DESCRIPTION:obj.DESCRIPTION,
-                    TEMP_ID:obj.TEMP_ID,
-                    START_TIME:obj.START_TIME,
-                    END_TIME:obj.END_TIME,
-                    INSPECT_TYPE:obj.INSPECT_TYPE,
-                    INSPECTED:obj.INSPECTED,
-                    INSPECT:obj.INSPECT
-                }
-                $state.go('OSI/OSILine',params);
-            }
-
-            /*扫描二维码开始阶段*/
-
-            //点击扫二维码
-            $scope.toScanCode = function () {
-                $cordovaBarcodeScanner.scan()
-                    .then(function (barcodeData) {
-                        $scope.barcodeDataText = barcodeData.text;
-                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
-                        $scope.patrolHome($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT);
-                    }, function (error) {
-
-                    });
-            }
-            //获取设备位置和名称
-            $scope.patrolHome = function (MCH_CODE, CONTRACT) {
-                $http.post('ServiceName=InspectionService&TransName=formCBluetoothEquip&MCH_CODE=' + MCH_CODE + '&CONTRACT=' + CONTRACT)
-                    .then(function (res) {
-                        if (res.data.code == 0) {
-                            $scope.patrolHomeData = res.data.detail;
-                            if ($scope.patrolHomeData.IS_MATCH=='TRUE') {
-                                blueToothEnable($scope.patrolHomeData.SN_CODE);
-                            }else{
-                                    $scope.inputHide = true;
-                                    $scope.osiListHide=true;
-                                    $scope.positionHide = false;
-                            }
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
-                    });
-            }
-            //开启本机蓝牙
-            function blueToothEnable(SN_ADDRESS) {
-                ble.enable(
-                    function () {
-                        scanBlueTooth(SN_ADDRESS);
-                    },
-                    function () {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg("", "", "打开蓝牙失败！");
-                    }
-                );
-            }
-            //扫描蓝牙
-            function scanBlueTooth(SN_ADDRESS) {
-                loadingAnimation.hideLoading();
-                ble.scan([], 5, function (device) {
-                        //成功的回调函数
-                        var SNdeviceID=device.id.replace(new RegExp(/(:)/g),"");
-                        // alert(SNdeviceID);
-                        if (SNdeviceID==SN_ADDRESS) {
-                            $scope.$apply(function(){
-                                $scope.inputHide = true;
-                                $scope.osiListHide=true;
-                                $scope.positionHide = false;
-                            });
-                        }
-                    }, function () {
-                        //失败的回调函数
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg('', '', "未扫描到有效蓝牙！");
-                    }
-                );
-            }
-            /*扫描二维码结束阶段*/
-
-
-            /*搜索蓝牙开始阶段*/
-
-            //点击搜索蓝牙
-            $scope.searchsBlueTooth = function () {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                openblueToothEnable();
-            }
-            //开启本机蓝牙
-            function openblueToothEnable() {
-                ble.enable(
-                    function () {
-                        scansBlueToothnow();
-                    },
-                    function () {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg("","","蓝牙未开启");
-                    }
-                );
-            }
-            //扫描蓝牙
-            function scansBlueToothnow() {
-                $scope.OSIToothList = [];
-                $scope.timer = $timeout(function () {
-                    loadingAnimation.hideLoading();
-                    if ($scope.OSIToothList.length > 0) {
-                        upWindows($scope.OSIToothList);
-                    } else {
-                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
-                    }
-                }, 5000);
-                ble.scan([], 5, function (device) {//成功的回调函数
-                     getBluesToothList(device);
-                    }, function () {
-                        //失败的回调函数
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg('', '', "扫描蓝牙失败");
-
-                    }
-                );
-            }
-            //获取蓝牙列表
-            function getBluesToothList(device) {
-                $http.post('ServiceName=InspectionService&TransName=formSBluetoothEquip&SN_CODE=' + device.id)
-                    .then(function (res) {
-                        if (res.data.code == '0') {
-                            $scope.equipToothdetail=res.data.dList;
-                            for(var i=0;i<$scope.equipToothdetail.length;i++){
-                                $scope.OSIToothList.push($scope.equipToothdetail[i]);
-                            }
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //弹出页面，显示扫描到的设备
-            var searchequipPopup;
-            function upWindows(OSIToothList) {
-                searchequipPopup = $ionicPopup.show({
-                    template:'<div>' +
-                    '<ul>' +
-                    '<li id="devices_{{$index}}" ng-click="selectsBlueTooth($index)" ng-repeat="equipTooth in OSIToothList track by $index" ng-style="searchPopupli">' +
-                    '{{equipTooth.ADDRESS}}' +
-                    '</li>' +
-                    '</ul>' +
-                    '</div>',
-                    title: '扫描到的蓝牙设备',
-                    scope: $scope,
-                });
-            }
-            $scope.searchPopupli = {
-                "line-height": "35px",
-                "font-size": "12px",
-                "text-align": "center",
-                "border-bottom": "1px dotted #f4f4f4",
-            };
-            //点击选择蓝牙设备
-            $scope.selectsBlueTooth= function (index) {
-                searchequipPopup.close();
-                $scope.patrolHomeData=$scope.OSIToothList[index];
-                $scope.searchsBlueHide=true;
-                $scope.osiListHide=true;
-                $scope.positionHide = false;
-            }
-
-            /*搜索蓝牙结束阶段*/
-
-            //首页签到 点击签到事件
-            $scope.patrolSign = function () {
-                var params = {
-                    BLUETOOTH_SERIAL_NO:$scope.patrolHomeData.BLUETOOTH_SERIAL_NO,
-                    LOCATION_DESCRIPTION:$scope.patrolHomeData.ADDRESS,
-                    IS_MATCH:$scope.patrolHomeData.IS_MATCH,
-                    PLAN_ID:$scope.patrolHomeData.PLAN_ID,
-                    EQUIP_NO:$scope.patrolHomeData.MCH_CODE,
-                    CONTRACT:$scope.patrolHomeData.CONTRACT
-                }
-                $http.post('ServiceName=InspectionService&TransName=inspectRecord',params)
-                    .then(function (res) {
-                        if (res.data.code == 0) {
-                            $scope.patrolSignData = res.data;
-                            showAlert.showMsg('','','签到成功！')
-                            $scope.positionHide = true;
-                            $scope.inputHide = false;
-                            $scope.searchsBlueHide=false;
-                            $scope.osiListHide=false;
-                            $scope.patrolRoteList();
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
-                    });
-            }
-            //返回事件
-            $scope.goBack = function () {
-                $scope.positionHide = true;
-                $scope.inputHide = false;
-                $scope.searchsBlueHide=false;
-                $scope.osiListHide=false;
-            }
-        }
-    ])
-
-angular.module('BaiYin.OSIA', [
-    'BaiYin.OSI',
-    'BaiYin.OSI.OSIHistoryDetail',
-    'BaiYin.OSI.OSIcount',
-    'BaiYin.OSI.OSILine',
-    'BaiYin.OSI.OSIArear',
-    'BaiYin.OSI.OSIHistory',
 ])
 angular.module('BaiYin.power', [
     'ionic',
@@ -4852,6 +5169,518 @@ angular.module('BaiYin.ProblemsA', [
    'BaiYin.NewProblems',
    'BaiYin.Tracking'
 ])
+angular.module('BaiYin.SettlementTrad', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('SettlementTrad', {
+        url: '/SettlementTrad',
+        controller: 'SettlementTradController',
+        templateUrl: 'SettlementTrad/SettlementTrad.tpl.html',
+        cache: 'true',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('SettlementTradController', ['$scope','$filter','showAlert' ,'pageInitService', '$http', '$state','$ionicTabsDelegate','$interval','$timeout','loadingAnimation','ionicDatePicker','$ionicActionSheet',
+        function($scope,$filter,showAlert,pageInitService,$http,$state,$ionicTabsDelegate,$interval,$timeout,loadingAnimation,ionicDatePicker,$ionicActionSheet) {
+            $scope.$on('$ionicView.afterEnter', function() {
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
+                $scope.newYear=$filter("date")(date, "yyyy");
+                $ionicTabsDelegate.select(0);
+                $scope.SetTlementProvience='QC';
+                var getTimes = {
+                    TRAND_YEAR:$scope.nowElementYear,
+                    provience:'QC',
+                    CONTRACT:''
+                }
+                $scope.getTlementQc(getTimes);
+                $(".setTlementrightSelect").hide();
+
+            });
+            $scope.$on('$ionicView.leave',function () {
+                $('.setElementCount').val('');
+            });
+            //全场请求数据
+            $scope.setTlementQc = function () {
+                $ionicTabsDelegate.select(0);
+                setTlementCONTRACT=[];
+                $scope.SetTlementProvience='QC';
+                var getTimes = {
+                    TRAND_YEAR:$scope.nowElementYear,
+                    provience:'QC',
+                    CONTRACT:''
+                }
+                $scope.getTlementQc(getTimes);
+
+            }
+            var setTlementCONTRACT=[];
+            //点击向前一个年
+            $scope.getPresetTlementYear = function (date) {
+                console.log(date);
+                $scope.nowElementYear=parseInt(date)-1;
+                // spotCountnYear($scope.nowYear);
+                $(".setTlementrightSelect").show();
+            }
+            //点击向后一个年
+            $scope.getNextsetTlementYear= function (date) {
+                console.log(date);
+                var year2 = parseInt(date) + 1;
+                if ($scope.newYear <= year2) {
+                    $(".setTlementrightSelect").hide();
+                    $scope.nowElementYear= year2;
+                    // spotCountnYear(year2);
+                }
+                else {
+                    $scope.nowElementYear =year2;
+                    // spotCountnYear(year2);
+                    $(".setTlementrightSelect").show();
+                }
+            }
+            //甘肃数据请求
+            $scope.setTlementGs = function (){
+                $ionicTabsDelegate.select(1);
+                setTlementCONTRACT=[];
+                $scope.SetTlementProvience='GS';
+                var Field='GS';
+                var parmas = {
+                    provience: Field,
+                }
+                $scope.getTlementField(parmas);
+            }
+            //青海数据请求
+            $scope.setTlementQh = function () {
+                $ionicTabsDelegate.select(2);
+                setTlementCONTRACT=[];
+                $scope.SetTlementProvience='QH';
+                var Field='QH';
+                var parmas = {
+                    provience: Field,
+                }
+                $scope.getTlementField(parmas);
+            }
+            //宁夏数据请求
+            $scope.setTlementNx = function () {
+                $ionicTabsDelegate.select(3);
+                setTlementCONTRACT=[];
+                $scope.SetTlementProvience='NX';
+                var Field='NX';
+                var parmas = {
+                    provience: Field,
+                }
+                $scope.getTlementField(parmas);
+            }
+            //新疆数据请求
+            $scope.setTlementXj = function () {
+                $ionicTabsDelegate.select(4);
+                setTlementCONTRACT=[];
+                $scope.SetTlementProvience='XJ';
+                var Field='XJ';
+                var parmas = {
+                    provience: Field,
+                }
+                $scope.getTlementField(parmas);
+
+            }
+            /*获取域*/
+            $scope.getTlementField=function (parmas) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecSettlementService&TransName=getElecSettlementDepartment', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res);
+                            $scope.getElementTradDepartList = res.data.departList;
+                            $('.setElementCount').val($scope.getElementTradDepartList[0].CONTRACT_NAME);
+                            var getTimes = {
+                                TRAND_YEAR:$scope.nowElementYear,
+                                provience:$scope.SetTlementProvience,
+                                CONTRACT:$scope.getElementTradDepartList[0].CONTRACT
+                            }
+                            for (var i = 0; i <$scope.getElementTradDepartList.length; i++) {
+                                var dlist = {};
+                                dlist.text = $scope.getElementTradDepartList[i].CONTRACT_NAME;
+                                dlist.CONTRACT = $scope.getElementTradDepartList[i].CONTRACT;
+                                setTlementCONTRACT.push(dlist);
+                            }
+                            $scope.getTlementQc(getTimes)
+
+
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            /*根据时间(年),电厂名,电厂域获取数据*/
+            $scope.getTlementQc=function (parmas) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecSettlementService&TransName=getElecSettlementAll', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.getElementTradList = res.data.tList;
+                            $scope.getElementTradpList = res.data.pList;
+                            $scope.getElementTradAllList = res.data.totalList;
+                            $scope.drawElementTrad()
+                        } else {
+                            $scope.getElementTradList=[];
+                            $scope.getElementTradpList=[{
+                                BASE_CHARGE_VALUE:0,
+                                MARKET_CHARGE_VALUE:0,
+                                DELIVERY_CHARGE_VALUE:0,
+                                DIRECT_CHARGE_VALUE:0,
+                                RIGHTS_CHARGE_VALUE:0
+                            }];
+                            $scope.drawElementTrad()
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        $scope.getElementTradList=[];
+                        $scope.getElementTradpList=[];
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            $scope.toSelectField=function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons:setTlementCONTRACT,
+                    cancel: function () {
+                    },
+                    buttonClicked: function (index) {
+                        var CONTRACT=setTlementCONTRACT[index].CONTRACT;
+                        var getTimes = {
+                            TRAND_YEAR:$scope.nowElementYear,
+                            provience:$scope.SetTlementProvience,
+                            CONTRACT:CONTRACT
+                        }
+                        console.log(setTlementCONTRACT[index].text)
+                        $('.setElementCount').val(setTlementCONTRACT[index].text);
+                        $scope.getTlementQc(getTimes)
+                        return true;
+                    }
+                });
+            }
+            /*根据获取到的信息制作饼图*/
+            $scope.drawElementTrad=function () {
+                var BASE_CHARGE_VALUE=$scope.getElementTradpList[0].BASE_CHARGE_VALUE;/*基础电量*/
+                var MARKET_CHARGE_VALUE=$scope.getElementTradpList[0].MARKET_CHARGE_VALUE;/*市场化电量*/
+                var DELIVERY_CHARGE_VALUE=$scope.getElementTradpList[0].DELIVERY_CHARGE_VALUE;/*外送电量*/
+                var DIRECT_CHARGE_VALUE=$scope.getElementTradpList[0].DIRECT_CHARGE_VALUE;/*直购电量*/
+                var RIGHTS_CHARGE_VALUE=$scope.getElementTradpList[0].RIGHTS_CHARGE_VALUE;/*发电权置换电量*/
+                var option = {
+                    title: {
+                        /*text : '考勤统计',*///标题说明
+                        x: 'center'//居中
+                    },
+                    // 提示框，鼠标悬浮交互时的信息提示
+                    tooltip: {
+                        show: true,
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'horizontal',
+                        x : 'left',
+                        y: '10',
+                        data:['基础电量','市场化电量','外送电量','直购电量','发电权置换电量']
+                    },
+                    calculable : false,
+                    series : [
+                        {
+                            name:'基础电量',
+                            type:'pie',
+                            selectedMode: 'single',
+                            radius : [0,40],
+                            x: '10%',
+                            width: '10%',
+                            funnelAlign: 'right',
+
+                            itemStyle : {
+                                normal : {
+                                    label : {
+                                        position : 'inner'
+                                    },
+                                    labelLine : {
+                                        show : false
+                                    }
+
+                                }
+                            },
+                            data:[
+                                {value:BASE_CHARGE_VALUE, name:'基础电量'},
+                                {value:MARKET_CHARGE_VALUE, name:'市场化电量'},
+                            ]
+                        },
+                        {
+                            name:'结算电量',
+                            type:'pie',
+                            radius : [50,60],
+                            x: '60%',
+                            width: '10%',
+                            funnelAlign: 'right',
+
+                            data:[
+                                {value:BASE_CHARGE_VALUE, name:'基础电量'},
+                                {value:DELIVERY_CHARGE_VALUE, name:'外送电量'},
+                                {value:DIRECT_CHARGE_VALUE, name:'直购电量'},
+                                {value:RIGHTS_CHARGE_VALUE, name:'发电权置换电量'}
+
+                            ]
+                        }
+                    ]
+                };
+                var Settlementmain='Settlementmain'+$scope.SetTlementProvience;
+                var myChart = echarts.init(document.getElementById(Settlementmain), 'macarons');
+                myChart.setOption(option);
+            }
+
+        }])
+angular.module('BaiYin.spotTransaction', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('spotTransaction', {
+            url: '/spotTransaction',
+            controller: 'spotTransactionController',
+            templateUrl: 'spotTransaction/spotTransaction.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+
+    }])
+    .controller('spotTransactionController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicActionSheet', 'ionicDatePicker',
+
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicActionSheet, ionicDatePicker) {
+            var date = new Date();
+            console.log(date);
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.now = $filter("date")(date, "yyyy-MM-dd");
+                $("#monthSelect").hide();
+                $("#yearSelect").hide();
+                $ionicTabsDelegate.select(0);
+                var spotnowDate=$scope.now.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowData=spotnowDate[2];
+                var spotnowTdate=spotnowYear+spotnowMonth+spotnowData;
+                var parmas = {
+                    TRADE_DAY: spotnowTdate
+                }
+                getSpotList(parmas);
+
+            });
+            //获取日历插件
+            var ipObj1 = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    $scope.now = $filter("date")(val, "yyyy-MM-dd");
+                    var spotnowDate=$scope.now.split('-');
+                    var spotnowYear=spotnowDate[0];
+                    var spotnowMonth=spotnowDate[1];
+                    var spotnowData=spotnowDate[2];
+                    var spotnowTdate=spotnowYear+spotnowMonth+spotnowData;
+                    var parmas = {
+                        TRADE_DAY: spotnowTdate
+                    }
+                    getSpotList(parmas);
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+            //点击日统计数据
+            $scope.toSpotDay = function () {
+                $ionicTabsDelegate.select(0);
+                $scope.now = $filter("date")(date, "yyyy-MM-dd");
+                var spotnowDate=$scope.now.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowData=spotnowDate[2];
+                var spotnowTdate=spotnowYear+spotnowMonth+spotnowData;
+                var parmas = {
+                    TRADE_DAY: spotnowTdate
+                }
+                getSpotList(parmas);
+            }
+            //点击月统计数据
+            $scope.tospotCountMounth = function () {
+                $ionicTabsDelegate.select(1);
+                $("#monthSelect").hide();
+                $scope.nowMounth = $filter("date")(date, "yyyy-MM");
+                $scope.newDate = $filter("date")(date, "yyyy-MM");
+                var spotnowDate=$scope.nowMounth.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowTdate=spotnowYear+spotnowMonth;
+                var parmas = {
+                    TRADE_MONTH: spotnowTdate
+                }
+                getSpotList(parmas);
+            }
+            //点击向前一个月
+            $scope.getPreMonth = function (date) {
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) - 1;
+                if (month2 == 0) {
+                    year2 = parseInt(year2) - 1;
+                    month2 = 12;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+                var t2 = year2 + '-' + month2;
+                $scope.nowMounth = t2;
+                spotCountnMounth(t2);
+                //点击当前月的后一个月
+                $("#monthSelect").show();
+            }
+            //点击向后一个月
+            $scope.getNextMonth = function (date) {
+                console.log("date==" + date);
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+
+                var t2 = year2 + '-' + month2;
+                if ($scope.newDate <= t2) {
+                    $("#monthSelect").hide();
+                    $scope.nowMounth = t2;
+                    spotCountnMounth(t2);
+                }
+                else {
+                    $scope.nowMounth = t2;
+                    spotCountnMounth(t2);
+                    $("#monthSelect").show();
+                }
+            }
+            //点击年统计数据
+            $scope.tospotCountYear=function () {
+                $ionicTabsDelegate.select(2);
+                $("#yearSelect").hide();
+                $scope.nowYear=$filter("date")(date, "yyyy");
+                $scope.newYear = $filter("date")(date, "yyyy");
+                var parmas = {
+                    TRADE_YEAR: $scope.nowYear
+                }
+                getSpotList(parmas);
+            }
+            //点击向前一个年
+            $scope.getPreYear = function (date) {
+                console.log(date);
+                $scope.nowYear=parseInt(date)-1;
+                spotCountnYear($scope.nowYear);
+                $("#yearSelect").show();
+            }
+            //点击向后一个年
+            $scope.getNextYear= function (date) {
+                console.log(date);
+                var year2 = parseInt(date) + 1;
+                if ($scope.newYear <= year2) {
+                    $("#yearSelect").hide();
+                    $scope.nowYear= year2;
+                    spotCountnYear(year2);
+                }
+                else {
+                    $scope.nowYear =year2;
+                    spotCountnYear(year2);
+                    $("#yearSelect").show();
+                }
+            }
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+            function spotCountnMounth(spotmonth) {
+                var spotnowDate=spotmonth.split('-');
+                var spotnowYear=spotnowDate[0];
+                var spotnowMonth=spotnowDate[1];
+                var spotnowTdate=spotnowYear+spotnowMonth;
+                var parmas = {
+                    TRADE_MONTH: spotnowTdate
+                }
+                getSpotList(parmas);
+            }
+            function spotCountnYear(spotyear) {
+                var parmas = {
+                    TRADE_YEAR: spotyear
+                }
+                getSpotList(parmas);
+            }
+
+            //获取统计信息
+            function getSpotList(parmas) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecSpotService&TransName=elecSpotList', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res)
+                            $scope.spotTradList=res.data.sList;
+                            $scope.APPLY_CHARGE_VALUE_SUM=res.data.APPLY_CHARGE_VALUE_SUM;
+                            $scope.APPLY_CHARGE_PRICE_SUM=res.data.APPLY_CHARGE_PRICE_SUM;
+                            $scope.CLEARING_CHARGE_VALUE_SUM=res.data.CLEARING_CHARGE_VALUE_SUM;
+                            $scope.CLEARING_CHARGE_PRICE_SUM=res.data.CLEARING_CHARGE_PRICE_SUM;
+                        } else {
+                            $scope.spotTradList=[];
+                            $scope.APPLY_CHARGE_VALUE_SUM=0;
+                            $scope.APPLY_CHARGE_PRICE_SUM=0;
+                            $scope.CLEARING_CHARGE_VALUE_SUM=0;
+                            $scope.CLEARING_CHARGE_PRICE_SUM=0;
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+        }
+    ])
+
 angular
     .module('BaiYin.home', [
         'BaiYin.tabs.homePage',
@@ -5119,6 +5948,54 @@ angular.module('BaiYin.userServers', [
     'BaiYin.blankPage',
     'BaiYin.login'
 ])
+angular.module('maxrocky.framework.directives.goback',[
+])
+
+.directive('mrGoBack',['$ionicHistory','$parse', '$filter', function($ionicHistory,$parse, $filter){
+	return {
+		restrict:'C',
+		link: function(scope, element, attrs){
+            element.on('click',function(){
+             	$ionicHistory.goBack();
+            });
+		}
+	};
+}])
+angular.module('maxrocky.framework.directives.navBar',[
+])
+
+.directive('mrNavBar',['$parse', '$filter', function($parse, $filter){
+
+	return {
+		restrict:'C',
+		scope:{
+			opacity:"="
+		},
+		link: function(scope, element, attrs){
+			scope.$watch('opacity',function(newValue){
+				newValue=newValue||0;
+				element.css('opacity',newValue);
+			})
+		}
+	};
+}])
+angular.module('maxrocky.framework.directives.rem',[
+])
+
+.directive('mrRem',['$parse', '$filter', function($parse, $filter){
+
+	return {
+		restrict:'A',
+		link: function(scope, element, attrs){
+	    var _size = 50;
+        var p = (document.body && document
+            .body.clientWidth || document.getElementsByTagName("html")[0].offsetWidth) /375
+       _size = p * 50; 
+        document.getElementsByTagName("html")[0].setAttribute("style", "font-size:" + _size + "px!important");
+      
+		}
+	};
+}])
 angular.module('BaiYin.agentsList', [])
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('AgentsList', {
@@ -7363,6 +8240,20 @@ angular
 				$ionicSlideBoxDelegate.update();
 				loadingAnimation.hideLoading();
 			};
+
+			//下载文件
+			$scope.downloadFile = function(url){
+				var u = navigator.userAgent;
+                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+                if (isAndroid) {
+					//android下载
+					window.location.href = url;
+                } else if (isiOS) {
+                	//ios直接显示
+					cordova.InAppBrowser.open(url, "_blank", "location=no,enableViewportScale=yes");
+                }
+			};
 		}
 	]);
 angular
@@ -7592,7 +8483,12 @@ angular.module('BaiYin.facilityInfoScan', [
                     .then(function (res) {
                         loadingAnimation.hideLoading();
                         if (res.code == 0) {
-                            $scope.equipmentDefectList=res.data.tList;
+                            if (res.data.code == 0) {
+                                $scope.equipmentDefectList=res.data.tList;
+                            }else{
+                                showAlert.showMsg('', '', res.data.msg);
+                            }
+
                         } else {
                             showAlert.showMsg('', '', res.msg);
                         }
@@ -7618,10 +8514,15 @@ angular.module('BaiYin.facilityInfoScan', [
                     .then(function (res) {
                         loadingAnimation.hideLoading();
                         if (res.code == 0) {
-                            console.log(res);
-                            var item=res.data.hList[0];
-                            console.log(item);
-                            $state.go('pm/defectFill/defectFillDetail', {item: item});
+                            if (res.data.code == 0) {
+                                console.log(res);
+                                var item=res.data.hList[0];
+                                console.log(item);
+                                $state.go('pm/defectFill/defectFillDetail', {item: item});
+                            }else{
+                                showAlert.showMsg('', '', res.data.msg);
+                            }
+
                         } else {
                             showAlert.showMsg('', '', res.msg);
                         }
@@ -7652,7 +8553,11 @@ angular.module('BaiYin.facilityInfoScan', [
                     .then(function (res) {
                         loadingAnimation.hideLoading();
                         if (res.code == 0) {
-                            $scope.equipmentWorkList=res.data.rList;
+                            if (res.data.code == 0) {
+                                $scope.equipmentWorkList=res.data.rList;
+                            }else{
+                                showAlert.showMsg('', '', res.data.msg);
+                            }
                         } else {
                             showAlert.showMsg('', '', res.msg);
                         }
@@ -7999,409 +8904,133 @@ angular.module('BaiYin.load.nearlyHour', [
 
         }
     ]);
-angular.module('BaiYin.OffLine.OffLineDetail', [
+angular.module('BaiYin.MarketbasedTradIndex', [
     'ionic',
 ])
 
     .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('OffLine/OffLineDetail', {
-            url: '/OffLine/OffLineDetail',
-            controller: 'OffLineDetailController',
-            templateUrl: 'OffLine/OffLineDetail/OffLineDetail.tpl.html',
+        $stateProvider.state('MarketbasedTradIndex', {
+            url: '/MarketbasedTrad/MarketbasedTradIndex',
+            controller: 'MarketbasedTradIndexController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTradIndex/MarketbasedTradIndex.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('MarketbasedTradIndexController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet','loadingAnimation',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet,loadingAnimation) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+                $scope.getElecMarketNotice();
+            });
+            /*获取列表数据*/
+            $scope.getElecMarketNotice=function (TITLE,CONTENT) {
+                var parmas = {
+                    TITLE:TITLE,
+                    CONTENT:CONTENT
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecMarketService&&TransName=elecMarketNotice', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res);
+                            $scope.marketNoticeList=res.data.eList;
+                            $(".MarketbasedShow").hide('slow');
+                            $(".bg").hide('slow');
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+            $scope.goMarketbasedTradDetail=function (obj) {
+                console.log(obj);
+                var params = {
+                    TITLE:obj.TITLE,
+                    CONTENT:obj.CONTENT,
+                    BILLING_CHARGE_PRICE:obj.BILLING_CHARGE_PRICE,
+                    TRADE_NO:obj.TRADE_NO,
+                }
+
+                $state.go('MarketbasedTradDetail',params);
+            }
+            $scope.toMarketbasedSearch=function () {
+                $(".bg").show();
+                $(".MarketbasedShow").show('slow');
+                $(".MarketbasedShow").css("display", "inline-block");
+                $(".MarketbasedShow").css("width", "95%");
+                $(".MarketbasedShow").css("right", "0");
+                $(".MarketbasedShow").css("top", "-10px");
+                $(".MarketbasedShow").css("position", "absolute");
+                $(".MarketbasedShow").css("z-index", "999999");
+            }
+            $scope.noticeSearchSblist=function () {
+                $scope.Noticenameid=$('#Noticenameid').val();
+                $scope.Noticecontentid=$('#Noticecontentid').val();
+                $scope.getElecMarketNotice($scope.Noticenameid,$scope.Noticecontentid)
+            }
+
+
+
+
+
+
+        }]);
+
+
+angular.module('BaiYin.MarketbasedTradDetail', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('MarketbasedTradDetail', {
+            url: '/MarketbasedTrad/MarketbasedTradDetail',
+            controller: 'MarketbasedTradDetailController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTradDetail/MarketbasedTradDetail.tpl.html',
             cache: 'true',
             authorizedRuleType: ['1'],
             params: {
-                TEMP_ID: null,
-                DESCRIPTION: null,
-                INSPECT_TYPE: null,
-                START_TIME: null,
-                END_TIME: null,
-                INSPECTED: null,
-                INSPECT: null,
-                childList: null
+                TITLE: null,
+                CONTENT: null,
+                BILLING_CHARGE_PRICE: null,
+                TRADE_NO: null
             }
         })
     }])
-    .controller('OffLineDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$cordovaBarcodeScanner',
-        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $cordovaBarcodeScanner) {
+    .controller('MarketbasedTradDetailController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet','$stateParams',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet,$stateParams) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
             $scope.$on('$ionicView.afterEnter', function () {
                 console.log($stateParams);
-                /*$scope.qdTimeHide = false;
-                $scope.djqdTimeHide = true;*/
-                $scope.itemQdBtnhide = true;
-                $scope.inputHide = true;
-                $scope.positionHide = true;
-                $scope.OSIDetailHide=false;
-                // var OffList= JSON.parse(localStorage.getItem("OffList"));
-                // console.log(OffList);
-                $scope.tempID = $stateParams.TEMP_ID;
-                $scope.description = $stateParams.DESCRIPTION;
-                $scope.inspectType = $stateParams.INSPECT_TYPE;
-                $scope.INSPECTED = $stateParams.INSPECTED;
-                $scope.INSPECT = $stateParams.INSPECT;
-                $scope.startTime = $stateParams.START_TIME;
-                $scope.endTime = $stateParams.END_TIME;
-                $scope.childList = $stateParams.childList;
-                console.log($scope.childList);
-                $scope.hDetail=$scope.childList;
-                console.log("$scope.hDetail===" + JSON.stringify($scope.hDetail));
-                for (var i = 0; i < $scope.hDetail.length; i++) {
-                    if ($scope.hDetail[i].RECORD_TIME == '' || $scope.hDetail[i].RECORD_TIME == null) {
-                        /*$scope.identifyShow = '未签到';*/
-                        console.log('', '', 'i==' + i);
-                        $("#qdIconColorid" + i).css('background', '#ccc');
-                        $("#qdIconColorid" + i).text('未签到');
-                    } else {
-                        $("#qdIconColorid" + i).text('已签到');
-                        $("#qdIconColorid" + i).css("background", "#83ecad");
-                    }
-                }
-                $scope.amount = 0;
-                //是否显示扫码
-                if ($scope.INSPECTED == $scope.INSPECT) {
-                    // $scope.inputHide = true;
-                }
-                //签到样式
-                $scope.identify = {
-                    'padding': '5px',
-                    'line-height': '35px',
-                    'border-radius': '50%',
-                    'display': 'inline-block',
-                    'float': 'left',
-                    'color': '#fff',
-                    'margin-right': '10px',
-                    'font-size': '12px',
-                    'width': '45px',
-                    'text-align': 'center'
-                }
+                $scope.detailTitle=$stateParams.TITLE;
+                $scope.detailCONTENT=$stateParams.CONTENT;
+                $scope.detailBILLING_CHARGE_PRICE=$stateParams.BILLING_CHARGE_PRICE;
+                $scope.detailTRADE_NO=$stateParams.TRADE_NO;
 
-                // HistoryDetail($scope.tempID);
             });
 
-            function HistoryDetail(tempid) {
-                console.log("tempid==" + tempid);
-                var parmas = {
-                    TEMP_ID: tempid
-                }
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http.post('ServiceName=InspectionService&TransName=cInspectRouteDetailPage', parmas)
-                    .then(function (res) {
-                        loadingAnimation.hideLoading();
-                        if (res.data.code == '0') {
-                            $scope.hDetail = res.data.dList;
-                            console.log(res.data);
-                            console.log("$scope.hDetail===" + JSON.stringify($scope.hDetail));
-                            for (var i = 0; i < $scope.hDetail.length; i++) {
-                                if ($scope.hDetail[i].RECORD_TIME == '' || $scope.hDetail[i].RECORD_TIME == null) {
-                                    /*$scope.identifyShow = '未签到';*/
-                                    console.log('', '', 'i==' + i);
-                                    $("#qdIconColorid" + i).css('background', '#ccc');
-                                    $("#qdIconColorid" + i).text('未签到');
-                                } else {
-                                    $("#qdIconColorid" + i).text('已签到');
-                                    $("#qdIconColorid" + i).css("background", "#83ecad");
-                                }
-                            }
-                            console.log("$scope.hDetail==" + JSON.stringify($scope.hDetail));
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
+            
 
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
 
-            //点击扫二维码
-            $scope.toScanCode = function () {
-                $cordovaBarcodeScanner.scan()
-                    .then(function (barcodeData) {
-                        $scope.barcodeDataText = barcodeData.text;
-                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
-                        $scope.patrolLine($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT, $scope.tempID);
-                    }, function (error) {
-                        console.log("ERROR:" + error);
-                    });
-            }
-            var planID;
-            $scope.patrolLine = function (MCH_CODE, CONTRACT, tempid) {
-                var params = {
-                    MCH_CODE: MCH_CODE,
-                    CONTRACT: CONTRACT,
-                    TEMP_ID: tempid
-                }
-                $http.post('ServiceName=InspectionService&TransName=formCBluetoothEquip', params)
-                    .then(function (res) {
-                        if (res.data.code == 0) {
-                            $scope.patrolLine = res.data.detail;
-                            planID = $scope.patrolLine.PLAN_ID;
-                            if ($scope.patrolLine.IS_MATCH == 'TRUE') {
-                                //扫描蓝牙
-                                blueToothEnable($scope.patrolLine.SN_ADDRESS);
-                            }
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
-                    });
-            }
 
-            //开启本机蓝牙
-            function blueToothEnable(SN_ADDRESS) {
-                ble.enable(
-                    function () {
-                        scanBlueTooth(SN_ADDRESS);
-                    },
-                    function () {
-                        showAlert.showMsg("", "", "打开蓝牙失败！");
-                    }
-                );
-            }
-            //扫描蓝牙
-            function scanBlueTooth(SN_ADDRESS) {
-                ble.scan([], 5, function (device) {
-                        //成功的回调函数
-                        if (device.id == SN_ADDRESS) {
-                            signedLightUp();
-                            /*$scope.$apply(function(){
-                                // $scope.inputHide = true;
-                                $scope.positionHide = false;
-                            });*/
-                        }
-                    }, function () {
-                        //失败的回调函数
-                        showAlert.showMsg('', '', "未扫描到有效蓝牙！");
-                    }
-                );
-            }
 
-            function signedLightUp() {
 
-                for (var i = 0; i < $scope.hDetail.length; i++) {
-                    if (planID == $scope.hDetail[i].PLAN_ID) {
-                        //显示签到按钮
-                        $(".itemQdBtn" + i).show();
-                    }
-                }
-                /*if(planID == ''){
-                    alert("匹配成功----");
-                }*/
 
-            }
+        }]);
 
-            //点击签到
-            $scope.toSigned = function (obj, num) {
-                $("#recordID").attr("disabled", true);
-                var params = {
-                    BLUETOOTH_SERIAL_NO: $scope.patrolLine.BLUETOOTH_SERIAL_NO,
-                    PLAN_ID: obj.PLAN_ID,
-                    LOCATION_DESCRIPTION: $scope.patrolLine.ADDRESS,
-                    IS_MATCH: $scope.patrolLine.IS_MATCH,
-                    EQUIP_NO: $scope.patrolLine.MCH_CODE,
-                    CONTRACT: $scope.patrolLine.CONTRACT
-                };
-                $http.post('ServiceName=InspectionService&TransName=inspectRecord', params)
-                    .then(function (res) {
-                        if (res.data.code == 0) {
-                            showAlert.showMsg('', '', '恭喜您，签到成功');
-                            $("#recordTimeid" + num).hide();
-                            $("#newRecordTimeid" + num).show();
-                            //签到按钮隐藏
-                            $scope.itemQdBtnHide = true;
-                            //颜色变蓝色
-                            $("#qdIconColorid" + num).css('background', '#83ecad');
-                            $("#qdIconColorid" + num).text('已签到');
-                            //显示签到时间
-                            $scope.recordTime = res.data.RECORD_TIME;
-
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
-                    });
-
-            }
-
-            //跳转到巡检记录
-            $scope.toOsiHistory = function () {
-                $state.go('OSI/OSIHistory');
-                //载入缓存数据
-                var obj = {
-                    tempID: $scope.tempID,
-                    description: $scope.description,
-                    inspectType: $scope.inspectType,
-                    INSPECTED: $scope.INSPECTED,
-                    INSPECT: $scope.INSPECT,
-                    startTime: $scope.startTime,
-                    endTime: $scope.endTime
-                };
-                localStorage.setItem("OSI_LINE",JSON.stringify(obj));
-
-            }
-            //点击搜索蓝牙
-            $scope.searchsBlueTooth = function () {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                openblueToothEnable();
-            }
-            //开启本机蓝牙
-            function openblueToothEnable() {
-                ble.enable(
-                    function () {
-                        scansBlueToothnow();
-                    },
-                    function () {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg("","","蓝牙未开启");
-                    }
-                );
-            }
-            //扫描蓝牙
-            function scansBlueToothnow() {
-                $scope.equipToothList = [];
-                $scope.timer = $timeout(function () {
-                    loadingAnimation.hideLoading();
-                    if ($scope.equipToothList.length > 0) {
-                        upWindows($scope.equipToothList);
-                    } else {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
-                    }
-                }, 5000);
-                ble.scan([], 5, function (device) {//成功的回调函数
-                        getBluesToothList(device);
-                    }, function () {
-                        //失败的回调函数
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg('', '', "扫描蓝牙失败");
-                    }
-                );
-            }
-            //弹出页面，显示扫描到的设备
-            var searchequipPopup;
-
-            function upWindows(equipToothList) {
-                searchequipPopup = $ionicPopup.show({
-                    template:'<div>' +
-                    '<ul>' +
-                    '<li id="devices_{{$index}}" ng-click="selectsBlueTooth($index)" ng-repeat="equipTooth in equipToothList track by $index" ng-style="searchPopupli">' +
-                    '{{equipTooth.ADDRESS}}' +
-                    '</li>' +
-                    '</ul>' +
-                    '</div>',
-                    title: '扫描到的蓝牙设备',
-                    scope: $scope,
-                });
-            }
-            //获取蓝牙列表
-            function getBluesToothList(device) {
-                $http.post('ServiceName=InspectionService&TransName=formSBluetoothEquip&SN_CODE=' + device.id)
-                    .then(function (res) {
-                        if (res.data.code == '0') {
-                            $scope.equipToothdetail=res.data.dList;
-                            for(var i=0;i<$scope.equipToothdetail.length;i++){
-                                $scope.equipToothList.push($scope.equipToothdetail[i]);
-                            }
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            $scope.searchPopupli = {
-                "line-height": "35px",
-                "font-size": "12px",
-                "text-align": "center",
-                "border-bottom": "1px dotted #f4f4f4",
-            };
-            //点击选择蓝牙设备
-            $scope.selectsBlueTooth = function (index) {
-                searchequipPopup.close();
-                var MCH_CODE= $scope.equipToothList[index].MCH_CODE;
-                var CONTRACT= $scope.equipToothList[index].CONTRACT;
-                $scope.patrolHome(MCH_CODE, CONTRACT);
-                $scope.OSIDetailHide=true;
-                $scope.positionHide = false;
-
-            }
-
-        }
-    ])
-
-angular.module('BaiYin.OffLine.OffLineLook', [
-    'ionic',
-])
-
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('OffLine/OffLineLook', {
-            url: '/OffLine/OffLineLook',
-            controller: 'OffLineLookController',
-            templateUrl: 'OffLine/OffLineLook/OffLineLook.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {},
-        })
-    }])
-    .controller('OffLineLookController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$cordovaBarcodeScanner',
-        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $cordovaBarcodeScanner) {
-            $scope.$on('$ionicView.afterEnter', function () {
-                var OffLineUpList= JSON.parse(localStorage.getItem("OffLineSignList"));
-                // alert(JSON.stringify(OffLineUpList))
-                $scope.hDetail=OffLineUpList;
-                //签到样式
-                $scope.identify = {
-                    'padding': '5px',
-                    'line-height': '60px',
-                    'border-radius': '50%',
-                    'display': 'inline-block',
-                    'float': 'left',
-                    'color': '#fff',
-                    'margin-right': '10px',
-                    'font-size': '12px',
-                    'width': '71px',
-                    'text-align': 'center'
-                }
-            });
-            /*点击上传*/
-            $scope.OffLineUpload=function () {
-                var params = {
-                    OffLineUpList:$scope.hDetail
-                }
-                $http.post('ServiceName=InspectionService&TransName=upLoadXcData',params)
-                    .then(function (res) {
-                        console.log(res);
-                        if (res.code == 0) {
-                            showAlert.showMsg('', '', '上传成功!');
-                            $scope.hDetail=[];
-                            localStorage.removeItem('OffLineSignList');
-                            localStorage.removeItem('OffList');
-                            $state.go('OffLine');
-                        }else {
-                            showAlert.showMsg('', '', '上传失败,请稍后再试!');
-                            localStorage.setItem("OffLineSignList",JSON.stringify($scope.hDetail));
-                        }
-                    }, function (error) {
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
-                    });
-            }
-            /*点击删除*/
-            $scope.dealOffLine=function (detailList,index) {
-                console.log(detailList,index);
-                $scope.hDetail.splice(index,1);
-                console.log($scope.hDetail.length);
-                if($scope.hDetail.length==0){
-                    localStorage.removeItem('OffLineSignList');
-                    $state.go('OffLine');
-
-                }else{
-                    localStorage.setItem("OffLineSignList",JSON.stringify($scope.hDetail));
-                }
-            }
-        }
-    ])
 
 angular.module('BaiYin.OSI.OSIArear', [
     'ionic',
@@ -9254,6 +9883,410 @@ angular.module('BaiYin.pm.troubleA', [
     'BaiYin.pm.trouble.addTrouble',
     'BaiYin.pm.trouble.troubleDetail',
 ])
+angular.module('BaiYin.OffLine.OffLineDetail', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OffLine/OffLineDetail', {
+            url: '/OffLine/OffLineDetail',
+            controller: 'OffLineDetailController',
+            templateUrl: 'OffLine/OffLineDetail/OffLineDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {
+                TEMP_ID: null,
+                DESCRIPTION: null,
+                INSPECT_TYPE: null,
+                START_TIME: null,
+                END_TIME: null,
+                INSPECTED: null,
+                INSPECT: null,
+                childList: null
+            }
+        })
+    }])
+    .controller('OffLineDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                console.log($stateParams);
+                /*$scope.qdTimeHide = false;
+                $scope.djqdTimeHide = true;*/
+                $scope.itemQdBtnhide = true;
+                $scope.inputHide = true;
+                $scope.positionHide = true;
+                $scope.OSIDetailHide=false;
+                // var OffList= JSON.parse(localStorage.getItem("OffList"));
+                // console.log(OffList);
+                $scope.tempID = $stateParams.TEMP_ID;
+                $scope.description = $stateParams.DESCRIPTION;
+                $scope.inspectType = $stateParams.INSPECT_TYPE;
+                $scope.INSPECTED = $stateParams.INSPECTED;
+                $scope.INSPECT = $stateParams.INSPECT;
+                $scope.startTime = $stateParams.START_TIME;
+                $scope.endTime = $stateParams.END_TIME;
+                $scope.childList = $stateParams.childList;
+                console.log($scope.childList);
+                $scope.hDetail=$scope.childList;
+                console.log("$scope.hDetail===" + JSON.stringify($scope.hDetail));
+                for (var i = 0; i < $scope.hDetail.length; i++) {
+                    if ($scope.hDetail[i].RECORD_TIME == '' || $scope.hDetail[i].RECORD_TIME == null) {
+                        /*$scope.identifyShow = '未签到';*/
+                        console.log('', '', 'i==' + i);
+                        $("#qdIconColorid" + i).css('background', '#ccc');
+                        $("#qdIconColorid" + i).text('未签到');
+                    } else {
+                        $("#qdIconColorid" + i).text('已签到');
+                        $("#qdIconColorid" + i).css("background", "#83ecad");
+                    }
+                }
+                $scope.amount = 0;
+                //是否显示扫码
+                if ($scope.INSPECTED == $scope.INSPECT) {
+                    // $scope.inputHide = true;
+                }
+                //签到样式
+                $scope.identify = {
+                    'padding': '5px',
+                    'line-height': '35px',
+                    'border-radius': '50%',
+                    'display': 'inline-block',
+                    'float': 'left',
+                    'color': '#fff',
+                    'margin-right': '10px',
+                    'font-size': '12px',
+                    'width': '45px',
+                    'text-align': 'center'
+                }
+
+                // HistoryDetail($scope.tempID);
+            });
+
+            function HistoryDetail(tempid) {
+                console.log("tempid==" + tempid);
+                var parmas = {
+                    TEMP_ID: tempid
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=InspectionService&TransName=cInspectRouteDetailPage', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.hDetail = res.data.dList;
+                            console.log(res.data);
+                            console.log("$scope.hDetail===" + JSON.stringify($scope.hDetail));
+                            for (var i = 0; i < $scope.hDetail.length; i++) {
+                                if ($scope.hDetail[i].RECORD_TIME == '' || $scope.hDetail[i].RECORD_TIME == null) {
+                                    /*$scope.identifyShow = '未签到';*/
+                                    console.log('', '', 'i==' + i);
+                                    $("#qdIconColorid" + i).css('background', '#ccc');
+                                    $("#qdIconColorid" + i).text('未签到');
+                                } else {
+                                    $("#qdIconColorid" + i).text('已签到');
+                                    $("#qdIconColorid" + i).css("background", "#83ecad");
+                                }
+                            }
+                            console.log("$scope.hDetail==" + JSON.stringify($scope.hDetail));
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+
+            //点击扫二维码
+            $scope.toScanCode = function () {
+                $cordovaBarcodeScanner.scan()
+                    .then(function (barcodeData) {
+                        $scope.barcodeDataText = barcodeData.text;
+                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
+                        $scope.patrolLine($scope.barcodeData.MCH_CODE, $scope.barcodeData.CONTRACT, $scope.tempID);
+                    }, function (error) {
+                        console.log("ERROR:" + error);
+                    });
+            }
+            var planID;
+            $scope.patrolLine = function (MCH_CODE, CONTRACT, tempid) {
+                var params = {
+                    MCH_CODE: MCH_CODE,
+                    CONTRACT: CONTRACT,
+                    TEMP_ID: tempid
+                }
+                $http.post('ServiceName=InspectionService&TransName=formCBluetoothEquip', params)
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            $scope.patrolLine = res.data.detail;
+                            planID = $scope.patrolLine.PLAN_ID;
+                            if ($scope.patrolLine.IS_MATCH == 'TRUE') {
+                                //扫描蓝牙
+                                blueToothEnable($scope.patrolLine.SN_ADDRESS);
+                            }
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+
+            //开启本机蓝牙
+            function blueToothEnable(SN_ADDRESS) {
+                ble.enable(
+                    function () {
+                        scanBlueTooth(SN_ADDRESS);
+                    },
+                    function () {
+                        showAlert.showMsg("", "", "打开蓝牙失败！");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scanBlueTooth(SN_ADDRESS) {
+                ble.scan([], 5, function (device) {
+                        //成功的回调函数
+                        if (device.id == SN_ADDRESS) {
+                            signedLightUp();
+                            /*$scope.$apply(function(){
+                                // $scope.inputHide = true;
+                                $scope.positionHide = false;
+                            });*/
+                        }
+                    }, function () {
+                        //失败的回调函数
+                        showAlert.showMsg('', '', "未扫描到有效蓝牙！");
+                    }
+                );
+            }
+
+            function signedLightUp() {
+
+                for (var i = 0; i < $scope.hDetail.length; i++) {
+                    if (planID == $scope.hDetail[i].PLAN_ID) {
+                        //显示签到按钮
+                        $(".itemQdBtn" + i).show();
+                    }
+                }
+                /*if(planID == ''){
+                    alert("匹配成功----");
+                }*/
+
+            }
+
+            //点击签到
+            $scope.toSigned = function (obj, num) {
+                $("#recordID").attr("disabled", true);
+                var params = {
+                    BLUETOOTH_SERIAL_NO: $scope.patrolLine.BLUETOOTH_SERIAL_NO,
+                    PLAN_ID: obj.PLAN_ID,
+                    LOCATION_DESCRIPTION: $scope.patrolLine.ADDRESS,
+                    IS_MATCH: $scope.patrolLine.IS_MATCH,
+                    EQUIP_NO: $scope.patrolLine.MCH_CODE,
+                    CONTRACT: $scope.patrolLine.CONTRACT
+                };
+                $http.post('ServiceName=InspectionService&TransName=inspectRecord', params)
+                    .then(function (res) {
+                        if (res.data.code == 0) {
+                            showAlert.showMsg('', '', '恭喜您，签到成功');
+                            $("#recordTimeid" + num).hide();
+                            $("#newRecordTimeid" + num).show();
+                            //签到按钮隐藏
+                            $scope.itemQdBtnHide = true;
+                            //颜色变蓝色
+                            $("#qdIconColorid" + num).css('background', '#83ecad');
+                            $("#qdIconColorid" + num).text('已签到');
+                            //显示签到时间
+                            $scope.recordTime = res.data.RECORD_TIME;
+
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+
+            }
+
+            //跳转到巡检记录
+            $scope.toOsiHistory = function () {
+                $state.go('OSI/OSIHistory');
+                //载入缓存数据
+                var obj = {
+                    tempID: $scope.tempID,
+                    description: $scope.description,
+                    inspectType: $scope.inspectType,
+                    INSPECTED: $scope.INSPECTED,
+                    INSPECT: $scope.INSPECT,
+                    startTime: $scope.startTime,
+                    endTime: $scope.endTime
+                };
+                localStorage.setItem("OSI_LINE",JSON.stringify(obj));
+
+            }
+            //点击搜索蓝牙
+            $scope.searchsBlueTooth = function () {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                openblueToothEnable();
+            }
+            //开启本机蓝牙
+            function openblueToothEnable() {
+                ble.enable(
+                    function () {
+                        scansBlueToothnow();
+                    },
+                    function () {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg("","","蓝牙未开启");
+                    }
+                );
+            }
+            //扫描蓝牙
+            function scansBlueToothnow() {
+                $scope.equipToothList = [];
+                $scope.timer = $timeout(function () {
+                    loadingAnimation.hideLoading();
+                    if ($scope.equipToothList.length > 0) {
+                        upWindows($scope.equipToothList);
+                    } else {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg('', '', "未扫描到蓝牙设备");
+                    }
+                }, 5000);
+                ble.scan([], 5, function (device) {//成功的回调函数
+                        getBluesToothList(device);
+                    }, function () {
+                        //失败的回调函数
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg('', '', "扫描蓝牙失败");
+                    }
+                );
+            }
+            //弹出页面，显示扫描到的设备
+            var searchequipPopup;
+
+            function upWindows(equipToothList) {
+                searchequipPopup = $ionicPopup.show({
+                    template:'<div>' +
+                    '<ul>' +
+                    '<li id="devices_{{$index}}" ng-click="selectsBlueTooth($index)" ng-repeat="equipTooth in equipToothList track by $index" ng-style="searchPopupli">' +
+                    '{{equipTooth.ADDRESS}}' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>',
+                    title: '扫描到的蓝牙设备',
+                    scope: $scope,
+                });
+            }
+            //获取蓝牙列表
+            function getBluesToothList(device) {
+                $http.post('ServiceName=InspectionService&TransName=formSBluetoothEquip&SN_CODE=' + device.id)
+                    .then(function (res) {
+                        if (res.data.code == '0') {
+                            $scope.equipToothdetail=res.data.dList;
+                            for(var i=0;i<$scope.equipToothdetail.length;i++){
+                                $scope.equipToothList.push($scope.equipToothdetail[i]);
+                            }
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            $scope.searchPopupli = {
+                "line-height": "35px",
+                "font-size": "12px",
+                "text-align": "center",
+                "border-bottom": "1px dotted #f4f4f4",
+            };
+            //点击选择蓝牙设备
+            $scope.selectsBlueTooth = function (index) {
+                searchequipPopup.close();
+                var MCH_CODE= $scope.equipToothList[index].MCH_CODE;
+                var CONTRACT= $scope.equipToothList[index].CONTRACT;
+                $scope.patrolHome(MCH_CODE, CONTRACT);
+                $scope.OSIDetailHide=true;
+                $scope.positionHide = false;
+
+            }
+
+        }
+    ])
+
+angular.module('BaiYin.OffLine.OffLineLook', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('OffLine/OffLineLook', {
+            url: '/OffLine/OffLineLook',
+            controller: 'OffLineLookController',
+            templateUrl: 'OffLine/OffLineLook/OffLineLook.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {},
+        })
+    }])
+    .controller('OffLineLookController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$cordovaBarcodeScanner',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $cordovaBarcodeScanner) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                var OffLineUpList= JSON.parse(localStorage.getItem("OffLineSignList"));
+                // alert(JSON.stringify(OffLineUpList))
+                $scope.hDetail=OffLineUpList;
+                //签到样式
+                $scope.identify = {
+                    'padding': '5px',
+                    'line-height': '60px',
+                    'border-radius': '50%',
+                    'display': 'inline-block',
+                    'float': 'left',
+                    'color': '#fff',
+                    'margin-right': '10px',
+                    'font-size': '12px',
+                    'width': '71px',
+                    'text-align': 'center'
+                }
+            });
+            /*点击上传*/
+            $scope.OffLineUpload=function () {
+                var params = {
+                    OffLineUpList:$scope.hDetail
+                }
+                $http.post('ServiceName=InspectionService&TransName=upLoadXcData',params)
+                    .then(function (res) {
+                        console.log(res);
+                        if (res.code == 0) {
+                            showAlert.showMsg('', '', '上传成功!');
+                            $scope.hDetail=[];
+                            localStorage.removeItem('OffLineSignList');
+                            localStorage.removeItem('OffList');
+                            $state.go('OffLine');
+                        }else {
+                            showAlert.showMsg('', '', '上传失败,请稍后再试!');
+                            localStorage.setItem("OffLineSignList",JSON.stringify($scope.hDetail));
+                        }
+                    }, function (error) {
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认');
+                    });
+            }
+            /*点击删除*/
+            $scope.dealOffLine=function (detailList,index) {
+                console.log(detailList,index);
+                $scope.hDetail.splice(index,1);
+                console.log($scope.hDetail.length);
+                if($scope.hDetail.length==0){
+                    localStorage.removeItem('OffLineSignList');
+                    $state.go('OffLine');
+
+                }else{
+                    localStorage.setItem("OffLineSignList",JSON.stringify($scope.hDetail));
+                }
+            }
+        }
+    ])
+
 angular.module('BaiYin.pdDay', [
     'ionic',
 ])
@@ -9932,7 +10965,17 @@ angular.module('BaiYin.tabs.homePage', [
                 $ionicTabsDelegate.select(0);
             });
             $scope.$on('$ionicView.afterEnter', function () {
-                console.log("time===");
+                var UserID=localStorage.getItem("UserID");
+                console.log(UserID);
+                var personname=localStorage.getItem("personname");
+                console.log(personname);
+                if(UserID==personname){
+
+                }else{
+                    localStorage.removeItem("personname");
+                    localStorage.removeItem("OfflineList");
+                    localStorage.removeItem("OffList");
+                }
                 firstNews();
                 getErpTodoCount();
             });
@@ -10025,7 +11068,7 @@ angular.module('BaiYin.tabs.homePage', [
                         "package": "com.seeyon.cmp"
                     }).start(function(){}, function(error) {
                         //没有安装应用会执行下面的语句
-                        window.location = "http://m3.seeyon.com/index!index.xhtml#download";
+                        cordova.InAppBrowser.open("http://m3.seeyon.com/index!index.xhtml#download", "_system");
                     });
                 } else if (isiOS) {
                     window.location.href = "seeyonM3Phone://";
@@ -10571,12 +11614,86 @@ angular.module('BaiYin.tabs.message.mock', [
     $httpBackend.whenGET(/\/AgriculturlWeb\/moneyApplication/).passThrough();
 
 }])
+angular
+    .module('BaiYin.tabs.OMA', [
+        'ionic',
+    ])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('tabs/OMA', {
+            url: '/tabs/OMA',
+            controller: 'OMAController',
+            templateUrl: 'tabs/OMA/OMA.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('OMAController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
+            $scope.myActiveSlide = 1;
+            $scope.$on('$ionicView.enter', function () {
+                //显示tabs
+                $rootScope.hideTabs = false;
+                $scope.currentTab = 'tabs/OMA';
+                $ionicTabsDelegate.select(2);
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+                // getPowerPlantList();
+            });
+            $scope.totask=function () {
+                showAlert.showMsg('','','开发中……');
+                /*$state.go('');*/
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转交易电量
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.toEleTrad=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('EleTrad');
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转现货交易
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.tospotTransaction=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('spotTransaction');
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转市场化交易
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.toMarketbasedTrad=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('MarketbasedTrad');
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转结算电量
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.toSettlementTrad=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('SettlementTrad');
+            }
+        }]);
 angular.module('BaiYin.tabs.mine', [
     'BaiYin.tabs.mine.mock',
     'BaiYin.mine.netWork',
-    'BaiYin.APPfeedback'
+    'BaiYin.APPfeedback',
+    'BaiYin.ListOfBluetooth'
 ])
-
     .config(['$stateProvider', function($stateProvider) {
         $stateProvider.state('tabs/mine', {
             url: '/tabs/mine',
@@ -10697,6 +11814,7 @@ angular.module('BaiYin.tabs.mine', [
 		                        '</ul>' +
 	            			  '</div>',
             		title: '主创人员',
+            		cssClass: 'my-custom-popup',
             		scope: $scope,
             	});
             	$scope.searchPopupli = {
@@ -10836,35 +11954,6 @@ angular.module('BaiYin.tabs.mine.mock', [
     // $httpBackend.whenPOST(/\/getApplys/).passThrough();
     $httpBackend.whenGET(/.*/).passThrough();
 }])
-angular
-    .module('BaiYin.tabs.OMA', [
-        'ionic',
-    ])
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('tabs/OMA', {
-            url: '/tabs/OMA',
-            controller: 'OMAController',
-            templateUrl: 'tabs/OMA/OMA.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1']
-        })
-    }])
-    .controller('OMAController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
-        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
-            $scope.myActiveSlide = 1;
-            $scope.$on('$ionicView.enter', function () {
-                //显示tabs
-                $rootScope.hideTabs = false;
-                $scope.currentTab = 'tabs/OMA';
-                $ionicTabsDelegate.select(2);
-            });
-            $scope.$on('$ionicView.afterEnter', function () {
-                // getPowerPlantList();
-            });
-            $scope.totask=function () {
-                showAlert.showMsg('','','开发中……')
-            }
-        }]);
 /*angular.module('BaiYin.tabs.porductManage', [
     'ionic'
 ])*/
@@ -12698,97 +13787,6 @@ angular.module('BaiYin.newVacation.mock', [
         var result = mocksData.resetData(data);
         $httpBackend.whenGET(/.*/).passThrough();
     }]);
-angular.module('BaiYin.VacationDetail', [
-        'BaiYin.VacationDetail.mock'
-    ])
-
-    .config(['$stateProvider', function($stateProvider) {
-        $stateProvider.state('VacationDetail', {
-            url: '/VacationDetail',
-            controller: 'VacationDetailController',
-            templateUrl: 'AllLeave/Vacation/VacationDetail/VacationDetail.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1']
-        })
-    }])
-
-    .controller('VacationDetailController', ['$scope','$ionicHistory', 'pageInitService', '$stateParams', '$http', '$state', 'showAlert',
-        function($scope,$ionicHistory, pageInitService, $stateParams, $http, $state, showAlert) {
-            var vacParam = JSON.parse(sessionStorage.getItem("vacationParam"));
-            $scope.$on('$ionicView.afterEnter', function() {
-                var apis = [
-                    'ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO,
-                ];
-                pageInitService.pageInit(apis).then(function(result) {
-                    $scope.item = result[0].data;
-                    if (result[0].data.APPROVE_STATUS == "未定义"||result[0].data.APPROVE_STATUS == "新建") {
-                        $scope.submitL = true;
-                        $scope.editL = true;
-                        $scope.deleL = true;
-                    } else if (result[0].data.APPROVE_STATUS == "审批通过" || result[0].data.APPROVE_STATUS == "审批中") {
-                        $scope.backLeaveL = true;
-                    };
-                }, function(error) {
-                    showAlert.showMsg(error, '', '网络异常', '确认')
-                });
-            });
-            $scope.doRefresh = function() {
-                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        $scope.item = res.data;
-                        $scope.$broadcast('scroll.refreshComplete');
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-            //提交
-            $scope.submit = function() {
-                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=doApplyForBusinessTravelDetail&ACTION_TYPE=submit&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-            //销假
-            $scope.backLeave = function() {
-                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-            //编辑
-            $scope.edit = function(item) {
-                var editParam = item;
-                editParam.numTT = 1;
-                $state.go("newVacation", { "newParam": editParam });
-            };
-            //删除
-            $scope.dele = function() {
-                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-        }
-    ])
-angular.module('BaiYin.VacationDetail.mock', [
-        'ngMockE2E', 'BaiYin.common.mocksData'
-    ])
-    .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
-        var data = {
-
-        }
-        var result = mocksData.resetData(data);
-        $httpBackend.whenGET(/.*/).passThrough();
-    }]);
 angular.module('BaiYin.VacationList', [
         'BaiYin.VacationList.mock'
     ])
@@ -12955,6 +13953,97 @@ angular.module('BaiYin.VacationList', [
         }
     ])
 angular.module('BaiYin.VacationList.mock', [
+        'ngMockE2E', 'BaiYin.common.mocksData'
+    ])
+    .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
+        var data = {
+
+        }
+        var result = mocksData.resetData(data);
+        $httpBackend.whenGET(/.*/).passThrough();
+    }]);
+angular.module('BaiYin.VacationDetail', [
+        'BaiYin.VacationDetail.mock'
+    ])
+
+    .config(['$stateProvider', function($stateProvider) {
+        $stateProvider.state('VacationDetail', {
+            url: '/VacationDetail',
+            controller: 'VacationDetailController',
+            templateUrl: 'AllLeave/Vacation/VacationDetail/VacationDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+
+    .controller('VacationDetailController', ['$scope','$ionicHistory', 'pageInitService', '$stateParams', '$http', '$state', 'showAlert',
+        function($scope,$ionicHistory, pageInitService, $stateParams, $http, $state, showAlert) {
+            var vacParam = JSON.parse(sessionStorage.getItem("vacationParam"));
+            $scope.$on('$ionicView.afterEnter', function() {
+                var apis = [
+                    'ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO,
+                ];
+                pageInitService.pageInit(apis).then(function(result) {
+                    $scope.item = result[0].data;
+                    if (result[0].data.APPROVE_STATUS == "未定义"||result[0].data.APPROVE_STATUS == "新建") {
+                        $scope.submitL = true;
+                        $scope.editL = true;
+                        $scope.deleL = true;
+                    } else if (result[0].data.APPROVE_STATUS == "审批通过" || result[0].data.APPROVE_STATUS == "审批中") {
+                        $scope.backLeaveL = true;
+                    };
+                }, function(error) {
+                    showAlert.showMsg(error, '', '网络异常', '确认')
+                });
+            });
+            $scope.doRefresh = function() {
+                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        $scope.item = res.data;
+                        $scope.$broadcast('scroll.refreshComplete');
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+            //提交
+            $scope.submit = function() {
+                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=doApplyForBusinessTravelDetail&ACTION_TYPE=submit&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+            //销假
+            $scope.backLeave = function() {
+                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+            //编辑
+            $scope.edit = function(item) {
+                var editParam = item;
+                editParam.numTT = 1;
+                $state.go("newVacation", { "newParam": editParam });
+            };
+            //删除
+            $scope.dele = function() {
+                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+        }
+    ])
+angular.module('BaiYin.VacationDetail.mock', [
         'ngMockE2E', 'BaiYin.common.mocksData'
     ])
     .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
@@ -13198,6 +14287,90 @@ angular.module('BaiYin.attence.countAttence.wdkDetail', [
         }
     ])
 
+angular.module('BaiYin.attence.countAttence.wdkList', [
+    'ionic'
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('attence/countAttence/wdkList', {
+            url: '/attence/countAttence/wdkList',
+            controller: 'wdkListController',
+            templateUrl: 'attence/countAttence/wdkList/wdkList.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {dateTimeShow: null, personNum: null, partCode: null, partName: null}
+        })
+    }])
+    .controller('wdkListController', ['$timeout', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$stateParams',
+
+        function ($timeout, $scope, showAlert, loadingAnimation, $http, $state, $stateParams) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                //获取统计页面传来的日期和人数
+                if(!localStorage.getItem("ATTENDENCE_FLG")){
+                    console.log("3333");
+                    $scope.dateTimeShow = $stateParams.dateTimeShow;
+                    $scope.personNum = $stateParams.personNum;
+                    $scope.partCode = $stateParams.partCode;
+                    $scope.partName = $stateParams.partName;
+                    console.log("partName==" + $scope.partName + "/personNum==" + $scope.personNum);
+                    localStorage.setItem("dateTimeShow",$stateParams.dateTimeShow);
+                    localStorage.setItem("personNum",$stateParams.personNum);
+                    localStorage.setItem("partCode",$stateParams.partCode);
+                    localStorage.setItem("partName",$stateParams.partName);
+                }else{
+                    $scope.dateTimeShow = localStorage.getItem("dateTimeShow");
+                    $scope.personNum = localStorage.getItem("personNum");
+                    $scope.partCode = localStorage.getItem("partCode");
+                    $scope.partName = localStorage.getItem("partName");
+                }
+
+                //获取未打卡人员列表
+                wdkPersonList($scope.dateTimeShow, $scope.partCode);
+                localStorage.removeItem("ATTENDENCE_FLG");
+
+            });
+
+            function wdkPersonList(mounth, dept) {
+                console.log("mounth==" + mounth + "/dept==" + dept);
+                var parmas = {
+                    QUERY_MONTH: mounth,
+                    DEPT: dept,
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=AttendStatisticsService&TransName=monthStatisticsUnclock', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.wdkList = res.data.tList;
+                            console.log("wdkList.length==" + $scope.wdkList.length);
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+
+            $scope.towdkDetail = function (obj) {
+                localStorage.setItem("ATTENDENCE_FLG","1");
+                console.log("dateTimeShow==" + $scope.dateTimeShow + "/obj==" + JSON.stringify(obj));
+                $scope.PERSON_ID = obj.PERSON_ID;
+                $scope.personName = obj.PERSON_NAME;
+                $scope.count = obj.COUNT;
+                var item = {
+                    PERSON_ID: $scope.PERSON_ID,
+                    QUERY_MONTH: $scope.dateTimeShow,
+                    personName: $scope.personName,
+                    count: $scope.count,
+                }
+                $state.go('attence/countAttence/wdkDetail', item);
+            }
+        }
+    ])
+
 angular.module('BaiYin.attence.countAttence.zcList', [
     'ionic'
 ])
@@ -13300,90 +14473,6 @@ angular.module('BaiYin.attence.countAttence.ztDetail', [
             $scope.$on('$ionicView.enter', function () {
 
             });
-        }
-    ])
-
-angular.module('BaiYin.attence.countAttence.wdkList', [
-    'ionic'
-])
-
-    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
-        $stateProvider.state('attence/countAttence/wdkList', {
-            url: '/attence/countAttence/wdkList',
-            controller: 'wdkListController',
-            templateUrl: 'attence/countAttence/wdkList/wdkList.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {dateTimeShow: null, personNum: null, partCode: null, partName: null}
-        })
-    }])
-    .controller('wdkListController', ['$timeout', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$stateParams',
-
-        function ($timeout, $scope, showAlert, loadingAnimation, $http, $state, $stateParams) {
-            $scope.$on('$ionicView.afterEnter', function () {
-                //获取统计页面传来的日期和人数
-                if(!localStorage.getItem("ATTENDENCE_FLG")){
-                    console.log("3333");
-                    $scope.dateTimeShow = $stateParams.dateTimeShow;
-                    $scope.personNum = $stateParams.personNum;
-                    $scope.partCode = $stateParams.partCode;
-                    $scope.partName = $stateParams.partName;
-                    console.log("partName==" + $scope.partName + "/personNum==" + $scope.personNum);
-                    localStorage.setItem("dateTimeShow",$stateParams.dateTimeShow);
-                    localStorage.setItem("personNum",$stateParams.personNum);
-                    localStorage.setItem("partCode",$stateParams.partCode);
-                    localStorage.setItem("partName",$stateParams.partName);
-                }else{
-                    $scope.dateTimeShow = localStorage.getItem("dateTimeShow");
-                    $scope.personNum = localStorage.getItem("personNum");
-                    $scope.partCode = localStorage.getItem("partCode");
-                    $scope.partName = localStorage.getItem("partName");
-                }
-
-                //获取未打卡人员列表
-                wdkPersonList($scope.dateTimeShow, $scope.partCode);
-                localStorage.removeItem("ATTENDENCE_FLG");
-
-            });
-
-            function wdkPersonList(mounth, dept) {
-                console.log("mounth==" + mounth + "/dept==" + dept);
-                var parmas = {
-                    QUERY_MONTH: mounth,
-                    DEPT: dept,
-                }
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http.post('ServiceName=AttendStatisticsService&TransName=monthStatisticsUnclock', parmas)
-                    .then(function (res) {
-                        loadingAnimation.hideLoading();
-                        if (res.data.code == '0') {
-                            $scope.wdkList = res.data.tList;
-                            console.log("wdkList.length==" + $scope.wdkList.length);
-                        } else {
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-
-            }
-
-            $scope.towdkDetail = function (obj) {
-                localStorage.setItem("ATTENDENCE_FLG","1");
-                console.log("dateTimeShow==" + $scope.dateTimeShow + "/obj==" + JSON.stringify(obj));
-                $scope.PERSON_ID = obj.PERSON_ID;
-                $scope.personName = obj.PERSON_NAME;
-                $scope.count = obj.COUNT;
-                var item = {
-                    PERSON_ID: $scope.PERSON_ID,
-                    QUERY_MONTH: $scope.dateTimeShow,
-                    personName: $scope.personName,
-                    count: $scope.count,
-                }
-                $state.go('attence/countAttence/wdkDetail', item);
-            }
         }
     ])
 
@@ -13665,88 +14754,6 @@ angular
 		}
 	]);
 angular
-	.module('BaiYin.OSI.OSIDepartmentPersonnel', [
-		'ionic',
-	])
-	.config(['$stateProvider', 'ionicDatePickerProvider', function($stateProvider, ionicDatePickerProvider) {
-		$stateProvider.state('OSI/OSIDepartmentPersonnel', {
-			url: '/OSI/OSIDepartmentPersonnel',
-			controller: 'OSIDepartmentPersonnelController',
-			templateUrl: 'OSI/OSIcount/OSIDepartmentPersonnel/OSIDepartmentPersonnel.tpl.html',
-			cache: 'true',
-			authorizedRuleType: ['1'],
-			params: {item: new Object()}
-		});
-	}])
-	.controller('OSIDepartmentPersonnelController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet', 'ionicDatePicker',
-		function($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet, ionicDatePicker) {
-            //上页传过来的数据
-            $scope.data = new Object();
-            //查询条件的时间集合
-            $scope.date = new Object();
-            $scope.$on('$ionicView.beforeEnter', function() {
-				$scope.date = JSON.parse(JSON.stringify($stateParams.item.date));
-				$scope.changeDateTime = function(){
-					if($stateParams.item.changeDateTime.apply($scope.date, arguments))
-						$scope.reload();
-				};
-				$scope.data = $stateParams.item.data;
-				$scope.reload();
-			});
-			
-			//分页页码
-			$scope.pageIndex = 1;
-			$scope.hasMore = true;
-			//数据
-			$scope.list = new Array();
-			$scope.reload = function(){
-				$scope.pageIndex = 1;
-				$scope.list = new Array();
-				$scope.getInspectStatisticalData();
-			};
-
-			//获取巡查统计数据
-            $scope.getInspectStatisticalData = function () {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http
-                    .post('ServiceName=InspectionService&TransName=getInspectStatisticalData', {
-                        restrict: "personnel",
-						pageIndex: $scope.pageIndex++,
-						org_code: $scope.data.ORG_CODE,
-                        startTime: $scope.date.departmentStart,
-                        endTime: $scope.date.departmentEnd
-                    })
-                    .then(function (res) {
-                        loadingAnimation.hideLoading();
-                        $scope.$broadcast('scroll.infiniteScrollComplete');
-                        
-                        if(res.data.list.length != 10){
-                            $scope.hasMore = false;
-                        }
-
-                        $scope.list = $scope.list.concat(res.data.list.map(function(v, i){
-                            v.percentage = Math.round(v.PLAN_INSPECTED/(v.PLAN_INSPECT == 0 ? 1 : v.PLAN_INSPECT) * 1000) / 10;
-                            return v;
-                        }));
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        $scope.$broadcast('scroll.infiniteScrollComplete');
-                        $scope.hasMore = false;
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-			}
-
-            //巡查记录视图
-            $scope.openRecord = function(data) {
-				data.date = {
-                    startDate: $scope.date.departmentStart,
-                    endDate:$scope.date.departmentEnd
-                };
-                $state.go('OSI/OSIHistory', {item: {autoOperation: "personnel", data: data}});
-            };
-		}
-	]);
-angular
 	.module('BaiYin.OSI.OSIPersonnelEquipment', [
 		'ionic',
 	])
@@ -13828,6 +14835,88 @@ angular
                 };
                 $state.go('OSI/OSIHistory', {item: {autoOperation: "personnel", data: data}});
 			};
+		}
+	]);
+angular
+	.module('BaiYin.OSI.OSIDepartmentPersonnel', [
+		'ionic',
+	])
+	.config(['$stateProvider', 'ionicDatePickerProvider', function($stateProvider, ionicDatePickerProvider) {
+		$stateProvider.state('OSI/OSIDepartmentPersonnel', {
+			url: '/OSI/OSIDepartmentPersonnel',
+			controller: 'OSIDepartmentPersonnelController',
+			templateUrl: 'OSI/OSIcount/OSIDepartmentPersonnel/OSIDepartmentPersonnel.tpl.html',
+			cache: 'true',
+			authorizedRuleType: ['1'],
+			params: {item: new Object()}
+		});
+	}])
+	.controller('OSIDepartmentPersonnelController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet', 'ionicDatePicker',
+		function($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet, ionicDatePicker) {
+            //上页传过来的数据
+            $scope.data = new Object();
+            //查询条件的时间集合
+            $scope.date = new Object();
+            $scope.$on('$ionicView.beforeEnter', function() {
+				$scope.date = JSON.parse(JSON.stringify($stateParams.item.date));
+				$scope.changeDateTime = function(){
+					if($stateParams.item.changeDateTime.apply($scope.date, arguments))
+						$scope.reload();
+				};
+				$scope.data = $stateParams.item.data;
+				$scope.reload();
+			});
+			
+			//分页页码
+			$scope.pageIndex = 1;
+			$scope.hasMore = true;
+			//数据
+			$scope.list = new Array();
+			$scope.reload = function(){
+				$scope.pageIndex = 1;
+				$scope.list = new Array();
+				$scope.getInspectStatisticalData();
+			};
+
+			//获取巡查统计数据
+            $scope.getInspectStatisticalData = function () {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http
+                    .post('ServiceName=InspectionService&TransName=getInspectStatisticalData', {
+                        restrict: "personnel",
+						pageIndex: $scope.pageIndex++,
+						org_code: $scope.data.ORG_CODE,
+                        startTime: $scope.date.departmentStart,
+                        endTime: $scope.date.departmentEnd
+                    })
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                        
+                        if(res.data.list.length != 10){
+                            $scope.hasMore = false;
+                        }
+
+                        $scope.list = $scope.list.concat(res.data.list.map(function(v, i){
+                            v.percentage = Math.round(v.PLAN_INSPECTED/(v.PLAN_INSPECT == 0 ? 1 : v.PLAN_INSPECT) * 1000) / 10;
+                            return v;
+                        }));
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                        $scope.hasMore = false;
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+			}
+
+            //巡查记录视图
+            $scope.openRecord = function(data) {
+				data.date = {
+                    startDate: $scope.date.departmentStart,
+                    endDate:$scope.date.departmentEnd
+                };
+                $state.go('OSI/OSIHistory', {item: {autoOperation: "personnel", data: data}});
+            };
 		}
 	]);
 angular.module('BaiYin.pm.defectFill.adddefectFill', [
@@ -13979,12 +15068,14 @@ angular.module('BaiYin.pm.defectFill.adddefectFill', [
             $scope.scanStart = function () {
                 $cordovaBarcodeScanner.scan()
                     .then(function (barcodeData) {
-                        $scope.barcodeData = barcodeData.text;
-                        var sbxx = $scope.barcodeData.split(',');
+                        // $scope.barcodeData = barcodeData.text;
+                        $scope.barcodeDataText = barcodeData.text;
+                        $scope.barcodeData = eval("(" + $scope.barcodeDataText + ")");
                         //设备编码和设备名称
-                        $("#sbcodeid").val(sbxx[0]);
-                        $("#sbmcValue").val(sbxx[1]);
-                        // showAlert.showMsg('', '', "barcodeData==" + $scope.barcodeData);
+                     /*   $("#sbcodeid").val($scope.barcodeData.MCH_CODE);
+                        $("#sbmcValue").val($scope.barcodeData.MCH_CODE);*/
+                        // alert(JSON.stringify($scope.barcodeData.MCH_CODE));
+                        $scope.getMchName($scope.barcodeData.MCH_CODE);
                     }, function (error) {
                         console.log("ERROR:" + error);
                     });
@@ -13996,6 +15087,24 @@ angular.module('BaiYin.pm.defectFill.adddefectFill', [
                 $(".sblist").show();
                 refreshMsg();
             }
+            /*获取设备名称*/
+            $scope.getMchName=function (MCH_CODE) {
+                var parms={
+                    MCH_CODE:MCH_CODE
+                }
+                $http.post('ServiceName=DefectManageService&TransName=listEquipmentFunctionalName',parms)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        $("#sbmcValue").val(res.data.hList[0].MCH_NAME);
+                        $("#sbcodeid").val(res.data.hList[0].MCH_CODE);
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+
+            }
+
+
             $scope.number = 1;
             $scope.hasMore = false;
             $scope.loadMore = function () {
@@ -16474,6 +17583,47 @@ angular.module('BaiYin.messageDetail.mock', [
     var result = mocksData.resetData(data);
     $httpBackend.whenGET(/\?messageList/).respond(result);
 }]);
+angular.module('BaiYin.message.othersInfo', [
+    'ionic'
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('message/othersInfo', {
+        url: '/message/othersInfo:targetId',
+        controller: 'othersInfoController',
+        templateUrl: 'tabs/message/othersInfo/othersInfo.tpl.html',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('othersInfoController', ['$scope', '$http', '$ionicPopup', '$stateParams', 'Session',
+
+    function($scope, $http, $ionicPopup, $stateParams, Session) {
+        $scope.$on('$ionicView.beforeEnter', function() {
+            if (isApp) {
+                //获取用户信息
+                if (Session.user.DeviceType == 'Android') {
+                    window.JMessage.getUserInfo($stateParams.targetId, null,
+                        function(response) {
+                            $scope.userInfo = JSON.parse(response);
+                        },
+                        function(errorStr) {
+                            console.log(errorStr); // 输出错误信息。
+                        });
+                } else {
+                    window.JMessage.getUserInfo($stateParams.targetId, null,
+                        function(response) {
+                            $scope.userInfo = response;
+                        },
+                        function(errorStr) {
+                            console.log(errorStr); // 输出错误信息。
+                        });
+                }
+
+            }
+        });
+    }
+])
 angular.module('BaiYin.message.myInfo', [
     'ionic'
 ])
@@ -16570,47 +17720,6 @@ angular.module('BaiYin.message.myInfo', [
                 }
             });
         };
-    }
-])
-angular.module('BaiYin.message.othersInfo', [
-    'ionic'
-])
-
-.config(['$stateProvider', function($stateProvider) {
-    $stateProvider.state('message/othersInfo', {
-        url: '/message/othersInfo:targetId',
-        controller: 'othersInfoController',
-        templateUrl: 'tabs/message/othersInfo/othersInfo.tpl.html',
-        authorizedRuleType: ['1']
-    })
-}])
-
-.controller('othersInfoController', ['$scope', '$http', '$ionicPopup', '$stateParams', 'Session',
-
-    function($scope, $http, $ionicPopup, $stateParams, Session) {
-        $scope.$on('$ionicView.beforeEnter', function() {
-            if (isApp) {
-                //获取用户信息
-                if (Session.user.DeviceType == 'Android') {
-                    window.JMessage.getUserInfo($stateParams.targetId, null,
-                        function(response) {
-                            $scope.userInfo = JSON.parse(response);
-                        },
-                        function(errorStr) {
-                            console.log(errorStr); // 输出错误信息。
-                        });
-                } else {
-                    window.JMessage.getUserInfo($stateParams.targetId, null,
-                        function(response) {
-                            $scope.userInfo = response;
-                        },
-                        function(errorStr) {
-                            console.log(errorStr); // 输出错误信息。
-                        });
-                }
-
-            }
-        });
     }
 ])
 angular.module('BaiYin.APPfeedback', [])

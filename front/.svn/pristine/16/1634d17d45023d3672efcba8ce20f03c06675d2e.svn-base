@@ -1,0 +1,46 @@
+<ion-view class="SettlementTradCSS">
+    <ion-nav-title>结算电量</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="全厂" ng-click="toQcData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="setSelectMounth">
+                    <button class="setleftSelect" ng-click="getPretlementMonth(nowMounth)" id="SettlementTradShowID"></button>
+                    {{nowMounth | date : "yyyy-MM"}}
+                    <button class="setrightSelect" ng-click="getNexttlementMonth(nowMounth)" disabled></button>
+                    <!--<div class="setselectGlassMounth">
+                        <input type="text" id="glassMounthId" placeholder="请选择部门" ng-click="toSelectGlass()" value="{{deptName}}" readonly>
+                    </div>-->
+                </div>
+                <div class="loadList">
+
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="甘" ng-click="toGsData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="青" ng-click="toQhData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="宁" ng-click="toNxData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="新" ng-click="toXjData()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

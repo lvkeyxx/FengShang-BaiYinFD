@@ -1,0 +1,12 @@
+<ion-view class="MarketbasedTradIndexCSS">
+    <ion-nav-title>交易公告详情</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="marketbasedbg clearfix">
+            <div class="lft">{{detailTitle}}</div>
+        </div>
+        <div class="marketList">
+            {{detailCONTENT}}
+        </div>
+    </ion-content>
+</ion-view>
+

@@ -1,0 +1,95 @@
+angular.module('BaiYin.bulletinBoard', [
+    'ionic'
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('bulletinBoard', {
+            url: '/bulletinBoard',
+            controller: 'bulletinBoardController',
+            templateUrl: 'bulletinBoard/bulletinBoard.tpl.html',
+            cache: 'false',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('bulletinBoardController', ['$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$ionicTabsDelegate', '$stateParams',
+        function ($scope, showAlert, loadingAnimation, $http, $state, $ionicTabsDelegate, $stateParams) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                bulletinInit();
+            });
+            $scope.data = {
+            	showReorder:false
+            }
+
+            //点击标题
+            $scope.toEdit = function (line_no) {
+                console.log("toEdit.line_no==="+line_no);
+                $state.go('bulletinBoard/edit', {LINE_NO: line_no})
+            };
+            
+            $scope.moveItem = function(board, fromIndex, toIndex) {
+            	$scope.newList = [];
+        	    $scope.tList.splice(fromIndex, 1);
+        	    $scope.tList.splice(toIndex, 0, board);
+        	    board.SORT = parseInt(toIndex) + 1;
+        	    var _fromIndex = parseInt(fromIndex) + 1;
+        	    var _toIndex = parseInt(toIndex) + 1;
+	    		for(var i in $scope.tList) {
+	    			if(parseInt(fromIndex) > parseInt(toIndex)
+	    					&& $scope.tList[i].SORT >= _toIndex
+	    					&& $scope.tList[i].SORT < _fromIndex) {
+	    				$scope.tList[i].SORT = parseInt($scope.tList[i].SORT) + 1;
+	    			} else if(parseInt(fromIndex) < parseInt(toIndex)
+	    					&& $scope.tList[i].SORT > _fromIndex
+	    					&& $scope.tList[i].SORT <= _toIndex){
+	    				$scope.tList[i].SORT = parseInt($scope.tList[i].SORT) - 1;
+	    			}
+	    			$scope.tList[toIndex].SORT = _toIndex;
+	    			var list = {
+    					"SORT": parseInt($scope.tList[i].SORT),
+    					"LINE_NO": parseInt($scope.tList[i].LINE_NO)
+	    			};
+	    			$scope.newList.push(list);
+	    		}
+                loadingAnimation.showLoading('数据上传中', 'loding', 0);
+                var param = {
+                		params:$scope.newList
+                }
+                $http.post('ServiceName=WhiteBoardService&TransName=updateWhiteBoardNewspaper',param)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            showAlert.showMsg('','','顺序更改成功！');
+                            history.back();
+                        } else {
+                            showAlert.showMsg('','',res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+        	  };
+        	  $scope.onItemDelete = function(board) {
+        	    $scope.tList.splice($scope.tList.indexOf(board), 1);
+        	  };
+
+            //初始化白板公告列表
+            function bulletinInit() {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=WhiteBoardService&TransName=listWhiteBoardNewspaper')
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.tList = res.data.tList;
+                        } else {
+                            showAlert.showMsg('', '', res.data.msg);
+
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+        }
+    ])

@@ -1,0 +1,52 @@
+<ion-view class="bulletinBoardCSS">
+    <ion-nav-title>公告</ion-nav-title>
+    <!-- <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="tips">
+            <span>提示：点击标题进入编辑页</span>
+        </div>
+        <div class="bulletinBoardList">
+            <table>
+                <tr>
+                    <th>排序号</th>
+                    <th>标题</th>
+                </tr>
+                <tr show-reorder="data.showReorder" on-hold="data.showReorder = !data.showReorder" 
+                	ng-repeat=" board in tList track by $index">
+                    <td>{{board.SORT}}</td>
+                    <td ng-click="toEdit(board.LINE_NO)">{{board.NEWS_TITLE}}</td>
+                    <td class="button-assertive" ng-click="onItemDelete(board)">
+			            delete
+			        </td>
+			        <td class="ion-navicon" on-reorder="moveItem(board, $fromIndex, $toIndex)"></td>
+                </tr>
+            </table>
+        </div>
+    </ion-content> -->
+    <ion-content has-bouncing="false" scrollbar-y="false">
+    	<div class="tips">
+            <span>提示：点击标题进入编辑页</span>
+        </div>
+        <div class="bulletinBoardList">
+            <table>
+                <tr>
+                    <th>排序号</th>
+                    <th>标题</th>
+                </tr>
+             </table>
+			<ion-list class="ionList" show-reorder="data.showReorder" on-hold="data.showReorder = !data.showReorder">
+		        <ion-item class="item-remove-animate item-text-wrap" 
+		        	ng-repeat="board in tList track by $index"  board="board"
+		                  ng-click="toEdit(board.LINE_NO)">
+		                  <!-- on-drag-up="moveItem(board, $fromIndex, $toIndex)"
+		                  on-drag-down="moveItem(board, $fromIndex, $toIndex)" -->
+          			<span class="titleSapn">{{ board.SORT }}</span>
+          			<span class="textSapn">{{board.NEWS_TITLE}}</span>
+          			<!-- <ion-option-button class="button-assertive" ng-click="onItemDelete(board)">
+            			delete
+          			</ion-option-button> -->
+          			<ion-reorder-button class="ion-navicon" on-reorder="moveItem(board, $fromIndex, $toIndex)"></ion-reorder-button>
+		        </ion-item>
+		      </ion-list>
+        </div>
+    </ion-content>
+</ion-view>

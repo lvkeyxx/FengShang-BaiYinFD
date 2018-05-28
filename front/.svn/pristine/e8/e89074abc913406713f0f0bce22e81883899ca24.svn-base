@@ -1,0 +1,12 @@
+<ion-view class="MarketbasedTradIndexCSS">
+    <ion-nav-title>4月西北送河南月度省间外送交易</ion-nav-title>
+    <ion-content has-bouncing="false" scrollbar-y="false">
+        <div class="marketbasedbg clearfix">
+            <div class="lft">5-10月西北替代安徽月度省间发电权交易</div>
+        </div>
+        <div class="marketbased clearfix" ng-click="goMarketbasedTradDetail()">
+            <div class="lft">5月西北送山东集中竞价交易</div>
+        </div>
+    </ion-content>
+</ion-view>
+
