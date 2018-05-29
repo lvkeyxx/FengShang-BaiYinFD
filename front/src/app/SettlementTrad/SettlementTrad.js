@@ -27,6 +27,7 @@ angular.module('BaiYin.SettlementTrad', [
                     CONTRACT:''
                 }
                 $scope.getTlementQc(getTimes);
+                $scope.CONTRACT='';
                 $(".setTlementrightSelect").hide();
 
             });
@@ -36,6 +37,8 @@ angular.module('BaiYin.SettlementTrad', [
             //全场请求数据
             $scope.setTlementQc = function () {
                 $ionicTabsDelegate.select(0);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='QC';
                 var getTimes = {
@@ -44,14 +47,28 @@ angular.module('BaiYin.SettlementTrad', [
                     CONTRACT:''
                 }
                 $scope.getTlementQc(getTimes);
+                $scope.CONTRACT='';
 
             }
             var setTlementCONTRACT=[];
             //点击向前一个年
+            $scope.chooseNewYear=function () {
+                var parmas={
+                    TRAND_YEAR:$scope.nowElementYear,
+                    provience:$scope.SetTlementProvience,
+                    CONTRACT:$scope.CONTRACT
+                }
+                $scope.getTlementQc(parmas)
+            }
             $scope.getPresetTlementYear = function (date) {
                 console.log(date);
                 $scope.nowElementYear=parseInt(date)-1;
-                // spotCountnYear($scope.nowYear);
+                var parmas={
+                    TRAND_YEAR:$scope.nowElementYear,
+                    provience:$scope.SetTlementProvience,
+                    CONTRACT:$scope.CONTRACT
+                }
+                $scope.getTlementQc(parmas)
                 $(".setTlementrightSelect").show();
             }
             //点击向后一个年
@@ -61,17 +78,29 @@ angular.module('BaiYin.SettlementTrad', [
                 if ($scope.newYear <= year2) {
                     $(".setTlementrightSelect").hide();
                     $scope.nowElementYear= year2;
-                    // spotCountnYear(year2);
+                    var parmas={
+                        TRAND_YEAR:$scope.nowElementYear,
+                        provience:$scope.SetTlementProvience,
+                        CONTRACT:$scope.CONTRACT
+                    }
+                    $scope.getTlementQc(parmas)
                 }
                 else {
                     $scope.nowElementYear =year2;
-                    // spotCountnYear(year2);
+                    var parmas={
+                        TRAND_YEAR:$scope.nowElementYear,
+                        provience:$scope.SetTlementProvience,
+                        CONTRACT:$scope.CONTRACT
+                    }
+                    $scope.getTlementQc(parmas)
                     $(".setTlementrightSelect").show();
                 }
             }
             //甘肃数据请求
             $scope.setTlementGs = function (){
                 $ionicTabsDelegate.select(1);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='GS';
                 var Field='GS';
@@ -83,6 +112,8 @@ angular.module('BaiYin.SettlementTrad', [
             //青海数据请求
             $scope.setTlementQh = function () {
                 $ionicTabsDelegate.select(2);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='QH';
                 var Field='QH';
@@ -94,6 +125,8 @@ angular.module('BaiYin.SettlementTrad', [
             //宁夏数据请求
             $scope.setTlementNx = function () {
                 $ionicTabsDelegate.select(3);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='NX';
                 var Field='NX';
@@ -105,6 +138,8 @@ angular.module('BaiYin.SettlementTrad', [
             //新疆数据请求
             $scope.setTlementXj = function () {
                 $ionicTabsDelegate.select(4);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='XJ';
                 var Field='XJ';
@@ -124,6 +159,7 @@ angular.module('BaiYin.SettlementTrad', [
                             console.log(res);
                             $scope.getElementTradDepartList = res.data.departList;
                             $('.setElementCount').val($scope.getElementTradDepartList[0].CONTRACT_NAME);
+                            $scope.CONTRACT=$scope.getElementTradDepartList[0].CONTRACT;
                             var getTimes = {
                                 TRAND_YEAR:$scope.nowElementYear,
                                 provience:$scope.SetTlementProvience,
@@ -160,6 +196,7 @@ angular.module('BaiYin.SettlementTrad', [
                             $scope.drawElementTrad()
                         } else {
                             $scope.getElementTradList=[];
+                            $scope.getElementTradAllList=[];
                             $scope.getElementTradpList=[{
                                 BASE_CHARGE_VALUE:0,
                                 MARKET_CHARGE_VALUE:0,
@@ -174,6 +211,7 @@ angular.module('BaiYin.SettlementTrad', [
                     }, function (error) {
                         $scope.getElementTradList=[];
                         $scope.getElementTradpList=[];
+                        $scope.getElementTradAllList=[];
                         loadingAnimation.hideLoading();
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
                     });
@@ -190,6 +228,7 @@ angular.module('BaiYin.SettlementTrad', [
                             provience:$scope.SetTlementProvience,
                             CONTRACT:CONTRACT
                         }
+                        $scope.CONTRACT=setTlementCONTRACT[index].CONTRACT;
                         console.log(setTlementCONTRACT[index].text)
                         $('.setElementCount').val(setTlementCONTRACT[index].text);
                         $scope.getTlementQc(getTimes)
@@ -197,8 +236,41 @@ angular.module('BaiYin.SettlementTrad', [
                     }
                 });
             }
+            $scope.getElementToTrandMonth=function (elementList) {
+                console.log(elementList);
+                console.log(elementList.TRADE_MONTH);
+                var parmas = {
+                    TRAND_MONTH:elementList.TRADE_MONTH,
+                    provience:$scope.SetTlementProvience,
+                    CONTRACT:$scope.CONTRACT
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecSettlementService&TransName=getElecSettlementMonthPie', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.getElementTradpList=res.data.pList;
+                            $scope.drawElementTrad()
+                        } else {
+                            $scope.getElementTradpList=[{
+                                BASE_CHARGE_VALUE:0,
+                                MARKET_CHARGE_VALUE:0,
+                                DELIVERY_CHARGE_VALUE:0,
+                                DIRECT_CHARGE_VALUE:0,
+                                RIGHTS_CHARGE_VALUE:0
+                            }];
+                            $scope.drawElementTrad()
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
             /*根据获取到的信息制作饼图*/
             $scope.drawElementTrad=function () {
+                /*alert(JSON.stringify($scope.getElementTradpList));*/
                 var BASE_CHARGE_VALUE=$scope.getElementTradpList[0].BASE_CHARGE_VALUE;/*基础电量*/
                 var MARKET_CHARGE_VALUE=$scope.getElementTradpList[0].MARKET_CHARGE_VALUE;/*市场化电量*/
                 var DELIVERY_CHARGE_VALUE=$scope.getElementTradpList[0].DELIVERY_CHARGE_VALUE;/*外送电量*/
@@ -226,7 +298,7 @@ angular.module('BaiYin.SettlementTrad', [
                             name:'基础电量',
                             type:'pie',
                             selectedMode: 'single',
-                            radius : [0,40],
+                            radius : [0,50],
                             x: '10%',
                             width: '10%',
                             funnelAlign: 'right',
@@ -250,7 +322,7 @@ angular.module('BaiYin.SettlementTrad', [
                         {
                             name:'结算电量',
                             type:'pie',
-                            radius : [50,60],
+                            radius : [60,70],
                             x: '60%',
                             width: '10%',
                             funnelAlign: 'right',

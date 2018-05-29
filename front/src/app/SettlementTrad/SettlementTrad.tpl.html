@@ -5,7 +5,7 @@
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="setElementSelectMounth">
                     <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)" id="setTlementYearShowID"></button>
-                    {{nowElementYear}}年
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
                     <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
                 </div>
                 <div class="countResult">
@@ -27,22 +27,22 @@
                             <th>基础电量</th>
                             <th>基础电价</th>
                         </tr>
-                        <tr ng-repeat="elementList in getElementTradList track by $index">
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
                             <td>{{elementList.TRADE_MONTH}}</td>
-                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:0}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                         <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
                             <td>合计</td>
-                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
-                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                     </table>
@@ -54,7 +54,7 @@
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="setElementSelectMounth">
                     <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
-                    {{nowElementYear}}年
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
                     <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
                     <div class="setElementGlassMounth">
                         <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>
@@ -79,22 +79,22 @@
                             <th>基础电量</th>
                             <th>基础电价</th>
                         </tr>
-                        <tr ng-repeat="elementList in getElementTradList track by $index">
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
                             <td>{{elementList.TRADE_MONTH}}</td>
-                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:0}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                         <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
                             <td>合计</td>
-                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
-                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                     </table>
@@ -107,7 +107,7 @@
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="setElementSelectMounth">
                     <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
-                    {{nowElementYear}}年
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
                     <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
                     <div class="setElementGlassMounth">
                         <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()"  readonly>
@@ -132,22 +132,22 @@
                             <th>基础电量</th>
                             <th>基础电价</th>
                         </tr>
-                        <tr ng-repeat="elementList in getElementTradList track by $index">
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
                             <td>{{elementList.TRADE_MONTH}}</td>
-                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:0}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                         <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
                             <td>合计</td>
-                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
-                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                     </table>
@@ -160,7 +160,7 @@
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="setElementSelectMounth">
                     <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
-                    {{nowElementYear}}年
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
                     <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
                     <div class="setElementGlassMounth">
                         <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>
@@ -185,22 +185,22 @@
                             <th>基础电量</th>
                             <th>基础电价</th>
                         </tr>
-                        <tr ng-repeat="elementList in getElementTradList track by $index">
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
                             <td>{{elementList.TRADE_MONTH}}</td>
-                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:0}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                         <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
                             <td>合计</td>
-                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
-                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                     </table>
@@ -212,7 +212,7 @@
             <ion-content has-bouncing="false" scrollbar-y="false">
                 <div class="setElementSelectMounth">
                     <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
-                    {{nowElementYear}}年
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
                     <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
                     <div class="setElementGlassMounth">
                         <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>
@@ -237,22 +237,22 @@
                             <th>基础电量</th>
                             <th>基础电价</th>
                         </tr>
-                        <tr ng-repeat="elementList in getElementTradList track by $index">
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
                             <td>{{elementList.TRADE_MONTH}}</td>
-                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.AVG_CHARGE_VALUE | number:2}}</td>
-                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:0}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                         <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
                             <td>合计</td>
-                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
-                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
-                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:0}}</td>
                             <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
                         </tr>
                     </table>

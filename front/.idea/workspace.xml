@@ -19,56 +19,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="countAttence.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttence.js">
+      <file leaf-file-name="SettlementTrad.tpl.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/SettlementTrad/SettlementTrad.tpl.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="190" column="32" lean-forward="false" selection-start-line="190" selection-start-column="32" selection-end-line="190" selection-end-column="32" />
+            <state relative-caret-position="225">
+              <caret line="12" column="50" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="50" />
               <folding>
-                <marker date="1524215822269" expanded="true" signature="19588:19613" ph="..." />
+                <element signature="n#style#0;n#div#4;n#ion-content#0;n#ion-tab#0;n#ion-tabs#0;n#ion-view#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.config.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/app/app.config.js">
+      <file leaf-file-name="SettlementTrad.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/SettlementTrad/SettlementTrad.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="countAttence.tpl.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttence.tpl.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SettlementTradCSS.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/less/SettlementTradCSS.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1527495389716" expanded="true" signature="2959:2966" ph="{...}" />
-                <marker date="1527495389716" expanded="true" signature="2959:2970" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="content.tpl.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app/tabs/OMA/content.tpl.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+            <state relative-caret-position="1435">
+              <caret line="317" column="42" lean-forward="false" selection-start-line="317" selection-start-column="42" selection-end-line="317" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -78,7 +45,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>appVersion</find>
       <find>getBlueToothList</find>
       <find>getWorkTime</find>
       <find>judgeTimes</find>
@@ -108,6 +74,7 @@
       <find>toRwgl</find>
       <find>scan</find>
       <find>cordova</find>
+      <find>ydNum</find>
     </findStrings>
     <replaceStrings>
       <replace>三塘湖</replace>
@@ -130,11 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/app/pm/defectFill/defectFill/defectFill.js" />
-        <option value="$PROJECT_DIR$/src/app/pm/defectFill/defectFillDetail/defectFillDetail.js" />
-        <option value="$PROJECT_DIR$/src/app/KPI/KPI.tpl.html" />
-        <option value="$PROJECT_DIR$/src/less/homePageCSS.less" />
-        <option value="$PROJECT_DIR$/src/app/pm/trouble/addTrouble/addTrouble.js" />
         <option value="$PROJECT_DIR$/src/app/pm/defectFill/adddefectFill/adddefectFill.js" />
         <option value="$PROJECT_DIR$/src/app/pm/trouble/troubleDetail/troubleDetail.tpl.html" />
         <option value="$PROJECT_DIR$/src/app/pm/defectFill/defectFillDetail/defectFillDetail.tpl.html" />
@@ -181,6 +143,11 @@
         <option value="$PROJECT_DIR$/src/app/OSI/OSIHistory/OSIHistory.tpl.html" />
         <option value="$PROJECT_DIR$/src/app/tabs/OMA/content.tpl.html" />
         <option value="$PROJECT_DIR$/src/app/app.config.js" />
+        <option value="$PROJECT_DIR$/src/app/spotTransaction/spotTransaction.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/MarketbasedTrad/MarketbasedTrad.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/SettlementTrad/SettlementTrad.tpl.html" />
+        <option value="$PROJECT_DIR$/src/app/SettlementTrad/SettlementTrad.js" />
+        <option value="$PROJECT_DIR$/src/less/SettlementTradCSS.less" />
       </list>
     </option>
   </component>
@@ -214,8 +181,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -239,32 +206,7 @@
               <item name="front" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="tabs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="tabs" type="462c0819:PsiDirectoryNode" />
-              <item name="homePage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mrframework" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="front" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="angular" type="462c0819:PsiDirectoryNode" />
+              <item name="SettlementTrad" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -330,10 +272,10 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
-          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\front\src\app\SettlementTrad\SettlementTrad.js</PATH>
-          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\front\src\app\SettlementTrad\SettlementTrad.tpl.html</PATH>
-          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\front\src\app\tabs\OMA\content.tpl.html</PATH>
-          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\front\src\less\SettlementTradCSS.less</PATH>
+          <PATH vcs="svn" revision="897">D:\fengshang\BaiyinFd\front\src\app\tabs\OMA\content.tpl.html</PATH>
+          <PATH vcs="svn" revision="897">D:\fengshang\BaiyinFd\front\src\images\OMA\jsdl_img_icon.png</PATH>
+          <PATH vcs="svn" revision="897">D:\fengshang\BaiyinFd\front\src\images\OMA\jydl_img_icon.png</PATH>
+          <PATH vcs="svn" revision="897">D:\fengshang\BaiyinFd\front\src\images\OMA\schjy_img_icon.png</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -341,7 +283,6 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="CREATED" />
-          <PATH vcs="svn" revision="883">D:\fengshang\BaiyinFd\front\src\images\goEveryIcon.png</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Deleted" />
@@ -588,28 +529,9 @@
       <workItem from="1527037693597" duration="4416000" />
       <workItem from="1527124303930" duration="4370000" />
       <workItem from="1527210268094" duration="5453000" />
-      <workItem from="1527469665990" duration="8397000" />
-    </task>
-    <task id="LOCAL-00048">
-      <created>1517821875110</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1517821875110</updated>
-    </task>
-    <task id="LOCAL-00049">
-      <created>1517822233109</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1517822233109</updated>
-    </task>
-    <task id="LOCAL-00050">
-      <created>1517822358113</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1517822358114</updated>
+      <workItem from="1527469665990" duration="8991000" />
+      <workItem from="1527498828697" duration="2497000" />
+      <workItem from="1527557924416" duration="4345000" />
     </task>
     <task id="LOCAL-00051">
       <created>1517827317110</created>
@@ -933,11 +855,32 @@
       <option name="project" value="LOCAL" />
       <updated>1526954501112</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097">
+      <created>1527559125108</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1527559125109</updated>
+    </task>
+    <task id="LOCAL-00098">
+      <created>1527559725108</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1527559725109</updated>
+    </task>
+    <task id="LOCAL-00099">
+      <created>1527561028105</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1527561028105</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="908203000" />
+    <option name="totallyTimeSpent" value="915639000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -951,14 +894,14 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25744048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25744048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293718" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32952693" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21222411" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32767403" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23259762" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23259762" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.69820553" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1007,48 +950,6 @@
     <select />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/app/power/pdMounth/pdMounth.tpl.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="19" column="61" lean-forward="false" selection-start-line="19" selection-start-column="61" selection-end-line="19" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/power/power.tpl.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="207" column="28" lean-forward="false" selection-start-line="207" selection-start-column="28" selection-end-line="207" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/companyNewsDetails/companyNewsDetails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="25" column="89" lean-forward="false" selection-start-line="25" selection-start-column="89" selection-end-line="25" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/News/News.tpl.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="43" lean-forward="false" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/News/News.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="44" column="27" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/power/power.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-175">
-          <caret line="358" column="25" lean-forward="false" selection-start-line="358" selection-start-column="25" selection-end-line="358" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/power/pdYear/pdYear.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-850">
@@ -1330,17 +1231,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/less/SettlementTradCSS.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1527495389716" expanded="true" signature="2959:2966" ph="{...}" />
-            <marker date="1527495389716" expanded="true" signature="2959:2970" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttence.tpl.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1349,28 +1239,87 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/tabs/homePage/homePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7975">
+          <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/attence/countAttence/countAttence.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="190" column="32" lean-forward="false" selection-start-line="190" selection-start-column="32" selection-end-line="190" selection-end-column="32" />
+        <state relative-caret-position="250">
+          <caret line="165" column="28" lean-forward="false" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
           <folding>
             <marker date="1524215822269" expanded="true" signature="19588:19613" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/tabs/homePage/homePage.js">
+    <entry file="file://$PROJECT_DIR$/src/app/app.config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7975">
-          <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+        <state relative-caret-position="350">
+          <caret line="35" column="16" lean-forward="false" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/app.config.js">
+    <entry file="file://$PROJECT_DIR$/src/app/MarketbasedTrad/MarketbasedTradIndex/MarketbasedTradIndex.tpl.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="22" column="32" lean-forward="true" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/MarketbasedTrad/MarketbasedTradDetail/MarketbasedTradDetail.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/MarketbasedTrad/MarketbasedTrad.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="35" column="61" lean-forward="false" selection-start-line="35" selection-start-column="61" selection-end-line="35" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/spotTransaction/spotTransaction.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10">
+          <caret line="124" column="41" lean-forward="false" selection-start-line="124" selection-start-column="41" selection-end-line="124" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/SettlementTrad/SettlementTrad.tpl.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="12" column="50" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="50" />
+          <folding>
+            <element signature="n#style#0;n#div#4;n#ion-content#0;n#ion-tab#0;n#ion-tabs#0;n#ion-view#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/less/SettlementTradCSS.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="32" column="11" lean-forward="false" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+          <folding>
+            <marker date="1527560880806" expanded="true" signature="2959:2966" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/SettlementTrad/SettlementTrad.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1435">
+          <caret line="317" column="42" lean-forward="false" selection-start-line="317" selection-start-column="42" selection-end-line="317" selection-end-column="42" />
           <folding />
         </state>
       </provider>

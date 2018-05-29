@@ -5198,6 +5198,7 @@ angular.module('BaiYin.SettlementTrad', [
                     CONTRACT:''
                 }
                 $scope.getTlementQc(getTimes);
+                $scope.CONTRACT='';
                 $(".setTlementrightSelect").hide();
 
             });
@@ -5207,6 +5208,8 @@ angular.module('BaiYin.SettlementTrad', [
             //全场请求数据
             $scope.setTlementQc = function () {
                 $ionicTabsDelegate.select(0);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='QC';
                 var getTimes = {
@@ -5215,14 +5218,28 @@ angular.module('BaiYin.SettlementTrad', [
                     CONTRACT:''
                 }
                 $scope.getTlementQc(getTimes);
+                $scope.CONTRACT='';
 
             }
             var setTlementCONTRACT=[];
             //点击向前一个年
+            $scope.chooseNewYear=function () {
+                var parmas={
+                    TRAND_YEAR:$scope.nowElementYear,
+                    provience:$scope.SetTlementProvience,
+                    CONTRACT:$scope.CONTRACT
+                }
+                $scope.getTlementQc(parmas)
+            }
             $scope.getPresetTlementYear = function (date) {
                 console.log(date);
                 $scope.nowElementYear=parseInt(date)-1;
-                // spotCountnYear($scope.nowYear);
+                var parmas={
+                    TRAND_YEAR:$scope.nowElementYear,
+                    provience:$scope.SetTlementProvience,
+                    CONTRACT:$scope.CONTRACT
+                }
+                $scope.getTlementQc(parmas)
                 $(".setTlementrightSelect").show();
             }
             //点击向后一个年
@@ -5232,17 +5249,29 @@ angular.module('BaiYin.SettlementTrad', [
                 if ($scope.newYear <= year2) {
                     $(".setTlementrightSelect").hide();
                     $scope.nowElementYear= year2;
-                    // spotCountnYear(year2);
+                    var parmas={
+                        TRAND_YEAR:$scope.nowElementYear,
+                        provience:$scope.SetTlementProvience,
+                        CONTRACT:$scope.CONTRACT
+                    }
+                    $scope.getTlementQc(parmas)
                 }
                 else {
                     $scope.nowElementYear =year2;
-                    // spotCountnYear(year2);
+                    var parmas={
+                        TRAND_YEAR:$scope.nowElementYear,
+                        provience:$scope.SetTlementProvience,
+                        CONTRACT:$scope.CONTRACT
+                    }
+                    $scope.getTlementQc(parmas)
                     $(".setTlementrightSelect").show();
                 }
             }
             //甘肃数据请求
             $scope.setTlementGs = function (){
                 $ionicTabsDelegate.select(1);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='GS';
                 var Field='GS';
@@ -5254,6 +5283,8 @@ angular.module('BaiYin.SettlementTrad', [
             //青海数据请求
             $scope.setTlementQh = function () {
                 $ionicTabsDelegate.select(2);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='QH';
                 var Field='QH';
@@ -5265,6 +5296,8 @@ angular.module('BaiYin.SettlementTrad', [
             //宁夏数据请求
             $scope.setTlementNx = function () {
                 $ionicTabsDelegate.select(3);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='NX';
                 var Field='NX';
@@ -5276,6 +5309,8 @@ angular.module('BaiYin.SettlementTrad', [
             //新疆数据请求
             $scope.setTlementXj = function () {
                 $ionicTabsDelegate.select(4);
+                var date = new Date();
+                $scope.nowElementYear=$filter("date")(date, "yyyy");
                 setTlementCONTRACT=[];
                 $scope.SetTlementProvience='XJ';
                 var Field='XJ';
@@ -5295,6 +5330,7 @@ angular.module('BaiYin.SettlementTrad', [
                             console.log(res);
                             $scope.getElementTradDepartList = res.data.departList;
                             $('.setElementCount').val($scope.getElementTradDepartList[0].CONTRACT_NAME);
+                            $scope.CONTRACT=$scope.getElementTradDepartList[0].CONTRACT;
                             var getTimes = {
                                 TRAND_YEAR:$scope.nowElementYear,
                                 provience:$scope.SetTlementProvience,
@@ -5331,6 +5367,7 @@ angular.module('BaiYin.SettlementTrad', [
                             $scope.drawElementTrad()
                         } else {
                             $scope.getElementTradList=[];
+                            $scope.getElementTradAllList=[];
                             $scope.getElementTradpList=[{
                                 BASE_CHARGE_VALUE:0,
                                 MARKET_CHARGE_VALUE:0,
@@ -5345,6 +5382,7 @@ angular.module('BaiYin.SettlementTrad', [
                     }, function (error) {
                         $scope.getElementTradList=[];
                         $scope.getElementTradpList=[];
+                        $scope.getElementTradAllList=[];
                         loadingAnimation.hideLoading();
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
                     });
@@ -5361,6 +5399,7 @@ angular.module('BaiYin.SettlementTrad', [
                             provience:$scope.SetTlementProvience,
                             CONTRACT:CONTRACT
                         }
+                        $scope.CONTRACT=setTlementCONTRACT[index].CONTRACT;
                         console.log(setTlementCONTRACT[index].text)
                         $('.setElementCount').val(setTlementCONTRACT[index].text);
                         $scope.getTlementQc(getTimes)
@@ -5368,8 +5407,41 @@ angular.module('BaiYin.SettlementTrad', [
                     }
                 });
             }
+            $scope.getElementToTrandMonth=function (elementList) {
+                console.log(elementList);
+                console.log(elementList.TRADE_MONTH);
+                var parmas = {
+                    TRAND_MONTH:elementList.TRADE_MONTH,
+                    provience:$scope.SetTlementProvience,
+                    CONTRACT:$scope.CONTRACT
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ElecSettlementService&TransName=getElecSettlementMonthPie', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.getElementTradpList=res.data.pList;
+                            $scope.drawElementTrad()
+                        } else {
+                            $scope.getElementTradpList=[{
+                                BASE_CHARGE_VALUE:0,
+                                MARKET_CHARGE_VALUE:0,
+                                DELIVERY_CHARGE_VALUE:0,
+                                DIRECT_CHARGE_VALUE:0,
+                                RIGHTS_CHARGE_VALUE:0
+                            }];
+                            $scope.drawElementTrad()
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
             /*根据获取到的信息制作饼图*/
             $scope.drawElementTrad=function () {
+                /*alert(JSON.stringify($scope.getElementTradpList));*/
                 var BASE_CHARGE_VALUE=$scope.getElementTradpList[0].BASE_CHARGE_VALUE;/*基础电量*/
                 var MARKET_CHARGE_VALUE=$scope.getElementTradpList[0].MARKET_CHARGE_VALUE;/*市场化电量*/
                 var DELIVERY_CHARGE_VALUE=$scope.getElementTradpList[0].DELIVERY_CHARGE_VALUE;/*外送电量*/
@@ -5397,7 +5469,7 @@ angular.module('BaiYin.SettlementTrad', [
                             name:'基础电量',
                             type:'pie',
                             selectedMode: 'single',
-                            radius : [0,40],
+                            radius : [0,50],
                             x: '10%',
                             width: '10%',
                             funnelAlign: 'right',
@@ -5421,7 +5493,7 @@ angular.module('BaiYin.SettlementTrad', [
                         {
                             name:'结算电量',
                             type:'pie',
-                            radius : [50,60],
+                            radius : [60,70],
                             x: '60%',
                             width: '10%',
                             funnelAlign: 'right',
@@ -6377,6 +6449,148 @@ angular.module('BaiYin.attence.attenceWdDetail', [
 
     ])
 
+angular.module('BaiYin.attence.attenZcDetail', [
+    'ionic',
+    'ionic-datepicker',
+])
+
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
+        $stateProvider.state('attence/attenZcDetail', {
+            url: '/attence/attenZcDetail',
+            controller: 'attenZcDetailController',
+            templateUrl: 'attence/attenZcDetail/attenZcDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {dateTimeShow: null, partName: null, partCode: null}
+        })
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: '选择',
+            todayLabel: '今天',
+            closeLabel: '关闭',
+            mondayFirst: false,
+            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
+            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            templateType: 'popup',
+            from: new Date(2012, 1, 1),
+            to: new Date(2020, 1, 1),
+            showTodayButton: true,
+            dateFormat: 'yyyy-MM-dd',
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
+    }])
+    .controller('attenZcDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicActionSheet', 'ionicDatePicker',
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicActionSheet, ionicDatePicker) {
+            var dateTimeShow, departCode;
+            $scope.$on('$ionicView.enter', function () {
+                //获取统计页面传来的时间和部门
+                dateTimeShow = $stateParams.dateTimeShow;
+                var departName = $stateParams.partName;
+                departCode = $stateParams.partCode;
+                console.log("dateTimeShow==" + dateTimeShow + "/departName==" + departName + "/departCode==" + departCode);
+                $("#attenceCdGlassid").val(departName);
+                $("#attenceCdTimeid").text(dateTimeShow);
+                cdztList(dateTimeShow, departCode);
+                orgList();
+            });
+            var date = new Date();
+
+            //点击选择部门
+            var glassName = '';
+            var glassArray;
+
+            //获取部门信息
+            function orgList() {
+                glassArray = [];
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=ClockService&TransName=deptList')
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.orgList = res.data.tList;
+                            console.log("orgList==" + JSON.stringify($scope.orgList));
+                            //默认部门
+                            // $("#attenceCdGlassid").val($scope.orgList[0].ORG_NAME);
+                            for (var i = 0; i < $scope.orgList.length; i++) {
+                                var olist = {};
+                                olist.orgCode = $scope.orgList[i].ORG_CODE;
+                                olist.text = $scope.orgList[i].ORG_NAME;
+                                glassArray.push(olist);
+                            }
+                        } else {
+                            showAlert.showMsg(res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+
+            $scope.selectGlass = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: glassArray,
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        glassName = glassArray[index].text;
+                        departCode = glassArray[index].orgCode;
+                        console.log("glassName==" + glassName + "/departCode==" + departCode);
+                        $("#attenceCdGlassid").val(glassName);
+                        cdztList(dateTimeShow, departCode);
+                        return true;
+                    }
+                });
+            };
+            //获取正常打卡列表信息
+            function cdztList(dayTime, departNo) {
+                var parmas = {
+                    QUERY_DATE: dayTime,
+                    DEPT: departNo,
+                }
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=AttendReasonService&TransName=normalPerson', parmas)
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.cdztList = res.data.zList;
+                            console.log("cdztList===" + JSON.stringify($scope.cdztList));
+                        } else {
+                            $scope.cdztList = '';
+                            showAlert.showMsg('', '', res.data.msg);
+                        }
+
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+
+            }
+
+            var ipObj1 = {
+                callback: function (val) {
+                    console.log('点击事件返回值 : ' + new Date(val));
+                    dateTimeShow = $filter("date")(val, "yyyy-MM-dd");
+                    $("#attenceCdTimeid").text(dateTimeShow);
+                    cdztList(dateTimeShow, departCode);
+                },
+                from: new Date(2012, 1, 1),
+                to: new Date(),
+                inputDate: new Date(),
+                mondayFirst: false,
+                closeOnSelect: false,
+                templateType: 'popup'
+            };
+            $scope.openDatePicker = function () {
+                ionicDatePicker.openDatePicker(ipObj1);
+            };
+        }
+
+    ])
+
 angular.module('BaiYin.attence.attenceZtDetail', [
     'ionic',
     'ionic-datepicker',
@@ -6519,19 +6733,19 @@ angular.module('BaiYin.attence.attenceZtDetail', [
 
     ])
 
-angular.module('BaiYin.attence.attenZcDetail', [
+angular.module('BaiYin.attence.fillCause', [
     'ionic',
     'ionic-datepicker',
-])
 
-    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider, ionicDatePickerProvider) {
-        $stateProvider.state('attence/attenZcDetail', {
-            url: '/attence/attenZcDetail',
-            controller: 'attenZcDetailController',
-            templateUrl: 'attence/attenZcDetail/attenZcDetail.tpl.html',
+])
+    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider,ionicDatePickerProvider) {
+        $stateProvider.state('attence/fillCause', {
+            url: '/attence/fillCause',
+            controller: 'fillCauseController',
+            templateUrl: 'attence/fillCause/fillCause.tpl.html',
             cache: 'true',
             authorizedRuleType: ['1'],
-            params: {dateTimeShow: null, partName: null, partCode: null}
+            params: {item: null}
         })
         var datePickerObj = {
             inputDate: new Date(),
@@ -6550,104 +6764,38 @@ angular.module('BaiYin.attence.attenZcDetail', [
         };
         ionicDatePickerProvider.configDatePicker(datePickerObj);
     }])
-    .controller('attenZcDetailController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicActionSheet', 'ionicDatePicker',
-        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicActionSheet, ionicDatePicker) {
-            var dateTimeShow, departCode;
-            $scope.$on('$ionicView.enter', function () {
-                //获取统计页面传来的时间和部门
-                dateTimeShow = $stateParams.dateTimeShow;
-                var departName = $stateParams.partName;
-                departCode = $stateParams.partCode;
-                console.log("dateTimeShow==" + dateTimeShow + "/departName==" + departName + "/departCode==" + departCode);
-                $("#attenceCdGlassid").val(departName);
-                $("#attenceCdTimeid").text(dateTimeShow);
-                cdztList(dateTimeShow, departCode);
-                orgList();
+    .controller('fillCauseController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup','$ionicActionSheet','ionicDatePicker',
+
+        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup,$ionicActionSheet,ionicDatePicker) {
+        var chidaoNOTE="事由:" ;
+        $scope.$on('$ionicView.afterEnter', function () {
+                //获取当前月份
+                getNowDate();
             });
             var date = new Date();
-
-            //点击选择部门
-            var glassName = '';
-            var glassArray;
-
-            //获取部门信息
-            function orgList() {
-                glassArray = [];
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http.post('ServiceName=ClockService&TransName=deptList')
-                    .then(function (res) {
-                        loadingAnimation.hideLoading();
-                        if (res.data.code == '0') {
-                            $scope.orgList = res.data.tList;
-                            console.log("orgList==" + JSON.stringify($scope.orgList));
-                            //默认部门
-                            // $("#attenceCdGlassid").val($scope.orgList[0].ORG_NAME);
-                            for (var i = 0; i < $scope.orgList.length; i++) {
-                                var olist = {};
-                                olist.orgCode = $scope.orgList[i].ORG_CODE;
-                                olist.text = $scope.orgList[i].ORG_NAME;
-                                glassArray.push(olist);
-                            }
-                        } else {
-                            showAlert.showMsg(res.data.msg);
-                        }
-
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-
+            var number=1;
+            //获取系统前一周的时间
+            var oneweekdate = new Date(date-7*24*3600*1000);
+            var y = oneweekdate.getFullYear();
+            var m = oneweekdate.getMonth()+1;
+            var d = oneweekdate.getDate();
+            $scope.fromDate = y+'-'+m+'-'+d;
+            function getNowDate() {
+                $scope.now = $filter("date")(date, "yyyy-MM-dd");
+                lateAndEarlyList();
             }
-
-            $scope.selectGlass = function () {
-                var hideSheet = $ionicActionSheet.show({
-                    buttons: glassArray,
-                    cancel: function () {
-                        // add cancel code..
-                    },
-                    buttonClicked: function (index) {
-                        glassName = glassArray[index].text;
-                        departCode = glassArray[index].orgCode;
-                        console.log("glassName==" + glassName + "/departCode==" + departCode);
-                        $("#attenceCdGlassid").val(glassName);
-                        cdztList(dateTimeShow, departCode);
-                        return true;
-                    }
-                });
-            };
-            //获取正常打卡列表信息
-            function cdztList(dayTime, departNo) {
-                var parmas = {
-                    QUERY_DATE: dayTime,
-                    DEPT: departNo,
-                }
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http.post('ServiceName=AttendReasonService&TransName=normalPerson', parmas)
-                    .then(function (res) {
-                        loadingAnimation.hideLoading();
-                        if (res.data.code == '0') {
-                            $scope.cdztList = res.data.zList;
-                            console.log("cdztList===" + JSON.stringify($scope.cdztList));
-                        } else {
-                            $scope.cdztList = '';
-                            showAlert.showMsg('', '', res.data.msg);
-                        }
-
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-
-            }
-
+            //获取日历插件
             var ipObj1 = {
                 callback: function (val) {
                     console.log('点击事件返回值 : ' + new Date(val));
-                    dateTimeShow = $filter("date")(val, "yyyy-MM-dd");
-                    $("#attenceCdTimeid").text(dateTimeShow);
-                    cdztList(dateTimeShow, departCode);
+                    $scope.now = $filter("date")(val, "yyyy-MM-dd");
+                    if($scope.tabType=='lateAndEarly'){
+                        lateAndEarlyList();
+                    }else if($scope.tabType=='unClock'){
+                        unClockList();
+                    }
                 },
-                from: new Date(2012, 1, 1),
+                from: $scope.fromDate,
                 to: new Date(),
                 inputDate: new Date(),
                 mondayFirst: false,
@@ -6655,10 +6803,183 @@ angular.module('BaiYin.attence.attenZcDetail', [
                 templateType: 'popup'
             };
             $scope.openDatePicker = function () {
+                ipObj1.inputDate = new Date($scope.now);
                 ionicDatePicker.openDatePicker(ipObj1);
             };
-        }
+            //隐藏填写事由
+            $scope.fillCause = true;
+            $scope.blackShow = true;
 
+            //点击向前一个月
+            $scope.getPreMonth = function (date) {
+                console.log("date==" + date);
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) - 1;
+                if (month2 == 0) {
+                    year2 = parseInt(year2) - 1;
+                    month2 = 12;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+                var t2 = year2 + '-' + month2;
+                $scope.now = t2;
+            }
+            //点击向后一个月
+            $scope.getNextMonth = function (date) {
+                console.log("date==" + date);
+                var arr = date.split('-');
+                var year = arr[0]; //获取当前日期的年份
+                var month = arr[1]; //获取当前日期的月份
+                var year2 = year;
+                var month2 = parseInt(month) + 1;
+                if (month2 == 13) {
+                    year2 = parseInt(year2) + 1;
+                    month2 = 1;
+                }
+                if (month2 < 10) {
+                    month2 = '0' + month2;
+                }
+
+                var t2 = year2 + '-' + month2;
+                $scope.now = t2;
+            }
+            //点击异常考勤查看事由
+            $scope.tofillCause = function (list, index) {
+                console.log(list,index)
+                 chidaoNOTE=list[index].NOTE;
+                weiCONFIRM_DATE=list[index].CONFIRM_DATE;
+                console.log(weiCONFIRM_DATE);
+                $scope.node =chidaoNOTE;
+                if(weiCONFIRM_DATE == null || typeof weiCONFIRM_DATE == "undefined" ||
+                    weiCONFIRM_DATE == ""){
+                    //缺勤事由点击事件
+                    $scope.data = new Object();
+                    // 自定义弹窗
+                    var myPopup = $ionicPopup.show({
+                        template: '<textarea ng-style="syWidth" ng-model="node" readonly></textarea>',
+                        title: '事由确认',
+                        scope: $scope,
+                        buttons: [
+                            {
+                                text: '取消',
+                                type: 'button-cancel'
+                            },
+                            {
+                                text: '<b>确认审核</b>',
+                                type: 'button-positive',
+                                onTap: function (e) {
+                                    if (!$scope.node) {
+                                        // 不允许用户关闭，除非输入数据
+                                        e.preventDefault();
+                                    } else {
+                                        submitNote(list, index);
+                                    }
+                                }
+                            },
+                        ]
+                    });
+                    myPopup.then(function (res) {
+                        console.log('Tapped!', res);
+                    });
+
+                }else{
+                    return false;
+                }
+
+            };
+
+            //缺勤事由编辑框样式
+            $scope.syWidth = {
+                "height": '100px',
+                "border": '1px solid #f4f4f4',
+                "margin": '0 auto',
+            }
+            //点击取消
+            $scope.toFillCancel = function () {
+                $scope.fillCause = true;
+                $scope.blackShow = true;
+            }
+
+            //切换标签
+            $scope.tabType = "lateAndEarly";
+            $scope.changeTabType=function(tabType){
+                console.log(number);
+                if(number==1){
+
+                }else{
+                    $scope.tabType = tabType;
+                    if(tabType=='lateAndEarly'){
+                        lateAndEarlyList();
+                    }else if(tabType=='unClock'){
+                        unClockList();
+                    }
+                }
+                number=2;
+            }
+            //获取迟到早退信息
+            function lateAndEarlyList() {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=AttendReasonService&TransName=lateAndEarlyReason&QUERY_DATE=' + $scope.now)
+                    .then(function (res) {
+                        $scope.lateAndEarlyList = new Array();
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            $scope.lateAndEarlyList = res.data.tList;
+                        } else if ($scope.tabType == "lateAndEarly") {
+                            showAlert.showMsg(res.data);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //未打卡数据
+            function unClockList(){
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http.post('ServiceName=AttendReasonService&TransName=unClockReason&QUERY_DATE=' + $scope.now)
+                    .then(function (res) {
+                        $scope.unClockList = new Array();
+                        loadingAnimation.hideLoading();
+                        if (res.data.code == '0') {
+                            console.log(res.data.wList)
+                            $scope.unClockList = res.data.wList;
+                        } else if ($scope.tabType == "unClock") {
+                            showAlert.showMsg(res.data);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //确认事由
+            function submitNote(list, index) {
+                console.log(list,index,$scope.now);
+                loadingAnimation.showLoading('数据保存中', 'loding', 0);
+                $http.post('ServiceName=AttendReasonService&TransName=Confirmation', {
+                    "TRANSACTION_ID": list[index].TRANSACTION_ID || "",
+                    "PERSON_ID": list[index].PERSON_ID,
+                    "QUERY_DATE": $scope.now
+                }).then(function (res) {
+                    loadingAnimation.hideLoading();
+                    if (res.data.code == '0') {
+                        if($scope.tabType=='lateAndEarly'){
+                            lateAndEarlyList();
+                        }else if($scope.tabType=='unClock'){
+                            unClockList();
+                        }
+                    } else {
+                        showAlert.showMsg(res.data);
+                    }
+                }, function (error) {
+                    loadingAnimation.hideLoading();
+                    showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                });
+            }
+        }
     ])
 
 angular.module('BaiYin.attence.countAttence', [
@@ -7175,255 +7496,6 @@ angular.module('BaiYin.attence.countAttenceA', [
     'BaiYin.attence.countAttence.ztDetail',
     'BaiYin.attence.countAttence.zcList',
 ])
-angular.module('BaiYin.attence.fillCause', [
-    'ionic',
-    'ionic-datepicker',
-
-])
-    .config(['$stateProvider', 'ionicDatePickerProvider', function ($stateProvider,ionicDatePickerProvider) {
-        $stateProvider.state('attence/fillCause', {
-            url: '/attence/fillCause',
-            controller: 'fillCauseController',
-            templateUrl: 'attence/fillCause/fillCause.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {item: null}
-        })
-        var datePickerObj = {
-            inputDate: new Date(),
-            setLabel: '选择',
-            todayLabel: '今天',
-            closeLabel: '关闭',
-            mondayFirst: false,
-            weeksList: ["日", "一", "二", "三", "四", "五", "六"],//["S", "M", "T", "W", "T", "F", "S"],
-            monthsList: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],//["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
-            templateType: 'popup',
-            from: new Date(2012, 1, 1),
-            to: new Date(2020, 1, 1),
-            showTodayButton: true,
-            dateFormat: 'yyyy-MM-dd',
-            closeOnSelect: false
-        };
-        ionicDatePickerProvider.configDatePicker(datePickerObj);
-    }])
-    .controller('fillCauseController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup','$ionicActionSheet','ionicDatePicker',
-
-        function ($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup,$ionicActionSheet,ionicDatePicker) {
-        var chidaoNOTE="事由:" ;
-        $scope.$on('$ionicView.afterEnter', function () {
-                //获取当前月份
-                getNowDate();
-            });
-            var date = new Date();
-            var number=1;
-            //获取系统前一周的时间
-            var oneweekdate = new Date(date-7*24*3600*1000);
-            var y = oneweekdate.getFullYear();
-            var m = oneweekdate.getMonth()+1;
-            var d = oneweekdate.getDate();
-            $scope.fromDate = y+'-'+m+'-'+d;
-            function getNowDate() {
-                $scope.now = $filter("date")(date, "yyyy-MM-dd");
-                lateAndEarlyList();
-            }
-            //获取日历插件
-            var ipObj1 = {
-                callback: function (val) {
-                    console.log('点击事件返回值 : ' + new Date(val));
-                    $scope.now = $filter("date")(val, "yyyy-MM-dd");
-                    if($scope.tabType=='lateAndEarly'){
-                        lateAndEarlyList();
-                    }else if($scope.tabType=='unClock'){
-                        unClockList();
-                    }
-                },
-                from: $scope.fromDate,
-                to: new Date(),
-                inputDate: new Date(),
-                mondayFirst: false,
-                closeOnSelect: false,
-                templateType: 'popup'
-            };
-            $scope.openDatePicker = function () {
-                ipObj1.inputDate = new Date($scope.now);
-                ionicDatePicker.openDatePicker(ipObj1);
-            };
-            //隐藏填写事由
-            $scope.fillCause = true;
-            $scope.blackShow = true;
-
-            //点击向前一个月
-            $scope.getPreMonth = function (date) {
-                console.log("date==" + date);
-                var arr = date.split('-');
-                var year = arr[0]; //获取当前日期的年份
-                var month = arr[1]; //获取当前日期的月份
-                var year2 = year;
-                var month2 = parseInt(month) - 1;
-                if (month2 == 0) {
-                    year2 = parseInt(year2) - 1;
-                    month2 = 12;
-                }
-                if (month2 < 10) {
-                    month2 = '0' + month2;
-                }
-                var t2 = year2 + '-' + month2;
-                $scope.now = t2;
-            }
-            //点击向后一个月
-            $scope.getNextMonth = function (date) {
-                console.log("date==" + date);
-                var arr = date.split('-');
-                var year = arr[0]; //获取当前日期的年份
-                var month = arr[1]; //获取当前日期的月份
-                var year2 = year;
-                var month2 = parseInt(month) + 1;
-                if (month2 == 13) {
-                    year2 = parseInt(year2) + 1;
-                    month2 = 1;
-                }
-                if (month2 < 10) {
-                    month2 = '0' + month2;
-                }
-
-                var t2 = year2 + '-' + month2;
-                $scope.now = t2;
-            }
-            //点击异常考勤查看事由
-            $scope.tofillCause = function (list, index) {
-                console.log(list,index)
-                 chidaoNOTE=list[index].NOTE;
-                weiCONFIRM_DATE=list[index].CONFIRM_DATE;
-                console.log(weiCONFIRM_DATE);
-                $scope.node =chidaoNOTE;
-                if(weiCONFIRM_DATE == null || typeof weiCONFIRM_DATE == "undefined" ||
-                    weiCONFIRM_DATE == ""){
-                    //缺勤事由点击事件
-                    $scope.data = new Object();
-                    // 自定义弹窗
-                    var myPopup = $ionicPopup.show({
-                        template: '<textarea ng-style="syWidth" ng-model="node" readonly></textarea>',
-                        title: '事由确认',
-                        scope: $scope,
-                        buttons: [
-                            {
-                                text: '取消',
-                                type: 'button-cancel'
-                            },
-                            {
-                                text: '<b>确认审核</b>',
-                                type: 'button-positive',
-                                onTap: function (e) {
-                                    if (!$scope.node) {
-                                        // 不允许用户关闭，除非输入数据
-                                        e.preventDefault();
-                                    } else {
-                                        submitNote(list, index);
-                                    }
-                                }
-                            },
-                        ]
-                    });
-                    myPopup.then(function (res) {
-                        console.log('Tapped!', res);
-                    });
-
-                }else{
-                    return false;
-                }
-
-            };
-
-            //缺勤事由编辑框样式
-            $scope.syWidth = {
-                "height": '100px',
-                "border": '1px solid #f4f4f4',
-                "margin": '0 auto',
-            }
-            //点击取消
-            $scope.toFillCancel = function () {
-                $scope.fillCause = true;
-                $scope.blackShow = true;
-            }
-
-            //切换标签
-            $scope.tabType = "lateAndEarly";
-            $scope.changeTabType=function(tabType){
-                console.log(number);
-                if(number==1){
-
-                }else{
-                    $scope.tabType = tabType;
-                    if(tabType=='lateAndEarly'){
-                        lateAndEarlyList();
-                    }else if(tabType=='unClock'){
-                        unClockList();
-                    }
-                }
-                number=2;
-            }
-            //获取迟到早退信息
-            function lateAndEarlyList() {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http.post('ServiceName=AttendReasonService&TransName=lateAndEarlyReason&QUERY_DATE=' + $scope.now)
-                    .then(function (res) {
-                        $scope.lateAndEarlyList = new Array();
-                        loadingAnimation.hideLoading();
-                        if (res.data.code == '0') {
-                            $scope.lateAndEarlyList = res.data.tList;
-                        } else if ($scope.tabType == "lateAndEarly") {
-                            showAlert.showMsg(res.data);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //未打卡数据
-            function unClockList(){
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http.post('ServiceName=AttendReasonService&TransName=unClockReason&QUERY_DATE=' + $scope.now)
-                    .then(function (res) {
-                        $scope.unClockList = new Array();
-                        loadingAnimation.hideLoading();
-                        if (res.data.code == '0') {
-                            console.log(res.data.wList)
-                            $scope.unClockList = res.data.wList;
-                        } else if ($scope.tabType == "unClock") {
-                            showAlert.showMsg(res.data);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //确认事由
-            function submitNote(list, index) {
-                console.log(list,index,$scope.now);
-                loadingAnimation.showLoading('数据保存中', 'loding', 0);
-                $http.post('ServiceName=AttendReasonService&TransName=Confirmation', {
-                    "TRANSACTION_ID": list[index].TRANSACTION_ID || "",
-                    "PERSON_ID": list[index].PERSON_ID,
-                    "QUERY_DATE": $scope.now
-                }).then(function (res) {
-                    loadingAnimation.hideLoading();
-                    if (res.data.code == '0') {
-                        if($scope.tabType=='lateAndEarly'){
-                            lateAndEarlyList();
-                        }else if($scope.tabType=='unClock'){
-                            unClockList();
-                        }
-                    } else {
-                        showAlert.showMsg(res.data);
-                    }
-                }, function (error) {
-                    loadingAnimation.hideLoading();
-                    showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                });
-            }
-        }
-    ])
-
 angular.module('BaiYin.attence.leaveEarlyDetail', [
     'ionic',
     'ionic-datepicker',
@@ -8904,6 +8976,51 @@ angular.module('BaiYin.load.nearlyHour', [
 
         }
     ]);
+angular.module('BaiYin.MarketbasedTradDetail', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('MarketbasedTradDetail', {
+            url: '/MarketbasedTrad/MarketbasedTradDetail',
+            controller: 'MarketbasedTradDetailController',
+            templateUrl: 'MarketbasedTrad/MarketbasedTradDetail/MarketbasedTradDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {
+                TITLE: null,
+                CONTENT: null,
+                BILLING_CHARGE_PRICE: null,
+                TRADE_NO: null
+            }
+        })
+    }])
+    .controller('MarketbasedTradDetailController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet','$stateParams',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet,$stateParams) {
+
+            $scope.$on('$ionicView.enter', function () {
+
+
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+                console.log($stateParams);
+                $scope.detailTitle=$stateParams.TITLE;
+                $scope.detailCONTENT=$stateParams.CONTENT;
+                $scope.detailBILLING_CHARGE_PRICE=$stateParams.BILLING_CHARGE_PRICE;
+                $scope.detailTRADE_NO=$stateParams.TRADE_NO;
+
+            });
+
+            
+
+
+
+
+
+
+        }]);
+
+
 angular.module('BaiYin.MarketbasedTradIndex', [
     'ionic',
 ])
@@ -8978,51 +9095,6 @@ angular.module('BaiYin.MarketbasedTradIndex', [
                 $scope.Noticecontentid=$('#Noticecontentid').val();
                 $scope.getElecMarketNotice($scope.Noticenameid,$scope.Noticecontentid)
             }
-
-
-
-
-
-
-        }]);
-
-
-angular.module('BaiYin.MarketbasedTradDetail', [
-    'ionic',
-])
-
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('MarketbasedTradDetail', {
-            url: '/MarketbasedTrad/MarketbasedTradDetail',
-            controller: 'MarketbasedTradDetailController',
-            templateUrl: 'MarketbasedTrad/MarketbasedTradDetail/MarketbasedTradDetail.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {
-                TITLE: null,
-                CONTENT: null,
-                BILLING_CHARGE_PRICE: null,
-                TRADE_NO: null
-            }
-        })
-    }])
-    .controller('MarketbasedTradDetailController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet','$stateParams',
-        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet,$stateParams) {
-
-            $scope.$on('$ionicView.enter', function () {
-
-
-            });
-            $scope.$on('$ionicView.afterEnter', function () {
-                console.log($stateParams);
-                $scope.detailTitle=$stateParams.TITLE;
-                $scope.detailCONTENT=$stateParams.CONTENT;
-                $scope.detailBILLING_CHARGE_PRICE=$stateParams.BILLING_CHARGE_PRICE;
-                $scope.detailTRADE_NO=$stateParams.TRADE_NO;
-
-            });
-
-            
 
 
 
@@ -9868,21 +9940,6 @@ angular.module('BaiYin.OSI.OSILine', [
         }
     ])
 
-angular.module('BaiYin.pm.defectFillA', [
-    'BaiYin.pm.defectFill.defectFill',
-    'BaiYin.pm.defectFill.adddefectFill',
-    'BaiYin.pm.defectFill.defectFillDetail',
-])
-angular.module('BaiYin.pm.journalA', [
-    'BaiYin.pm.journal.journalList',
-    'BaiYin.pm.journal.journalDetailList',
-    'BaiYin.pm.journal.journalDetail'
-])
-angular.module('BaiYin.pm.troubleA', [
-    'BaiYin.pm.trouble.hideTrouble',
-    'BaiYin.pm.trouble.addTrouble',
-    'BaiYin.pm.trouble.troubleDetail',
-])
 angular.module('BaiYin.OffLine.OffLineDetail', [
     'ionic',
 ])
@@ -10287,6 +10344,21 @@ angular.module('BaiYin.OffLine.OffLineLook', [
         }
     ])
 
+angular.module('BaiYin.pm.journalA', [
+    'BaiYin.pm.journal.journalList',
+    'BaiYin.pm.journal.journalDetailList',
+    'BaiYin.pm.journal.journalDetail'
+])
+angular.module('BaiYin.pm.defectFillA', [
+    'BaiYin.pm.defectFill.defectFill',
+    'BaiYin.pm.defectFill.adddefectFill',
+    'BaiYin.pm.defectFill.defectFillDetail',
+])
+angular.module('BaiYin.pm.troubleA', [
+    'BaiYin.pm.trouble.hideTrouble',
+    'BaiYin.pm.trouble.addTrouble',
+    'BaiYin.pm.trouble.troubleDetail',
+])
 angular.module('BaiYin.pdDay', [
     'ionic',
 ])
@@ -11614,80 +11686,6 @@ angular.module('BaiYin.tabs.message.mock', [
     $httpBackend.whenGET(/\/AgriculturlWeb\/moneyApplication/).passThrough();
 
 }])
-angular
-    .module('BaiYin.tabs.OMA', [
-        'ionic',
-    ])
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('tabs/OMA', {
-            url: '/tabs/OMA',
-            controller: 'OMAController',
-            templateUrl: 'tabs/OMA/OMA.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1']
-        })
-    }])
-    .controller('OMAController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
-        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
-            $scope.myActiveSlide = 1;
-            $scope.$on('$ionicView.enter', function () {
-                //显示tabs
-                $rootScope.hideTabs = false;
-                $scope.currentTab = 'tabs/OMA';
-                $ionicTabsDelegate.select(2);
-            });
-            $scope.$on('$ionicView.afterEnter', function () {
-                // getPowerPlantList();
-            });
-            $scope.totask=function () {
-                showAlert.showMsg('','','开发中……');
-                /*$state.go('');*/
-            }
-            /**
-             * @author:Grant
-             * @remark:跳转交易电量
-             * @parameter:
-             * request:
-             * field:
-             */
-            $scope.toEleTrad=function () {
-                // showAlert.showMsg('','','开发中……');
-                $state.go('EleTrad');
-            }
-            /**
-             * @author:Grant
-             * @remark:跳转现货交易
-             * @parameter:
-             * request:
-             * field:
-             */
-            $scope.tospotTransaction=function () {
-                // showAlert.showMsg('','','开发中……');
-                $state.go('spotTransaction');
-            }
-            /**
-             * @author:Grant
-             * @remark:跳转市场化交易
-             * @parameter:
-             * request:
-             * field:
-             */
-            $scope.toMarketbasedTrad=function () {
-                // showAlert.showMsg('','','开发中……');
-                $state.go('MarketbasedTrad');
-            }
-            /**
-             * @author:Grant
-             * @remark:跳转结算电量
-             * @parameter:
-             * request:
-             * field:
-             */
-            $scope.toSettlementTrad=function () {
-                // showAlert.showMsg('','','开发中……');
-                $state.go('SettlementTrad');
-            }
-        }]);
 angular.module('BaiYin.tabs.mine', [
     'BaiYin.tabs.mine.mock',
     'BaiYin.mine.netWork',
@@ -11954,6 +11952,80 @@ angular.module('BaiYin.tabs.mine.mock', [
     // $httpBackend.whenPOST(/\/getApplys/).passThrough();
     $httpBackend.whenGET(/.*/).passThrough();
 }])
+angular
+    .module('BaiYin.tabs.OMA', [
+        'ionic',
+    ])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('tabs/OMA', {
+            url: '/tabs/OMA',
+            controller: 'OMAController',
+            templateUrl: 'tabs/OMA/OMA.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('OMAController', ['$interval', '$scope','$rootScope', '$http', 'showAlert', '$ionicTabsDelegate', '$ionicHistory', '$ionicPopup', '$state', 'Session', '$ionicLoading','$ionicActionSheet',
+        function ($interval, $scope,$rootScope, $http, showAlert, $ionicTabsDelegate, $ionicHistory, $ionicPopup, $state, Session, $ionicLoading,$ionicActionSheet) {
+            $scope.myActiveSlide = 1;
+            $scope.$on('$ionicView.enter', function () {
+                //显示tabs
+                $rootScope.hideTabs = false;
+                $scope.currentTab = 'tabs/OMA';
+                $ionicTabsDelegate.select(2);
+            });
+            $scope.$on('$ionicView.afterEnter', function () {
+                // getPowerPlantList();
+            });
+            $scope.totask=function () {
+                showAlert.showMsg('','','开发中……');
+                /*$state.go('');*/
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转交易电量
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.toEleTrad=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('EleTrad');
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转现货交易
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.tospotTransaction=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('spotTransaction');
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转市场化交易
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.toMarketbasedTrad=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('MarketbasedTrad');
+            }
+            /**
+             * @author:Grant
+             * @remark:跳转结算电量
+             * @parameter:
+             * request:
+             * field:
+             */
+            $scope.toSettlementTrad=function () {
+                // showAlert.showMsg('','','开发中……');
+                $state.go('SettlementTrad');
+            }
+        }]);
 /*angular.module('BaiYin.tabs.porductManage', [
     'ionic'
 ])*/
@@ -13127,87 +13199,6 @@ angular.module('BaiYin.historyList', [
         }
 
     }])
-angular.module('BaiYin.LeavesDetail', [
-        'BaiYin.LeavesDetail.mock'
-    ])
-
-    .config(['$stateProvider', function($stateProvider) {
-        $stateProvider.state('LeavesDetail', {
-            url: '/LeavesDetail',
-            controller: 'LeavesDetailController',
-            templateUrl: 'AllLeave/Leave/leavesDetail/LeavesDetail.tpl.html',
-            //params: { 'detailParam': null },
-            cache: 'true',
-            authorizedRuleType: ['1']
-        })
-    }])
-    .controller('LeavesDetailController', ['$scope', 'pageInitService', '$stateParams', '$http', '$state', 'showAlert','$ionicHistory',
-        function($scope, pageInitService, $stateParams, $http, $state, showAlert,$ionicHistory) {
-            var delParam = JSON.parse(sessionStorage.getItem("detailParam"));
-            $scope.$on('$ionicView.afterEnter', function() {
-                var apis = [
-                    'ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + delParam.APPLY_NO,
-                ];
-                pageInitService.pageInit(apis).then(function(result) {
-                    $scope.item = result[0].data;
-                    if (result[0].data.APPLYFORLEAVESTATE == "新建") {
-                        $scope.submitL = true;
-                        $scope.editL = true;
-                        $scope.deleL = true;
-                    } 
-                }, function(error) {
-                    showAlert.showMsg(error, '', '网络异常', '确认')
-                });
-            });
-            $scope.doRefresh = function() {
-                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + delParam.APPLY_NO)
-                    .then(function(res) {
-                        $scope.item = res.data;
-                        $scope.$broadcast('scroll.refreshComplete');
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-
-            //提交
-            $scope.submit = function() {
-                $http.get('ServiceName=ApplyForLeaveService&ACTION_TYPE=submit&TransName=doApplyForLeaveDetail&APPLY_NO=' + delParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-           
-            //编辑
-            $scope.edit = function(item) {
-                var editParam = angular.copy(item);
-                editParam.numTT = 1;
-                $state.go("newLeaves", { "newParam": editParam });
-            };
-            //删除
-            $scope.dele = function() {
-                $http.get('ServiceName=ApplyForLeaveService&TransName=doApplyForLeaveDetail&ACTION_TYPE=delete&APPLY_NO=' + delParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-        }
-    ])
-angular.module('BaiYin.LeavesDetail.mock', [
-        'ngMockE2E', 'BaiYin.common.mocksData'
-    ])
-    .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
-        var data = {
-
-        }
-        var result = mocksData.resetData(data);
-        $httpBackend.whenGET(/.*/).passThrough();
-    }]);
 angular.module('BaiYin.LeavesList', [
         'BaiYin.LeavesList.mock'
     ])
@@ -13378,6 +13369,87 @@ angular.module('BaiYin.LeavesList', [
         }
     ])
 angular.module('BaiYin.LeavesList.mock', [
+        'ngMockE2E', 'BaiYin.common.mocksData'
+    ])
+    .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
+        var data = {
+
+        }
+        var result = mocksData.resetData(data);
+        $httpBackend.whenGET(/.*/).passThrough();
+    }]);
+angular.module('BaiYin.LeavesDetail', [
+        'BaiYin.LeavesDetail.mock'
+    ])
+
+    .config(['$stateProvider', function($stateProvider) {
+        $stateProvider.state('LeavesDetail', {
+            url: '/LeavesDetail',
+            controller: 'LeavesDetailController',
+            templateUrl: 'AllLeave/Leave/leavesDetail/LeavesDetail.tpl.html',
+            //params: { 'detailParam': null },
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+    .controller('LeavesDetailController', ['$scope', 'pageInitService', '$stateParams', '$http', '$state', 'showAlert','$ionicHistory',
+        function($scope, pageInitService, $stateParams, $http, $state, showAlert,$ionicHistory) {
+            var delParam = JSON.parse(sessionStorage.getItem("detailParam"));
+            $scope.$on('$ionicView.afterEnter', function() {
+                var apis = [
+                    'ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + delParam.APPLY_NO,
+                ];
+                pageInitService.pageInit(apis).then(function(result) {
+                    $scope.item = result[0].data;
+                    if (result[0].data.APPLYFORLEAVESTATE == "新建") {
+                        $scope.submitL = true;
+                        $scope.editL = true;
+                        $scope.deleL = true;
+                    } 
+                }, function(error) {
+                    showAlert.showMsg(error, '', '网络异常', '确认')
+                });
+            });
+            $scope.doRefresh = function() {
+                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + delParam.APPLY_NO)
+                    .then(function(res) {
+                        $scope.item = res.data;
+                        $scope.$broadcast('scroll.refreshComplete');
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+
+            //提交
+            $scope.submit = function() {
+                $http.get('ServiceName=ApplyForLeaveService&ACTION_TYPE=submit&TransName=doApplyForLeaveDetail&APPLY_NO=' + delParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+           
+            //编辑
+            $scope.edit = function(item) {
+                var editParam = angular.copy(item);
+                editParam.numTT = 1;
+                $state.go("newLeaves", { "newParam": editParam });
+            };
+            //删除
+            $scope.dele = function() {
+                $http.get('ServiceName=ApplyForLeaveService&TransName=doApplyForLeaveDetail&ACTION_TYPE=delete&APPLY_NO=' + delParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+        }
+    ])
+angular.module('BaiYin.LeavesDetail.mock', [
         'ngMockE2E', 'BaiYin.common.mocksData'
     ])
     .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
@@ -13787,6 +13859,97 @@ angular.module('BaiYin.newVacation.mock', [
         var result = mocksData.resetData(data);
         $httpBackend.whenGET(/.*/).passThrough();
     }]);
+angular.module('BaiYin.VacationDetail', [
+        'BaiYin.VacationDetail.mock'
+    ])
+
+    .config(['$stateProvider', function($stateProvider) {
+        $stateProvider.state('VacationDetail', {
+            url: '/VacationDetail',
+            controller: 'VacationDetailController',
+            templateUrl: 'AllLeave/Vacation/VacationDetail/VacationDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+    }])
+
+    .controller('VacationDetailController', ['$scope','$ionicHistory', 'pageInitService', '$stateParams', '$http', '$state', 'showAlert',
+        function($scope,$ionicHistory, pageInitService, $stateParams, $http, $state, showAlert) {
+            var vacParam = JSON.parse(sessionStorage.getItem("vacationParam"));
+            $scope.$on('$ionicView.afterEnter', function() {
+                var apis = [
+                    'ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO,
+                ];
+                pageInitService.pageInit(apis).then(function(result) {
+                    $scope.item = result[0].data;
+                    if (result[0].data.APPROVE_STATUS == "未定义"||result[0].data.APPROVE_STATUS == "新建") {
+                        $scope.submitL = true;
+                        $scope.editL = true;
+                        $scope.deleL = true;
+                    } else if (result[0].data.APPROVE_STATUS == "审批通过" || result[0].data.APPROVE_STATUS == "审批中") {
+                        $scope.backLeaveL = true;
+                    };
+                }, function(error) {
+                    showAlert.showMsg(error, '', '网络异常', '确认')
+                });
+            });
+            $scope.doRefresh = function() {
+                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        $scope.item = res.data;
+                        $scope.$broadcast('scroll.refreshComplete');
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+            //提交
+            $scope.submit = function() {
+                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=doApplyForBusinessTravelDetail&ACTION_TYPE=submit&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+            //销假
+            $scope.backLeave = function() {
+                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+            //编辑
+            $scope.edit = function(item) {
+                var editParam = item;
+                editParam.numTT = 1;
+                $state.go("newVacation", { "newParam": editParam });
+            };
+            //删除
+            $scope.dele = function() {
+                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
+                    .then(function(res) {
+                        showAlert.showMsg(res, '', '提交成功', '确认');
+                        $ionicHistory.goBack();
+                    }, function(error) {
+                        showAlert.showMsg(error, '', '网络异常', '确认')
+                    })
+            };
+        }
+    ])
+angular.module('BaiYin.VacationDetail.mock', [
+        'ngMockE2E', 'BaiYin.common.mocksData'
+    ])
+    .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
+        var data = {
+
+        }
+        var result = mocksData.resetData(data);
+        $httpBackend.whenGET(/.*/).passThrough();
+    }]);
 angular.module('BaiYin.VacationList', [
         'BaiYin.VacationList.mock'
     ])
@@ -13953,97 +14116,6 @@ angular.module('BaiYin.VacationList', [
         }
     ])
 angular.module('BaiYin.VacationList.mock', [
-        'ngMockE2E', 'BaiYin.common.mocksData'
-    ])
-    .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
-        var data = {
-
-        }
-        var result = mocksData.resetData(data);
-        $httpBackend.whenGET(/.*/).passThrough();
-    }]);
-angular.module('BaiYin.VacationDetail', [
-        'BaiYin.VacationDetail.mock'
-    ])
-
-    .config(['$stateProvider', function($stateProvider) {
-        $stateProvider.state('VacationDetail', {
-            url: '/VacationDetail',
-            controller: 'VacationDetailController',
-            templateUrl: 'AllLeave/Vacation/VacationDetail/VacationDetail.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1']
-        })
-    }])
-
-    .controller('VacationDetailController', ['$scope','$ionicHistory', 'pageInitService', '$stateParams', '$http', '$state', 'showAlert',
-        function($scope,$ionicHistory, pageInitService, $stateParams, $http, $state, showAlert) {
-            var vacParam = JSON.parse(sessionStorage.getItem("vacationParam"));
-            $scope.$on('$ionicView.afterEnter', function() {
-                var apis = [
-                    'ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO,
-                ];
-                pageInitService.pageInit(apis).then(function(result) {
-                    $scope.item = result[0].data;
-                    if (result[0].data.APPROVE_STATUS == "未定义"||result[0].data.APPROVE_STATUS == "新建") {
-                        $scope.submitL = true;
-                        $scope.editL = true;
-                        $scope.deleL = true;
-                    } else if (result[0].data.APPROVE_STATUS == "审批通过" || result[0].data.APPROVE_STATUS == "审批中") {
-                        $scope.backLeaveL = true;
-                    };
-                }, function(error) {
-                    showAlert.showMsg(error, '', '网络异常', '确认')
-                });
-            });
-            $scope.doRefresh = function() {
-                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=getApplyForBusinessTravelDetail&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        $scope.item = res.data;
-                        $scope.$broadcast('scroll.refreshComplete');
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-            //提交
-            $scope.submit = function() {
-                $http.get('ServiceName=ApplyForBusinessTravelService&TransName=doApplyForBusinessTravelDetail&ACTION_TYPE=submit&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-            //销假
-            $scope.backLeave = function() {
-                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-            //编辑
-            $scope.edit = function(item) {
-                var editParam = item;
-                editParam.numTT = 1;
-                $state.go("newVacation", { "newParam": editParam });
-            };
-            //删除
-            $scope.dele = function() {
-                $http.get('ServiceName=ApplyForLeaveService&TransName=getApplyForLeaveDetail&APPLY_NO=' + vacParam.APPLY_NO)
-                    .then(function(res) {
-                        showAlert.showMsg(res, '', '提交成功', '确认');
-                        $ionicHistory.goBack();
-                    }, function(error) {
-                        showAlert.showMsg(error, '', '网络异常', '确认')
-                    })
-            };
-        }
-    ])
-angular.module('BaiYin.VacationDetail.mock', [
         'ngMockE2E', 'BaiYin.common.mocksData'
     ])
     .run(['$httpBackend', 'mocksData', function($httpBackend, mocksData) {
@@ -14754,6 +14826,88 @@ angular
 		}
 	]);
 angular
+	.module('BaiYin.OSI.OSIDepartmentPersonnel', [
+		'ionic',
+	])
+	.config(['$stateProvider', 'ionicDatePickerProvider', function($stateProvider, ionicDatePickerProvider) {
+		$stateProvider.state('OSI/OSIDepartmentPersonnel', {
+			url: '/OSI/OSIDepartmentPersonnel',
+			controller: 'OSIDepartmentPersonnelController',
+			templateUrl: 'OSI/OSIcount/OSIDepartmentPersonnel/OSIDepartmentPersonnel.tpl.html',
+			cache: 'true',
+			authorizedRuleType: ['1'],
+			params: {item: new Object()}
+		});
+	}])
+	.controller('OSIDepartmentPersonnelController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet', 'ionicDatePicker',
+		function($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet, ionicDatePicker) {
+            //上页传过来的数据
+            $scope.data = new Object();
+            //查询条件的时间集合
+            $scope.date = new Object();
+            $scope.$on('$ionicView.beforeEnter', function() {
+				$scope.date = JSON.parse(JSON.stringify($stateParams.item.date));
+				$scope.changeDateTime = function(){
+					if($stateParams.item.changeDateTime.apply($scope.date, arguments))
+						$scope.reload();
+				};
+				$scope.data = $stateParams.item.data;
+				$scope.reload();
+			});
+			
+			//分页页码
+			$scope.pageIndex = 1;
+			$scope.hasMore = true;
+			//数据
+			$scope.list = new Array();
+			$scope.reload = function(){
+				$scope.pageIndex = 1;
+				$scope.list = new Array();
+				$scope.getInspectStatisticalData();
+			};
+
+			//获取巡查统计数据
+            $scope.getInspectStatisticalData = function () {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                $http
+                    .post('ServiceName=InspectionService&TransName=getInspectStatisticalData', {
+                        restrict: "personnel",
+						pageIndex: $scope.pageIndex++,
+						org_code: $scope.data.ORG_CODE,
+                        startTime: $scope.date.departmentStart,
+                        endTime: $scope.date.departmentEnd
+                    })
+                    .then(function (res) {
+                        loadingAnimation.hideLoading();
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                        
+                        if(res.data.list.length != 10){
+                            $scope.hasMore = false;
+                        }
+
+                        $scope.list = $scope.list.concat(res.data.list.map(function(v, i){
+                            v.percentage = Math.round(v.PLAN_INSPECTED/(v.PLAN_INSPECT == 0 ? 1 : v.PLAN_INSPECT) * 1000) / 10;
+                            return v;
+                        }));
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                        $scope.hasMore = false;
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+			}
+
+            //巡查记录视图
+            $scope.openRecord = function(data) {
+				data.date = {
+                    startDate: $scope.date.departmentStart,
+                    endDate:$scope.date.departmentEnd
+                };
+                $state.go('OSI/OSIHistory', {item: {autoOperation: "personnel", data: data}});
+            };
+		}
+	]);
+angular
 	.module('BaiYin.OSI.OSIPersonnelEquipment', [
 		'ionic',
 	])
@@ -14837,88 +14991,412 @@ angular
 			};
 		}
 	]);
-angular
-	.module('BaiYin.OSI.OSIDepartmentPersonnel', [
-		'ionic',
-	])
-	.config(['$stateProvider', 'ionicDatePickerProvider', function($stateProvider, ionicDatePickerProvider) {
-		$stateProvider.state('OSI/OSIDepartmentPersonnel', {
-			url: '/OSI/OSIDepartmentPersonnel',
-			controller: 'OSIDepartmentPersonnelController',
-			templateUrl: 'OSI/OSIcount/OSIDepartmentPersonnel/OSIDepartmentPersonnel.tpl.html',
-			cache: 'true',
-			authorizedRuleType: ['1'],
-			params: {item: new Object()}
-		});
-	}])
-	.controller('OSIDepartmentPersonnelController', ['$timeout', '$filter', '$scope', 'showAlert', 'loadingAnimation', '$http', '$state', '$interval', '$ionicTabsDelegate', '$stateParams', '$ionicPopup', '$timeout', '$ionicActionSheet', 'ionicDatePicker',
-		function($timeout, $filter, $scope, showAlert, loadingAnimation, $http, $state, $interval, $ionicTabsDelegate, $stateParams, $ionicPopup, $timeout, $ionicActionSheet, ionicDatePicker) {
-            //上页传过来的数据
-            $scope.data = new Object();
-            //查询条件的时间集合
-            $scope.date = new Object();
-            $scope.$on('$ionicView.beforeEnter', function() {
-				$scope.date = JSON.parse(JSON.stringify($stateParams.item.date));
-				$scope.changeDateTime = function(){
-					if($stateParams.item.changeDateTime.apply($scope.date, arguments))
-						$scope.reload();
-				};
-				$scope.data = $stateParams.item.data;
-				$scope.reload();
-			});
-			
-			//分页页码
-			$scope.pageIndex = 1;
-			$scope.hasMore = true;
-			//数据
-			$scope.list = new Array();
-			$scope.reload = function(){
-				$scope.pageIndex = 1;
-				$scope.list = new Array();
-				$scope.getInspectStatisticalData();
-			};
+angular.module('BaiYin.pm.journal.journalDetail', [
+    'ionic',
+])
 
-			//获取巡查统计数据
-            $scope.getInspectStatisticalData = function () {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                $http
-                    .post('ServiceName=InspectionService&TransName=getInspectStatisticalData', {
-                        restrict: "personnel",
-						pageIndex: $scope.pageIndex++,
-						org_code: $scope.data.ORG_CODE,
-                        startTime: $scope.date.departmentStart,
-                        endTime: $scope.date.departmentEnd
-                    })
-                    .then(function (res) {
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('pm/journal/journalDetail', {
+            url: '/pm/journal/journalDetail',
+            controller: 'journalDetailController',
+            templateUrl: 'pm/journal/journalDetail/journalDetail.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item:null}
+        })
+    }])
+
+    .controller('journalDetailController', ['$scope','loadingAnimation','showAlert', 'showAlert', '$http', '$state','$ionicTabsDelegate','$stateParams',
+        function ($scope,loadingAnimation,showAlert, $showAlert, $http, $state,$ionicTabsDelegate,$stateParams) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                //获取列表页对象
+                console.log("item=="+JSON.stringify($stateParams.item));
+                $scope.obj = $stateParams.item;
+                //默认第一个选项卡
+                $ionicTabsDelegate.select(0);
+                $scope.listcenterOperRecordLine();
+            });
+
+            //运行日志
+            $scope.toYxrzData = function () {
+                $ionicTabsDelegate.select(0);
+                $scope.listcenterOperRecordLine();
+            }
+            //运行方式
+            $scope.toYxfsData = function () {
+                $ionicTabsDelegate.select(1);
+                $scope.listcenterOperMode();
+            }
+            //交接班
+            $scope.toJjbData = function () {
+                $ionicTabsDelegate.select(2);
+                $scope.listcenterOperRecord();
+            }
+            //接地线
+            $scope.toJdxData = function () {
+                $ionicTabsDelegate.select(3);
+                $scope.listcenterGroupWire();
+            }
+            //运行日志详情
+            $scope.listcenterOperRecordLine = function() {
+                $http.get("ServiceName=JournalService&TransName=listOperRecordLine&EVENT_NO=" + $scope.obj.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
                         loadingAnimation.hideLoading();
-                        $scope.$broadcast('scroll.infiniteScrollComplete');
-                        
-                        if(res.data.list.length != 10){
-                            $scope.hasMore = false;
+                        if (result.code == '0') {
+                            $scope.list1 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
                         }
-
-                        $scope.list = $scope.list.concat(res.data.list.map(function(v, i){
-                            v.percentage = Math.round(v.PLAN_INSPECTED/(v.PLAN_INSPECT == 0 ? 1 : v.PLAN_INSPECT) * 1000) / 10;
-                            return v;
-                        }));
                     }, function (error) {
                         loadingAnimation.hideLoading();
-                        $scope.$broadcast('scroll.infiniteScrollComplete');
-                        $scope.hasMore = false;
                         showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
                     });
-			}
+            }
+            //运行方式
+            $scope.listcenterOperMode = function() {
+                $http.get("ServiceName=JournalService&TransName=listopeMode&EVENT_NO=" + $scope.obj.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.list2 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //交接班
+            $scope.listcenterOperRecord = function() {
+                $http.get("ServiceName=JournalService&TransName=listteamChange&EVENT_NO=" + $scope.obj.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.list3 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //接地线
+            $scope.listcenterGroupWire = function() {
+                $http.get("ServiceName=JournalService&TransName=listgroupWire&EVENT_NO=" + $scope.obj.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.list4 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+                //生产运行日志详情
+            $scope.listOper = function(EVENT_NO){
+                $http.get("ServiceName=JournalService&TransName=listopeMode&EVENT_NO="+EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0'){
+                            $scope.listoper = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    },function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+        }
+    ])
+angular.module('BaiYin.pm.journal.journalDetailList', [
+    'ionic',
+])
 
-            //巡查记录视图
-            $scope.openRecord = function(data) {
-				data.date = {
-                    startDate: $scope.date.departmentStart,
-                    endDate:$scope.date.departmentEnd
-                };
-                $state.go('OSI/OSIHistory', {item: {autoOperation: "personnel", data: data}});
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('pm/journal/journalDetailList', {
+            url: '/pm/journal/journalDetailList',
+            controller: 'journalDetailListController',
+            templateUrl: 'pm/journal/journalDetailList/journalDetailList.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1'],
+            params: {item: null}
+        })
+    }])
+
+    .controller('journalDetailListController', ['$scope', 'loadingAnimation', 'showAlert', 'showAlert', '$http', '$state', '$ionicTabsDelegate', '$stateParams',
+        function ($scope, loadingAnimation, showAlert, $showAlert, $http, $state, $ionicTabsDelegate, $stateParams) {
+            $scope.$on('$ionicView.afterEnter', function () {
+                console.log("objCenteritem==" + $stateParams.item);
+                //获取列表页对象
+                $scope.objCenter = $stateParams.item;
+                //默认第一个选项卡
+                $ionicTabsDelegate.select(0);
+                $scope.listcenterOperRecordLine();
+            });
+
+            //运行日志
+            $scope.toYxrzData = function () {
+                $ionicTabsDelegate.select(0);
+                $scope.listcenterOperRecordLine();
+            }
+            //运行方式
+            $scope.toYxfsData = function (x) {
+                $ionicTabsDelegate.select(1);
+                $scope.listcenterOperMode();
+            }
+            //交接班
+            $scope.toJjbData = function () {
+                $ionicTabsDelegate.select(2);
+                $scope.listcenterOperRecord();
+            }
+            //接地线
+            $scope.toJdxData = function () {
+                $ionicTabsDelegate.select(3);
+                $scope.listcenterGroupWire();
+            }
+            //集控中心运行日志详情
+            $scope.myDiv = false;
+            $scope.listcenterOperRecordLine = function () {
+                $http.get("ServiceName=JournalService&TransName=listcenterOperRecordLine&EVENT_NO=" + $scope.objCenter.EVENT_NO)
+                    .then(function (result) {
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.listcenter1 = result.data.rList;
+                            if ($scope.listcenter1 == '' || $scope.listcenter1 == undefined) {
+                                $scope.myDiv = true;
+                            }
+                            console.log("listcenter1==" + JSON.stringify(result.data.rList));
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //集控中心运行方式
+            $scope.listcenterOperMode = function () {
+                $http.get("ServiceName=JournalService&TransName=listcenterOperMode&EVENT_NO=" + $scope.objCenter.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.listcenter2 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //集控中心交接班
+            $scope.listcenterOperRecord = function () {
+                $http.get("ServiceName=JournalService&TransName=listcenterOperRecord&EVENT_NO=" + $scope.objCenter.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.listcenter3 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //集控中心接地线
+            $scope.listcenterGroupWire = function () {
+                $http.get("ServiceName=JournalService&TransName=listcenterGroupWire&EVENT_NO=" + $scope.objCenter.EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.listcenter4 = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            //生产运行日志详情
+            $scope.listOper = function (EVENT_NO) {
+                $http.get("ServiceName=JournalService&TransName=listopeMode&EVENT_NO=" + EVENT_NO)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        if (result.code == '0') {
+                            $scope.listoper = result.data.rList;
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+        }
+    ])
+angular.module('BaiYin.pm.journal.journalList', [
+    'ionic',
+])
+
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('pm/journal/journalList', {
+            url: '/pm/journal/journalList',
+            controller: 'journalListController',
+            templateUrl: 'pm/journal/journalList/journalList.tpl.html',
+            cache: 'true',
+            authorizedRuleType: ['1']
+        })
+
+    }])
+    .controller('journalListController', ['$scope', 'loadingAnimation', 'showAlert', '$http', '$state', '$ionicActionSheet',
+        function ($scope, loadingAnimation, showAlert, $http, $state, $ionicActionSheet) {
+
+            $scope.$on('$ionicView.afterEnter', function () {
+                // $(".journalList ul").hide()
+                $scope.flag2 = false;
+                $scope.flag = false;
+                var status = false;
+
+            });
+            $scope.getBackground = function (status) {
+                var c = "";
+                if (status) {
+                    c = '#f4f4f4';
+                } else {
+                    c = '#f4f4f4';
+                }
+                return {"background": c};
             };
-		}
-	]);
+            //日期选择
+            var calendar = new LCalendar();
+            calendar.init({
+                'trigger': '#select_date_please', //标签id
+                'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
+                'minDate': (new Date().getFullYear() - 10) + '-' + 1 + '-' + 1, //最小日期
+                'maxDate': (new Date().getFullYear()) + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate()) //最大日期
+            });
+            $scope.dateChangeEvent = function(){
+                $scope.RECORD_DATE = $('#select_date_please').val();
+                console.log("到这里来了不空$scope.RECORD_DATE===" + $scope.RECORD_DATE);
+                $scope.listCenter($scope.WORK_SEQ, $scope.RECORD_DATE);
+            }
+            $scope.RECORD_DATE = '';
+            $scope.WORK_SEQ = '';
+            //input框显示位置
+            $("input").width($(window).width() - 120);
+            $scope.toDetailListCenter = function (item) {
+                $state.go('pm/journal/journalDetailList', {item: item})
+            }
+            $scope.toDetailList = function (item) {
+                $state.go('pm/journal/journalDetail', {item: item})
+            }
+            //选择班次
+            $scope.arr = [
+                {text: '全部'},
+                {text: '白班'},
+                {text: '中班'},
+                {text: '夜班'}];
+            $scope.toSelectClass = function () {
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: $scope.arr,
+                    //destructiveText: 'Delete',
+                    /*titleText: '选择班次',
+                    cancelText: '取消',*/
+                    cancel: function () {
+                        // add cancel code..
+                    },
+                    buttonClicked: function (index) {
+                        $('#selectclass').val($scope.arr[index].text);
+                        //取班次的值
+                        $scope.WORK_SEQ = $scope.arr[index].text;
+                        if ($scope.WORK_SEQ == '全部') {
+                            $scope.WORK_SEQ = '';
+                        }
+                        $scope.listCenter($scope.WORK_SEQ, $scope.RECORD_DATE);
+                        return true;
+                    }
+                });
+            };
+            $scope.listCenter = function (WORK_SEQ, RECORD_DATE) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                //集控中心运行日志概览
+                var params = {
+                    WORK_SEQ: WORK_SEQ,
+                    RECORD_DATE: RECORD_DATE
+                };
+
+                $http.post("ServiceName=JournalService&TransName=listCenterOperRecorde", params)
+                    .then(function (result) {
+                        $scope.listOper(WORK_SEQ, RECORD_DATE);
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        $scope.flag2 = false;
+                        if (result.data.code == '0') {
+                            $scope.journal2 = result.data.rList;
+                            console.log("journal2===" + JSON.stringify($scope.journal2));
+                            $scope.listcenter_EVENT_NO = $scope.journal2;
+                            if($scope.journal2.length == 0){
+                                showAlert.showMsg('','','没有查询到集控中心运行日志数据...');
+                            }
+                        } else if (result.data.coce == '1' || result.data.rList.length == 0) {
+                            $scope.flag2 = true;//不显示
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+            $scope.listOper = function (WORK_SEQ, RECORD_DATE) {
+                loadingAnimation.showLoading('数据载入中', 'loding', 0);
+                //生产运行日志概览
+                var params = {
+                    WORK_SEQ: WORK_SEQ,
+                    RECORD_DATE: RECORD_DATE
+                };
+                $http.post("ServiceName=JournalService&TransName=listOperRecorde",params)
+                    .then(function (result) {
+                        console.log(result);
+                        loadingAnimation.hideLoading();
+                        $scope.flag = false;
+                        if (result.data.code == '0') {
+                            $scope.journal = result.data.rList;
+                            $scope.listoper_EVENT_NO = $scope.journal;
+                            if($scope.journal.length == 0){
+                                showAlert.showMsg('','','没有查询到生产运行日志数据...');
+                            }
+                        } else if (result.data.coce == '1' || result, data.rList.length == 0) {
+                            $scope.flag = true;//不显示
+                        } else {
+                            showAlert.showMsg(res.msg);
+                        }
+                    }, function (error) {
+                        loadingAnimation.hideLoading();
+                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
+                    });
+            }
+
+        }
+    ])
+
 angular.module('BaiYin.pm.defectFill.adddefectFill', [
     'ionic',
     'ngCordova',
@@ -15659,412 +16137,6 @@ angular.module('BaiYin.pm.defectFill.defectFillDetail', [
             }
         }
     ])
-angular.module('BaiYin.pm.journal.journalDetail', [
-    'ionic',
-])
-
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('pm/journal/journalDetail', {
-            url: '/pm/journal/journalDetail',
-            controller: 'journalDetailController',
-            templateUrl: 'pm/journal/journalDetail/journalDetail.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {item:null}
-        })
-    }])
-
-    .controller('journalDetailController', ['$scope','loadingAnimation','showAlert', 'showAlert', '$http', '$state','$ionicTabsDelegate','$stateParams',
-        function ($scope,loadingAnimation,showAlert, $showAlert, $http, $state,$ionicTabsDelegate,$stateParams) {
-            $scope.$on('$ionicView.afterEnter', function () {
-                //获取列表页对象
-                console.log("item=="+JSON.stringify($stateParams.item));
-                $scope.obj = $stateParams.item;
-                //默认第一个选项卡
-                $ionicTabsDelegate.select(0);
-                $scope.listcenterOperRecordLine();
-            });
-
-            //运行日志
-            $scope.toYxrzData = function () {
-                $ionicTabsDelegate.select(0);
-                $scope.listcenterOperRecordLine();
-            }
-            //运行方式
-            $scope.toYxfsData = function () {
-                $ionicTabsDelegate.select(1);
-                $scope.listcenterOperMode();
-            }
-            //交接班
-            $scope.toJjbData = function () {
-                $ionicTabsDelegate.select(2);
-                $scope.listcenterOperRecord();
-            }
-            //接地线
-            $scope.toJdxData = function () {
-                $ionicTabsDelegate.select(3);
-                $scope.listcenterGroupWire();
-            }
-            //运行日志详情
-            $scope.listcenterOperRecordLine = function() {
-                $http.get("ServiceName=JournalService&TransName=listOperRecordLine&EVENT_NO=" + $scope.obj.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.list1 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //运行方式
-            $scope.listcenterOperMode = function() {
-                $http.get("ServiceName=JournalService&TransName=listopeMode&EVENT_NO=" + $scope.obj.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.list2 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //交接班
-            $scope.listcenterOperRecord = function() {
-                $http.get("ServiceName=JournalService&TransName=listteamChange&EVENT_NO=" + $scope.obj.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.list3 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //接地线
-            $scope.listcenterGroupWire = function() {
-                $http.get("ServiceName=JournalService&TransName=listgroupWire&EVENT_NO=" + $scope.obj.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.list4 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-                //生产运行日志详情
-            $scope.listOper = function(EVENT_NO){
-                $http.get("ServiceName=JournalService&TransName=listopeMode&EVENT_NO="+EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0'){
-                            $scope.listoper = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    },function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-        }
-    ])
-angular.module('BaiYin.pm.journal.journalDetailList', [
-    'ionic',
-])
-
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('pm/journal/journalDetailList', {
-            url: '/pm/journal/journalDetailList',
-            controller: 'journalDetailListController',
-            templateUrl: 'pm/journal/journalDetailList/journalDetailList.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1'],
-            params: {item: null}
-        })
-    }])
-
-    .controller('journalDetailListController', ['$scope', 'loadingAnimation', 'showAlert', 'showAlert', '$http', '$state', '$ionicTabsDelegate', '$stateParams',
-        function ($scope, loadingAnimation, showAlert, $showAlert, $http, $state, $ionicTabsDelegate, $stateParams) {
-            $scope.$on('$ionicView.afterEnter', function () {
-                console.log("objCenteritem==" + $stateParams.item);
-                //获取列表页对象
-                $scope.objCenter = $stateParams.item;
-                //默认第一个选项卡
-                $ionicTabsDelegate.select(0);
-                $scope.listcenterOperRecordLine();
-            });
-
-            //运行日志
-            $scope.toYxrzData = function () {
-                $ionicTabsDelegate.select(0);
-                $scope.listcenterOperRecordLine();
-            }
-            //运行方式
-            $scope.toYxfsData = function (x) {
-                $ionicTabsDelegate.select(1);
-                $scope.listcenterOperMode();
-            }
-            //交接班
-            $scope.toJjbData = function () {
-                $ionicTabsDelegate.select(2);
-                $scope.listcenterOperRecord();
-            }
-            //接地线
-            $scope.toJdxData = function () {
-                $ionicTabsDelegate.select(3);
-                $scope.listcenterGroupWire();
-            }
-            //集控中心运行日志详情
-            $scope.myDiv = false;
-            $scope.listcenterOperRecordLine = function () {
-                $http.get("ServiceName=JournalService&TransName=listcenterOperRecordLine&EVENT_NO=" + $scope.objCenter.EVENT_NO)
-                    .then(function (result) {
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.listcenter1 = result.data.rList;
-                            if ($scope.listcenter1 == '' || $scope.listcenter1 == undefined) {
-                                $scope.myDiv = true;
-                            }
-                            console.log("listcenter1==" + JSON.stringify(result.data.rList));
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //集控中心运行方式
-            $scope.listcenterOperMode = function () {
-                $http.get("ServiceName=JournalService&TransName=listcenterOperMode&EVENT_NO=" + $scope.objCenter.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.listcenter2 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //集控中心交接班
-            $scope.listcenterOperRecord = function () {
-                $http.get("ServiceName=JournalService&TransName=listcenterOperRecord&EVENT_NO=" + $scope.objCenter.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.listcenter3 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //集控中心接地线
-            $scope.listcenterGroupWire = function () {
-                $http.get("ServiceName=JournalService&TransName=listcenterGroupWire&EVENT_NO=" + $scope.objCenter.EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.listcenter4 = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            //生产运行日志详情
-            $scope.listOper = function (EVENT_NO) {
-                $http.get("ServiceName=JournalService&TransName=listopeMode&EVENT_NO=" + EVENT_NO)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        if (result.code == '0') {
-                            $scope.listoper = result.data.rList;
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-        }
-    ])
-angular.module('BaiYin.pm.journal.journalList', [
-    'ionic',
-])
-
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('pm/journal/journalList', {
-            url: '/pm/journal/journalList',
-            controller: 'journalListController',
-            templateUrl: 'pm/journal/journalList/journalList.tpl.html',
-            cache: 'true',
-            authorizedRuleType: ['1']
-        })
-
-    }])
-    .controller('journalListController', ['$scope', 'loadingAnimation', 'showAlert', '$http', '$state', '$ionicActionSheet',
-        function ($scope, loadingAnimation, showAlert, $http, $state, $ionicActionSheet) {
-
-            $scope.$on('$ionicView.afterEnter', function () {
-                // $(".journalList ul").hide()
-                $scope.flag2 = false;
-                $scope.flag = false;
-                var status = false;
-
-            });
-            $scope.getBackground = function (status) {
-                var c = "";
-                if (status) {
-                    c = '#f4f4f4';
-                } else {
-                    c = '#f4f4f4';
-                }
-                return {"background": c};
-            };
-            //日期选择
-            var calendar = new LCalendar();
-            calendar.init({
-                'trigger': '#select_date_please', //标签id
-                'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
-                'minDate': (new Date().getFullYear() - 10) + '-' + 1 + '-' + 1, //最小日期
-                'maxDate': (new Date().getFullYear()) + '-' + (new Date().getMonth() + 1) + '-' + (new Date().getDate()) //最大日期
-            });
-            $scope.dateChangeEvent = function(){
-                $scope.RECORD_DATE = $('#select_date_please').val();
-                console.log("到这里来了不空$scope.RECORD_DATE===" + $scope.RECORD_DATE);
-                $scope.listCenter($scope.WORK_SEQ, $scope.RECORD_DATE);
-            }
-            $scope.RECORD_DATE = '';
-            $scope.WORK_SEQ = '';
-            //input框显示位置
-            $("input").width($(window).width() - 120);
-            $scope.toDetailListCenter = function (item) {
-                $state.go('pm/journal/journalDetailList', {item: item})
-            }
-            $scope.toDetailList = function (item) {
-                $state.go('pm/journal/journalDetail', {item: item})
-            }
-            //选择班次
-            $scope.arr = [
-                {text: '全部'},
-                {text: '白班'},
-                {text: '中班'},
-                {text: '夜班'}];
-            $scope.toSelectClass = function () {
-                var hideSheet = $ionicActionSheet.show({
-                    buttons: $scope.arr,
-                    //destructiveText: 'Delete',
-                    /*titleText: '选择班次',
-                    cancelText: '取消',*/
-                    cancel: function () {
-                        // add cancel code..
-                    },
-                    buttonClicked: function (index) {
-                        $('#selectclass').val($scope.arr[index].text);
-                        //取班次的值
-                        $scope.WORK_SEQ = $scope.arr[index].text;
-                        if ($scope.WORK_SEQ == '全部') {
-                            $scope.WORK_SEQ = '';
-                        }
-                        $scope.listCenter($scope.WORK_SEQ, $scope.RECORD_DATE);
-                        return true;
-                    }
-                });
-            };
-            $scope.listCenter = function (WORK_SEQ, RECORD_DATE) {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                //集控中心运行日志概览
-                var params = {
-                    WORK_SEQ: WORK_SEQ,
-                    RECORD_DATE: RECORD_DATE
-                };
-
-                $http.post("ServiceName=JournalService&TransName=listCenterOperRecorde", params)
-                    .then(function (result) {
-                        $scope.listOper(WORK_SEQ, RECORD_DATE);
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        $scope.flag2 = false;
-                        if (result.data.code == '0') {
-                            $scope.journal2 = result.data.rList;
-                            console.log("journal2===" + JSON.stringify($scope.journal2));
-                            $scope.listcenter_EVENT_NO = $scope.journal2;
-                            if($scope.journal2.length == 0){
-                                showAlert.showMsg('','','没有查询到集控中心运行日志数据...');
-                            }
-                        } else if (result.data.coce == '1' || result.data.rList.length == 0) {
-                            $scope.flag2 = true;//不显示
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-            $scope.listOper = function (WORK_SEQ, RECORD_DATE) {
-                loadingAnimation.showLoading('数据载入中', 'loding', 0);
-                //生产运行日志概览
-                var params = {
-                    WORK_SEQ: WORK_SEQ,
-                    RECORD_DATE: RECORD_DATE
-                };
-                $http.post("ServiceName=JournalService&TransName=listOperRecorde",params)
-                    .then(function (result) {
-                        console.log(result);
-                        loadingAnimation.hideLoading();
-                        $scope.flag = false;
-                        if (result.data.code == '0') {
-                            $scope.journal = result.data.rList;
-                            $scope.listoper_EVENT_NO = $scope.journal;
-                            if($scope.journal.length == 0){
-                                showAlert.showMsg('','','没有查询到生产运行日志数据...');
-                            }
-                        } else if (result.data.coce == '1' || result, data.rList.length == 0) {
-                            $scope.flag = true;//不显示
-                        } else {
-                            showAlert.showMsg(res.msg);
-                        }
-                    }, function (error) {
-                        loadingAnimation.hideLoading();
-                        showAlert.showMsg(error, '', '网络异常,请检查网络', '确认')
-                    });
-            }
-
-        }
-    ])
-
 angular.module('BaiYin.pm.trouble.addTrouble', [
     'ionic',
     'ngCordova',
@@ -17583,47 +17655,6 @@ angular.module('BaiYin.messageDetail.mock', [
     var result = mocksData.resetData(data);
     $httpBackend.whenGET(/\?messageList/).respond(result);
 }]);
-angular.module('BaiYin.message.othersInfo', [
-    'ionic'
-])
-
-.config(['$stateProvider', function($stateProvider) {
-    $stateProvider.state('message/othersInfo', {
-        url: '/message/othersInfo:targetId',
-        controller: 'othersInfoController',
-        templateUrl: 'tabs/message/othersInfo/othersInfo.tpl.html',
-        authorizedRuleType: ['1']
-    })
-}])
-
-.controller('othersInfoController', ['$scope', '$http', '$ionicPopup', '$stateParams', 'Session',
-
-    function($scope, $http, $ionicPopup, $stateParams, Session) {
-        $scope.$on('$ionicView.beforeEnter', function() {
-            if (isApp) {
-                //获取用户信息
-                if (Session.user.DeviceType == 'Android') {
-                    window.JMessage.getUserInfo($stateParams.targetId, null,
-                        function(response) {
-                            $scope.userInfo = JSON.parse(response);
-                        },
-                        function(errorStr) {
-                            console.log(errorStr); // 输出错误信息。
-                        });
-                } else {
-                    window.JMessage.getUserInfo($stateParams.targetId, null,
-                        function(response) {
-                            $scope.userInfo = response;
-                        },
-                        function(errorStr) {
-                            console.log(errorStr); // 输出错误信息。
-                        });
-                }
-
-            }
-        });
-    }
-])
 angular.module('BaiYin.message.myInfo', [
     'ionic'
 ])
@@ -17720,6 +17751,47 @@ angular.module('BaiYin.message.myInfo', [
                 }
             });
         };
+    }
+])
+angular.module('BaiYin.message.othersInfo', [
+    'ionic'
+])
+
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('message/othersInfo', {
+        url: '/message/othersInfo:targetId',
+        controller: 'othersInfoController',
+        templateUrl: 'tabs/message/othersInfo/othersInfo.tpl.html',
+        authorizedRuleType: ['1']
+    })
+}])
+
+.controller('othersInfoController', ['$scope', '$http', '$ionicPopup', '$stateParams', 'Session',
+
+    function($scope, $http, $ionicPopup, $stateParams, Session) {
+        $scope.$on('$ionicView.beforeEnter', function() {
+            if (isApp) {
+                //获取用户信息
+                if (Session.user.DeviceType == 'Android') {
+                    window.JMessage.getUserInfo($stateParams.targetId, null,
+                        function(response) {
+                            $scope.userInfo = JSON.parse(response);
+                        },
+                        function(errorStr) {
+                            console.log(errorStr); // 输出错误信息。
+                        });
+                } else {
+                    window.JMessage.getUserInfo($stateParams.targetId, null,
+                        function(response) {
+                            $scope.userInfo = response;
+                        },
+                        function(errorStr) {
+                            console.log(errorStr); // 输出错误信息。
+                        });
+                }
+
+            }
+        });
     }
 ])
 angular.module('BaiYin.APPfeedback', [])

@@ -149,16 +149,16 @@ public class AttendStatisticsServiceSQL {
             sb.append("'");
         }
         if(MapUtil.valueIsNotNull(map,"DEPT")){
-            sb.append(" and dept='");
-            sb.append(MapUtil.stringValue(map,"DEPT"));
-            sb.append("'");
-        }
-        if(MapUtil.stringValue(map,"DEPT").equals("10")){
-            sb.append(" and  ifsapp.Company_Pers_Assign_API.Get_Org_Code('10', person_id, SYSDATE) is not null");
-        }else {
-            sb.append(" and  ifsapp.Company_Pers_Assign_API.Get_Org_Code('10', person_id, SYSDATE) = '");
-            sb.append(MapUtil.stringValue(map, "DEPT"));
-            sb.append("'");
+            if(MapUtil.stringValue(map,"DEPT").equals("10")){
+                sb.append(" and  ifsapp.Company_Pers_Assign_API.Get_Org_Code('10', person_id, SYSDATE) is not null");
+            }else {
+                sb.append(" and dept='");
+                sb.append(MapUtil.stringValue(map,"DEPT"));
+                sb.append("'");
+                sb.append(" and  ifsapp.Company_Pers_Assign_API.Get_Org_Code('10', person_id, SYSDATE) = '");
+                sb.append(MapUtil.stringValue(map, "DEPT"));
+                sb.append("'");
+            }
         }
         sb.append(" and ifsapp.update_news_person_api.Get_C_Check_Exist(person_id) = 'FALSE'");
         sb.append(" and ifsapp.COMPANY_EMP_CATEGORY_API.Get_Emp_Cat_Name('10', person_id) not in ('08', '09')");

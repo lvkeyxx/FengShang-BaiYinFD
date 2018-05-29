@@ -27,13 +27,13 @@
                 <tr ng-repeat="ketList in elemarketList">
                     <td>{{ketList.CONTRANCT_NAME}}</td>
                     <td>{{ketList.TRADE_MONTH}}</td>
-                    <td>{{ketList.APPLY_CHARGE_VALUE}}</td>
-                    <td>{{ketList.CLEARING_CHARGE_VALUE}}</td>
+                    <td>{{ketList.APPLY_CHARGE_VALUE |number:0}}</td>
+                    <td>{{ketList.CLEARING_CHARGE_VALUE |number:0}}</td>
                 </tr>
                 <tr>
                     <td colspan=2>合计(全厂)</td>
-                    <td>{{APPLY_CHARGE_VALUE_SUM}}</td>
-                    <td>{{CLEARING_CHARGE_VALUE_SUM}}</td>
+                    <td>{{APPLY_CHARGE_VALUE_SUM |number:0}}</td>
+                    <td>{{CLEARING_CHARGE_VALUE_SUM |number:0}}</td>
                 </tr>
             </table>
         </div>

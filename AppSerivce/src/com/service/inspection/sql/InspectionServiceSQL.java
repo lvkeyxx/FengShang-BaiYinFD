@@ -526,7 +526,7 @@ public class InspectionServiceSQL {
         sb.append(" FROM ifsapp.c_inspect_record ");
         sb.append(" where PERSON_ID = '");
         sb.append("" + map.get(Constant.USER_ID) + "'");
-        sb.append(" and EQUIP_NO='" + map.get("EQUIP_NO") + "')");
+        sb.append(" and EQUIP_NO='" + map.get("EQUIP_NO") + "'");
         sb.append(" and plan_id in (" + sbs + ")");
         sb.append(" and CONTRACT='" + MapUtil.stringValue(map, "CONTRACT") + "'");
         return sb.toString();

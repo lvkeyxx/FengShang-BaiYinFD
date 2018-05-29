@@ -1,0 +1,266 @@
+<ion-view class="SettlementTradCSS">
+    <ion-nav-title>结算电量</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="全厂" ng-click="setTlementQc()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="setElementSelectMounth">
+                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)" id="setTlementYearShowID"></button>
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
+                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <line id="SettlementmainQC" legend="legend"  data="data"></line>
+                    </div>
+                </div>
+                <div class="marketrbased clearfix">
+                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>月份</th>
+                            <th>结算电量</th>
+                            <th>结算电价</th>
+                            <th>市场化电量</th>
+                            <th>市场化电价</th>
+                            <th>基础电量</th>
+                            <th>基础电价</th>
+                        </tr>
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
+                            <td>{{elementList.TRADE_MONTH}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
+                            <td>合计</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="甘" ng-click="setTlementGs()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="setElementSelectMounth">
+                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
+                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
+                    <div class="setElementGlassMounth">
+                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <line id="SettlementmainGS" legend="legend"  data="data"></line>
+                    </div>
+                </div>
+                <div class="marketrbased clearfix">
+                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>月份</th>
+                            <th>结算电量</th>
+                            <th>结算电价</th>
+                            <th>市场化电量</th>
+                            <th>市场化电价</th>
+                            <th>基础电量</th>
+                            <th>基础电价</th>
+                        </tr>
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
+                            <td>{{elementList.TRADE_MONTH}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
+                            <td>合计</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="青" ng-click="setTlementQh()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="setElementSelectMounth">
+                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
+                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
+                    <div class="setElementGlassMounth">
+                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()"  readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <line id="SettlementmainQH" legend="legend"  data="data"></line>
+                    </div>
+                </div>
+                <div class="marketrbased clearfix">
+                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>月份</th>
+                            <th>结算电量</th>
+                            <th>结算电价</th>
+                            <th>市场化电量</th>
+                            <th>市场化电价</th>
+                            <th>基础电量</th>
+                            <th>基础电价</th>
+                        </tr>
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
+                            <td>{{elementList.TRADE_MONTH}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
+                            <td>合计</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="宁" ng-click="setTlementNx()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="setElementSelectMounth">
+                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
+                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
+                    <div class="setElementGlassMounth">
+                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <line id="SettlementmainNX" legend="legend"  data="data"></line>
+                    </div>
+                </div>
+                <div class="marketrbased clearfix">
+                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>月份</th>
+                            <th>结算电量</th>
+                            <th>结算电价</th>
+                            <th>市场化电量</th>
+                            <th>市场化电价</th>
+                            <th>基础电量</th>
+                            <th>基础电价</th>
+                        </tr>
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
+                            <td>{{elementList.TRADE_MONTH}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
+                            <td>合计</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="新" ng-click="setTlementXj()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="setElementSelectMounth">
+                    <button class="setElementleftSelect" ng-click="getPresetTlementYear(nowElementYear)"></button>
+                    <span ng-click="chooseNewYear()">{{nowElementYear}}年</span>
+                    <button class="setTlementrightSelect" ng-click="getNextsetTlementYear(nowElementYear)" style="display: none"></button>
+                    <div class="setElementGlassMounth">
+                        <input class="setElementCount" type="text" placeholder="请选择所在域" ng-click="toSelectField()" value="{{getElementTradDepartValue}}" readonly>
+                    </div>
+                </div>
+                <div class="countResult">
+                    <div class="ydNum">
+                        <line id="SettlementmainXJ" legend="legend"  data="data"></line>
+                    </div>
+                </div>
+                <div class="marketrbased clearfix">
+                    <div class="rft">单位：(万千瓦时)(元/兆瓦时)</div>
+                </div>
+                <div class="graphList">
+                    <table>
+                        <tr>
+                            <th>月份</th>
+                            <th>结算电量</th>
+                            <th>结算电价</th>
+                            <th>市场化电量</th>
+                            <th>市场化电价</th>
+                            <th>基础电量</th>
+                            <th>基础电价</th>
+                        </tr>
+                        <tr ng-repeat="elementList in getElementTradList track by $index" ng-click="getElementToTrandMonth(elementList)">
+                            <td>{{elementList.TRADE_MONTH}}</td>
+                            <td>{{elementList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.MARKET_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                        <tr ng-repeat="elementAllList in getElementTradAllList track by $index">
+                            <td>合计</td>
+                            <td>{{elementAllList.TOTAL_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.AVG_CHARGE_PRVICE | number:2}}</td>
+                            <td>{{elementAllList.MARKET_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.RIGHTS_CHARGE_PRICE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_VALUE | number:2}}</td>
+                            <td>{{elementAllList.BASE_CHARGE_PRICE | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="height: 110px"></div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

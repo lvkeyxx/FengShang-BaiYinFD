@@ -1,0 +1,140 @@
+<ion-view class="spotTransactionCSS">
+    <ion-nav-title>现货交易</ion-nav-title>
+    <ion-tabs class="tabs-icon-only tabs-positive tabs-top mortgagetab">
+        <ion-tab title="日统计" ng-click="toSpotDay()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="selectDateBtn" ng-click="openDatePicker()" id="countDayId">{{now | date : "yyyy-MM-dd"}}</button>
+                </div>
+                <div class="spotmarketList">
+                    <div class="spottransatright">单位：(万千瓦时)(元/兆瓦时)</div>
+                    <table>
+                        <tr>
+                            <th>
+                                <span>域名称</span>
+                            </th>
+                            <th>
+                                <span>申报电量</span>
+                            </th>
+                            <th>
+                                <span>申报电价</span>
+                            </th>
+                            <th>
+                                <span>出清电量</span>
+                            </th>
+                            <th>
+                                <span>出清电价</span>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="spotList in spotTradList">
+                            <td>{{spotList.CONTRACT_NAME}}</td>
+                            <td>{{spotList.APPLY_CHARGE_VALUE |number:0}}</td>
+                            <td>{{spotList.APPLY_CHARGE_PRICE |number:2}}</td>
+                            <td>{{spotList.CLEARING_CHARGE_VALUE |number:0}}</td>
+                            <td>{{spotList.CLEARING_CHARGE_PRICE |number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>合计(全厂)</td>
+                            <td>{{APPLY_CHARGE_VALUE_SUM |number:0}}</td>
+                            <td>{{APPLY_CHARGE_PRICE_SUM |number:2}}</td>
+                            <td>{{CLEARING_CHARGE_VALUE_SUM |number:0}}</td>
+                            <td>{{CLEARING_CHARGE_PRICE_SUM |number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="月统计" ng-click="tospotCountMounth()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="leftSelect" ng-click="getPreMonth(nowMounth)" id="countMouthShowID"></button>
+                    {{nowMounth | date : "yyyy-MM"}}
+                    <button id="monthSelect" class="monthSelect" ng-click="getNextMonth(nowMounth)" style="display: none"></button>
+                </div>
+                <div class="spotmarketList">
+                    <div class="spottransatright">单位：(万千瓦时)(元/兆瓦时)</div>
+                    <table>
+                        <tr>
+                            <th>
+                                <span>域名称</span>
+                            </th>
+                            <th>
+                                <span>申报电量</span>
+                            </th>
+                            <th>
+                                <span>申报电价</span>
+                            </th>
+                            <th>
+                                <span>出清电量</span>
+                            </th>
+                            <th>
+                                <span>出清电价</span>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="spotList in spotTradList">
+                            <td>{{spotList.CONTRACT_NAME}}</td>
+                            <td>{{spotList.APPLY_CHARGE_VALUE |number:0}}</td>
+                            <td>{{spotList.APPLY_CHARGE_PRICE |number:2}}</td>
+                            <td>{{spotList.CLEARING_CHARGE_VALUE |number:0}}</td>
+                            <td>{{spotList.CLEARING_CHARGE_PRICE |number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>合计(全厂)</td>
+                            <td>{{APPLY_CHARGE_VALUE_SUM |number:0}}</td>
+                            <td>{{APPLY_CHARGE_PRICE_SUM |number:2}}</td>
+                            <td>{{CLEARING_CHARGE_VALUE_SUM |number:0}}</td>
+                            <td>{{CLEARING_CHARGE_PRICE_SUM |number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="年统计" ng-click="tospotCountYear()">
+            <ion-content has-bouncing="false" scrollbar-y="false">
+                <div class="selectMounth">
+                    <button class="leftSelect" ng-click="getPreYear(nowYear)" id="countYearShowID"></button>
+                    {{nowYear}}年
+                    <button id="yearSelect" class="yearSelect" ng-click="getNextYear(nowYear)" style="display: none"></button>
+                </div>
+                <div class="spotmarketList">
+                    <div class="spottransatright">单位：(万千瓦时)(元/兆瓦时)</div>
+                    <table>
+                        <tr>
+                            <th>
+                                <span>域名称</span>
+                            </th>
+                            <th>
+                                <span>申报电量</span>
+                            </th>
+                            <th>
+                                <span>申报电价</span>
+                            </th>
+                            <th>
+                                <span>出清电量</span>
+                            </th>
+                            <th>
+                                <span>出清电价</span>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="spotList in spotTradList">
+                            <td>{{spotList.CONTRACT_NAME}}</td>
+                            <td>{{spotList.APPLY_CHARGE_VALUE |number:0}}</td>
+                            <td>{{spotList.APPLY_CHARGE_PRICE |number:2}}</td>
+                            <td>{{spotList.CLEARING_CHARGE_VALUE |number:0}}</td>
+                            <td>{{spotList.CLEARING_CHARGE_PRICE |number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>合计(全厂)</td>
+                            <td>{{APPLY_CHARGE_VALUE_SUM |number:0}}</td>
+                            <td>{{APPLY_CHARGE_PRICE_SUM |number:2}}</td>
+                            <td>{{CLEARING_CHARGE_VALUE_SUM |number:0}}</td>
+                            <td>{{CLEARING_CHARGE_PRICE_SUM |number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
+
+</ion-view>

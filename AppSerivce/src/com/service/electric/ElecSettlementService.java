@@ -13,12 +13,17 @@ import com.service.IJsonService;
 import com.service.electric.sql.ElecSettlementSQL;
 import com.utility.IbatisDBUtil;
 import com.utility.ListUtil;
+import com.utility.MapUtil;
 
 public class ElecSettlementService extends AJsonService implements IJsonService{
 	
 	static Map<String, String> domainIdMap = new HashMap<String, String>();
 	static {
 		domainIdMap.put("10", "全公司");
+		domainIdMap.put("GS", "全省");
+		domainIdMap.put("QH", "全省");
+		domainIdMap.put("NX", "全省");
+		domainIdMap.put("XJ", "全省");
 		domainIdMap.put("1101", "捡财塘风电场");
 		domainIdMap.put("1201", "北大桥东风电场");
 		domainIdMap.put("1301", "桥东第二风电场");
@@ -50,21 +55,20 @@ public class ElecSettlementService extends AJsonService implements IJsonService{
 		    logger.info("departsql====="+departsql);
 		    List<Map> dList = new IbatisDBUtil().executeSql(departsql);
 		    List<Map> departList = new ArrayList<Map>();
-		    String domains = "1101, 1201, 1301, 1401";
+		    String domains = "";
 		    if("GS".equals(map.get("provience"))) {// 甘肃电厂
-		    	domains = "1101, 1201, 1301, 1401";
+		    	domains = "GS, 1101, 1201, 1301, 1401";
 		    } else if("QH".equals(map.get("provience"))) {
-		    	domains = "1701, 1601";
+		    	domains = "QH, 1701, 1601";
 		    } else if("NX".equals(map.get("provience"))) {
-		    	domains = "1501";
+		    	domains = "NX, 1501";
 		    } else if("XJ".equals(map.get("provience"))) {
-		    	domains = "1801, 1802, 1803, 1804, 1901";
+		    	domains = "XJ, 1801, 1802, 1803, 1804, 1901";
 		    }
 			for(String domain : domains.split(",")) {
 				Map<String, String> departmap = new HashMap<String, String> ();
 				departmap.put("CONTRACT", domain.trim());
 				departmap.put("CONTRACT_NAME", domainIdMap.get(domain.trim()));
-				System.out.println(domainIdMap.get(domain));
 				departList.add(departmap);
 			}
 			if(departList.isEmpty()) {
@@ -95,6 +99,31 @@ public class ElecSettlementService extends AJsonService implements IJsonService{
         String code = "0";
         String msg = "success";
         try{
+        	String[] domainsArray = null ;
+        	if(MapUtil.valueIsNotNull(map, "CONTRACT")) {
+        		String CONTRACT = MapUtil.stringValue(map, "CONTRACT");
+            	if(CONTRACT.equals("GS")) {
+            		map.put("PROVIENCE", "GS");
+            		domainsArray = "1101, 1201, 1301, 1401".split(",");
+            	} else if(CONTRACT.equals("QH")) {
+            		map.put("PROVIENCE", "QH");
+            		domainsArray = "1701, 1601".split(",");
+            	} else if(CONTRACT.equals("NX")) {
+            		map.put("PROVIENCE", "NX");
+            		domainsArray = "1501".split(",");
+            	} else if(CONTRACT.equals("XJ")) {
+            		map.put("PROVIENCE", "XJ");
+            		domainsArray = "1801, 1802, 1803, 1804, 1901".split(",");
+            	} else {
+            		domainsArray = MapUtil.stringValue(map, "CONTRACT").split(",");
+            	}
+            	StringBuffer sb = new StringBuffer();
+            	sb.append("'" + domainsArray[0].trim() + "'");
+            	for(int i = 1; i < domainsArray.length; i++) {
+            		sb.append(",'" + domainsArray[i].trim() + "'");
+            	}
+            	map.put("CONTRACT", sb.toString());
+            }
         	// 饼图sql
             String yearpsql = ElecSettlementSQL.getElecSettlementYearInfo(map);
             logger.info("yearpsql====="+yearpsql);
