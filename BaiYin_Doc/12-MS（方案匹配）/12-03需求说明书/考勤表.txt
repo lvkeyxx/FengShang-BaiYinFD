@@ -1,0 +1,8 @@
+--考勤规则
+grant all on  ifsapp.c_time_rule_tab to sdicapp;
+--考勤默认域
+grant all on  ifsapp.c_time_rule_contract_tab to sdicapp;
+--考勤默认蓝牙
+grant all on  ifsapp.c_time_rule_bluetooth_tab to sdicapp;
+--考勤登记表
+grant all on  ifsapp.C_TIME_TRANSACTION_TAB to sdicapp;

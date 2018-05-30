@@ -1,0 +1,3 @@
+select a.contract,a.description,b.city  from COMPANY_SITE a
+left join COMPANY_ADDRESS b on b.address_id in (select min(t.address_id) from COMPANY_ADDRESS t group by t.company)
+and a.company = b.company

@@ -1,0 +1,454 @@
+--74测试库
+CREATE  TABLESPACE "SDICAPP" 
+DATAFILE '/u01/app/oradata/TRAIN/SDICAPP.DBF' 
+SIZE 500M 
+AUTOEXTEND ON 
+NEXT 10M 
+MAXSIZE UNLIMITED 
+LOGGING EXTENT 
+MANAGEMENT LOCAL 
+SEGMENT SPACE 
+MANAGEMENT AUTO; 
+  
+CREATE USER "SDICAPP" 
+PROFILE "DEFAULT" 
+IDENTIFIED BY "SDICAPP" 
+DEFAULT TABLESPACE "SDICAPP" 
+TEMPORARY TABLESPACE "TEMP" 
+QUOTA UNLIMITED ON "SDICAPP" 
+ACCOUNT UNLOCK;
+
+GRANT "CONNECT" TO "SDICAPP";
+GRANT "RESOURCE" TO "SDICAPP";
+--GRANT "DBA" TO "SDICAPP";
+--grant connect to sdicapp with admin option;
+grant create session to sdicapp with admin option;
+grant create table to sdicapp with admin option;
+grant create sequence to sdicapp with admin option;
+
+--创建数据表（表名待定）
+CREATE TABLE SDIC_INDEX_DATA (
+MEASURE_PERIOD VARCHAR(10) NOT NULL, --时间
+MEASURE_TYPE VARCHAR(2) NOT NULL, --时间类型
+COMPANY_ID INT NOT NULL, --公司ID
+INDEX_ID INT NOT NULL, --指标ID
+POWER_UNIT_ID INT NOT NULL, --机组ID
+NUM_VALUE Float, --指标值
+LAST_UPDATE_DATE date DEFAULT sysdate --最后更新时间
+);
+
+alter table SDIC_INDEX_DATA
+  add constraint PK_KEY primary key (MEASURE_PERIOD, COMPANY_ID, INDEX_ID, POWER_UNIT_ID, MEASURE_TYPE);
+
+--创建SIS数据表
+CREATE TABLE SDIC_SIS_DATA (
+MEASURE_POINT_ID VARCHAR(200), --测点名称
+MEASURE_TIME VARCHAR(10), --检测时间
+MEASURE_POINT_VALUE Float, --测点值
+LAST_UPDATE_DATE date DEFAULT sysdate --最后更新时间
+);
+
+--创建测点指标映射表
+CREATE TABLE SDIC_SIS_INDEX_MAPPING (
+ID INT NOT NULL, --id
+MEASURE_POINT_ID VARCHAR(200), --测点ID
+MEASURE_POINT_NAME VARCHAR(200), --测点名称
+INDEX_ID INT NOT NULL, --指标ID
+POWER_UNIT_ID INT NOT NULL, --机组号
+primary key (MEASURE_POINT_ID, INDEX_ID, POWER_UNIT_ID)
+);
+
+----创建指标维度表
+CREATE TABLE SDIC_INDEX_DIMENSION (
+INDEX_ID INT NOT NULL PRIMARY KEY, --指标ID
+INDEX_NAME VARCHAR(200), --指标名称
+INDEX_TYPE VARCHAR(200), --指标类型
+CAL_TYPE VARCHAR(2) DEFAULT 'n', --计算类型
+MEASURE_TYPE VARCHAR(2) NOT NULL, --时间类型
+IOC_IMAGE VARCHAR(200),		  --图标文件
+UNIT_NAME NVARCHAR2(20)     --指标单位
+);
+
+--建议表
+CREATE TABLE SDIC_APP_SUGGESTION (
+ID INTEGER NOT NULL PRIMARY KEY,   --建议ID号
+SUBJECT  VARCHAR2(50),    --建议的主题
+CONTENT  VARCHAR2(2000),    --建议的内容
+PHONE  VARCHAR2(50),    --建议人联系方式
+USER_NAME  VARCHAR2(50),  --建议人姓名
+USER_ID  VARCHAR2(20),    --建议人ID
+ORG_CODE VARCHAR2(50),    --组织机构编码
+SUBMIT_TIME date DEFAULT sysdate --最后更新时间 
+);
+
+--建议sequence
+CREATE SEQUENCE seqSuggestion
+INCREMENT BY 1
+START WITH 1
+NOMAXvalue
+NOCYCLE
+CACHE 10;
+
+--日志表
+CREATE TABLE SDIC_APP_LOG (
+ID INTEGER NOT NULL PRIMARY KEY,   --日志ID号
+REQUEST_URL VARCHAR2(2000),		   --url
+CLIENT_IP VARCHAR2(50),            --客户端地址
+CLIENT_TYPE VARCHAR2(10) default 'APP', --客户端类型(APP,WEB)
+USER_ID VARCHAR2(50),          	   --用户ID
+SERVICE_NAME VARCHAR2(50),         --服务名
+TRANS_NAME VARCHAR2(50),           --方法名
+RESPONSE_CODE VARCHAR2(10),		   --返回码
+INPUT_PARAM_MAP VARCHAR2(2000),    --传入参数
+OUTPUT_PARAM_MAP CLOB,             --输出结果
+START_TIME TIMESTAMP(6) WITH LOCAL TIME ZONE,                   --开始时间
+END_TIME TIMESTAMP(6) WITH LOCAL TIME ZONE,			           --结束时间
+LAST_UPDATE_DATE date DEFAULT sysdate --最后更新时间 
+);
+
+--日志sequence
+CREATE SEQUENCE seqLog
+INCREMENT BY 1
+START WITH 1
+NOMAXvalue
+NOCYCLE
+CACHE 10;
+
+CREATE TABLE SDIC_APP_USER_DEVICE (
+DEVICE_ID VARCHAR(100),
+USER_ID NUMBER,
+REGISTER_TIME date DEFAULT sysdate,
+isdelete VARCHAR2(1) DEFAULT '1',
+LOGIN_NAME VARCHAR(50)
+);
+
+comment on column SDIC_APP_USER_DEVICE.device_id
+  is '设备号';
+comment on column SDIC_APP_USER_DEVICE.user_id
+  is '用户ID';
+comment on column SDIC_APP_USER_DEVICE.register_time
+  is '设置时间';
+comment on column SDIC_APP_USER_DEVICE.isdelete
+  is '有效标志,1为有效,0为无效';
+  
+alter table SDIC_APP_USER_DEVICE
+  add constraint UK_USER_ID_DEVICE_ID primary key (DEVICE_ID, USER_ID);
+
+
+create table SDIC_APP_USER
+(
+  user_id    NUMBER not null,
+  user_name  VARCHAR2(50),
+  org_id     NUMBER,
+  login_name VARCHAR2(50) unique,
+  password   VARCHAR2(50),
+  image      VARCHAR2(200),
+  isdelete   VARCHAR2(1)
+);
+
+comment on column SDIC_APP_USER.user_id
+  is '用户ID';
+comment on column SDIC_APP_USER.user_name
+  is '用户名';
+comment on column SDIC_APP_USER.org_id
+  is '机构ID';
+comment on column SDIC_APP_USER.login_name
+  is '登录名';
+comment on column SDIC_APP_USER.password
+  is '密码';
+comment on column SDIC_APP_USER.image
+  is '头像图片路径';
+comment on column SDIC_APP_USER.isdelete
+  is '有效标志,1为有效,0为无效';
+
+alter table SDIC_APP_USER
+  add constraint PK_USER_ID primary key (USER_ID);
+  
+create table SDIC_APP_ROLE
+(
+  role_id   NUMBER not null,
+  role_name VARCHAR2(20),
+  isdelete  VARCHAR2(1)
+);
+
+comment on column SDIC_APP_ROLE.role_id
+  is '角色ID';
+comment on column SDIC_APP_ROLE.role_name
+  is '角色名称';
+comment on column SDIC_APP_ROLE.isdelete
+  is '有效标志,1为有效,0为无效';
+
+alter table SDIC_APP_ROLE
+  add constraint PK_ROLE_ID primary key (ROLE_ID);
+  
+create table SDIC_APP_USER_ROLE
+(
+  user_id NUMBER,
+  role_id NUMBER
+);
+
+comment on column SDIC_APP_USER_ROLE.user_id
+  is '用户ID';
+comment on column SDIC_APP_USER_ROLE.role_id
+  is '角色ID';
+  
+alter table SDIC_APP_USER_ROLE
+  add constraint PK_USER_ID_ROLE_ID primary key (USER_ID, ROLE_ID);
+  
+create table SDIC_APP_PRIVILEGE
+(
+  privilege_id   NUMBER not null,
+  privilege_name VARCHAR2(50),
+  privilege_type VARCHAR2(20),
+  isdelete       VARCHAR2(1)
+);
+
+comment on column SDIC_APP_PRIVILEGE.privilege_id
+  is '权限ID';
+comment on column SDIC_APP_PRIVILEGE.privilege_name
+  is '权限名称';
+comment on column SDIC_APP_PRIVILEGE.privilege_type
+  is '权限类型(如菜单为MENU)';
+comment on column SDIC_APP_PRIVILEGE.isdelete
+  is '有效标志,1为有效,0为无效';
+
+alter table SDIC_APP_PRIVILEGE
+  add constraint PK_PRIVILEGE_ID primary key (PRIVILEGE_ID);
+  
+create table SDIC_APP_ROLE_PRIVILEGE
+(
+  role_id      NUMBER,
+  privilege_id NUMBER
+);
+
+comment on column SDIC_APP_ROLE_PRIVILEGE.role_id
+  is '角色ID';
+comment on column SDIC_APP_ROLE_PRIVILEGE.privilege_id
+  is '权限ID';
+  
+alter table SDIC_APP_ROLE_PRIVILEGE
+  add constraint PK_ROLE_ID_PRIVILEGE_ID primary key (ROLE_ID, PRIVILEGE_ID);
+  
+create table SDIC_APP_MENU
+(
+  menu_id   NUMBER not null,
+  menu_name VARCHAR2(20),
+  parent_id NUMBER,
+  url       VARCHAR2(200),
+  sort      NUMBER
+);
+
+comment on column SDIC_APP_MENU.menu_id
+  is '菜单ID';
+comment on column SDIC_APP_MENU.menu_name
+  is '菜单名称';
+comment on column SDIC_APP_MENU.parent_id
+  is '父级菜单ID';
+comment on column SDIC_APP_MENU.url
+  is '菜单链接';
+comment on column SDIC_APP_MENU.sort
+  is '序号';
+
+alter table SDIC_APP_MENU
+  add constraint PK_MENU_ID primary key (MENU_ID);
+
+create table SDIC_APP_MENU_PRIVILEGE
+(
+  privilege_id NUMBER,
+  menu_id      NUMBER
+);
+
+comment on column SDIC_APP_MENU_PRIVILEGE.privilege_id
+  is '权限ID';
+comment on column SDIC_APP_MENU_PRIVILEGE.menu_id
+  is '菜单ID';
+  
+alter table SDIC_APP_MENU_PRIVILEGE
+  add constraint PK_PRIVILEGE_ID_MENU_ID primary key (PRIVILEGE_ID, MENU_ID);
+  
+create table SDIC_APP_ORG
+(
+  org_id     NUMBER not null,
+  org_name   VARCHAR2(50),
+  parent_id  NUMBER,
+  short_name VARCHAR2(50),
+  sort       NUMBER,
+  IFS_ORG_ID VARCHAR2(20)
+);
+
+comment on column SDIC_APP_ORG.org_id
+  is '机构ID';
+comment on column SDIC_APP_ORG.org_name
+  is '机构名称';
+comment on column SDIC_APP_ORG.parent_id
+  is '父级机构ID';
+comment on column SDIC_APP_ORG.short_name
+  is '机构简称';
+comment on column SDIC_APP_ORG.sort
+  is '序号';
+comment on column SDIC_APP_ORG.IFS_ORG_ID
+  is 'IFS机构ID';
+  
+alter table SDIC_APP_ORG
+  add constraint PK_ORG_ID primary key (ORG_ID);
+  
+alter table SDIC_APP_ORG
+  add constraint UK_IFS_ORG_ID unique (IFS_ORG_ID);
+  
+create table SDIC_APP_GROUP
+(
+  group_id   NUMBER not null,
+  group_name VARCHAR2(50),
+  isdelete   VARCHAR2(1)
+);
+
+comment on column SDIC_APP_GROUP.group_id
+  is '用户组ID';
+comment on column SDIC_APP_GROUP.group_name
+  is '用户组名称';
+comment on column SDIC_APP_GROUP.isdelete
+  is '有效标志,1为有效,0为无效';
+  
+alter table SDIC_APP_GROUP
+  add constraint PK_GROUP_ID primary key (GROUP_ID);
+  
+create table SDIC_APP_USER_GROUP
+(
+  user_id  NUMBER,
+  group_id NUMBER
+);
+
+comment on column SDIC_APP_USER_GROUP.user_id
+  is '用户ID';
+comment on column SDIC_APP_USER_GROUP.group_id
+  is '用户组ID';
+  
+alter table SDIC_APP_USER_GROUP
+  add constraint PK_USER_ID_GROUP_ID primary key (USER_ID, GROUP_ID);
+
+create table SDIC_APP_GROUP_ROLE
+(
+  role_id  NUMBER,
+  group_id NUMBER
+);
+
+comment on column SDIC_APP_GROUP_ROLE.role_id
+  is '角色ID';
+comment on column SDIC_APP_GROUP_ROLE.group_id
+  is '用户组ID';
+  
+alter table SDIC_APP_GROUP_ROLE
+  add constraint PK_ROLE_ID_GROUP_ID primary key (ROLE_ID, GROUP_ID);
+  
+
+--业务表
+-- Create table
+create table SDIC_APP_BUSIN_TYPE
+(
+  type_id   VARCHAR2(20) not null,
+  type_name VARCHAR2(50),
+  isdelete  VARCHAR2(1)
+);
+
+-- Add comments to the columns 
+comment on column SDIC_APP_BUSIN_TYPE.type_id  is '业务类型编码';
+comment on column SDIC_APP_BUSIN_TYPE.type_name  is '业务类型名称';
+comment on column SDIC_APP_BUSIN_TYPE.isdelete  is '有效标志,1为有效,0为无效';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table SDIC_APP_BUSIN_TYPE
+  add constraint PK_TYPE_ID primary key (TYPE_ID);
+ 
+
+
+
+
+--字典表
+-- Create table
+create table SDIC_APP_DICTIONARY
+(
+  busin_id   VARCHAR2(20) not null,
+  busin_name VARCHAR2(500),
+  type_id    VARCHAR2(20) not null,
+  isdelete   VARCHAR2(1),
+  sort       NUMBER
+);
+
+-- Add comments to the columns 
+comment on column SDIC_APP_DICTIONARY.busin_id  is '业务代码';
+comment on column SDIC_APP_DICTIONARY.busin_name  is '业务名称';
+comment on column SDIC_APP_DICTIONARY.type_id  is '业务类型编码';
+comment on column SDIC_APP_DICTIONARY.isdelete  is '有效标志,1为有效,0为无效';
+comment on column SDIC_APP_DICTIONARY.sort  is '序号';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table SDIC_APP_DICTIONARY
+  add constraint PK_BUSIN_ID primary key (BUSIN_ID, TYPE_ID);
+  
+--消息推送队列表
+CREATE TABLE SDIC_APP_MESSAGE (
+ID INT primary key,--ID号
+DESTINATION  VARCHAR(50),--发送目标
+CONTENT VARCHAR(2000),--发送内容
+TYPE VARCHAR(10),--发送类型
+SENDRESULT VARCHAR(10) DEFAULT 'FALSE', --发送结果状态
+RESPONSECODE INT, --结果返回码
+SENDCOUNT INT DEFAULT 0,--发送次数
+REMARK VARCHAR(100), --备注
+SENDTIME timestamp DEFAULT sysdate, --发送时间
+CREATETIME timestamp DEFAULT sysdate--创建时间
+);
+
+--附件表
+CREATE TABLE SDIC_APP_ATTACHMENT(
+ATTACHMENT_ID INT,--附件组ID号
+ATTACHMENT_NO INT,--附件号
+USER_ID VARCHAR(50),--上传人
+FILE_SIZE VARCHAR(20),--字节数
+FILE_EXTENSION VARCHAR(10),--文件后缀
+FILE_NAME VARCHAR(200), --文件名称
+FILE_NAME_SOURCE VARCHAR(200), --原文件名称
+FILE_TYPE VARCHAR(50), --文件类型
+FILE_PATH VARCHAR(500),--文件路径
+LAST_UPDATE_TIME timestamp DEFAULT systimestamp, --最后更新时间
+CREATETIME timestamp DEFAULT systimestamp--创建时间
+);
+
+alter table SDIC_APP_ATTACHMENT
+  add constraint PK_ATTACHMENT_ID primary key (ATTACHMENT_ID, ATTACHMENT_NO);
+
+insert into  SDIC_APP_ORG values (1,'总机构',0,'总机构',1,'00');
+insert into sdic_app_menu values(1,'菜单',0,'',1);
+insert into SDIC_APP_USER values(1,'admin',1,'admin','bjadmin2017','','1');
+
+grant select on sdic_index_data to ifsapp;
+grant select on sdic_index_dimension to ifsapp;
+grant select on sdic_sis_index_mapping to ifsapp;
+grant select on sdic_sis_data to ifsapp;
+grant select on SDIC_APP_SUGGESTION to ifsapp;
+grant insert on SDIC_APP_SUGGESTION to ifsapp;
+grant select on SDIC_APP_LOG to ifsapp;
+grant insert on SDIC_APP_LOG to ifsapp;
+grant select on seqLog to ifsapp;
+grant select on seqSuggestion to ifsapp;
+grant select on SDIC_APP_USER_DEVICE to ifsapp;
+grant insert on SDIC_APP_USER_DEVICE to ifsapp;
+grant select on  SDIC_APP_USER to ifsapp;
+grant insert on  SDIC_APP_USER to ifsapp;
+grant update on  SDIC_APP_USER to ifsapp;
+grant select on  SDIC_APP_ROLE to ifsapp;
+grant select on  SDIC_APP_USER_ROLE to ifsapp;
+grant select on  SDIC_APP_PRIVILEGE to ifsapp;
+grant select on  SDIC_APP_ROLE_PRIVILEGE to ifsapp;
+grant select on  SDIC_APP_MENU to ifsapp;
+grant select on  SDIC_APP_MENU_PRIVILEGE to ifsapp;
+grant select on  SDIC_APP_ORG to ifsapp;
+grant insert on  SDIC_APP_ORG to ifsapp;
+grant update on  SDIC_APP_ORG to ifsapp;
+grant select on  SDIC_APP_GROUP to ifsapp;
+grant select on  SDIC_APP_USER_GROUP to ifsapp;
+grant select on  SDIC_APP_GROUP_ROLE to ifsapp;
+
+grant select, insert, update, delete on SDIC_APP_BUSIN_TYPE to ifsapp;
+grant select, insert, update, delete on SDIC_APP_DICTIONARY to ifsapp;
+
+grant select, insert, update on  SDIC_APP_MESSAGE to ifsapp;
+grant select, insert, update, delete on  SDIC_APP_ATTACHMENT to ifsapp;

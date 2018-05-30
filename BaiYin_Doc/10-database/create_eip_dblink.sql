@@ -1,0 +1,36 @@
+DROP DATABASE LINK EIP_ON;
+
+CREATE DATABASE LINK EIP_ON
+ CONNECT TO EIP
+ IDENTIFIED BY EIP
+ USING '(DESCRIPTION =
+(ADDRESS_LIST =
+(ADDRESS = (PROTOCOL = TCP)(HOST = 10.0.10.11
+
+)(PORT = 1521))
+)
+(CONNECT_DATA =
+(service_name=EIP)
+)
+)';
+
+
+
+
+CREATE OR REPLACE FORCE VIEW sdicapp.WEB_CATALOG
+AS
+   select * from eip.WEB_CATALOG@EIP_ON
+          WITH READ ONLY;
+
+
+CREATE MATERIALIZED VIEW sdicapp.web_repository 
+REFRESH complete  START WITH SYSDATE
+ NEXT SYSDATE+1/24
+  AS SELECT * FROM  eip.web_repository@eip_on;
+
+CREATE OR REPLACE FORCE VIEW sdicapp.keytable
+AS
+   select * from eip.keytable@EIP_ON
+          WITH READ ONLY;
+
+

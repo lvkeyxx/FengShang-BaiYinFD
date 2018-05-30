@@ -1,0 +1,6 @@
+create sequence RECORD_SEQ
+minvalue 1000000000
+maxvalue 9999999999
+start with 1000000000
+increment by 2
+cache 20;

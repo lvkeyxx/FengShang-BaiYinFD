@@ -1,0 +1,44 @@
+begin
+  sys.dbms_job.submit(job => :job,
+                      what => 'dbms_refresh.refresh(''"SDICAPP"."WEB_REPOSITORY"'');',
+                      next_date => to_date('08-02-2018 20:07:07', 'dd-mm-yyyy hh24:mi:ss'),
+                      interval => 'SYSDATE+1/24');
+  commit;
+end;
+/
+
+
+begin
+  sys.dbms_job.submit(job => :job,
+                      what => 'syn_yc_hs_6800;',
+                      next_date => to_date('08-02-2018 19:20:00', 'dd-mm-yyyy hh24:mi:ss'),
+                      interval => 'TRUNC(sysdate,''mi'') + 3/ (24*60)');
+  commit;
+end;
+/
+
+
+
+
+begin
+  sys.dbms_job.submit(job => :job,
+                      what => 'syn_yc_hs_6801;',
+                      next_date => to_date('08-02-2018 19:21:00', 'dd-mm-yyyy hh24:mi:ss'),
+                      interval => 'TRUNC(sysdate,''mi'')+3/(24*60)');
+  commit;
+end;
+/
+
+
+
+begin
+  sys.dbms_job.submit(job => :job,
+                      what => 'dbms_refresh.refresh(''"SDICAPP"."M_OPE_PROGRAM_INDEX"'');',
+                      next_date => to_date('01-01-4000', 'dd-mm-yyyy'),
+                      interval => 'SYSDATE + 1');
+  sys.dbms_job.broken(job => :job,
+                      broken => true,
+                      next_date => to_date('01-01-4000', 'dd-mm-yyyy'));
+  commit;
+end;
+/

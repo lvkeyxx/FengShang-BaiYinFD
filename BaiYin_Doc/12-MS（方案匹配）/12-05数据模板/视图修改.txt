@@ -1,0 +1,39 @@
+--修改记录
+CREATE OR REPLACE VIEW OPE_UNIT_TIME_INFO AS
+SELECT t.record_datatime	record_datatime,
+       t.contract contract,
+       COMPANY_SITE_API.Get_Description(t.CONTRACT) contract_name,
+       ope_unit_info_api.Get_Curr_Time_Amount(t.contract, t.record_datatime)  real_value,
+       row_number() over(partition by contract,trunc(sysdate) order by record_datatime asc ) row_num 
+  FROM realtime_electricity_tab t
+ WHERE trunc(t.record_datatime) = trunc(sysdate)
+   and t.realtime_type = '2'
+WITH   read only;
+comment on table OPE_UNIT_TIME_INFO is 'LU=OpeUnitInfo^PROMPT=Ope Unit Time Info^MODULE=OPEMAN^';
+
+
+
+
+CREATE OR REPLACE VIEW OPE_UNIT_TIME_CONTR_INFO AS
+SELECT to_char(sysdate,'yyyy-MM-dd')             report_id,
+       T.CONTRACT                                contract,
+       COMPANY_SITE_API.Get_Description(t.CONTRACT) contract_name,
+       ope_unit_info_api.Get_Curr_Day_Amount(T.CONTRACT)   day_ele_amount, --日发电量
+       t.month_ele_amount+ope_unit_info_api.Get_Curr_Day_Amount(T.CONTRACT) month_ele_amount, --月发电量
+       t.year_ele_amount+ope_unit_info_api.Get_Curr_Day_Amount(T.CONTRACT)  year_ele_amount --年发电量
+  FROM OPE_PROGRAM_INDEX_REP_COMPANY t
+ WHERE T.CONTRACT <> '10'
+   and t.report_id=to_char(sysdate-1,'yyyy-MM-dd')
+ union all
+ SELECT report_id                report_id,
+       T.CONTRACT                                    contract,
+       COMPANY_SITE_API.Get_Description(t.CONTRACT) contract_name,
+       to_number(t.day_ele_amount)                               day_ele_amount, --日发电量
+       to_number(t.month_ele_amount)                          month_ele_amount, --月发电量
+       to_number(t.year_ele_amount)                          year_ele_amount --年发电量
+  FROM OPE_PROGRAM_INDEX_REP_COMPANY t
+ WHERE T.CONTRACT <> '10'
+ and  t.report_id <> to_char(sysdate,'yyyy-MM-dd')
+WITH   read only
+;
+comment on table OPE_UNIT_TIME_CONTR_INFO is 'LU=OpeUnitInfo^PROMPT=Ope Unit Time Contr Info^MODULE=OPEMAN^';
