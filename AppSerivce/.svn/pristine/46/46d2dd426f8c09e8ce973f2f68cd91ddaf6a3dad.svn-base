@@ -1039,14 +1039,7 @@ public class TargetService extends AJsonService implements IJsonService {
             // 宁夏
             String nxSql = TargetServiceParam.nxTotalLoad(map).get("hoursLoad");
             List<Map> nxList = new IbatisDBUtil().executeSql(nxSql);
-            for(Map listMap : list) {
-            	for(Map nxMap : nxList) {
-            		if(nxMap.get("OCCUR_TIME").equals(listMap.get("OCCUR_TIME"))) {
-            			listMap.put("NX_POWER", nxMap.get("NX_POWER"));
-            		}
-            	}
-            }
-            json.put("yestLoad", list);
+            json.put("yestLoad", list.addAll(nxList));
             //今小时走势图
             dateStr = DateUtil.formDate(new Date(), "");
             map.put(Constant.CHART_COND, dateStr);
@@ -1055,14 +1048,7 @@ public class TargetService extends AJsonService implements IJsonService {
          // 宁夏
             nxSql = TargetServiceParam.nxTotalLoad(map).get("hoursLoad");
             nxList = new IbatisDBUtil().executeSql(nxSql);
-            for(Map listMap : list) {
-            	for(Map nxMap : nxList) {
-            		if(nxMap.get("OCCUR_TIME").equals(listMap.get("OCCUR_TIME"))) {
-            			listMap.put("NX_POWER", nxMap.get("NX_POWER"));
-            		}
-            	}
-            }
-            json.put("todayLoad", list);
+            json.put("todayLoad", list.addAll(nxList));
             json.put("dateStr", dateStr);
         }catch (Throwable e){
             e.printStackTrace();
@@ -1101,17 +1087,10 @@ public class TargetService extends AJsonService implements IJsonService {
         try {
             String sql = TargetServiceSQL.nearlyOneHourP(map);
             List<Map> list = new IbatisDBUtil().executeSql(sql);
-            // 宁夏数据
+            
             sql = TargetServiceSQL.nearlyOneHourPNx(map);
             List<Map> nxList = new IbatisDBUtil().executeSql(sql);
-            for(Map listMap : list) {
-            	for(Map nxMap : nxList) {
-            		if(nxMap.get("OCCUR_TIME").equals(listMap.get("OCCUR_TIME"))) {
-            			listMap.put("NX_POWER", nxMap.get("NX_POWER"));
-            		}
-            	}
-            }
-            json.put("hList", list);
+            json.put("hList", list.addAll(nxList));
         }catch (Throwable e){
             e.printStackTrace();
             throw new ServiceException("1013","获取近一小时数据出错！");

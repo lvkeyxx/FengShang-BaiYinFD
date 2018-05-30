@@ -6655,7 +6655,6 @@ select:-webkit-autofill {
 }
 .OMACSS .navlist ul li {
   display: inline-block;
-  padding: 0 0.24305556rem;
   text-align: center;
   font-size: 0.27777778rem;
   border-bottom: 1px solid rgba(208, 234, 234, 0.3);
